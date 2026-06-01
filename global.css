@@ -286,13 +286,12 @@ body {
   right: 5vw;
   transform: translateY(-50%);
   width: clamp(280px, 28vw, 380px);
-  background: #0f0f11;              /* solid, no bleed */
+  background: #0f0f11;
   border: 1px solid rgba(255, 107, 53, 0.18);
   border-left: 2px solid var(--drought-light);
   padding: 2rem 1.8rem 1.6rem;
-  z-index: 30;                      /* above svg (z-index: 1) */
+  z-index: 30;
   pointer-events: auto;
- 
   transition:
     opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);

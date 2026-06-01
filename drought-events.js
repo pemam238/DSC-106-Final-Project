@@ -5,7 +5,6 @@
 let eventsData       = [];
 let eventsReady      = false;
 let activeEventIndex = -1;
-let sweepHasPlayed   = false;
 
 let panel, panelIndex, panelTitle, panelPeriod,
     panelRegion, panelTagline, panelBody,
@@ -20,13 +19,13 @@ let _getBaseScale, _getBaseTranslate, _renderYear, _renderYearSweep;
 function initEvents({ projection, path, dotLayer,
                       getBaseScale, getBaseTranslate,
                       renderYear, renderYearSweep }) {
-  _projection        = projection;
-  _path              = path;
-  _dotLayer          = dotLayer;
-  _getBaseScale      = getBaseScale;
-  _getBaseTranslate  = getBaseTranslate;
-  _renderYear        = renderYear;
-  _renderYearSweep   = renderYearSweep;
+  _projection       = projection;
+  _path             = path;
+  _dotLayer         = dotLayer;
+  _getBaseScale     = getBaseScale;
+  _getBaseTranslate = getBaseTranslate;
+  _renderYear       = renderYear;
+  _renderYearSweep  = renderYearSweep;
 }
 
 /* ─────────────────────────────────────────────
@@ -52,7 +51,17 @@ async function loadEvents() {
 }
 
 /* ─────────────────────────────────────────────
-   PUBLIC: scroll update  (frac 0–1 in events zone)
+   PUBLIC: firstSweepYear
+   Returns the sweepToYear of event 0 (used by main.js rewind).
+   Falls back to 1878 if not set.
+───────────────────────────────────────────── */
+function firstSweepYear() {
+  if (!eventsReady || eventsData.length === 0) return 1878;
+  return eventsData[0].sweepToYear || 1878;
+}
+
+/* ─────────────────────────────────────────────
+   PUBLIC: scroll update  (frac 0–1 within events zone)
 ───────────────────────────────────────────── */
 function updateEventsByScroll(frac) {
   if (!eventsReady || eventsData.length === 0) return;
@@ -73,9 +82,6 @@ function dismissAll() {
   if (activeEventIndex === -1) return;
   activeEventIndex = -1;
 
-  /* Reset sweep guard so it replays if user scrolls back into events zone */
-  sweepHasPlayed = false;
-
   if (panel) {
     panel.classList.remove('ep--visible', 'ep--exit');
     panel.classList.add('ep--hidden');
@@ -84,7 +90,7 @@ function dismissAll() {
 }
 
 /* ─────────────────────────────────────────────
-   PUBLIC: expose active index for main.js
+   PUBLIC: activeIndex
 ───────────────────────────────────────────── */
 function getActiveIndex() {
   return activeEventIndex;
@@ -100,7 +106,7 @@ function showEvent(index) {
 
   activeEventIndex = index;
 
-  /* Fill panel */
+  /* Fill panel content */
   panelIndex.textContent     = `${String(ev.index).padStart(2,'0')} / ${String(eventsData.length).padStart(2,'0')}`;
   panelTitle.textContent     = ev.title;
   panelPeriod.textContent    = ev.period;
@@ -110,28 +116,17 @@ function showEvent(index) {
   panelStat.textContent      = ev.stat;
   panelStatLabel.textContent = ev.statLabel;
 
-  /* Event 0: play the year sweep first, then zoom, then show panel.
-     All other events: show panel immediately, zoom right away. */
-  if (index === 0 && !sweepHasPlayed) {
-    sweepHasPlayed = true;
-    /* Hide panel while sweep plays */
-    panel.classList.remove('ep--visible', 'ep--exit');
-    panel.classList.add('ep--hidden');
-    _renderYearSweep(2014, ev.sweepToYear || 1878, () => {
-      zoomToEvent(ev, () => {
-        /* Show panel only after zoom settles */
-        panel.classList.remove('ep--hidden', 'ep--exit');
-        void panel.offsetWidth;
-        panel.classList.add('ep--visible');
-      });
-    });
-  } else {
-    /* Re-trigger slide-in animation on every event change */
-    panel.classList.remove('ep--visible', 'ep--exit', 'ep--hidden');
-    void panel.offsetWidth;
+  /* All events: zoom immediately, panel slides in after zoom settles */
+  /* Hide panel first so it never flashes in before the zoom */
+  panel.classList.remove('ep--visible', 'ep--exit');
+  panel.classList.add('ep--hidden');
+
+  zoomToEvent(ev, () => {
+    /* Show panel only after zoom + ring animation finish */
+    panel.classList.remove('ep--hidden', 'ep--exit');
+    void panel.offsetWidth; /* force reflow to restart epSlideIn */
     panel.classList.add('ep--visible');
-    zoomToEvent(ev, null);
-  }
+  });
 }
 
 /* ─────────────────────────────────────────────
@@ -147,11 +142,11 @@ function zoomToEvent(ev, onComplete) {
 
   const normLon = ev.lon > 180 ? ev.lon - 360 : ev.lon;
 
-  /* Reset to base, measure target pixel coords */
+  /* Reset projection to base then measure target coords */
   _projection.scale(bs).translate(bt);
   const [x, y] = _projection([normLon, ev.lat]);
 
-  /* Apply zoom transform */
+  /* Apply zoom */
   _projection
     .scale(bs * zf)
     .translate([
@@ -159,16 +154,16 @@ function zoomToEvent(ev, onComplete) {
       H / 2 - zf * (y - bt[1]),
     ]);
 
-  /* Redraw dots immediately at new projection so they're never mismatched */
+  /* Redraw dots at new projection immediately (no flicker) */
   _dotLayer.selectAll('.event-ring').remove();
-  _renderYear(null);   /* null = reposition dots at currentYear, no label change */
+  _renderYear(null);
 
-  /* Animate land + graticule paths to the new projection */
+  /* Animate map paths to new projection */
   svg.selectAll('path')
     .transition().duration(1300).ease(d3.easeCubicInOut)
     .attr('d', _path);
 
-  /* Add highlight ring after paths settle */
+  /* Add highlight ring after paths settle, then fire onComplete */
   const [nx, ny]      = _projection([normLon, ev.lat]);
   const capturedIndex = activeEventIndex;
 
@@ -192,7 +187,7 @@ function zoomToEvent(ev, onComplete) {
       .transition().duration(600).delay(250).style('opacity', 1)
       .on('end', () => { if (onComplete) onComplete(); });
 
-  }, 1350); /* slightly after the 1300ms path transition */
+  }, 1350);
 }
 
 /* ─────────────────────────────────────────────
@@ -200,7 +195,7 @@ function zoomToEvent(ev, onComplete) {
 ───────────────────────────────────────────── */
 function onEventsResize() {
   if (activeEventIndex >= 0 && eventsReady) {
-    zoomToEvent(eventsData[activeEventIndex]);
+    zoomToEvent(eventsData[activeEventIndex], null);
   }
 }
 
@@ -208,10 +203,11 @@ function onEventsResize() {
    EXPORTS
 ───────────────────────────────────────────── */
 window.DroughtEvents = {
-  init:        initEvents,
-  load:        loadEvents,
-  update:      updateEventsByScroll,
-  dismissAll:  dismissAll,
-  activeIndex: getActiveIndex,
-  resize:      onEventsResize,
+  init:           initEvents,
+  load:           loadEvents,
+  update:         updateEventsByScroll,
+  dismissAll:     dismissAll,
+  activeIndex:    getActiveIndex,
+  resize:         onEventsResize,
+  firstSweepYear: firstSweepYear,
 };

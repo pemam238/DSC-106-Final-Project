@@ -5,25 +5,26 @@
 const YEARS_START = 1850;
 const YEARS_END   = 2014;
 
-/* ── Scroll zones (total: 600vh) ──────────────
-   0.000 – 0.38   → title hooks visible
-   0.38  – 0.45   → hooks fading out, blank buffer (clean map, no dots)
-   0.45  – 0.62   → timeline animation 1850 → 2014
-   0.62  – 0.667  → timeline done, brief pause
+/* ── Scroll zones (total: 600vh)
+   0.000 – 0.667  → title hooks + year timeline (same feel as original 400vh page)
    0.667 – 1.000  → 5 historical event panels
-──────────────────────────────────────────────── */
-const TEXT_HIDE_FRAC    = 0.38;
-const ANIM_START_FRAC   = 0.45;
-const ANIM_END_FRAC     = 0.62;
+── */
 const EVENTS_START_FRAC = 0.667;
 
+/* Timeline fracs are expressed within the 0–0.667 zone,
+   scaled so the experience feels identical to the original 400vh page. */
+const ZONE_A_END       = EVENTS_START_FRAC;          // 0.667
+const ANIM_START_FRAC  = 0.05  * ZONE_A_END;         // ≈ 0.033
+const ANIM_END_FRAC    = 0.985 * ZONE_A_END;         // ≈ 0.655  (rewind triggers here)
+const TEXT_HIDE_FRAC   = 0.90  * ZONE_A_END;         // ≈ 0.600
+
 const hooks = [
-  { id: 'hook-eyebrow', scrollFrac: 0.00 },
-  { id: 'hook-word1',   scrollFrac: 0.00 },
-  { id: 'hook-word2',   scrollFrac: 0.06 },
-  { id: 'hook-word3',   scrollFrac: 0.12 },
-  { id: 'hook-sub',     scrollFrac: 0.20 },
-  { id: 'hook-byline',  scrollFrac: 0.28 },
+  { id: 'hook-eyebrow', scrollFrac: 0.00  * ZONE_A_END },
+  { id: 'hook-word1',   scrollFrac: 0.00  * ZONE_A_END },
+  { id: 'hook-word2',   scrollFrac: 0.20  * ZONE_A_END },
+  { id: 'hook-word3',   scrollFrac: 0.30  * ZONE_A_END },
+  { id: 'hook-sub',     scrollFrac: 0.40  * ZONE_A_END },
+  { id: 'hook-byline',  scrollFrac: 0.60  * ZONE_A_END },
 ];
 
 /* ── State ── */
@@ -35,6 +36,11 @@ let dotLayer;
 
 let baseScale;
 let baseTranslate;
+
+/* rewind = the 2014→earliest-drought sweep that plays at end of Zone A */
+let rewindHasPlayed = false;
+
+/* events zone flag */
 let inEventZone            = false;
 let inEventsBlockDotRender = false;
 
@@ -81,16 +87,12 @@ function initMap() {
 function getBaseScale()     { return baseScale; }
 function getBaseTranslate() { return baseTranslate.slice(); }
 
-function resetProjectionToBase(animate = true) {
+function resetProjectionToBase() {
   projection.scale(baseScale).translate(baseTranslate);
-  const sel = d3.select('#world-svg').selectAll('path');
-  if (animate) {
-    sel.transition().duration(900).ease(d3.easeCubicInOut).attr('d', path)
-      .on('end', () => renderYear(currentYear));
-  } else {
-    sel.attr('d', path);
-    renderYear(currentYear);
-  }
+  d3.select('#world-svg').selectAll('path')
+    .transition().duration(900).ease(d3.easeCubicInOut)
+    .attr('d', path)
+    .on('end', () => renderYear(currentYear));
 }
 
 /* ═══════════════════════════════════════════
@@ -104,7 +106,7 @@ function loadData() {
 
 /* ═══════════════════════════════════════════
    3. RENDER YEAR
-   year=null → reposition existing dots at current projection, no label change
+   Pass null to reposition dots at currentYear without updating the label.
 ═══════════════════════════════════════════ */
 function renderYear(year) {
   const useYear  = (year !== null && year !== undefined) ? year : currentYear;
@@ -137,14 +139,38 @@ function renderYearIfNew(year) {
 }
 
 /* ═══════════════════════════════════════════
-   4. YEAR SWEEP
-   Animates year counter + dots from `from` → `to`, then calls done().
-   Used by event 0's intro sweep.
+   4. REWIND (end of Zone A) — identical to original
+═══════════════════════════════════════════ */
+function playRewindToFirstEvent() {
+  if (rewindHasPlayed) return;
+  rewindHasPlayed = true;
+
+  /* Sweep from 2014 back to the first event's year (event 0 in drought-events.json).
+     DroughtEvents.firstYear() returns that value once data is loaded. */
+  const sweepTo   = DroughtEvents.firstSweepYear();
+  const startYear = currentYear;
+
+  d3.select('#world-svg')
+    .transition('rewind')
+    .duration(3500)
+    .ease(d3.easeCubicInOut)
+    .tween('rewind-year', () => {
+      const interp = d3.interpolateNumber(startYear, sweepTo);
+      return t => {
+        const y = Math.round(interp(t));
+        if (y !== lastYear) { renderYear(y); lastYear = y; }
+      };
+    })
+    .on('end', () => {
+      /* Rewind done — scroll will now enter Zone B naturally */
+    });
+}
+
+/* ═══════════════════════════════════════════
+   5. YEAR SWEEP (used by DroughtEvents for event 0)
 ═══════════════════════════════════════════ */
 function renderYearSweep(from, to, done) {
   inEventsBlockDotRender = false;
-
-  /* Interrupt any prior sweep transition */
   d3.select('#world-svg').interrupt('year-sweep');
 
   d3.select('#world-svg')
@@ -155,10 +181,7 @@ function renderYearSweep(from, to, done) {
       const interp = d3.interpolateNumber(from, to);
       return t => {
         const y = Math.round(interp(t));
-        if (y !== lastYear) {
-          renderYear(y);
-          lastYear = y;
-        }
+        if (y !== lastYear) { renderYear(y); lastYear = y; }
       };
     })
     .on('end', () => {
@@ -166,13 +189,12 @@ function renderYearSweep(from, to, done) {
       if (done) done();
     })
     .on('interrupt', () => {
-      /* If scrolled away mid-sweep, restore block flag */
       inEventsBlockDotRender = true;
     });
 }
 
 /* ═══════════════════════════════════════════
-   5. SCROLL DRIVER
+   6. SCROLL DRIVER
 ═══════════════════════════════════════════ */
 function getScrollFrac() {
   const scrollTop = window.scrollY;
@@ -186,7 +208,7 @@ function onScroll() {
 
   document.getElementById('progress-bar').style.width = (frac * 100) + '%';
 
-  /* ── Hook text ── */
+  /* ── Hook text (only active in Zone A) ── */
   hooks.forEach(h => {
     const el = document.getElementById(h.id);
     if (frac >= h.scrollFrac && frac < TEXT_HIDE_FRAC) {
@@ -198,59 +220,56 @@ function onScroll() {
     }
   });
 
-  /* Legend: show only during/after timeline animation, not during events 1-4 */
-  const inLaterEvents = frac >= EVENTS_START_FRAC && DroughtEvents.activeIndex() > 0;
-  document.getElementById('legend').classList.toggle('show', frac >= ANIM_START_FRAC && !inLaterEvents);
-
+  document.getElementById('legend').classList.toggle('show', frac >= ANIM_START_FRAC);
   if (frac > 0.02) document.getElementById('scroll-hint').style.opacity = '0';
 
-  /* Year counter: show only during animation and event 0's sweep; hide otherwise */
-  const yearDisplay = document.getElementById('year-display');
-  const showYear = frac >= ANIM_START_FRAC && !inLaterEvents;
-  yearDisplay.style.opacity = showYear ? '' : '0';
+  /* Year display: hide during events 1-4 only */
+  const inLaterEvents = frac >= EVENTS_START_FRAC && DroughtEvents.activeIndex() > 0;
+  document.getElementById('year-display').style.opacity = inLaterEvents ? '0' : '';
 
-  /* ══════════════════════════════════════
-     ZONE ROUTING
-  ══════════════════════════════════════ */
+  /* ══ ZONE ROUTING ══ */
 
   if (frac < EVENTS_START_FRAC) {
-    /* ── Zone A: title hooks + timeline ── */
+    /* ── Zone A: title + timeline ── */
+
+    /* Coming back from Zone B: reset */
     if (inEventZone) {
       inEventZone            = false;
       inEventsBlockDotRender = false;
       d3.select('#world-svg').interrupt('year-sweep');
       DroughtEvents.dismissAll();
-      resetProjectionToBase(true);
+      resetProjectionToBase();
+      rewindHasPlayed = false;   /* allow rewind to replay if user scrolls back */
     }
 
-    if (frac < ANIM_START_FRAC) {
-      /* Title card zone: show 1850 dots but no year label yet */
-      if (lastYear !== YEARS_START) {
-        renderYear(YEARS_START);
-        lastYear = YEARS_START;
-      }
-    } else {
-      /* Timeline animation zone: scrub year with scroll */
-      const animFrac   = Math.min(
-        Math.max((frac - ANIM_START_FRAC) / (ANIM_END_FRAC - ANIM_START_FRAC), 0), 1
-      );
-      const targetYear = Math.round(YEARS_START + animFrac * (YEARS_END - YEARS_START));
+    const animFrac = Math.min(
+      Math.max((frac - ANIM_START_FRAC) / (ANIM_END_FRAC - ANIM_START_FRAC), 0), 1
+    );
+    const targetYear = Math.round(YEARS_START + animFrac * (YEARS_END - YEARS_START));
+
+    if (!rewindHasPlayed) {
       renderYearIfNew(targetYear);
     }
 
+    /* Trigger rewind when scroll reaches end of Zone A */
+    if (frac >= ANIM_END_FRAC) {
+      playRewindToFirstEvent();
+    }
+
   } else {
-    /* ── Zone B: historical events (0.667 → 1.0) ── */
+    /* ── Zone B: events ── */
     if (!inEventZone) {
       inEventZone            = true;
       inEventsBlockDotRender = true;
     }
+
     const eventsFrac = (frac - EVENTS_START_FRAC) / (1.0 - EVENTS_START_FRAC);
     DroughtEvents.update(eventsFrac);
   }
 }
 
 /* ═══════════════════════════════════════════
-   6. RESIZE
+   7. RESIZE
 ═══════════════════════════════════════════ */
 function onResize() {
   const W = window.innerWidth;
@@ -267,16 +286,14 @@ function onResize() {
 }
 
 /* ═══════════════════════════════════════════
-   7. BOOT
+   8. BOOT
 ═══════════════════════════════════════════ */
 (async function boot() {
   initMap();
   await loadData();
 
-  /* Render 1850 immediately so dots are visible on the title page */
   renderYear(YEARS_START);
   lastYear = YEARS_START;
-  document.getElementById('year-display').textContent = '';
 
   DroughtEvents.init({
     projection,
@@ -295,7 +312,6 @@ function onResize() {
   onScroll();
 })();
 
-/* ── util ── */
 function debounce(fn, ms) {
   let t;
   return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
