@@ -21,9 +21,9 @@ const YEARS_END   = 2014;
 const EVENTS_START_FRAC = 0.667;
 
 /* Zone A internal fracs */
-const ANIM_START_FRAC = 0.05  * EVENTS_START_FRAC;  // ≈ 0.033  dots start
-const ANIM_END_FRAC   = 0.98  * EVENTS_START_FRAC;  // ≈ 0.653  timeline → 2014
-const TEXT_HIDE_FRAC  = 0.90  * EVENTS_START_FRAC;  // ≈ 0.600  hooks fade
+const ANIM_START_FRAC = 0.05 * EVENTS_START_FRAC;   // ≈ 0.033  dots start appearing
+const TEXT_HIDE_FRAC  = 0.90 * EVENTS_START_FRAC;   // ≈ 0.600  hooks fade out
+const ANIM_END_FRAC   = TEXT_HIDE_FRAC;              // year reaches 2014 exactly when text hides → rewind fires
 
 const hooks = [
   { id: 'hook-eyebrow', scrollFrac: 0.00 * EVENTS_START_FRAC },
@@ -154,40 +154,61 @@ function renderYearIfNew(year) {
 
 /* ═══════════════════════════════════════════
    4. REWIND + ZOOM SEQUENCE
-   Sweeps 2014 → firstEventYear (3.5 s), then zooms to event 0,
-   shows the panel, then scrolls the page into Zone B.
+   1. If not at 2014 yet, sweep forward to 2014 (proportional speed).
+   2. Sweep backward from 2014 → firstEventYear (3.5 s).
+   3. Zoom to event 0, show panel, scroll into Zone B.
 ═══════════════════════════════════════════ */
 function playRewindSequence() {
   if (rewindPlaying || rewindDone) return;
   rewindPlaying = true;
-
-  /* Stop any scroll-driven dot rendering while rewind plays */
   inEventsBlockDotRender = true;
 
-  const sweepTo   = DroughtEvents.firstSweepYear();
-  const startYear = currentYear;
+  const sweepTo = DroughtEvents.firstSweepYear();
 
-  /* Step 1: sweep year counter backward */
-  d3.select('#world-svg')
-    .transition('rewind')
-    .duration(3500)
-    .ease(d3.easeCubicInOut)
-    .tween('rewind-year', () => {
-      const interp = d3.interpolateNumber(startYear, sweepTo);
-      return t => {
-        const y = Math.round(interp(t));
-        if (y !== lastYear) { renderYear(y); lastYear = y; }
-      };
-    })
-    .on('end', () => {
-      /* Step 2: zoom to event 0's location, panel appears */
-      DroughtEvents.zoomAndShowFirst(() => {
-        /* Step 3: scroll into Zone B */
-        rewindDone    = true;
-        rewindPlaying = false;
-        scrollIntoZoneB();
+  function doRewind() {
+    /* ── Step 2: sweep 2014 → firstEventYear ── */
+    const REWIND_MS = 3500;
+    d3.select('#world-svg')
+      .transition('rewind')
+      .duration(REWIND_MS)
+      .ease(d3.easeCubicInOut)
+      .tween('rewind-year', () => {
+        const interp = d3.interpolateNumber(YEARS_END, sweepTo);
+        return t => {
+          const y = Math.round(interp(t));
+          if (y !== lastYear) { renderYear(y); lastYear = y; }
+        };
+      })
+      .on('end', () => {
+        /* ── Step 3: zoom to event 0 ── */
+        DroughtEvents.zoomAndShowFirst(() => {
+          rewindDone    = true;
+          rewindPlaying = false;
+          scrollIntoZoneB();
+        });
       });
-    });
+  }
+
+  if (currentYear < YEARS_END) {
+    /* ── Step 1: sweep forward to 2014 first ── */
+    const remaining = (YEARS_END - currentYear) / (YEARS_END - YEARS_START);
+    const FORWARD_MS = Math.round(remaining * 2000); // proportional, max ~2 s
+    d3.select('#world-svg')
+      .transition('rewind')
+      .duration(FORWARD_MS)
+      .ease(d3.easeCubicInOut)
+      .tween('forward-year', () => {
+        const from = currentYear;
+        const interp = d3.interpolateNumber(from, YEARS_END);
+        return t => {
+          const y = Math.round(interp(t));
+          if (y !== lastYear) { renderYear(y); lastYear = y; }
+        };
+      })
+      .on('end', doRewind);
+  } else {
+    doRewind();
+  }
 }
 
 /* Programmatically scrolls so frac ≈ EVENTS_START_FRAC + small offset,
@@ -234,8 +255,8 @@ function getScrollFrac() {
   return Math.min(Math.max((scrollTop - sceneTop) / sceneH, 0), 1);
 }
 
-/* Tiny threshold so rewind only triggers once */
-const REWIND_TRIGGER_FRAC = EVENTS_START_FRAC - 0.008;
+/* Rewind triggers exactly when the title text finishes hiding */
+const REWIND_TRIGGER_FRAC = TEXT_HIDE_FRAC;
 
 function onScroll() {
   const frac = getScrollFrac();

@@ -190,8 +190,9 @@ function _showEventPanel(index, onComplete) {
 
 /* ─────────────────────────────────────────────
    INTERNAL: zoomToEvent
-   FIX: Always resets projection to base FIRST before computing
-   pixel coords, so repeated calls don't compound transforms.
+   - Resets projection to base before computing pixel coords
+   - Clears dots immediately (no re-render mid-transition)
+   - Interrupts any in-flight zoom before starting
 ───────────────────────────────────────────── */
 function zoomToEvent(ev, onComplete) {
   const svg = d3.select('#world-svg');
@@ -201,14 +202,17 @@ function zoomToEvent(ev, onComplete) {
   const H   = window.innerHeight;
   const zf  = ev.zoomFactor || 3.0;
 
-  /* Normalise longitude to [-180, 180] */
+  /* Normalise longitude */
   const normLon = ev.lon > 180 ? ev.lon - 360 : ev.lon;
 
-  /* Step 1: Reset to base so pixel lookup is correct */
+  /* Cancel any in-flight zoom so paths don't snap */
+  svg.selectAll('path').interrupt('zoom');
+
+  /* Step 1: Reset to base projection to get correct pixel coords */
   _projection.scale(bs).translate(bt);
   const [x, y] = _projection([normLon, ev.lat]);
 
-  /* Step 2: Apply zoomed transform */
+  /* Step 2: Apply zoomed projection state */
   _projection
     .scale(bs * zf)
     .translate([
@@ -216,11 +220,11 @@ function zoomToEvent(ev, onComplete) {
       H / 2 - zf * (y - bt[1]),
     ]);
 
-  /* Step 3: Remove old ring, re-render dots at new projection */
+  /* Step 3: Clear ALL dots immediately — don't re-add until zoom lands */
   _dotLayer.selectAll('.event-ring').remove();
-  _renderYear(null);
+  _dotLayer.selectAll('.drought-dot').remove();
 
-  /* Step 4: Transition all map paths to new projection */
+  /* Step 4: Animate map paths to zoomed projection */
   const ZOOM_MS = 1300;
   svg.selectAll('path')
     .transition('zoom')
@@ -228,14 +232,13 @@ function zoomToEvent(ev, onComplete) {
     .ease(d3.easeCubicInOut)
     .attr('d', _path);
 
-  /* Step 5: After zoom settles, draw the ring + centre dot */
+  /* Step 5: After zoom settles, draw ring + centre dot */
   const capturedIndex = activeEventIndex;
 
   setTimeout(() => {
-    /* Guard: abort if user scrolled to a different event */
     if (activeEventIndex !== capturedIndex) return;
 
-    /* Re-project the event location (projection has changed) */
+    /* Re-project with the now-settled zoomed projection */
     const [nx, ny] = _projection([normLon, ev.lat]);
 
     _dotLayer.selectAll('.event-ring').remove();
@@ -251,7 +254,7 @@ function zoomToEvent(ev, onComplete) {
       .transition().duration(900).ease(d3.easeCubicOut)
       .attr('r', 24).style('opacity', 0.5);
 
-    /* Centre dot — reveal triggers onComplete */
+    /* Centre dot — triggers onComplete when done */
     _dotLayer.append('circle')
       .attr('class', 'event-ring')
       .attr('cx', nx).attr('cy', ny).attr('r', 5)
