@@ -58,10 +58,13 @@
         </div>
       </div>
 
-      <!-- Scroll hint -->
+      <!-- Scroll hint: simple CSS-only arrow, no giant div -->
       <div id="scroll-hint">
         <span>Scroll</span>
-        <div class="scroll-arrow"></div>
+        <svg width="16" height="24" viewBox="0 0 16 24" fill="none" class="scroll-arrow-svg">
+          <line x1="8" y1="0" x2="8" y2="20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <polyline points="3,15 8,21 13,15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
 
       <!-- ── Historical Event Panel ── -->
@@ -84,7 +87,7 @@
         </div>
 
         <h2 id="ep-title" class="ep-title">The Great Drought</h2>
-        <p  id="ep-tagline" class="ep-tagline">The deadliest drought in modern history</p>
+        <p id="ep-tagline" class="ep-tagline">The deadliest drought in modern history</p>
 
         <div class="ep-divider"></div>
 
@@ -107,7 +110,7 @@
 
     </div><!-- /map-scene -->
 
-    <!-- Scroll spacer drives animation — extra height for events zone -->
+    <!-- Scroll spacer drives animation -->
     <div id="scroll-space"></div>
 
   </div><!-- /scrolly -->

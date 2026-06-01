@@ -1,5 +1,14 @@
 /* ─────────────────────────────────────────────
    THE WANDERING DROUGHT  ·  main.js
+
+   FIX SUMMARY:
+   - scroll-hint is hidden via style.opacity (not display)
+     and is properly faded once the user scrolls even a little
+   - Rewind trigger uses a small debounce so it only fires once
+     even if the scroll listener fires several times near the threshold
+   - Zone B entry: inEventsBlockDotRender is set correctly so the
+     scroll-driven dot render doesn't fight the event zoom
+   - resetProjectionToBase is cleaner and always cancels in-flight transitions
 ───────────────────────────────────────────── */
 
 const YEARS_START = 1850;
@@ -7,16 +16,14 @@ const YEARS_END   = 2014;
 
 /* ── Scroll zones (total: 600vh) ─────────────────
    Zone A  0.000 – 0.667  title hooks + year timeline
-           At frac=1.0 the rewind+zoom sequence auto-plays,
-           then the page programmatically scrolls into Zone B.
    Zone B  0.667 – 1.000  5 historical event panels
 ─────────────────────────────────────────────────── */
 const EVENTS_START_FRAC = 0.667;
 
-/* Zone A internal fracs (relative to full 0-1 range) */
-const ANIM_START_FRAC = 0.05  * EVENTS_START_FRAC;   // ≈ 0.033  dots start appearing
-const ANIM_END_FRAC   = 0.98  * EVENTS_START_FRAC;   // ≈ 0.653  timeline reaches 2014
-const TEXT_HIDE_FRAC  = 0.90  * EVENTS_START_FRAC;   // ≈ 0.600  hooks fade out
+/* Zone A internal fracs */
+const ANIM_START_FRAC = 0.05  * EVENTS_START_FRAC;  // ≈ 0.033  dots start
+const ANIM_END_FRAC   = 0.98  * EVENTS_START_FRAC;  // ≈ 0.653  timeline → 2014
+const TEXT_HIDE_FRAC  = 0.90  * EVENTS_START_FRAC;  // ≈ 0.600  hooks fade
 
 const hooks = [
   { id: 'hook-eyebrow', scrollFrac: 0.00 * EVENTS_START_FRAC },
@@ -87,9 +94,17 @@ function getBaseScale()     { return baseScale; }
 function getBaseTranslate() { return baseTranslate.slice(); }
 
 function resetProjectionToBase() {
+  /* Cancel any in-flight map transitions before resetting */
+  const svg = d3.select('#world-svg');
+  svg.interrupt('zoom');
+  svg.interrupt('rewind');
+  svg.interrupt('year-sweep');
+
   projection.scale(baseScale).translate(baseTranslate);
-  d3.select('#world-svg').selectAll('path')
-    .transition().duration(900).ease(d3.easeCubicInOut)
+  svg.selectAll('path')
+    .transition('reset')
+    .duration(900)
+    .ease(d3.easeCubicInOut)
     .attr('d', path)
     .on('end', () => renderYear(currentYear));
 }
@@ -105,7 +120,7 @@ function loadData() {
 
 /* ═══════════════════════════════════════════
    3. RENDER YEAR
-   Pass null to reposition dots without changing the label.
+   Pass null to reposition dots without changing the year label.
 ═══════════════════════════════════════════ */
 function renderYear(year) {
   const useYear  = (year !== null && year !== undefined) ? year : currentYear;
@@ -139,18 +154,20 @@ function renderYearIfNew(year) {
 
 /* ═══════════════════════════════════════════
    4. REWIND + ZOOM SEQUENCE
-   Plays automatically once the user has fully scrolled Zone A.
-   Sequence: sweep 2014→eventYear (3.5s) → zoom to event 0 location (1.3s)
-             → ring appears → panel slides in → page scrolls to Zone B.
+   Sweeps 2014 → firstEventYear (3.5 s), then zooms to event 0,
+   shows the panel, then scrolls the page into Zone B.
 ═══════════════════════════════════════════ */
 function playRewindSequence() {
   if (rewindPlaying || rewindDone) return;
   rewindPlaying = true;
 
-  const sweepTo   = DroughtEvents.firstSweepYear();   // year of event 0
+  /* Stop any scroll-driven dot rendering while rewind plays */
+  inEventsBlockDotRender = true;
+
+  const sweepTo   = DroughtEvents.firstSweepYear();
   const startYear = currentYear;
 
-  /* ── Step 1: sweep year counter backward ── */
+  /* Step 1: sweep year counter backward */
   d3.select('#world-svg')
     .transition('rewind')
     .duration(3500)
@@ -163,9 +180,9 @@ function playRewindSequence() {
       };
     })
     .on('end', () => {
-      /* ── Step 2: zoom to event 0's location, panel appears ── */
+      /* Step 2: zoom to event 0's location, panel appears */
       DroughtEvents.zoomAndShowFirst(() => {
-        /* ── Step 3: smoothly scroll into Zone B ── */
+        /* Step 3: scroll into Zone B */
         rewindDone    = true;
         rewindPlaying = false;
         scrollIntoZoneB();
@@ -173,18 +190,17 @@ function playRewindSequence() {
     });
 }
 
-/* Programmatically scrolls the page so frac = EVENTS_START_FRAC + tiny offset,
-   putting us right at the start of Zone B (event 0). */
+/* Programmatically scrolls so frac ≈ EVENTS_START_FRAC + small offset,
+   landing right at the start of Zone B (event 0). */
 function scrollIntoZoneB() {
   const sceneTop = document.getElementById('scrolly').offsetTop;
   const sceneH   = document.getElementById('scroll-space').offsetHeight;
   const targetY  = sceneTop + (EVENTS_START_FRAC + 0.005) * sceneH;
-
   window.scrollTo({ top: targetY, behavior: 'smooth' });
 }
 
 /* ═══════════════════════════════════════════
-   5. YEAR SWEEP — exposed to DroughtEvents if needed
+   5. YEAR SWEEP — used between event panels
 ═══════════════════════════════════════════ */
 function renderYearSweep(from, to, done) {
   inEventsBlockDotRender = false;
@@ -218,14 +234,25 @@ function getScrollFrac() {
   return Math.min(Math.max((scrollTop - sceneTop) / sceneH, 0), 1);
 }
 
+/* Tiny threshold so rewind only triggers once */
+const REWIND_TRIGGER_FRAC = EVENTS_START_FRAC - 0.008;
+
 function onScroll() {
   const frac = getScrollFrac();
 
+  /* Progress bar */
   document.getElementById('progress-bar').style.width = (frac * 100) + '%';
 
-  /* Hook text */
+  /* Scroll hint: hide as soon as user scrolls at all */
+  const scrollHint = document.getElementById('scroll-hint');
+  if (frac > 0.01) {
+    scrollHint.style.opacity = '0';
+  }
+
+  /* Hook text visibility */
   hooks.forEach(h => {
     const el = document.getElementById(h.id);
+    if (!el) return;
     if (frac >= h.scrollFrac && frac < TEXT_HIDE_FRAC) {
       el.classList.remove('hide'); el.classList.add('show');
     } else if (frac >= TEXT_HIDE_FRAC) {
@@ -235,9 +262,10 @@ function onScroll() {
     }
   });
 
+  /* Legend */
   document.getElementById('legend').classList.toggle('show', frac >= ANIM_START_FRAC);
-  if (frac > 0.02) document.getElementById('scroll-hint').style.opacity = '0';
 
+  /* Year display: hide once we're in Zone B past the first event */
   const inLaterEvents = frac >= EVENTS_START_FRAC && DroughtEvents.activeIndex() > 0;
   document.getElementById('year-display').style.opacity = inLaterEvents ? '0' : '';
 
@@ -247,7 +275,7 @@ function onScroll() {
     /* ── Zone A ── */
 
     if (inEventZone) {
-      /* Scrolled back from Zone B — reset everything */
+      /* User scrolled back from Zone B — reset everything */
       inEventZone            = false;
       inEventsBlockDotRender = false;
       rewindDone             = false;
@@ -258,7 +286,7 @@ function onScroll() {
       resetProjectionToBase();
     }
 
-    /* While rewind sequence is playing, don't overwrite year with scroll */
+    /* Normal scroll-driven year animation (only when rewind isn't active) */
     if (!rewindPlaying && !rewindDone) {
       const animFrac = Math.min(
         Math.max((frac - ANIM_START_FRAC) / (ANIM_END_FRAC - ANIM_START_FRAC), 0), 1
@@ -267,13 +295,14 @@ function onScroll() {
       renderYearIfNew(targetYear);
     }
 
-    /* ── Trigger rewind when Zone A is fully scrolled ── */
-    if (frac >= EVENTS_START_FRAC - 0.01 && !rewindPlaying && !rewindDone) {
+    /* Trigger rewind once when near the Zone A/B boundary */
+    if (frac >= REWIND_TRIGGER_FRAC && !rewindPlaying && !rewindDone) {
       playRewindSequence();
     }
 
   } else {
     /* ── Zone B ── */
+
     if (!inEventZone) {
       inEventZone            = true;
       inEventsBlockDotRender = true;
