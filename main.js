@@ -1,11 +1,21 @@
 /* ─────────────────────────────────────────────
    THE WANDERING DROUGHT  ·  main.js
    Scrolly-driven D3 world map with drought dots
+   + historical event zoom panels
 ───────────────────────────────────────────── */
 
 const YEARS_START = 1850;
 const YEARS_END   = 2014;
-const TOTAL_YEARS = YEARS_END - YEARS_START + 1;
+
+/* ── Scroll zones (fractions of total scroll height) ──
+   0.00 – 0.72  → timeline animation (years 1850-2014)
+   0.72 – 0.97  → 5 historical event zooms
+   0.97 – 1.00  → rewind / final beat
+*/
+const TIMELINE_END_FRAC   = 0.72;
+const EVENTS_START_FRAC   = 0.74;
+const EVENTS_END_FRAC     = 0.96;
+const REWIND_FRAC         = 0.97;
 
 /* ── State ── */
 let allData      = {};
@@ -17,6 +27,7 @@ let dotLayer;
 let baseScale;
 let baseTranslate;
 let rewindHasPlayed = false;
+let inEventZone = false;
 
 /* ── Opacity scale ── */
 const opacityScale = d3.scalePow()
@@ -24,8 +35,6 @@ const opacityScale = d3.scalePow()
   .domain([-3.5, -1.0])
   .range([0.98, 0.3])
   .clamp(true);
-
-const dotRadius = 1.8;
 
 /* ═══════════════════════════════════════════
    1. SET UP SVG + PROJECTION
@@ -42,7 +51,7 @@ function initMap() {
     .scale(W / 5.8)
     .translate([W / 2, H / 2]);
 
-  baseScale = projection.scale();
+  baseScale     = projection.scale();
   baseTranslate = projection.translate();
 
   path = d3.geoPath().projection(projection);
@@ -69,15 +78,17 @@ function initMap() {
     });
 }
 
+/* ── Getters for base projection (used by drought-events.js) ── */
+function getBaseScale()     { return baseScale; }
+function getBaseTranslate() { return baseTranslate; }
+
 /* ═══════════════════════════════════════════
    2. LOAD DATA
 ═══════════════════════════════════════════ */
 function loadData() {
   return fetch('historical_yearly.json')
     .then(r => r.json())
-    .then(json => {
-      allData = json;
-    });
+    .then(json => { allData = json; });
 }
 
 /* ═══════════════════════════════════════════
@@ -86,8 +97,7 @@ function loadData() {
 function renderYear(year) {
   const yearData = allData[year] || [];
 
-  dotLayer.selectAll('circle').remove();
-  dotLayer.selectAll('text').remove();
+  dotLayer.selectAll('circle.drought-dot').remove();
 
   yearData.forEach(d => {
     const normLon = d.lon > 180 ? d.lon - 360 : d.lon;
@@ -119,75 +129,57 @@ function renderYearIfNew(year) {
 function findEarliestSevereDrought(threshold = -1.5) {
   for (let year = YEARS_START; year <= YEARS_END; year++) {
     const yearData = allData[year] || [];
-
     const severe = yearData
       .filter(d => d.spi <= threshold)
       .sort((a, b) => a.spi - b.spi)[0];
-
-    if (severe) {
-      return { year, ...severe };
-    }
+    if (severe) return { year, ...severe };
   }
-
   return null;
 }
 
 /* ═══════════════════════════════════════════
-   5. REWIND + ZOOM
+   5. REWIND + ZOOM  (end-of-scroll beat)
 ═══════════════════════════════════════════ */
 function playRewindToFirstSevereDrought() {
   if (rewindHasPlayed) return;
   rewindHasPlayed = true;
 
-  const first = findEarliestSevereDrought(-1.5);
+  const first     = findEarliestSevereDrought(-1.5);
   if (!first) return;
 
   const startYear = currentYear;
-  const endYear = first.year;
+  const endYear   = first.year;
 
   d3.select({ year: startYear })
     .transition()
     .duration(3500)
     .ease(d3.easeCubicInOut)
-    .tween('rewind-year', function () {
+    .tween('rewind-year', () => {
       const interp = d3.interpolateNumber(startYear, endYear);
-
-      return function (t) {
-        const y = Math.round(interp(t));
-        renderYearIfNew(y);
-      };
+      return t => renderYearIfNew(Math.round(interp(t)));
     })
-    .on('end', () => {
-      zoomToDrought(first);
-    });
+    .on('end', () => zoomToDrought(first));
 }
 
 function zoomToDrought(d) {
-  const svg = d3.select('#world-svg');
-
-  const normLon = d.lon > 180 ? d.lon - 360 : d.lon;
-
-  projection
-    .scale(baseScale)
-    .translate(baseTranslate);
-
-  const [x, y] = projection([normLon, d.lat]);
-
+  const svg      = d3.select('#world-svg');
+  const normLon  = d.lon > 180 ? d.lon - 360 : d.lon;
   const W = window.innerWidth;
   const H = window.innerHeight;
-  const zoomFactor = 3.2;
+
+  projection.scale(baseScale).translate(baseTranslate);
+  const [x, y] = projection([normLon, d.lat]);
+  const zf = 3.2;
 
   projection
-    .scale(baseScale * zoomFactor)
+    .scale(baseScale * zf)
     .translate([
-      W / 2 - (x - baseTranslate[0]) * zoomFactor,
-      H / 2 - (y - baseTranslate[1]) * zoomFactor
+      W / 2 - (x - baseTranslate[0]) * zf,
+      H / 2 - (y - baseTranslate[1]) * zf
     ]);
 
   svg.selectAll('path')
-    .transition()
-    .duration(1800)
-    .ease(d3.easeCubicInOut)
+    .transition().duration(1800).ease(d3.easeCubicInOut)
     .attr('d', path);
 
   setTimeout(() => {
@@ -198,23 +190,15 @@ function zoomToDrought(d) {
 
     dotLayer.append('circle')
       .attr('class', 'first-severe-drought-highlight')
-      .attr('cx', newX)
-      .attr('cy', newY)
-      .attr('r', 0)
-      .attr('fill', 'none')
-      .attr('stroke', '#ffffff')
-      .attr('stroke-width', 2)
-      .style('opacity', 1)
-      .transition()
-      .duration(1200)
-      .attr('r', 16);
+      .attr('cx', newX).attr('cy', newY).attr('r', 0)
+      .attr('fill', 'none').attr('stroke', '#ffffff')
+      .attr('stroke-width', 2).style('opacity', 1)
+      .transition().duration(1200).attr('r', 16);
 
     dotLayer.append('text')
       .attr('class', 'first-severe-drought-label')
-      .attr('x', newX + 20)
-      .attr('y', newY - 14)
-      .attr('fill', '#ffffff')
-      .attr('font-size', '14px')
+      .attr('x', newX + 20).attr('y', newY - 14)
+      .attr('fill', '#ffffff').attr('font-size', '14px')
       .attr('font-weight', '600')
       .text(`Earliest severe drought: ${d.year}, SPI ${d.spi.toFixed(2)}`);
   }, 1850);
@@ -224,9 +208,7 @@ function zoomToDrought(d) {
    6. SCROLL DRIVER
 ═══════════════════════════════════════════ */
 const ANIM_START_FRAC  = 0.05;
-const ANIM_END_FRAC    = 0.95;
-const TEXT_HIDE_FRAC   = 0.90;
-const LEGEND_SHOW_FRAC = 0;
+const TEXT_HIDE_FRAC   = 0.68;
 
 const hooks = [
   { id: 'hook-eyebrow', scrollFrac: 0.00 },
@@ -249,40 +231,62 @@ function onScroll() {
 
   document.getElementById('progress-bar').style.width = (frac * 100) + '%';
 
+  /* ── Hook text visibility ── */
   hooks.forEach(h => {
     const el = document.getElementById(h.id);
-
     if (frac >= h.scrollFrac && frac < TEXT_HIDE_FRAC) {
-      el.classList.remove('hide');
-      el.classList.add('show');
+      el.classList.remove('hide'); el.classList.add('show');
     } else if (frac >= TEXT_HIDE_FRAC) {
-      el.classList.remove('show');
-      el.classList.add('hide');
+      el.classList.remove('show'); el.classList.add('hide');
     } else {
       el.classList.remove('show', 'hide');
     }
   });
 
-  document.getElementById('legend').classList.toggle('show', frac >= LEGEND_SHOW_FRAC);
+  document.getElementById('legend').classList.toggle('show', frac >= 0);
 
   if (frac > 0.02) {
     document.getElementById('scroll-hint').style.opacity = '0';
   }
 
-  const animFrac = Math.min(
-    Math.max((frac - ANIM_START_FRAC) / (ANIM_END_FRAC - ANIM_START_FRAC), 0),
-    1
-  );
-
-  const targetYear = Math.round(
-    YEARS_START + animFrac * (YEARS_END - YEARS_START)
-  );
-
-  if (!rewindHasPlayed) {
-    renderYearIfNew(targetYear);
+  /* ── Year display visibility ── */
+  const yearDisplay = document.getElementById('year-display');
+  if (frac >= EVENTS_START_FRAC && frac < REWIND_FRAC) {
+    yearDisplay.style.opacity = '0';
+  } else {
+    yearDisplay.style.opacity = '';
   }
 
-  if (frac >= 0.985) {
+  /* ── Zone routing ── */
+  if (frac < EVENTS_START_FRAC) {
+    // ── Timeline zone ──
+    if (inEventZone) {
+      inEventZone = false;
+      // Reset zoom when leaving events zone scrolling back
+      DroughtEvents.update(-1);
+    }
+
+    const animFrac = Math.min(
+      Math.max((frac - ANIM_START_FRAC) / (TIMELINE_END_FRAC - ANIM_START_FRAC), 0),
+      1
+    );
+    const targetYear = Math.round(YEARS_START + animFrac * (YEARS_END - YEARS_START));
+
+    if (!rewindHasPlayed) renderYearIfNew(targetYear);
+
+  } else if (frac >= EVENTS_START_FRAC && frac < REWIND_FRAC) {
+    // ── Events zone ──
+    inEventZone = true;
+
+    const eventsFrac = (frac - EVENTS_START_FRAC) / (REWIND_FRAC - EVENTS_START_FRAC);
+    DroughtEvents.update(eventsFrac);
+
+  } else if (frac >= REWIND_FRAC) {
+    // ── Rewind beat ──
+    if (inEventZone) {
+      inEventZone = false;
+      DroughtEvents.update(-1);
+    }
     playRewindToFirstSevereDrought();
   }
 }
@@ -294,19 +298,16 @@ function onResize() {
   const W = window.innerWidth;
   const H = window.innerHeight;
 
-  d3.select('#world-svg')
-    .attr('viewBox', `0 0 ${W} ${H}`);
+  d3.select('#world-svg').attr('viewBox', `0 0 ${W} ${H}`);
 
-  projection
-    .scale(W / 5.8)
-    .translate([W / 2, H / 2]);
-
-  baseScale = projection.scale();
+  projection.scale(W / 5.8).translate([W / 2, H / 2]);
+  baseScale     = projection.scale();
   baseTranslate = projection.translate();
 
   d3.select('#world-svg').selectAll('path').attr('d', path);
-
   renderYear(currentYear);
+
+  DroughtEvents.resize();
 }
 
 /* ═══════════════════════════════════════════
@@ -319,6 +320,17 @@ function onResize() {
   renderYear(YEARS_START);
   lastYear = YEARS_START;
 
+  /* Inject D3 context into events module */
+  DroughtEvents.init({
+    projection,
+    path,
+    dotLayer,
+    getBaseScale,
+    getBaseTranslate,
+  });
+
+  await DroughtEvents.load();
+
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', debounce(onResize, 200));
 
@@ -328,8 +340,5 @@ function onResize() {
 /* ── util ── */
 function debounce(fn, ms) {
   let t;
-  return (...args) => {
-    clearTimeout(t);
-    t = setTimeout(() => fn(...args), ms);
-  };
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
 }

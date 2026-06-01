@@ -18,45 +18,45 @@
       <svg id="world-svg"></svg>
 
       <!-- Text overlay -->
-    <div id="text-overlay">
-    <div class="hook-block" id="hook-eyebrow">
-        <div class="eyebrow">A data story · 1850 – 2014</div>
-    </div>
-    <div class="hook-block" id="hook-word1">
-        <h1 class="main-title">Droughts</h1>
-    </div>
-    <div class="hook-block" id="hook-word2">
-        <h1 class="main-title"><em>don't stay</em></h1>
-    </div>
-    <div class="hook-block" id="hook-word3">
-        <h1 class="main-title">in one place.</h1>
-    </div>
-    <div class="hook-block" id="hook-sub">
-        <p class="subtitle">
-        Over 164 years of global climate records, drought has swept, shifted, and
-        migrated across every continent — a restless crisis that refuses to be contained.
-        Each point of light is a place that ran dry.
-        </p>
-    </div>
-    <div class="hook-block" id="hook-byline">
-        <p class="byline">By [Parisa Emam, Jamera Fernando, Jessica Lu] <br /> Data: CMIP6 / SPI Index</p>
-    </div>
-    </div>
+      <div id="text-overlay">
+        <div class="hook-block" id="hook-eyebrow">
+          <div class="eyebrow">A data story · 1850 – 2014</div>
+        </div>
+        <div class="hook-block" id="hook-word1">
+          <h1 class="main-title">Droughts</h1>
+        </div>
+        <div class="hook-block" id="hook-word2">
+          <h1 class="main-title"><em>don't stay</em></h1>
+        </div>
+        <div class="hook-block" id="hook-word3">
+          <h1 class="main-title">in one place.</h1>
+        </div>
+        <div class="hook-block" id="hook-sub">
+          <p class="subtitle">
+            Over 164 years of global climate records, drought has swept, shifted, and
+            migrated across every continent — a restless crisis that refuses to be contained.
+            Each point of light is a place that ran dry.
+          </p>
+        </div>
+        <div class="hook-block" id="hook-byline">
+          <p class="byline">By [Parisa Emam, Jamera Fernando, Jessica Lu] <br /> Data: CMIP6 / SPI Index</p>
+        </div>
+      </div>
 
       <!-- Year display -->
       <div id="year-display">1850</div>
 
       <!-- Legend -->
-        <div id="legend">
+      <div id="legend">
         <div class="legend-label">Drought severity (avg. SPI)</div>
         <div class="legend-gradient">
-            <div class="gradient-bar"></div>
-            <div class="gradient-labels">
+          <div class="gradient-bar"></div>
+          <div class="gradient-labels">
             <span>Severe</span>
             <span>Mild</span>
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
 
       <!-- Scroll hint -->
       <div id="scroll-hint">
@@ -64,15 +64,57 @@
         <div class="scroll-arrow"></div>
       </div>
 
-    </div>
+      <!-- ── Historical Event Panel ── -->
+      <aside id="event-panel" class="ep--hidden" role="complementary" aria-label="Historical drought event">
 
-    <!-- Scroll spacer drives animation -->
+        <div class="ep-index-row">
+          <span id="ep-index" class="ep-index">01 / 05</span>
+          <button id="ep-close" class="ep-close" aria-label="Close panel">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <line x1="1" y1="1" x2="13" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="13" y1="1" x2="1" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="ep-meta">
+          <span id="ep-period" class="ep-period">1875 – 1878</span>
+          <span class="ep-dot">·</span>
+          <span id="ep-region" class="ep-region">Asia & Africa</span>
+        </div>
+
+        <h2 id="ep-title" class="ep-title">The Great Drought</h2>
+        <p  id="ep-tagline" class="ep-tagline">The deadliest drought in modern history</p>
+
+        <div class="ep-divider"></div>
+
+        <p id="ep-body" class="ep-body"></p>
+
+        <div class="ep-stat-block">
+          <span id="ep-stat" class="ep-stat">30–50M</span>
+          <span id="ep-stat-label" class="ep-stat-label">estimated fatalities</span>
+        </div>
+
+        <!-- Scroll nudge inside panel -->
+        <div class="ep-scroll-nudge">
+          <span>Continue scrolling for next event</span>
+          <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
+            <polyline points="2,2 10,8 18,2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+      </aside>
+
+    </div><!-- /map-scene -->
+
+    <!-- Scroll spacer drives animation — extra height for events zone -->
     <div id="scroll-space"></div>
 
-  </div>
+  </div><!-- /scrolly -->
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script src="drought-events.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
