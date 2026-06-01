@@ -5,7 +5,7 @@
 let eventsData       = [];
 let eventsReady      = false;
 let activeEventIndex = -1;
-let sweepHasPlayed   = false;  // event 0's intro sweep fires only once
+let sweepHasPlayed   = false;
 
 let panel, panelIndex, panelTitle, panelPeriod,
     panelRegion, panelTagline, panelBody,
@@ -73,6 +73,9 @@ function dismissAll() {
   if (activeEventIndex === -1) return;
   activeEventIndex = -1;
 
+  /* Reset sweep guard so it replays if user scrolls back into events zone */
+  sweepHasPlayed = false;
+
   if (panel) {
     panel.classList.remove('ep--visible', 'ep--exit');
     panel.classList.add('ep--hidden');
@@ -107,29 +110,34 @@ function showEvent(index) {
   panelStat.textContent      = ev.stat;
   panelStatLabel.textContent = ev.statLabel;
 
-  /* Show panel */
-  panel.classList.remove('ep--hidden', 'ep--exit');
-  void panel.offsetWidth;
-  panel.classList.add('ep--visible');
-
-  /* Event 0: play the year sweep first, then zoom.
-     All other events: zoom immediately.               */
+  /* Event 0: play the year sweep first, then zoom, then show panel.
+     All other events: show panel immediately, zoom right away. */
   if (index === 0 && !sweepHasPlayed) {
     sweepHasPlayed = true;
-    // Sweep from whatever year the timeline left off (2014) back to 1878
-    // then zoom into India/China once the sweep finishes
+    /* Hide panel while sweep plays */
+    panel.classList.remove('ep--visible', 'ep--exit');
+    panel.classList.add('ep--hidden');
     _renderYearSweep(2014, ev.sweepToYear || 1878, () => {
-      zoomToEvent(ev);
+      zoomToEvent(ev, () => {
+        /* Show panel only after zoom settles */
+        panel.classList.remove('ep--hidden', 'ep--exit');
+        void panel.offsetWidth;
+        panel.classList.add('ep--visible');
+      });
     });
   } else {
-    zoomToEvent(ev);
+    /* Re-trigger slide-in animation on every event change */
+    panel.classList.remove('ep--visible', 'ep--exit', 'ep--hidden');
+    void panel.offsetWidth;
+    panel.classList.add('ep--visible');
+    zoomToEvent(ev, null);
   }
 }
 
 /* ─────────────────────────────────────────────
    ZOOM TO EVENT
 ───────────────────────────────────────────── */
-function zoomToEvent(ev) {
+function zoomToEvent(ev, onComplete) {
   const svg = d3.select('#world-svg');
   const bs  = _getBaseScale();
   const bt  = _getBaseTranslate();
@@ -139,11 +147,11 @@ function zoomToEvent(ev) {
 
   const normLon = ev.lon > 180 ? ev.lon - 360 : ev.lon;
 
-  /* Reset to base, measure target */
+  /* Reset to base, measure target pixel coords */
   _projection.scale(bs).translate(bt);
   const [x, y] = _projection([normLon, ev.lat]);
 
-  /* Apply zoom */
+  /* Apply zoom transform */
   _projection
     .scale(bs * zf)
     .translate([
@@ -151,21 +159,21 @@ function zoomToEvent(ev) {
       H / 2 - zf * (y - bt[1]),
     ]);
 
-  /* Redraw dots synchronously at new projection — no race with onScroll */
+  /* Redraw dots immediately at new projection so they're never mismatched */
   _dotLayer.selectAll('.event-ring').remove();
-  _renderYear(null);
+  _renderYear(null);   /* null = reposition dots at currentYear, no label change */
 
-  /* Animate land paths */
+  /* Animate land + graticule paths to the new projection */
   svg.selectAll('path')
     .transition().duration(1300).ease(d3.easeCubicInOut)
     .attr('d', _path);
 
   /* Add highlight ring after paths settle */
-  const [nx, ny] = _projection([normLon, ev.lat]);
+  const [nx, ny]      = _projection([normLon, ev.lat]);
   const capturedIndex = activeEventIndex;
 
   setTimeout(() => {
-    if (activeEventIndex !== capturedIndex) return; // user scrolled away
+    if (activeEventIndex !== capturedIndex) return;
 
     _dotLayer.selectAll('.event-ring').remove();
 
@@ -181,9 +189,10 @@ function zoomToEvent(ev) {
       .attr('class', 'event-ring')
       .attr('cx', nx).attr('cy', ny).attr('r', 5)
       .attr('fill', '#ff6b35').style('opacity', 0)
-      .transition().duration(600).delay(250).style('opacity', 1);
+      .transition().duration(600).delay(250).style('opacity', 1)
+      .on('end', () => { if (onComplete) onComplete(); });
 
-  }, 900);
+  }, 1350); /* slightly after the 1300ms path transition */
 }
 
 /* ─────────────────────────────────────────────

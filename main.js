@@ -5,30 +5,25 @@
 const YEARS_START = 1850;
 const YEARS_END   = 2014;
 
-/* ── Scroll zones ──────────────────────────────
-   Total scroll space: 600vh
-
-   The original story (title + timeline) ran over 400vh.
-   Scale all its fracs by 400/600 so it feels identical.
-
-   0.000 – 0.633  → title hooks + year timeline (1850→2014)
-   0.667 – 1.000  → 5 historical event zoom panels
+/* ── Scroll zones (total: 600vh) ──────────────
+   0.000 – 0.38   → title hooks visible
+   0.38  – 0.45   → hooks fading out, blank buffer (clean map, no dots)
+   0.45  – 0.62   → timeline animation 1850 → 2014
+   0.62  – 0.667  → timeline done, brief pause
+   0.667 – 1.000  → 5 historical event panels
 ──────────────────────────────────────────────── */
-const SCALE             = 400 / 600;
-
-const ANIM_START_FRAC   = 0.05 * SCALE;   // ≈ 0.033
-const ANIM_END_FRAC     = 0.95 * SCALE;   // ≈ 0.633
-const TEXT_HIDE_FRAC    = 0.90 * SCALE;   // ≈ 0.600
-
-const EVENTS_START_FRAC = 0.667;          // events zone starts here, runs to 1.0
+const TEXT_HIDE_FRAC    = 0.38;
+const ANIM_START_FRAC   = 0.45;
+const ANIM_END_FRAC     = 0.62;
+const EVENTS_START_FRAC = 0.667;
 
 const hooks = [
-  { id: 'hook-eyebrow', scrollFrac: 0.00 * SCALE },
-  { id: 'hook-word1',   scrollFrac: 0.00 * SCALE },
-  { id: 'hook-word2',   scrollFrac: 0.20 * SCALE },
-  { id: 'hook-word3',   scrollFrac: 0.30 * SCALE },
-  { id: 'hook-sub',     scrollFrac: 0.40 * SCALE },
-  { id: 'hook-byline',  scrollFrac: 0.60 * SCALE },
+  { id: 'hook-eyebrow', scrollFrac: 0.00 },
+  { id: 'hook-word1',   scrollFrac: 0.00 },
+  { id: 'hook-word2',   scrollFrac: 0.06 },
+  { id: 'hook-word3',   scrollFrac: 0.12 },
+  { id: 'hook-sub',     scrollFrac: 0.20 },
+  { id: 'hook-byline',  scrollFrac: 0.28 },
 ];
 
 /* ── State ── */
@@ -89,8 +84,13 @@ function getBaseTranslate() { return baseTranslate.slice(); }
 function resetProjectionToBase(animate = true) {
   projection.scale(baseScale).translate(baseTranslate);
   const sel = d3.select('#world-svg').selectAll('path');
-  if (animate) sel.transition().duration(900).ease(d3.easeCubicInOut).attr('d', path);
-  else         sel.attr('d', path);
+  if (animate) {
+    sel.transition().duration(900).ease(d3.easeCubicInOut).attr('d', path)
+      .on('end', () => renderYear(currentYear));
+  } else {
+    sel.attr('d', path);
+    renderYear(currentYear);
+  }
 }
 
 /* ═══════════════════════════════════════════
@@ -104,7 +104,7 @@ function loadData() {
 
 /* ═══════════════════════════════════════════
    3. RENDER YEAR
-   null → reposition dots only, no label change
+   year=null → reposition existing dots at current projection, no label change
 ═══════════════════════════════════════════ */
 function renderYear(year) {
   const useYear  = (year !== null && year !== undefined) ? year : currentYear;
@@ -137,7 +137,42 @@ function renderYearIfNew(year) {
 }
 
 /* ═══════════════════════════════════════════
-   4. SCROLL DRIVER
+   4. YEAR SWEEP
+   Animates year counter + dots from `from` → `to`, then calls done().
+   Used by event 0's intro sweep.
+═══════════════════════════════════════════ */
+function renderYearSweep(from, to, done) {
+  inEventsBlockDotRender = false;
+
+  /* Interrupt any prior sweep transition */
+  d3.select('#world-svg').interrupt('year-sweep');
+
+  d3.select('#world-svg')
+    .transition('year-sweep')
+    .duration(2800)
+    .ease(d3.easeCubicInOut)
+    .tween('sweep', () => {
+      const interp = d3.interpolateNumber(from, to);
+      return t => {
+        const y = Math.round(interp(t));
+        if (y !== lastYear) {
+          renderYear(y);
+          lastYear = y;
+        }
+      };
+    })
+    .on('end', () => {
+      inEventsBlockDotRender = true;
+      if (done) done();
+    })
+    .on('interrupt', () => {
+      /* If scrolled away mid-sweep, restore block flag */
+      inEventsBlockDotRender = true;
+    });
+}
+
+/* ═══════════════════════════════════════════
+   5. SCROLL DRIVER
 ═══════════════════════════════════════════ */
 function getScrollFrac() {
   const scrollTop = window.scrollY;
@@ -163,12 +198,16 @@ function onScroll() {
     }
   });
 
-  document.getElementById('legend').classList.toggle('show', frac > 0.02);
+  /* Legend: show only during/after timeline animation, not during events 1-4 */
+  const inLaterEvents = frac >= EVENTS_START_FRAC && DroughtEvents.activeIndex() > 0;
+  document.getElementById('legend').classList.toggle('show', frac >= ANIM_START_FRAC && !inLaterEvents);
+
   if (frac > 0.02) document.getElementById('scroll-hint').style.opacity = '0';
 
-  /* ── Year counter: hide only during events 1-4 (not event 0 — it has the sweep) ── */
+  /* Year counter: show only during animation and event 0's sweep; hide otherwise */
   const yearDisplay = document.getElementById('year-display');
-  yearDisplay.style.opacity = (frac >= EVENTS_START_FRAC && DroughtEvents.activeIndex() > 0) ? '0' : '';
+  const showYear = frac >= ANIM_START_FRAC && !inLaterEvents;
+  yearDisplay.style.opacity = showYear ? '' : '0';
 
   /* ══════════════════════════════════════
      ZONE ROUTING
@@ -179,28 +218,39 @@ function onScroll() {
     if (inEventZone) {
       inEventZone            = false;
       inEventsBlockDotRender = false;
+      d3.select('#world-svg').interrupt('year-sweep');
       DroughtEvents.dismissAll();
       resetProjectionToBase(true);
     }
 
-    const animFrac = Math.min(
-      Math.max((frac - ANIM_START_FRAC) / (ANIM_END_FRAC - ANIM_START_FRAC), 0), 1
-    );
-    const targetYear = Math.round(YEARS_START + animFrac * (YEARS_END - YEARS_START));
-    renderYearIfNew(targetYear);
+    if (frac < ANIM_START_FRAC) {
+      /* Title card zone: show 1850 dots but no year label yet */
+      if (lastYear !== YEARS_START) {
+        renderYear(YEARS_START);
+        lastYear = YEARS_START;
+      }
+    } else {
+      /* Timeline animation zone: scrub year with scroll */
+      const animFrac   = Math.min(
+        Math.max((frac - ANIM_START_FRAC) / (ANIM_END_FRAC - ANIM_START_FRAC), 0), 1
+      );
+      const targetYear = Math.round(YEARS_START + animFrac * (YEARS_END - YEARS_START));
+      renderYearIfNew(targetYear);
+    }
 
   } else {
     /* ── Zone B: historical events (0.667 → 1.0) ── */
-    inEventZone            = true;
-    inEventsBlockDotRender = true;
-
+    if (!inEventZone) {
+      inEventZone            = true;
+      inEventsBlockDotRender = true;
+    }
     const eventsFrac = (frac - EVENTS_START_FRAC) / (1.0 - EVENTS_START_FRAC);
     DroughtEvents.update(eventsFrac);
   }
 }
 
 /* ═══════════════════════════════════════════
-   5. RESIZE
+   6. RESIZE
 ═══════════════════════════════════════════ */
 function onResize() {
   const W = window.innerWidth;
@@ -217,14 +267,16 @@ function onResize() {
 }
 
 /* ═══════════════════════════════════════════
-   6. BOOT
+   7. BOOT
 ═══════════════════════════════════════════ */
 (async function boot() {
   initMap();
   await loadData();
 
+  /* Render 1850 immediately so dots are visible on the title page */
   renderYear(YEARS_START);
   lastYear = YEARS_START;
+  document.getElementById('year-display').textContent = '';
 
   DroughtEvents.init({
     projection,
@@ -233,7 +285,7 @@ function onResize() {
     getBaseScale,
     getBaseTranslate,
     renderYear,
-    renderYearSweep,   // for event 0's intro sweep
+    renderYearSweep,
   });
 
   await DroughtEvents.load();
@@ -243,30 +295,7 @@ function onResize() {
   onScroll();
 })();
 
-/* ── renderYearSweep: animates the year counter from `from` to `to`
-   then calls `done()`. Used by event 0's intro. ── */
-function renderYearSweep(from, to, done) {
-  inEventsBlockDotRender = false; // sweep needs to render dots
-  d3.select('#world-svg') // dummy selection to hang transition on
-    .transition('year-sweep')
-    .duration(2800)
-    .ease(d3.easeCubicInOut)
-    .tween('sweep', () => {
-      const interp = d3.interpolateNumber(from, to);
-      return t => {
-        const y = Math.round(interp(t));
-        if (y !== lastYear) {
-          renderYear(y);
-          lastYear = y;
-        }
-      };
-    })
-    .on('end', () => {
-      inEventsBlockDotRender = true; // hand control back to events zone
-      if (done) done();
-    });
-}
-
+/* ── util ── */
 function debounce(fn, ms) {
   let t;
   return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
