@@ -1,11 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Wandering Drought</title>
+  <link rel="stylesheet" href="global.css" />
 </head>
 <body>
-    
+
+  <div id="progress-bar"></div>
+
+  <div id="scrolly">
+
+    <!-- Sticky visual scene -->
+    <div id="map-scene">
+      <svg id="world-svg"></svg>
+
+      <!-- Text overlay -->
+    <div id="text-overlay">
+    <div class="hook-block" id="hook-eyebrow">
+        <div class="eyebrow">A data story · 1850 – 2014</div>
+    </div>
+    <div class="hook-block" id="hook-word1">
+        <h1 class="main-title">Droughts</h1>
+    </div>
+    <div class="hook-block" id="hook-word2">
+        <h1 class="main-title"><em>don't stay</em></h1>
+    </div>
+    <div class="hook-block" id="hook-word3">
+        <h1 class="main-title">in one place.</h1>
+    </div>
+    <div class="hook-block" id="hook-sub">
+        <p class="subtitle">
+        Over 164 years of global climate records, drought has swept, shifted, and
+        migrated across every continent — a restless crisis that refuses to be contained.
+        Each point of light is a place that ran dry.
+        </p>
+    </div>
+    <div class="hook-block" id="hook-byline">
+        <p class="byline">By [Parisa Emam, Jamera Fernando, Jessica Lu] <br /> Data: CMIP6 / SPI Index</p>
+    </div>
+    </div>
+
+      <!-- Year display -->
+      <div id="year-display">1850</div>
+
+      <!-- Legend -->
+        <div id="legend">
+        <div class="legend-label">Drought severity (avg. SPI)</div>
+        <div class="legend-gradient">
+            <div class="gradient-bar"></div>
+            <div class="gradient-labels">
+            <span>Severe</span>
+            <span>Mild</span>
+            </div>
+        </div>
+        </div>
+
+      <!-- Scroll hint -->
+      <div id="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-arrow"></div>
+      </div>
+
+    </div>
+
+    <!-- Scroll spacer drives animation -->
+    <div id="scroll-space"></div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
