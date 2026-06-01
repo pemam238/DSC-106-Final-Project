@@ -2,8 +2,8 @@
    DROUGHT EVENTS  ·  drought-events.js
 ───────────────────────────────────────────── */
 
-let eventsData       = [];
-let eventsReady      = false;
+let eventsData  = [];
+let eventsReady = false;
 let activeEventIndex = -1;
 
 let panel, panelIndex, panelTitle, panelPeriod,
@@ -52,8 +52,7 @@ async function loadEvents() {
 
 /* ─────────────────────────────────────────────
    PUBLIC: firstSweepYear
-   Returns the sweepToYear of event 0 (used by main.js rewind).
-   Falls back to 1878 if not set.
+   The year the rewind sweeps back to (from event 0's data).
 ───────────────────────────────────────────── */
 function firstSweepYear() {
   if (!eventsReady || eventsData.length === 0) return 1878;
@@ -61,7 +60,34 @@ function firstSweepYear() {
 }
 
 /* ─────────────────────────────────────────────
-   PUBLIC: scroll update  (frac 0–1 within events zone)
+   PUBLIC: zoomAndShowFirst
+   Called by main.js after the rewind sweep finishes.
+   Zooms to event 0's location, shows the panel, then calls onComplete.
+───────────────────────────────────────────── */
+function zoomAndShowFirst(onComplete) {
+  if (!eventsReady || eventsData.length === 0) { if (onComplete) onComplete(); return; }
+
+  const ev = eventsData[0];
+  activeEventIndex = 0;
+
+  /* Fill panel content */
+  fillPanel(ev);
+
+  /* Keep panel hidden until zoom settles */
+  panel.classList.remove('ep--visible', 'ep--exit');
+  panel.classList.add('ep--hidden');
+
+  zoomToEvent(ev, () => {
+    /* Slide panel in */
+    panel.classList.remove('ep--hidden', 'ep--exit');
+    void panel.offsetWidth;
+    panel.classList.add('ep--visible');
+    if (onComplete) onComplete();
+  });
+}
+
+/* ─────────────────────────────────────────────
+   PUBLIC: scroll update  (frac 0–1 within Zone B)
 ───────────────────────────────────────────── */
 function updateEventsByScroll(frac) {
   if (!eventsReady || eventsData.length === 0) return;
@@ -92,21 +118,12 @@ function dismissAll() {
 /* ─────────────────────────────────────────────
    PUBLIC: activeIndex
 ───────────────────────────────────────────── */
-function getActiveIndex() {
-  return activeEventIndex;
-}
+function getActiveIndex() { return activeEventIndex; }
 
 /* ─────────────────────────────────────────────
-   SHOW EVENT
+   FILL PANEL CONTENT
 ───────────────────────────────────────────── */
-function showEvent(index) {
-  if (!eventsReady) return;
-  const ev = eventsData[index];
-  if (!ev) return;
-
-  activeEventIndex = index;
-
-  /* Fill panel content */
+function fillPanel(ev) {
   panelIndex.textContent     = `${String(ev.index).padStart(2,'0')} / ${String(eventsData.length).padStart(2,'0')}`;
   panelTitle.textContent     = ev.title;
   panelPeriod.textContent    = ev.period;
@@ -115,16 +132,26 @@ function showEvent(index) {
   panelBody.textContent      = ev.body;
   panelStat.textContent      = ev.stat;
   panelStatLabel.textContent = ev.statLabel;
+}
 
-  /* All events: zoom immediately, panel slides in after zoom settles */
-  /* Hide panel first so it never flashes in before the zoom */
+/* ─────────────────────────────────────────────
+   SHOW EVENT (scroll-driven, events 0-N)
+───────────────────────────────────────────── */
+function showEvent(index) {
+  if (!eventsReady) return;
+  const ev = eventsData[index];
+  if (!ev) return;
+
+  activeEventIndex = index;
+  fillPanel(ev);
+
+  /* Hide panel → zoom → show panel */
   panel.classList.remove('ep--visible', 'ep--exit');
   panel.classList.add('ep--hidden');
 
   zoomToEvent(ev, () => {
-    /* Show panel only after zoom + ring animation finish */
     panel.classList.remove('ep--hidden', 'ep--exit');
-    void panel.offsetWidth; /* force reflow to restart epSlideIn */
+    void panel.offsetWidth;
     panel.classList.add('ep--visible');
   });
 }
@@ -142,11 +169,9 @@ function zoomToEvent(ev, onComplete) {
 
   const normLon = ev.lon > 180 ? ev.lon - 360 : ev.lon;
 
-  /* Reset projection to base then measure target coords */
   _projection.scale(bs).translate(bt);
   const [x, y] = _projection([normLon, ev.lat]);
 
-  /* Apply zoom */
   _projection
     .scale(bs * zf)
     .translate([
@@ -154,16 +179,13 @@ function zoomToEvent(ev, onComplete) {
       H / 2 - zf * (y - bt[1]),
     ]);
 
-  /* Redraw dots at new projection immediately (no flicker) */
   _dotLayer.selectAll('.event-ring').remove();
   _renderYear(null);
 
-  /* Animate map paths to new projection */
   svg.selectAll('path')
     .transition().duration(1300).ease(d3.easeCubicInOut)
     .attr('d', _path);
 
-  /* Add highlight ring after paths settle, then fire onComplete */
   const [nx, ny]      = _projection([normLon, ev.lat]);
   const capturedIndex = activeEventIndex;
 
@@ -203,11 +225,12 @@ function onEventsResize() {
    EXPORTS
 ───────────────────────────────────────────── */
 window.DroughtEvents = {
-  init:           initEvents,
-  load:           loadEvents,
-  update:         updateEventsByScroll,
-  dismissAll:     dismissAll,
-  activeIndex:    getActiveIndex,
-  resize:         onEventsResize,
-  firstSweepYear: firstSweepYear,
+  init:            initEvents,
+  load:            loadEvents,
+  update:          updateEventsByScroll,
+  dismissAll:      dismissAll,
+  activeIndex:     getActiveIndex,
+  resize:          onEventsResize,
+  firstSweepYear:  firstSweepYear,
+  zoomAndShowFirst: zoomAndShowFirst,
 };
