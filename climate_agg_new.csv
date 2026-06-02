@@ -1,0 +1,2971 @@
+year,climate_zone,continent,mean_temp_C,mean_pr_mm_day,mean_spi
+1850,Polar,Antarctica,-34.3971,0.5159,-0.118
+1850,Polar,Asia/Europe,-18.3168,0.4115,-0.454
+1850,Polar,Europe,-10.6344,1.101,-0.3749
+1850,Polar,North America,-18.9413,0.4557,-0.4037
+1850,Polar,South America,-8.693,1.4731,0.5117
+1850,Temperate,Africa,14.3591,1.8645,0.1589
+1850,Temperate,Antarctica,-2.388,2.316,0.0574
+1850,Temperate,Asia,8.4815,2.1023,-0.1471
+1850,Temperate,Asia/Europe,-9.9228,0.8117,0.1015
+1850,Temperate,Europe,7.7359,3.4381,-0.384
+1850,Temperate,North America,6.7595,3.1711,0.1146
+1850,Temperate,Oceania,14.2079,2.2693,-0.1148
+1850,Temperate,South America,9.4293,2.445,-0.0442
+1850,Tropical,Africa,25.8718,2.79,0.0004
+1850,Tropical,Asia,26.5693,5.325,-0.0379
+1850,Tropical,North America,25.4494,2.731,-0.1262
+1850,Tropical,Oceania,26.1137,5.5218,0.0012
+1850,Tropical,South America,24.9348,4.9181,0.0496
+1851,Polar,Antarctica,-33.8193,0.6664,-0.2364
+1851,Polar,Asia/Europe,-16.7979,0.7812,-0.2777
+1851,Polar,Europe,-10.7133,1.3426,-0.3345
+1851,Polar,North America,-19.3688,0.6171,-0.6253
+1851,Polar,South America,-8.974,1.5876,0.0611
+1851,Temperate,Africa,14.2977,2.2263,-0.1012
+1851,Temperate,Antarctica,-2.2467,2.6168,-0.0479
+1851,Temperate,Asia,8.4008,2.4183,-0.1354
+1851,Temperate,Asia/Europe,-8.7721,1.3969,-0.1736
+1851,Temperate,Europe,8.4194,2.6113,-0.2219
+1851,Temperate,North America,6.5211,2.5855,0.151
+1851,Temperate,Oceania,14.2425,2.6536,-0.1523
+1851,Temperate,South America,9.3157,2.6537,0.0334
+1851,Tropical,Africa,25.7396,2.6541,-0.0734
+1851,Tropical,Asia,26.7358,4.2145,-0.1802
+1851,Tropical,North America,25.4284,3.2451,-0.1048
+1851,Tropical,Oceania,26.1575,5.7457,0.098
+1851,Tropical,South America,24.8216,3.6498,0.2101
+1852,Polar,Antarctica,-34.246,0.701,0.4348
+1852,Polar,Asia/Europe,-17.685,0.8302,0.1482
+1852,Polar,Europe,-9.8912,1.5209,-0.2496
+1852,Polar,North America,-19.0646,0.6371,-0.3686
+1852,Polar,South America,-8.7803,1.6901,-0.6984
+1852,Temperate,Africa,14.3373,2.3329,0.1176
+1852,Temperate,Antarctica,-1.9884,2.6446,-0.3432
+1852,Temperate,Asia,9.1068,2.4477,-0.1733
+1852,Temperate,Asia/Europe,-9.0696,1.3378,0.1243
+1852,Temperate,Europe,8.6633,2.6238,0.0727
+1852,Temperate,North America,6.5615,2.5866,0.119
+1852,Temperate,Oceania,14.2758,2.4724,-0.2958
+1852,Temperate,South America,9.3355,2.6437,0.0525
+1852,Tropical,Africa,26.0301,2.6251,0.1458
+1852,Tropical,Asia,26.754,4.0913,-0.5891
+1852,Tropical,North America,26.0568,3.628,0.0421
+1852,Tropical,Oceania,26.3163,5.8674,0.0519
+1852,Tropical,South America,25.3701,3.5375,-0.2038
+1853,Polar,Antarctica,-33.5652,0.7081,0.5836
+1853,Polar,Asia/Europe,-17.1284,0.8043,0.1312
+1853,Polar,Europe,-11.0773,1.3498,0.4972
+1853,Polar,North America,-18.8952,0.6334,-0.5278
+1853,Polar,South America,-9.5185,1.5997,-0.5623
+1853,Temperate,Africa,14.443,2.251,0.1903
+1853,Temperate,Antarctica,-1.9369,2.658,-0.062
+1853,Temperate,Asia,9.0399,2.3215,-0.1464
+1853,Temperate,Asia/Europe,-8.7078,1.4512,-0.2109
+1853,Temperate,Europe,8.3618,2.6887,0.0781
+1853,Temperate,North America,6.6649,2.6184,0.0438
+1853,Temperate,Oceania,14.1516,2.5646,-0.4016
+1853,Temperate,South America,9.3402,2.6647,0.0492
+1853,Tropical,Africa,26.0995,2.6834,0.0971
+1853,Tropical,Asia,26.7824,4.4438,-0.3848
+1853,Tropical,North America,25.6593,3.1338,-0.0509
+1853,Tropical,Oceania,26.2993,5.7617,-0.0278
+1853,Tropical,South America,25.2542,3.6542,-0.0691
+1854,Polar,Antarctica,-34.6603,0.6314,0.038
+1854,Polar,Asia/Europe,-19.6219,0.814,0.2695
+1854,Polar,Europe,-12.9077,1.2074,-1.2355
+1854,Polar,North America,-19.6883,0.6397,0.135
+1854,Polar,South America,-8.6299,1.7302,-0.4301
+1854,Temperate,Africa,14.2172,2.2172,-0.004
+1854,Temperate,Antarctica,-2.2429,2.6617,-0.2508
+1854,Temperate,Asia,8.8679,2.3554,-0.2893
+1854,Temperate,Asia/Europe,-10.1994,1.4949,0.5805
+1854,Temperate,Europe,7.527,2.5818,-0.0033
+1854,Temperate,North America,6.3197,2.452,-0.06
+1854,Temperate,Oceania,14.1185,2.6663,-0.1253
+1854,Temperate,South America,9.4713,2.5497,-0.1021
+1854,Tropical,Africa,25.7531,2.827,0.1291
+1854,Tropical,Asia,26.6222,5.0493,0.1363
+1854,Tropical,North America,25.0138,3.1031,-0.2659
+1854,Tropical,Oceania,25.9116,5.2963,0.0917
+1854,Tropical,South America,24.4919,3.798,0.2024
+1855,Polar,Antarctica,-33.8517,0.6362,-0.3432
+1855,Polar,Asia/Europe,-17.6847,0.8663,0.6519
+1855,Polar,Europe,-12.2323,1.545,0.289
+1855,Polar,North America,-20.1678,0.6748,0.3426
+1855,Polar,South America,-8.3691,1.7347,0.0098
+1855,Temperate,Africa,14.1875,2.2587,-0.1419
+1855,Temperate,Antarctica,-2.2597,2.5634,-0.2956
+1855,Temperate,Asia,8.9242,2.2942,-0.5132
+1855,Temperate,Asia/Europe,-8.348,1.3637,0.161
+1855,Temperate,Europe,8.6783,2.6555,0.0449
+1855,Temperate,North America,6.6078,2.5402,-0.1966
+1855,Temperate,Oceania,14.2891,2.7323,0.0775
+1855,Temperate,South America,9.4609,2.6198,-0.0187
+1855,Tropical,Africa,25.593,2.5067,0.1327
+1855,Tropical,Asia,26.1798,4.4768,0.376
+1855,Tropical,North America,25.2448,3.0018,-0.2424
+1855,Tropical,Oceania,25.868,5.6208,0.1682
+1855,Tropical,South America,24.5259,3.7763,0.2629
+1856,Polar,Antarctica,-33.6748,0.6498,0.2432
+1856,Polar,Asia/Europe,-17.5835,0.8148,0.1924
+1856,Polar,Europe,-8.9875,1.6085,0.8539
+1856,Polar,North America,-18.8721,0.6625,0.1169
+1856,Polar,South America,-10.3303,1.5981,-0.0352
+1856,Temperate,Africa,14.4317,2.3304,0.044
+1856,Temperate,Antarctica,-2.1738,2.6534,-0.427
+1856,Temperate,Asia,8.8524,2.4003,-0.1891
+1856,Temperate,Asia/Europe,-9.9265,1.4089,-0.0527
+1856,Temperate,Europe,8.846,2.6524,0.1699
+1856,Temperate,North America,6.9262,2.5772,-0.0742
+1856,Temperate,Oceania,14.2839,2.5784,-0.1574
+1856,Temperate,South America,9.26,2.7436,0.2266
+1856,Tropical,Africa,25.9269,2.5241,-0.1299
+1856,Tropical,Asia,26.6358,4.2653,-0.2271
+1856,Tropical,North America,26.0353,3.6185,-0.1772
+1856,Tropical,Oceania,26.261,5.9042,0.0034
+1856,Tropical,South America,25.3463,3.4093,-0.0083
+1857,Polar,Antarctica,-34.1686,0.6517,-0.2066
+1857,Polar,Asia/Europe,-17.831,0.7957,0.105
+1857,Polar,Europe,-10.8665,1.325,-0.0307
+1857,Polar,North America,-18.5011,0.6603,0.1036
+1857,Polar,South America,-8.6384,1.7251,-0.7009
+1857,Temperate,Africa,14.399,2.2464,0.2418
+1857,Temperate,Antarctica,-2.4783,2.7313,-0.028
+1857,Temperate,Asia,9.4078,2.5282,0.2467
+1857,Temperate,Asia/Europe,-8.9018,1.4013,0.2523
+1857,Temperate,Europe,8.4867,2.6944,0.1991
+1857,Temperate,North America,6.6631,2.5787,0.0827
+1857,Temperate,Oceania,14.0958,2.5795,0.0311
+1857,Temperate,South America,9.4386,2.6666,0.1381
+1857,Tropical,Africa,26.2053,2.5131,0.0737
+1857,Tropical,Asia,26.9281,4.7096,-0.101
+1857,Tropical,North America,26.1692,4.1972,0.2476
+1857,Tropical,Oceania,26.3276,5.3793,-0.2043
+1857,Tropical,South America,25.8097,3.5617,-0.4102
+1858,Polar,Antarctica,-33.8333,0.6565,-0.0836
+1858,Polar,Asia/Europe,-16.5285,0.8107,0.1725
+1858,Polar,Europe,-9.5351,1.6021,0.5485
+1858,Polar,North America,-17.8205,0.6835,0.2836
+1858,Polar,South America,-8.4242,1.7912,0.661
+1858,Temperate,Africa,14.2908,2.3403,0.0655
+1858,Temperate,Antarctica,-2.5884,2.5798,-0.0623
+1858,Temperate,Asia,8.7814,2.4005,-0.0311
+1858,Temperate,Asia/Europe,-8.3423,1.3674,0.0326
+1858,Temperate,Europe,8.5656,2.5674,0.1323
+1858,Temperate,North America,6.7894,2.5352,0.0333
+1858,Temperate,Oceania,14.1861,2.5901,-0.1162
+1858,Temperate,South America,9.4471,2.6296,-0.0639
+1858,Tropical,Africa,26.084,2.6438,-0.2373
+1858,Tropical,Asia,26.7219,4.3682,-0.0062
+1858,Tropical,North America,25.5575,3.3231,0.2916
+1858,Tropical,Oceania,26.3628,5.7663,-0.0053
+1858,Tropical,South America,25.2997,3.525,-0.2946
+1859,Polar,Antarctica,-34.7479,0.6056,-0.1094
+1859,Polar,Asia/Europe,-17.3332,0.7522,-0.3504
+1859,Polar,Europe,-8.5613,1.4431,0.7044
+1859,Polar,North America,-18.6699,0.7016,0.6827
+1859,Polar,South America,-10.0378,1.7247,0.2353
+1859,Temperate,Africa,14.2722,2.175,-0.0235
+1859,Temperate,Antarctica,-2.6727,2.7335,-0.2435
+1859,Temperate,Asia,8.6995,2.4711,0.0393
+1859,Temperate,Asia/Europe,-9.7035,1.3041,-0.825
+1859,Temperate,Europe,8.7253,2.6301,-0.2768
+1859,Temperate,North America,6.7485,2.4546,-0.1622
+1859,Temperate,Oceania,14.1629,2.7162,-0.0443
+1859,Temperate,South America,9.4123,2.568,0.0987
+1859,Tropical,Africa,25.7854,2.5716,-0.1005
+1859,Tropical,Asia,26.6775,5.0215,-0.0382
+1859,Tropical,North America,24.9002,3.1843,-0.0797
+1859,Tropical,Oceania,25.885,5.3663,0.1594
+1859,Tropical,South America,24.5132,3.8587,0.1412
+1860,Polar,Antarctica,-35.2147,0.6051,-0.7892
+1860,Polar,Asia/Europe,-17.6841,0.8026,0.1721
+1860,Polar,Europe,-10.5143,1.3983,0.0204
+1860,Polar,North America,-19.39,0.6648,0.267
+1860,Polar,South America,-9.1897,1.7081,0.1465
+1860,Temperate,Africa,14.5287,2.1521,-0.3929
+1860,Temperate,Antarctica,-2.4676,2.697,0.3367
+1860,Temperate,Asia,8.9749,2.3897,-0.1172
+1860,Temperate,Asia/Europe,-9.4755,1.4732,0.2707
+1860,Temperate,Europe,8.5068,2.5949,0.126
+1860,Temperate,North America,6.575,2.5203,-0.2592
+1860,Temperate,Oceania,14.1238,2.833,0.2593
+1860,Temperate,South America,9.287,2.5755,0.1505
+1860,Tropical,Africa,25.2027,2.5085,-0.1723
+1860,Tropical,Asia,26.1955,5.2967,0.6954
+1860,Tropical,North America,24.6538,3.0326,-0.149
+1860,Tropical,Oceania,25.481,5.0464,0.0344
+1860,Tropical,South America,23.9202,3.8771,0.4385
+1861,Polar,Antarctica,-34.6832,0.6578,-0.6366
+1861,Polar,Asia/Europe,-16.7396,0.8924,0.7684
+1861,Polar,Europe,-9.9479,1.4444,0.1574
+1861,Polar,North America,-19.7415,0.6206,-0.1853
+1861,Polar,South America,-10.0984,1.6115,-0.4245
+1861,Temperate,Africa,14.5559,2.2038,-0.1942
+1861,Temperate,Antarctica,-1.9727,2.6624,0.0963
+1861,Temperate,Asia,9.2166,2.3028,-0.2868
+1861,Temperate,Asia/Europe,-8.5797,1.4133,0.4134
+1861,Temperate,Europe,8.3972,2.6908,0.1151
+1861,Temperate,North America,6.3683,2.5781,-0.0496
+1861,Temperate,Oceania,14.2166,2.6885,0.0819
+1861,Temperate,South America,8.868,2.5856,-0.1153
+1861,Tropical,Africa,25.5856,2.5788,-0.093
+1861,Tropical,Asia,26.3395,4.3411,0.294
+1861,Tropical,North America,25.5467,3.2411,-0.0761
+1861,Tropical,Oceania,25.9932,5.7321,0.0596
+1861,Tropical,South America,24.6451,3.6242,0.1019
+1862,Polar,Antarctica,-34.6418,0.6143,-0.4983
+1862,Polar,Asia/Europe,-17.3201,0.8019,0.4289
+1862,Polar,Europe,-10.3488,1.4242,-0.4728
+1862,Polar,North America,-17.0727,0.6578,-0.2381
+1862,Polar,South America,-10.4064,1.5036,-1.0851
+1862,Temperate,Africa,14.3571,2.3521,0.1435
+1862,Temperate,Antarctica,-2.0192,2.6289,-0.2658
+1862,Temperate,Asia,8.792,2.4551,-0.0744
+1862,Temperate,Asia/Europe,-8.692,1.2855,-0.4377
+1862,Temperate,Europe,8.2699,2.7653,0.351
+1862,Temperate,North America,6.9559,2.6406,0.1487
+1862,Temperate,Oceania,14.0945,2.5352,-0.0595
+1862,Temperate,South America,8.9092,2.6483,-0.1924
+1862,Tropical,Africa,26.1551,2.5414,-0.0658
+1862,Tropical,Asia,26.8875,3.9385,-0.5388
+1862,Tropical,North America,26.1983,4.091,-0.0044
+1862,Tropical,Oceania,26.3151,5.7928,-0.0276
+1862,Tropical,South America,25.925,3.4265,-0.4135
+1863,Polar,Antarctica,-34.3109,0.6629,-0.3455
+1863,Polar,Asia/Europe,-17.6348,0.809,0.1834
+1863,Polar,Europe,-10.0441,1.5042,0.614
+1863,Polar,North America,-19.1804,0.6595,0.3781
+1863,Polar,South America,-8.715,1.8269,-0.2862
+1863,Temperate,Africa,14.2736,2.1975,0.0584
+1863,Temperate,Antarctica,-2.3406,2.6456,-0.1844
+1863,Temperate,Asia,9.0264,2.4745,0.0086
+1863,Temperate,Asia/Europe,-8.3386,1.2844,-0.5169
+1863,Temperate,Europe,8.5326,2.6343,0.5421
+1863,Temperate,North America,6.9601,2.4644,-0.0274
+1863,Temperate,Oceania,14.3321,2.6399,-0.0475
+1863,Temperate,South America,9.2472,2.5867,-0.0978
+1863,Tropical,Africa,26.0511,2.6398,0.1556
+1863,Tropical,Asia,26.8927,5.0462,-0.1847
+1863,Tropical,North America,25.3904,3.7296,0.4238
+1863,Tropical,Oceania,26.0634,5.2442,-0.1994
+1863,Tropical,South America,25.1099,3.851,0.06
+1864,Polar,Antarctica,-34.3689,0.6254,-0.1918
+1864,Polar,Asia/Europe,-17.6058,0.7897,-0.0261
+1864,Polar,Europe,-11.3752,1.4348,0.3025
+1864,Polar,North America,-20.2319,0.6587,-0.1252
+1864,Polar,South America,-8.9602,1.7727,0.1336
+1864,Temperate,Africa,14.1006,2.1475,-0.4171
+1864,Temperate,Antarctica,-2.3585,2.6385,-0.344
+1864,Temperate,Asia,9.0912,2.4153,-0.2104
+1864,Temperate,Asia/Europe,-8.0063,1.4863,0.0569
+1864,Temperate,Europe,8.1233,2.4684,-0.1788
+1864,Temperate,North America,6.361,2.4332,-0.1288
+1864,Temperate,Oceania,14.2338,2.8203,0.3105
+1864,Temperate,South America,9.3787,2.5492,-0.2588
+1864,Tropical,Africa,25.3626,2.7228,0.175
+1864,Tropical,Asia,26.2981,5.3201,0.7269
+1864,Tropical,North America,24.7569,3.1218,0.1051
+1864,Tropical,Oceania,25.5605,5.021,-0.0688
+1864,Tropical,South America,24.1805,3.7175,0.3005
+1865,Polar,Antarctica,-34.3247,0.6242,-0.5176
+1865,Polar,Asia/Europe,-17.1274,0.7522,-0.2967
+1865,Polar,Europe,-10.9771,1.2993,-0.1812
+1865,Polar,North America,-18.8373,0.6134,-0.068
+1865,Polar,South America,-8.653,1.8838,0.7751
+1865,Temperate,Africa,14.1996,2.1773,-0.3655
+1865,Temperate,Antarctica,-2.7562,2.6189,-0.2678
+1865,Temperate,Asia,8.5858,2.3177,-0.2153
+1865,Temperate,Asia/Europe,-8.9185,1.2779,-0.2535
+1865,Temperate,Europe,8.1979,2.6481,-0.4471
+1865,Temperate,North America,6.4918,2.5866,0.0159
+1865,Temperate,Oceania,14.2349,2.7788,0.2695
+1865,Temperate,South America,9.2929,2.5858,-0.1612
+1865,Tropical,Africa,25.5404,2.6344,0.2956
+1865,Tropical,Asia,26.318,4.7635,0.5244
+1865,Tropical,North America,25.1474,3.1196,-0.1071
+1865,Tropical,Oceania,25.9103,5.4009,0.0315
+1865,Tropical,South America,24.4694,3.7085,0.2493
+1866,Polar,Antarctica,-33.6706,0.66,0.0717
+1866,Polar,Asia/Europe,-16.3737,0.8081,-0.2994
+1866,Polar,Europe,-10.6398,1.3118,-0.9093
+1866,Polar,North America,-18.1661,0.6528,-0.4192
+1866,Polar,South America,-8.6046,1.6721,0.3081
+1866,Temperate,Africa,14.5002,2.3215,-0.08
+1866,Temperate,Antarctica,-2.1317,2.7704,0.1645
+1866,Temperate,Asia,8.4567,2.306,-0.3592
+1866,Temperate,Asia/Europe,-8.1901,1.3257,-0.6596
+1866,Temperate,Europe,8.0054,2.6261,-0.0184
+1866,Temperate,North America,6.9204,2.6179,0.224
+1866,Temperate,Oceania,14.1201,2.6831,-0.006
+1866,Temperate,South America,9.3355,2.6778,-0.0415
+1866,Tropical,Africa,25.8294,2.5272,0.0716
+1866,Tropical,Asia,26.4395,4.1494,-0.165
+1866,Tropical,North America,25.6916,3.3575,-0.0978
+1866,Tropical,Oceania,26.1896,5.8388,0.0022
+1866,Tropical,South America,25.1459,3.629,-0.0489
+1867,Polar,Antarctica,-33.6909,0.6802,-0.0172
+1867,Polar,Asia/Europe,-17.5713,0.7537,0.0401
+1867,Polar,Europe,-10.7672,1.3559,-0.1791
+1867,Polar,North America,-18.5179,0.6416,0.1981
+1867,Polar,South America,-9.2595,1.6566,-0.2948
+1867,Temperate,Africa,14.4045,2.4266,0.3489
+1867,Temperate,Antarctica,-1.9579,2.6635,0.0865
+1867,Temperate,Asia,8.8013,2.4964,0.0132
+1867,Temperate,Asia/Europe,-10.2046,1.3288,-0.2647
+1867,Temperate,Europe,8.2917,2.6287,0.2493
+1867,Temperate,North America,6.5587,2.5752,-0.0013
+1867,Temperate,Oceania,14.1829,2.4874,-0.2715
+1867,Temperate,South America,9.2734,2.6778,0.0514
+1867,Tropical,Africa,26.3092,2.4387,-0.0236
+1867,Tropical,Asia,26.732,4.2412,-0.4078
+1867,Tropical,North America,26.1132,3.7806,0.0977
+1867,Tropical,Oceania,26.2641,5.6872,-0.1377
+1867,Tropical,South America,25.9447,3.6562,0.0611
+1868,Polar,Antarctica,-34.0938,0.6484,0.37
+1868,Polar,Asia/Europe,-16.3021,0.7899,-0.6568
+1868,Polar,Europe,-12.086,1.3197,-0.6633
+1868,Polar,North America,-18.5329,0.6631,-0.3594
+1868,Polar,South America,-8.4301,1.8913,0.4693
+1868,Temperate,Africa,14.5303,2.2811,0.3591
+1868,Temperate,Antarctica,-2.1632,2.6812,0.083
+1868,Temperate,Asia,8.8,2.4279,0.1393
+1868,Temperate,Asia/Europe,-8.0279,1.45,-0.0659
+1868,Temperate,Europe,7.9275,2.5919,0.0744
+1868,Temperate,North America,6.7804,2.507,-0.1105
+1868,Temperate,Oceania,14.2058,2.6572,-0.1767
+1868,Temperate,South America,9.4246,2.5952,-0.0471
+1868,Tropical,Africa,26.4043,2.5637,-0.2404
+1868,Tropical,Asia,26.9185,5.0149,-0.1337
+1868,Tropical,North America,25.7697,4.2001,0.4265
+1868,Tropical,Oceania,26.3224,4.9999,-0.2414
+1868,Tropical,South America,25.4063,4.037,0.1034
+1869,Polar,Antarctica,-34.5034,0.6484,-0.0803
+1869,Polar,Asia/Europe,-17.4449,0.8103,0.0147
+1869,Polar,Europe,-11.3136,1.3247,-0.7946
+1869,Polar,North America,-19.6099,0.6524,0.3193
+1869,Polar,South America,-8.6696,1.8926,0.8344
+1869,Temperate,Africa,14.3559,2.1781,-0.1928
+1869,Temperate,Antarctica,-2.1317,2.6916,0.1045
+1869,Temperate,Asia,9.2016,2.2922,-0.2927
+1869,Temperate,Asia/Europe,-8.8348,1.4878,0.8386
+1869,Temperate,Europe,8.0689,2.6533,-0.0613
+1869,Temperate,North America,6.4307,2.443,-0.2827
+1869,Temperate,Oceania,14.1442,2.8086,0.2113
+1869,Temperate,South America,9.5379,2.4826,-0.1467
+1869,Tropical,Africa,25.7076,2.681,0.0921
+1869,Tropical,Asia,26.4611,5.1202,0.5249
+1869,Tropical,North America,25.1293,3.3922,0.306
+1869,Tropical,Oceania,25.8188,5.1531,-0.0307
+1869,Tropical,South America,24.4468,3.7133,0.4231
+1870,Polar,Antarctica,-34.751,0.6114,-0.5219
+1870,Polar,Asia/Europe,-16.0268,0.7824,0.1465
+1870,Polar,Europe,-10.0292,1.3821,0.3138
+1870,Polar,North America,-18.7592,0.6688,0.1894
+1870,Polar,South America,-10.0682,1.6989,0.4803
+1870,Temperate,Africa,14.2861,2.2419,-0.3514
+1870,Temperate,Antarctica,-2.1088,2.601,-0.2836
+1870,Temperate,Asia,8.6905,2.3487,-0.3526
+1870,Temperate,Asia/Europe,-8.4125,1.4267,0.0526
+1870,Temperate,Europe,8.1369,2.561,-0.0347
+1870,Temperate,North America,6.3861,2.5394,-0.1465
+1870,Temperate,Oceania,14.2522,2.7567,0.1847
+1870,Temperate,South America,9.246,2.6674,0.1995
+1870,Tropical,Africa,25.5691,2.7074,-0.0452
+1870,Tropical,Asia,26.3364,4.2001,0.2538
+1870,Tropical,North America,25.3039,3.2279,0.2179
+1870,Tropical,Oceania,25.9831,5.5979,0.0606
+1870,Tropical,South America,24.3573,3.6427,0.1397
+1871,Polar,Antarctica,-33.8906,0.6684,-0.3308
+1871,Polar,Asia/Europe,-16.6501,0.826,0.3962
+1871,Polar,Europe,-11.2,1.4289,-0.0919
+1871,Polar,North America,-18.3952,0.6869,0.6922
+1871,Polar,South America,-11.1949,1.4174,-0.9478
+1871,Temperate,Africa,14.5004,2.3588,0.2544
+1871,Temperate,Antarctica,-1.8606,2.6943,-0.2527
+1871,Temperate,Asia,8.579,2.3785,-0.0672
+1871,Temperate,Asia/Europe,-8.7239,1.3662,-0.0713
+1871,Temperate,Europe,8.1309,2.6365,0.012
+1871,Temperate,North America,6.3382,2.5611,-0.0311
+1871,Temperate,Oceania,14.1884,2.5614,-0.0642
+1871,Temperate,South America,9.0965,2.7139,0.0504
+1871,Tropical,Africa,26.1022,2.5754,0.1571
+1871,Tropical,Asia,26.7724,4.1232,-0.4559
+1871,Tropical,North America,26.1573,3.6825,-0.0572
+1871,Tropical,Oceania,26.2377,5.7447,-0.073
+1871,Tropical,South America,25.4614,3.668,0.1437
+1872,Polar,Antarctica,-34.2043,0.6698,0.04
+1872,Polar,Asia/Europe,-19.1389,0.7475,-0.4589
+1872,Polar,Europe,-13.1586,1.2436,-1.076
+1872,Polar,North America,-19.6938,0.6152,0.1046
+1872,Polar,South America,-8.2867,1.8368,-0.0353
+1872,Temperate,Africa,14.411,2.3123,0.2243
+1872,Temperate,Antarctica,-2.2209,2.6985,0.2434
+1872,Temperate,Asia,9.1051,2.3506,-0.1395
+1872,Temperate,Asia/Europe,-9.5175,1.4367,0.2557
+1872,Temperate,Europe,7.563,2.5577,-0.1717
+1872,Temperate,North America,6.2888,2.5359,0.0117
+1872,Temperate,Oceania,14.3447,2.6418,-0.1476
+1872,Temperate,South America,9.5216,2.5932,-0.0841
+1872,Tropical,Africa,26.5939,2.6665,0.0063
+1872,Tropical,Asia,27.1098,4.3671,-0.3588
+1872,Tropical,North America,26.1224,3.9766,0.2724
+1872,Tropical,Oceania,26.4328,5.5701,-0.2131
+1872,Tropical,South America,25.8688,3.607,-0.2821
+1873,Polar,Antarctica,-34.2037,0.6432,0.219
+1873,Polar,Asia/Europe,-17.4867,0.8591,0.4646
+1873,Polar,Europe,-10.2546,1.298,-0.268
+1873,Polar,North America,-18.9967,0.6816,-0.0711
+1873,Polar,South America,-9.4564,1.7358,0.0661
+1873,Temperate,Africa,14.3537,2.067,-0.4205
+1873,Temperate,Antarctica,-2.3698,2.6841,-0.0285
+1873,Temperate,Asia,9.1234,2.4264,-0.2547
+1873,Temperate,Asia/Europe,-8.693,1.4478,0.1571
+1873,Temperate,Europe,8.2258,2.5832,-0.0306
+1873,Temperate,North America,6.1975,2.4236,-0.2314
+1873,Temperate,Oceania,14.2899,2.8072,0.1643
+1873,Temperate,South America,9.4137,2.5602,-0.103
+1873,Tropical,Africa,25.8948,2.7884,0.0389
+1873,Tropical,Asia,26.8198,5.4017,0.2625
+1873,Tropical,North America,24.8231,3.3209,0.2867
+1873,Tropical,Oceania,25.7611,4.9333,-0.0984
+1873,Tropical,South America,24.4539,4.0077,0.3637
+1874,Polar,Antarctica,-35.015,0.6399,-0.5319
+1874,Polar,Asia/Europe,-18.2751,0.7529,0.059
+1874,Polar,Europe,-12.0621,1.195,-1.1674
+1874,Polar,North America,-19.405,0.6277,0.2235
+1874,Polar,South America,-8.4291,1.7178,-0.2625
+1874,Temperate,Africa,14.2921,2.1652,-0.4805
+1874,Temperate,Antarctica,-2.5743,2.6295,-0.0619
+1874,Temperate,Asia,9.0118,2.3122,-0.2785
+1874,Temperate,Asia/Europe,-9.5962,1.5343,0.5853
+1874,Temperate,Europe,7.8331,2.589,-0.032
+1874,Temperate,North America,6.1077,2.4336,-0.2673
+1874,Temperate,Oceania,14.1336,2.9093,0.5823
+1874,Temperate,South America,9.2786,2.4687,-0.2621
+1874,Tropical,Africa,25.2505,2.7302,0.2436
+1874,Tropical,Asia,26.2265,5.2096,0.997
+1874,Tropical,North America,24.7895,3.0962,0.1135
+1874,Tropical,Oceania,25.6882,5.1085,-0.1
+1874,Tropical,South America,24.1084,3.7694,0.5754
+1875,Polar,Antarctica,-33.2612,0.6695,0.1218
+1875,Polar,Asia/Europe,-17.9131,0.804,-0.178
+1875,Polar,Europe,-12.2458,1.3139,-1.145
+1875,Polar,North America,-18.8498,0.6632,-0.1866
+1875,Polar,South America,-9.155,1.6213,-0.5695
+1875,Temperate,Africa,14.3441,2.3846,0.2358
+1875,Temperate,Antarctica,-1.9551,2.6167,-0.4329
+1875,Temperate,Asia,8.7067,2.3847,-0.1602
+1875,Temperate,Asia/Europe,-9.1489,1.3923,0.449
+1875,Temperate,Europe,8.0789,2.6119,-0.216
+1875,Temperate,North America,6.2768,2.607,-0.0477
+1875,Temperate,Oceania,14.1985,2.5517,0.1455
+1875,Temperate,South America,9.2436,2.6882,-0.1579
+1875,Tropical,Africa,25.7623,2.5754,0.1224
+1875,Tropical,Asia,26.4446,3.7511,0.0077
+1875,Tropical,North America,25.7595,3.4013,-0.1416
+1875,Tropical,Oceania,26.1082,6.1002,0.0657
+1875,Tropical,South America,25.2256,3.5737,0.2125
+1876,Polar,Antarctica,-33.6319,0.6577,-0.0851
+1876,Polar,Asia/Europe,-18.4663,0.7512,-0.2867
+1876,Polar,Europe,-11.8076,1.3824,-0.5657
+1876,Polar,North America,-19.185,0.656,0.2363
+1876,Polar,South America,-8.0872,1.5924,-0.5167
+1876,Temperate,Africa,14.2548,2.3527,0.396
+1876,Temperate,Antarctica,-2.3365,2.6295,-0.3551
+1876,Temperate,Asia,8.8159,2.5372,0.1426
+1876,Temperate,Asia/Europe,-8.7847,1.3326,-0.2172
+1876,Temperate,Europe,8.1551,2.62,0.1644
+1876,Temperate,North America,6.5166,2.5346,-0.0076
+1876,Temperate,Oceania,14.2239,2.6118,-0.0608
+1876,Temperate,South America,9.3299,2.5559,-0.0915
+1876,Tropical,Africa,26.3204,2.5358,-0.0163
+1876,Tropical,Asia,26.9182,4.5218,-0.6534
+1876,Tropical,North America,25.9336,4.221,0.2722
+1876,Tropical,Oceania,26.2653,5.3562,-0.1204
+1876,Tropical,South America,25.5842,3.8683,-0.1264
+1877,Polar,Antarctica,-34.9656,0.6482,-0.2695
+1877,Polar,Asia/Europe,-18.4232,0.7389,-0.5687
+1877,Polar,Europe,-9.2931,1.5487,0.4246
+1877,Polar,North America,-19.2735,0.682,0.1068
+1877,Polar,South America,-8.7769,1.861,0.295
+1877,Temperate,Africa,14.2564,2.1646,0.0674
+1877,Temperate,Antarctica,-2.7061,2.6555,-0.1668
+1877,Temperate,Asia,8.6131,2.4197,-0.0707
+1877,Temperate,Asia/Europe,-9.8667,1.2851,-0.6991
+1877,Temperate,Europe,8.6487,2.5395,-0.1828
+1877,Temperate,North America,6.4095,2.4526,-0.0921
+1877,Temperate,Oceania,14.3268,2.7608,0.0313
+1877,Temperate,South America,9.2806,2.4824,-0.3266
+1877,Tropical,Africa,25.7021,2.7364,0.0548
+1877,Tropical,Asia,26.5779,5.1151,0.1428
+1877,Tropical,North America,24.6114,3.0536,0.1198
+1877,Tropical,Oceania,25.692,5.2107,0.0713
+1877,Tropical,South America,24.2869,3.9879,0.44
+1878,Polar,Antarctica,-34.691,0.5953,-0.6644
+1878,Polar,Asia/Europe,-18.8275,0.7471,-0.3197
+1878,Polar,Europe,-11.3422,1.5089,0.9924
+1878,Polar,North America,-20.7231,0.662,0.233
+1878,Polar,South America,-9.0082,1.7291,-0.0049
+1878,Temperate,Africa,14.2634,2.1951,-0.351
+1878,Temperate,Antarctica,-2.3771,2.6274,-0.2803
+1878,Temperate,Asia,8.6959,2.3557,-0.1688
+1878,Temperate,Asia/Europe,-9.6154,1.3159,-0.6222
+1878,Temperate,Europe,8.4541,2.546,-0.3522
+1878,Temperate,North America,6.2466,2.444,-0.2586
+1878,Temperate,Oceania,14.2186,2.8962,0.4875
+1878,Temperate,South America,9.3855,2.5206,-0.2868
+1878,Tropical,Africa,25.2423,2.7456,0.186
+1878,Tropical,Asia,26.1791,4.8577,0.5855
+1878,Tropical,North America,24.5619,3.038,-0.1299
+1878,Tropical,Oceania,25.5387,5.1759,0.0461
+1878,Tropical,South America,23.8306,3.788,0.4496
+1879,Polar,Antarctica,-34.4353,0.7017,-0.2422
+1879,Polar,Asia/Europe,-17.6173,0.7728,-0.0278
+1879,Polar,Europe,-11.8317,1.4698,-0.0048
+1879,Polar,North America,-19.4289,0.6632,0.3555
+1879,Polar,South America,-9.6149,1.5903,-0.4198
+1879,Temperate,Africa,14.383,2.2874,-0.1623
+1879,Temperate,Antarctica,-1.9095,2.6435,-0.1967
+1879,Temperate,Asia,8.7431,2.3663,-0.2514
+1879,Temperate,Asia/Europe,-9.4147,1.3625,-0.1382
+1879,Temperate,Europe,7.935,2.6017,-0.0699
+1879,Temperate,North America,6.2741,2.5234,-0.2479
+1879,Temperate,Oceania,14.2258,2.6772,0.0844
+1879,Temperate,South America,9.1581,2.6083,-0.1215
+1879,Tropical,Africa,25.4818,2.7692,0.3763
+1879,Tropical,Asia,26.3281,4.0776,-0.0801
+1879,Tropical,North America,25.5031,3.0778,-0.2258
+1879,Tropical,Oceania,26.0665,5.8554,0.1389
+1879,Tropical,South America,24.8773,3.4783,0.037
+1880,Polar,Antarctica,-33.7991,0.6912,0.2724
+1880,Polar,Asia/Europe,-17.4989,0.7904,-0.0774
+1880,Polar,Europe,-11.5442,1.3721,0.0218
+1880,Polar,North America,-18.0708,0.6782,0.3698
+1880,Polar,South America,-9.0381,1.6968,-0.4092
+1880,Temperate,Africa,14.4033,2.3334,0.3261
+1880,Temperate,Antarctica,-1.6726,2.7219,-0.1117
+1880,Temperate,Asia,9.126,2.4733,0.0849
+1880,Temperate,Asia/Europe,-8.6815,1.4014,-0.1987
+1880,Temperate,Europe,7.775,2.6545,-0.0362
+1880,Temperate,North America,6.7253,2.6198,0.1141
+1880,Temperate,Oceania,14.269,2.5223,-0.1693
+1880,Temperate,South America,9.3839,2.6637,-0.002
+1880,Tropical,Africa,26.2409,2.4304,0.1403
+1880,Tropical,Asia,26.9141,4.2764,-0.5716
+1880,Tropical,North America,26.293,4.093,-0.0147
+1880,Tropical,Oceania,26.3566,5.7196,-0.1102
+1880,Tropical,South America,26.0494,3.436,-0.3594
+1881,Polar,Antarctica,-34.1689,0.6551,0.1118
+1881,Polar,Asia/Europe,-17.2171,0.7903,-0.1629
+1881,Polar,Europe,-10.2636,1.3529,-0.2864
+1881,Polar,North America,-18.7061,0.6518,0.219
+1881,Polar,South America,-8.8411,1.781,0.077
+1881,Temperate,Africa,14.5527,2.2364,-0.0164
+1881,Temperate,Antarctica,-2.1183,2.7762,0.4901
+1881,Temperate,Asia,9.107,2.4124,0.0081
+1881,Temperate,Asia/Europe,-9.2176,1.4266,0.112
+1881,Temperate,Europe,8.3954,2.6129,0.0982
+1881,Temperate,North America,6.6562,2.5427,-0.0766
+1881,Temperate,Oceania,14.2523,2.6013,-0.0243
+1881,Temperate,South America,9.4987,2.5963,-0.0055
+1881,Tropical,Africa,26.271,2.5873,-0.1395
+1881,Tropical,Asia,26.9958,4.9777,0.0094
+1881,Tropical,North America,26.0314,3.7324,0.2414
+1881,Tropical,Oceania,26.3948,5.4739,-0.1871
+1881,Tropical,South America,25.6999,3.3676,-0.5361
+1882,Polar,Antarctica,-33.7615,0.659,0.1474
+1882,Polar,Asia/Europe,-17.0639,0.8473,0.2671
+1882,Polar,Europe,-10.9399,1.4951,0.2035
+1882,Polar,North America,-18.7165,0.6471,-0.1455
+1882,Polar,South America,-8.0388,1.6748,0.1062
+1882,Temperate,Africa,14.4002,2.1263,-0.4065
+1882,Temperate,Antarctica,-2.1152,2.738,0.4824
+1882,Temperate,Asia,9.0772,2.3607,-0.2093
+1882,Temperate,Asia/Europe,-8.846,1.3405,-0.0699
+1882,Temperate,Europe,8.1551,2.5143,-0.2132
+1882,Temperate,North America,6.8626,2.4717,-0.0928
+1882,Temperate,Oceania,14.2631,2.7557,0.0912
+1882,Temperate,South America,9.5773,2.5388,-0.0683
+1882,Tropical,Africa,25.7849,2.5463,-0.2071
+1882,Tropical,Asia,26.5829,5.3919,0.4629
+1882,Tropical,North America,24.9376,3.2371,0.1247
+1882,Tropical,Oceania,25.8554,5.2355,0.0732
+1882,Tropical,South America,24.6093,4.0353,0.3469
+1883,Polar,Antarctica,-34.5029,0.6279,-0.2169
+1883,Polar,Asia/Europe,-17.2837,0.8777,0.4915
+1883,Polar,Europe,-9.6525,1.5557,0.5346
+1883,Polar,North America,-19.3854,0.6947,0.3291
+1883,Polar,South America,-8.3795,1.6438,-0.4778
+1883,Temperate,Africa,14.3526,2.1913,-0.3113
+1883,Temperate,Antarctica,-2.114,2.6505,0.172
+1883,Temperate,Asia,8.6695,2.2406,-0.373
+1883,Temperate,Asia/Europe,-8.5883,1.4231,0.0259
+1883,Temperate,Europe,8.4683,2.534,-0.332
+1883,Temperate,North America,6.7316,2.4945,-0.2227
+1883,Temperate,Oceania,14.2298,2.8172,0.2682
+1883,Temperate,South America,9.3756,2.5782,-0.1359
+1883,Tropical,Africa,25.5356,2.5518,-0.1162
+1883,Tropical,Asia,26.1438,4.8993,0.5824
+1883,Tropical,North America,25.0235,3.0506,0.0063
+1883,Tropical,Oceania,25.804,5.3829,0.0779
+1883,Tropical,South America,24.4158,3.8902,0.4776
+1884,Polar,Antarctica,-34.3407,0.6739,-0.0357
+1884,Polar,Asia/Europe,-17.23,0.7928,0.7042
+1884,Polar,Europe,-9.6345,1.492,0.7087
+1884,Polar,North America,-19.5826,0.6498,0.38
+1884,Polar,South America,-8.8799,1.6159,-0.4237
+1884,Temperate,Africa,14.1719,2.2926,0.1748
+1884,Temperate,Antarctica,-2.2604,2.6793,-0.1537
+1884,Temperate,Asia,8.0099,2.2817,-0.3584
+1884,Temperate,Asia/Europe,-9.0499,1.2742,-0.1229
+1884,Temperate,Europe,7.6238,2.4984,-0.2647
+1884,Temperate,North America,6.2632,2.5871,-0.0232
+1884,Temperate,Oceania,14.194,2.5978,-0.0073
+1884,Temperate,South America,9.2213,2.6132,-0.0741
+1884,Tropical,Africa,25.3705,2.7038,-0.0788
+1884,Tropical,Asia,26.1442,4.1131,0.0026
+1884,Tropical,North America,25.289,3.018,-0.3196
+1884,Tropical,Oceania,25.9003,5.7355,0.0658
+1884,Tropical,South America,24.5928,3.6529,0.1445
+1885,Polar,Antarctica,-33.8555,0.6585,-0.2325
+1885,Polar,Asia/Europe,-19.043,0.7406,-0.0021
+1885,Polar,Europe,-12.8954,1.1835,-0.1013
+1885,Polar,North America,-18.9031,0.6032,0.0067
+1885,Polar,South America,-9.6719,1.592,-0.4037
+1885,Temperate,Africa,14.3668,2.297,0.051
+1885,Temperate,Antarctica,-1.9596,2.6649,0.0667
+1885,Temperate,Asia,8.6968,2.4183,-0.1651
+1885,Temperate,Asia/Europe,-10.0092,1.3856,-0.2096
+1885,Temperate,Europe,7.5033,2.7156,0.0348
+1885,Temperate,North America,6.2671,2.5836,0.0188
+1885,Temperate,Oceania,14.0483,2.5428,-0.1151
+1885,Temperate,South America,9.3132,2.7677,0.1682
+1885,Tropical,Africa,25.9741,2.4757,-0.0342
+1885,Tropical,Asia,26.641,4.1401,-0.4569
+1885,Tropical,North America,26.0517,3.8154,-0.3107
+1885,Tropical,Oceania,26.1394,5.8229,-0.0736
+1885,Tropical,South America,25.5898,3.476,0.0465
+1886,Polar,Antarctica,-33.9685,0.6513,0.0135
+1886,Polar,Asia/Europe,-20.9233,0.7736,-0.8712
+1886,Polar,Europe,-12.6875,1.2949,-1.4543
+1886,Polar,North America,-19.7958,0.648,-0.6177
+1886,Polar,South America,-7.4007,1.9096,0.3584
+1886,Temperate,Africa,14.4682,2.2603,0.1176
+1886,Temperate,Antarctica,-2.0251,2.7221,0.1572
+1886,Temperate,Asia,9.1945,2.4048,0.1882
+1886,Temperate,Asia/Europe,-10.3207,1.4068,-0.2975
+1886,Temperate,Europe,7.8954,2.6502,0.0567
+1886,Temperate,North America,6.3234,2.4742,-0.1384
+1886,Temperate,Oceania,14.287,2.6244,-0.0334
+1886,Temperate,South America,9.6404,2.6568,0.2417
+1886,Tropical,Africa,26.3997,2.5225,-0.4149
+1886,Tropical,Asia,26.9151,4.5671,-0.3191
+1886,Tropical,North America,25.9143,4.3253,0.4489
+1886,Tropical,Oceania,26.2903,5.2311,-0.2612
+1886,Tropical,South America,25.4009,4.1416,0.2606
+1887,Polar,Antarctica,-34.5265,0.6092,-0.519
+1887,Polar,Asia/Europe,-17.0503,0.8124,-0.0799
+1887,Polar,Europe,-10.6195,1.4435,-0.2955
+1887,Polar,North America,-18.7926,0.7034,0.9074
+1887,Polar,South America,-8.1223,1.751,0.3691
+1887,Temperate,Africa,14.2966,2.1557,-0.2764
+1887,Temperate,Antarctica,-2.3425,2.5968,-0.3607
+1887,Temperate,Asia,8.8939,2.4199,-0.1454
+1887,Temperate,Asia/Europe,-8.5492,1.3319,-0.1353
+1887,Temperate,Europe,8.0102,2.4985,-0.2088
+1887,Temperate,North America,6.5766,2.4965,-0.1232
+1887,Temperate,Oceania,14.3432,2.7531,0.1938
+1887,Temperate,South America,9.5401,2.547,0.0628
+1887,Tropical,Africa,25.6316,2.6873,-0.0549
+1887,Tropical,Asia,26.519,5.1814,0.2401
+1887,Tropical,North America,24.9389,3.2014,0.1807
+1887,Tropical,Oceania,25.8092,5.1059,-0.0381
+1887,Tropical,South America,24.3923,4.0116,0.4707
+1888,Polar,Antarctica,-34.4399,0.6369,-0.5819
+1888,Polar,Asia/Europe,-17.9534,0.7855,0.4714
+1888,Polar,Europe,-11.949,1.2289,-0.1024
+1888,Polar,North America,-19.1279,0.6168,0.0868
+1888,Polar,South America,-9.1534,1.6771,-0.0526
+1888,Temperate,Africa,14.3846,2.1597,-0.5175
+1888,Temperate,Antarctica,-2.3921,2.6544,-0.2129
+1888,Temperate,Asia,9.3504,2.2472,-0.3886
+1888,Temperate,Asia/Europe,-9.6279,1.4617,-0.0752
+1888,Temperate,Europe,7.9149,2.598,-0.217
+1888,Temperate,North America,6.5054,2.4802,-0.1518
+1888,Temperate,Oceania,14.2224,2.9066,0.3453
+1888,Temperate,South America,9.4096,2.5153,-0.0072
+1888,Tropical,Africa,25.2712,2.5402,-0.0024
+1888,Tropical,Asia,26.0868,5.3319,0.794
+1888,Tropical,North America,24.7382,3.0397,-0.1091
+1888,Tropical,Oceania,25.6563,5.1601,-0.0178
+1888,Tropical,South America,24.0685,3.8534,0.5466
+1889,Polar,Antarctica,-33.7652,0.6935,0.234
+1889,Polar,Asia/Europe,-16.5138,0.7859,-0.0466
+1889,Polar,Europe,-9.2366,1.5307,-0.1436
+1889,Polar,North America,-20.2376,0.676,-0.3129
+1889,Polar,South America,-8.3998,1.5532,-0.7861
+1889,Temperate,Africa,14.4942,2.3366,0.0221
+1889,Temperate,Antarctica,-2.067,2.704,0.098
+1889,Temperate,Asia,8.9085,2.3784,-0.089
+1889,Temperate,Asia/Europe,-8.5684,1.5028,0.3646
+1889,Temperate,Europe,8.2693,2.5258,-0.1895
+1889,Temperate,North America,6.1294,2.4813,-0.128
+1889,Temperate,Oceania,14.3632,2.7327,0.1769
+1889,Temperate,South America,9.3488,2.5985,-0.1413
+1889,Tropical,Africa,25.6139,2.5321,-0.279
+1889,Tropical,Asia,26.2702,4.1382,0.2167
+1889,Tropical,North America,25.456,3.4791,0.1689
+1889,Tropical,Oceania,26.0343,5.6401,0.0658
+1889,Tropical,South America,24.8394,3.6934,0.2407
+1890,Polar,Antarctica,-33.7888,0.6572,0.0371
+1890,Polar,Asia/Europe,-17.8729,0.7784,-0.2246
+1890,Polar,Europe,-10.9953,1.3945,0.1093
+1890,Polar,North America,-18.9499,0.6638,0.0912
+1890,Polar,South America,-8.0422,1.6765,-0.559
+1890,Temperate,Africa,14.5676,2.3724,0.4452
+1890,Temperate,Antarctica,-1.8961,2.7262,0.1009
+1890,Temperate,Asia,9.2985,2.4788,0.0182
+1890,Temperate,Asia/Europe,-8.592,1.511,0.643
+1890,Temperate,Europe,8.346,2.7562,0.2151
+1890,Temperate,North America,6.4276,2.5905,-0.0049
+1890,Temperate,Oceania,14.2609,2.5764,-0.101
+1890,Temperate,South America,9.5136,2.6676,0.0502
+1890,Tropical,Africa,26.317,2.5752,0.0449
+1890,Tropical,Asia,26.7888,4.2103,-0.5059
+1890,Tropical,North America,26.1284,4.0954,0.373
+1890,Tropical,Oceania,26.3277,5.5302,-0.204
+1890,Tropical,South America,25.6968,3.6414,-0.0652
+1891,Polar,Antarctica,-34.2558,0.6402,-0.3807
+1891,Polar,Asia/Europe,-19.2155,0.7474,-0.5073
+1891,Polar,Europe,-12.8803,1.2751,-0.6185
+1891,Polar,North America,-18.4474,0.6544,0.3228
+1891,Polar,South America,-8.6671,1.6591,-0.0809
+1891,Temperate,Africa,14.4674,2.3265,0.2803
+1891,Temperate,Antarctica,-2.2382,2.7016,0.23
+1891,Temperate,Asia,9.0697,2.4537,0.0826
+1891,Temperate,Asia/Europe,-9.8282,1.435,0.83
+1891,Temperate,Europe,8.091,2.7199,0.4017
+1891,Temperate,North America,6.4476,2.5747,0.0006
+1891,Temperate,Oceania,14.3138,2.5133,-0.1547
+1891,Temperate,South America,9.583,2.6743,0.0302
+1891,Tropical,Africa,26.2932,2.7219,0.0792
+1891,Tropical,Asia,26.9169,4.1776,-0.4164
+1891,Tropical,North America,26.2574,3.4128,0.0381
+1891,Tropical,Oceania,26.3938,5.8674,-0.2077
+1891,Tropical,South America,25.6764,3.4129,-0.0461
+1892,Polar,Antarctica,-33.7372,0.6626,-0.3195
+1892,Polar,Asia/Europe,-17.3961,0.8412,-0.0802
+1892,Polar,Europe,-10.5189,1.5237,-0.0916
+1892,Polar,North America,-19.419,0.6268,0.0916
+1892,Polar,South America,-8.5679,1.6898,-0.6038
+1892,Temperate,Africa,14.375,2.181,0.1097
+1892,Temperate,Antarctica,-2.2611,2.6755,-0.0004
+1892,Temperate,Asia,9.1543,2.4673,0.1731
+1892,Temperate,Asia/Europe,-8.8069,1.332,-0.0994
+1892,Temperate,Europe,8.3344,2.6154,0.4444
+1892,Temperate,North America,6.5676,2.5293,-0.1288
+1892,Temperate,Oceania,14.326,2.5974,-0.1355
+1892,Temperate,South America,9.5027,2.7048,0.3483
+1892,Tropical,Africa,26.2333,2.6135,-0.0757
+1892,Tropical,Asia,26.9401,4.8246,-0.2443
+1892,Tropical,North America,25.6579,3.6221,0.0388
+1892,Tropical,Oceania,26.3053,5.5125,-0.0854
+1892,Tropical,South America,25.2971,3.5746,-0.3141
+1893,Polar,Antarctica,-34.1355,0.6766,0.0479
+1893,Polar,Asia/Europe,-18.3667,0.7161,-0.2719
+1893,Polar,Europe,-8.9108,1.3209,-0.1315
+1893,Polar,North America,-18.7379,0.6601,0.0164
+1893,Polar,South America,-8.3487,1.7354,0.3109
+1893,Temperate,Africa,14.4664,2.2101,-0.2484
+1893,Temperate,Antarctica,-1.9594,2.7042,0.1892
+1893,Temperate,Asia,8.9312,2.4582,-0.0656
+1893,Temperate,Asia/Europe,-9.5807,1.3138,-0.4704
+1893,Temperate,Europe,8.6878,2.6212,-0.096
+1893,Temperate,North America,6.4166,2.4813,-0.0613
+1893,Temperate,Oceania,14.2341,2.7144,-0.0879
+1893,Temperate,South America,9.5097,2.555,0.1329
+1893,Tropical,Africa,25.5818,2.698,-0.0679
+1893,Tropical,Asia,26.4792,4.9345,0.4258
+1893,Tropical,North America,25.1114,3.3391,0.3088
+1893,Tropical,Oceania,25.8939,5.2308,0.0599
+1893,Tropical,South America,24.5492,3.7892,0.1604
+1894,Polar,Antarctica,-33.9865,0.6348,-0.3025
+1894,Polar,Asia/Europe,-16.6269,0.8109,-0.3241
+1894,Polar,Europe,-9.9749,1.5179,-0.0656
+1894,Polar,North America,-18.8763,0.6372,-0.1293
+1894,Polar,South America,-9.1018,1.5231,-0.6431
+1894,Temperate,Africa,14.5331,2.3004,-0.107
+1894,Temperate,Antarctica,-1.7127,2.6231,-0.282
+1894,Temperate,Asia,9.1145,2.3879,-0.0093
+1894,Temperate,Asia/Europe,-7.6835,1.3764,-0.1526
+1894,Temperate,Europe,8.7791,2.6386,0.0783
+1894,Temperate,North America,6.4312,2.5514,0.0064
+1894,Temperate,Oceania,14.1758,2.6296,-0.0134
+1894,Temperate,South America,9.4767,2.7031,0.1715
+1894,Tropical,Africa,25.7016,2.6132,0.0446
+1894,Tropical,Asia,26.4272,4.0381,-0.1191
+1894,Tropical,North America,25.6672,3.4003,0.1492
+1894,Tropical,Oceania,26.1351,5.8294,0.0772
+1894,Tropical,South America,25.1153,3.6849,0.2264
+1895,Polar,Antarctica,-33.6103,0.6383,-0.1982
+1895,Polar,Asia/Europe,-17.6025,0.8185,0.1524
+1895,Polar,Europe,-8.2565,1.444,0.3451
+1895,Polar,North America,-18.0157,0.6571,0.0122
+1895,Polar,South America,-8.8322,1.5736,-0.729
+1895,Temperate,Africa,14.3728,2.3065,0.4123
+1895,Temperate,Antarctica,-2.1755,2.5821,-0.3448
+1895,Temperate,Asia,8.9122,2.5953,0.2726
+1895,Temperate,Asia/Europe,-10.4267,1.3626,-0.2374
+1895,Temperate,Europe,8.6588,2.6612,0.2342
+1895,Temperate,North America,6.483,2.5641,0.0322
+1895,Temperate,Oceania,14.1797,2.5561,-0.0943
+1895,Temperate,South America,9.4091,2.6371,0.1119
+1895,Tropical,Africa,26.4825,2.5062,0.2251
+1895,Tropical,Asia,27.1184,4.2902,-0.6059
+1895,Tropical,North America,26.1615,4.2791,0.426
+1895,Tropical,Oceania,26.3903,5.6992,-0.1047
+1895,Tropical,South America,25.8482,3.6463,-0.1178
+1896,Polar,Antarctica,-34.1021,0.6692,-0.0328
+1896,Polar,Asia/Europe,-17.6292,0.7424,-0.096
+1896,Polar,Europe,-10.7383,1.3718,-0.1576
+1896,Polar,North America,-18.6425,0.6197,-0.2543
+1896,Polar,South America,-8.1805,1.7792,-0.1998
+1896,Temperate,Africa,14.4221,2.229,0.0453
+1896,Temperate,Antarctica,-2.5075,2.6715,-0.3388
+1896,Temperate,Asia,8.6341,2.5195,0.2285
+1896,Temperate,Asia/Europe,-9.2769,1.418,-0.0108
+1896,Temperate,Europe,8.434,2.5788,-0.0268
+1896,Temperate,North America,6.8674,2.5111,-0.0294
+1896,Temperate,Oceania,14.2067,2.6494,-0.0288
+1896,Temperate,South America,9.6281,2.6276,0.1392
+1896,Tropical,Africa,25.9006,2.6883,-0.0637
+1896,Tropical,Asia,26.8422,5.1811,0.2027
+1896,Tropical,North America,25.2889,3.4026,0.3852
+1896,Tropical,Oceania,26.053,5.159,-0.1483
+1896,Tropical,South America,24.8871,3.5767,-0.0327
+1897,Polar,Antarctica,-34.4906,0.6464,-0.1186
+1897,Polar,Asia/Europe,-17.3281,0.7231,-0.7821
+1897,Polar,Europe,-11.1705,1.2269,-0.7183
+1897,Polar,North America,-18.39,0.612,-0.8893
+1897,Polar,South America,-9.4034,1.7322,0.4338
+1897,Temperate,Africa,14.2722,2.2619,-0.042
+1897,Temperate,Antarctica,-2.752,2.6063,-0.1717
+1897,Temperate,Asia,8.8302,2.2858,-0.1411
+1897,Temperate,Asia/Europe,-8.7205,1.3338,0.0439
+1897,Temperate,Europe,8.1137,2.6237,-0.0148
+1897,Temperate,North America,6.5954,2.5451,0.0548
+1897,Temperate,Oceania,14.2442,2.7055,-0.0092
+1897,Temperate,South America,9.4287,2.5654,-0.1983
+1897,Tropical,Africa,25.6907,2.6193,0.0666
+1897,Tropical,Asia,26.4616,4.8961,0.4607
+1897,Tropical,North America,25.1436,3.1033,0.0007
+1897,Tropical,Oceania,26.0391,5.3994,-0.0026
+1897,Tropical,South America,24.5638,3.9477,0.3363
+1898,Polar,Antarctica,-34.5815,0.6527,-0.3556
+1898,Polar,Asia/Europe,-17.5303,0.7664,-0.6188
+1898,Polar,Europe,-10.6728,1.3675,-0.7651
+1898,Polar,North America,-19.3244,0.6502,-0.3408
+1898,Polar,South America,-9.7755,1.6566,-0.2868
+1898,Temperate,Africa,14.2987,2.1995,-0.1881
+1898,Temperate,Antarctica,-2.6516,2.6923,-0.2415
+1898,Temperate,Asia,8.8832,2.3504,-0.1115
+1898,Temperate,Asia/Europe,-9.566,1.478,0.1691
+1898,Temperate,Europe,8.3687,2.7028,0.1198
+1898,Temperate,North America,6.5356,2.5612,-0.0384
+1898,Temperate,Oceania,14.1375,2.6216,-0.0621
+1898,Temperate,South America,9.3944,2.669,0.0199
+1898,Tropical,Africa,25.7724,2.7173,0.119
+1898,Tropical,Asia,26.467,4.2183,0.0217
+1898,Tropical,North America,25.6254,2.9642,-0.2637
+1898,Tropical,Oceania,26.1652,5.8746,0.1297
+1898,Tropical,South America,25.06,3.6245,0.2567
+1899,Polar,Antarctica,-34.3413,0.6643,-0.221
+1899,Polar,Asia/Europe,-16.9792,0.749,-0.3745
+1899,Polar,Europe,-8.867,1.4575,0.1631
+1899,Polar,North America,-18.9818,0.5996,-0.4283
+1899,Polar,South America,-8.7731,1.7288,-0.5852
+1899,Temperate,Africa,14.4267,2.2825,0.0011
+1899,Temperate,Antarctica,-2.0656,2.6642,0.0334
+1899,Temperate,Asia,8.7427,2.5798,0.1388
+1899,Temperate,Asia/Europe,-9.1834,1.2864,-0.1161
+1899,Temperate,Europe,8.4209,2.7015,0.4863
+1899,Temperate,North America,6.6561,2.5981,0.1046
+1899,Temperate,Oceania,14.1707,2.5195,-0.3241
+1899,Temperate,South America,9.3262,2.6366,0.0339
+1899,Tropical,Africa,26.1326,2.6858,0.2435
+1899,Tropical,Asia,26.8665,4.2442,-0.3386
+1899,Tropical,North America,26.1458,3.6693,-0.2856
+1899,Tropical,Oceania,26.2746,5.7771,-0.0516
+1899,Tropical,South America,25.7792,3.4868,-0.5465
+1900,Polar,Antarctica,-33.5677,0.6949,0.0132
+1900,Polar,Asia/Europe,-18.6973,0.781,-0.3192
+1900,Polar,Europe,-10.0743,1.5314,0.3339
+1900,Polar,North America,-20.0573,0.6413,-0.4345
+1900,Polar,South America,-8.4464,1.5737,-0.5421
+1900,Temperate,Africa,14.3564,2.341,0.1872
+1900,Temperate,Antarctica,-1.6094,2.6337,-0.275
+1900,Temperate,Asia,8.8221,2.4348,0.1469
+1900,Temperate,Asia/Europe,-9.1731,1.2902,-0.2832
+1900,Temperate,Europe,8.1799,2.6269,0.1395
+1900,Temperate,North America,6.3419,2.5511,0.0123
+1900,Temperate,Oceania,14.234,2.5917,-0.1883
+1900,Temperate,South America,9.4755,2.6397,0.1338
+1900,Tropical,Africa,26.1931,2.6514,0.1306
+1900,Tropical,Asia,26.8211,4.7633,-0.1763
+1900,Tropical,North America,25.7004,3.4739,-0.048
+1900,Tropical,Oceania,26.2287,5.4576,-0.0532
+1900,Tropical,South America,25.2841,3.6433,-0.0139
+1901,Polar,Antarctica,-34.3991,0.6434,0.0282
+1901,Polar,Asia/Europe,-17.1842,0.7447,-0.1961
+1901,Polar,Europe,-10.2035,1.4262,0.3628
+1901,Polar,North America,-18.4752,0.6311,-0.1489
+1901,Polar,South America,-8.3174,1.64,-0.6174
+1901,Temperate,Africa,14.3648,2.2507,0.0389
+1901,Temperate,Antarctica,-2.1758,2.6195,-0.2832
+1901,Temperate,Asia,9.0191,2.3891,0.0292
+1901,Temperate,Asia/Europe,-9.4876,1.4063,-0.2463
+1901,Temperate,Europe,8.3676,2.5535,-0.1266
+1901,Temperate,North America,6.6561,2.5992,0.0937
+1901,Temperate,Oceania,14.3319,2.6057,-0.1566
+1901,Temperate,South America,9.6183,2.6409,-0.0083
+1901,Tropical,Africa,26.0283,2.509,-0.0306
+1901,Tropical,Asia,26.7571,4.3571,0.0946
+1901,Tropical,North America,25.7382,3.4944,0.1664
+1901,Tropical,Oceania,26.3434,5.8029,0.0271
+1901,Tropical,South America,25.2862,3.6556,-0.1948
+1902,Polar,Antarctica,-33.5502,0.675,0.1119
+1902,Polar,Asia/Europe,-16.3852,0.849,-0.0581
+1902,Polar,Europe,-9.7146,1.5363,0.3946
+1902,Polar,North America,-18.6731,0.6713,-0.1615
+1902,Polar,South America,-8.9685,1.5946,-0.4699
+1902,Temperate,Africa,14.3717,2.2999,0.0997
+1902,Temperate,Antarctica,-2.3523,2.5978,-0.361
+1902,Temperate,Asia,9.0378,2.4495,0.1011
+1902,Temperate,Asia/Europe,-8.3262,1.3667,0.2699
+1902,Temperate,Europe,8.597,2.6537,0.0897
+1902,Temperate,North America,6.3987,2.5976,0.1677
+1902,Temperate,Oceania,14.2943,2.6156,-0.1333
+1902,Temperate,South America,9.4576,2.6665,-0.0039
+1902,Tropical,Africa,26.134,2.6415,0.1461
+1902,Tropical,Asia,26.8996,4.399,-0.2496
+1902,Tropical,North America,25.815,3.4196,0.1966
+1902,Tropical,Oceania,26.3969,5.6538,-0.0528
+1902,Tropical,South America,25.3229,3.7395,-0.0723
+1903,Polar,Antarctica,-34.5056,0.6504,-0.0556
+1903,Polar,Asia/Europe,-17.386,0.8285,0.5018
+1903,Polar,Europe,-10.8755,1.4455,0.1647
+1903,Polar,North America,-19.5693,0.6278,0.0896
+1903,Polar,South America,-9.0755,1.7342,-0.1026
+1903,Temperate,Africa,14.3113,2.1639,-0.211
+1903,Temperate,Antarctica,-2.48,2.6726,-0.3786
+1903,Temperate,Asia,8.1623,2.3306,-0.1157
+1903,Temperate,Asia/Europe,-9.2002,1.2856,-0.722
+1903,Temperate,Europe,8.2009,2.5506,-0.079
+1903,Temperate,North America,6.1049,2.5348,-0.0377
+1903,Temperate,Oceania,14.194,2.7289,0.0189
+1903,Temperate,South America,9.4594,2.5639,0.0494
+1903,Tropical,Africa,25.6485,2.5367,-0.1914
+1903,Tropical,Asia,26.4717,5.1169,0.1231
+1903,Tropical,North America,24.878,3.1837,-0.1093
+1903,Tropical,Oceania,25.9428,5.3041,0.0138
+1903,Tropical,South America,24.4256,3.9448,0.3079
+1904,Polar,Antarctica,-34.1299,0.6463,-0.0519
+1904,Polar,Asia/Europe,-16.7998,0.7341,-0.1627
+1904,Polar,Europe,-9.6548,1.423,0.3299
+1904,Polar,North America,-18.8379,0.6085,-0.1953
+1904,Polar,South America,-8.9429,1.6192,-0.438
+1904,Temperate,Africa,14.4087,2.2473,-0.1622
+1904,Temperate,Antarctica,-2.0674,2.6362,-0.064
+1904,Temperate,Asia,7.9308,2.3029,-0.292
+1904,Temperate,Asia/Europe,-8.6313,1.3656,-0.3396
+1904,Temperate,Europe,8.1788,2.6319,-0.0176
+1904,Temperate,North America,6.2336,2.5051,-0.1131
+1904,Temperate,Oceania,14.2139,2.7089,0.0399
+1904,Temperate,South America,9.4361,2.546,-0.0862
+1904,Tropical,Africa,25.4086,2.82,0.0153
+1904,Tropical,Asia,26.2079,4.7365,0.2886
+1904,Tropical,North America,24.8384,3.0571,-0.0064
+1904,Tropical,Oceania,25.7492,5.2595,-0.0463
+1904,Tropical,South America,24.2638,3.85,0.4083
+1905,Polar,Antarctica,-33.874,0.6666,-0.1445
+1905,Polar,Asia/Europe,-16.3457,0.7949,-0.3796
+1905,Polar,Europe,-9.2338,1.408,-0.2868
+1905,Polar,North America,-18.2583,0.6294,-0.4688
+1905,Polar,South America,-9.6951,1.6558,-0.2422
+1905,Temperate,Africa,14.4017,2.2255,-0.1272
+1905,Temperate,Antarctica,-2.1244,2.6786,-0.0186
+1905,Temperate,Asia,8.9453,2.2804,-0.3714
+1905,Temperate,Asia/Europe,-8.3267,1.361,-0.196
+1905,Temperate,Europe,8.328,2.597,0.0708
+1905,Temperate,North America,6.1895,2.5886,-0.0391
+1905,Temperate,Oceania,14.2359,2.7358,-0.0274
+1905,Temperate,South America,9.3871,2.567,-0.0785
+1905,Tropical,Africa,25.4998,2.8954,0.4891
+1905,Tropical,Asia,26.2402,4.2078,-0.024
+1905,Tropical,North America,25.2468,3.0727,-0.3673
+1905,Tropical,Oceania,25.9933,5.6257,0.0591
+1905,Tropical,South America,24.486,3.7754,0.2794
+1906,Polar,Antarctica,-33.4434,0.6974,0.3392
+1906,Polar,Asia/Europe,-16.0963,0.7845,-0.2377
+1906,Polar,Europe,-10.4926,1.3551,-0.1103
+1906,Polar,North America,-18.4559,0.5869,-0.6137
+1906,Polar,South America,-9.0807,1.6238,-0.3895
+1906,Temperate,Africa,14.4876,2.3151,0.1721
+1906,Temperate,Antarctica,-1.6181,2.656,-0.1793
+1906,Temperate,Asia,8.3628,2.3991,-0.0559
+1906,Temperate,Asia/Europe,-8.5278,1.2691,-0.2288
+1906,Temperate,Europe,8.132,2.6666,-0.0694
+1906,Temperate,North America,6.4356,2.6316,0.1073
+1906,Temperate,Oceania,14.1419,2.6689,-0.0565
+1906,Temperate,South America,9.4062,2.5999,-0.1257
+1906,Tropical,Africa,25.9226,2.6932,0.2969
+1906,Tropical,Asia,26.6071,4.1047,-0.3961
+1906,Tropical,North America,25.4814,3.3023,-0.0777
+1906,Tropical,Oceania,26.1919,5.7589,0.0376
+1906,Tropical,South America,24.9425,3.538,-0.1268
+1907,Polar,Antarctica,-33.8472,0.676,0.3763
+1907,Polar,Asia/Europe,-17.2611,0.8144,0.3353
+1907,Polar,Europe,-8.4516,1.2713,-0.5819
+1907,Polar,North America,-18.6787,0.6674,0.0915
+1907,Polar,South America,-8.5741,1.8183,-0.0079
+1907,Temperate,Africa,14.4438,2.1796,0.002
+1907,Temperate,Antarctica,-2.0944,2.6928,0.1319
+1907,Temperate,Asia,8.0778,2.3309,-0.158
+1907,Temperate,Asia/Europe,-9.335,1.3438,-0.6346
+1907,Temperate,Europe,8.2514,2.5773,0.0837
+1907,Temperate,North America,6.6186,2.5521,0.0737
+1907,Temperate,Oceania,14.2872,2.6831,-0.143
+1907,Temperate,South America,9.5495,2.5543,-0.1549
+1907,Tropical,Africa,25.9081,2.6268,0.0141
+1907,Tropical,Asia,26.6167,4.9134,-0.1399
+1907,Tropical,North America,25.1466,3.141,-0.1313
+1907,Tropical,Oceania,26.0747,5.4477,0.0989
+1907,Tropical,South America,24.794,3.7414,-0.0762
+1908,Polar,Antarctica,-33.8557,0.6529,-0.1038
+1908,Polar,Asia/Europe,-16.5707,0.7999,0.1868
+1908,Polar,Europe,-9.1097,1.4722,-0.2073
+1908,Polar,North America,-18.4712,0.6842,0.2925
+1908,Polar,South America,-9.2842,1.5603,-0.2274
+1908,Temperate,Africa,14.4435,2.2586,-0.1031
+1908,Temperate,Antarctica,-1.917,2.6824,0.1696
+1908,Temperate,Asia,8.7692,2.3896,-0.22
+1908,Temperate,Asia/Europe,-8.2516,1.3347,-0.2765
+1908,Temperate,Europe,8.5129,2.6857,0.0328
+1908,Temperate,North America,6.4893,2.4939,-0.0592
+1908,Temperate,Oceania,14.2586,2.6947,0.0617
+1908,Temperate,South America,9.5306,2.5781,-0.1124
+1908,Tropical,Africa,25.8456,2.674,-0.0987
+1908,Tropical,Asia,26.4494,4.1926,0.0276
+1908,Tropical,North America,25.5015,3.2543,-0.1171
+1908,Tropical,Oceania,26.1165,5.8769,0.1816
+1908,Tropical,South America,24.9564,3.6164,0.1085
+1909,Polar,Antarctica,-34.1635,0.648,-0.376
+1909,Polar,Asia/Europe,-17.2841,0.755,-0.2449
+1909,Polar,Europe,-9.6253,1.4644,0.1081
+1909,Polar,North America,-18.4578,0.6408,0.1656
+1909,Polar,South America,-10.0015,1.5998,-0.7936
+1909,Temperate,Africa,14.5201,2.3262,0.1927
+1909,Temperate,Antarctica,-2.1214,2.6032,-0.2942
+1909,Temperate,Asia,8.7473,2.4221,0.0512
+1909,Temperate,Asia/Europe,-9.2982,1.2809,-0.0667
+1909,Temperate,Europe,8.5857,2.7226,0.5201
+1909,Temperate,North America,6.7784,2.6067,-0.0082
+1909,Temperate,Oceania,14.292,2.5857,-0.0535
+1909,Temperate,South America,9.3899,2.6542,0.0195
+1909,Tropical,Africa,26.2411,2.4974,0.0457
+1909,Tropical,Asia,26.9053,4.2613,-0.4927
+1909,Tropical,North America,25.9571,3.7321,-0.0294
+1909,Tropical,Oceania,26.3932,5.76,-0.0524
+1909,Tropical,South America,25.4627,3.8093,-0.0428
+1910,Polar,Antarctica,-33.7812,0.6771,0.2246
+1910,Polar,Asia/Europe,-16.7034,0.7121,-0.7307
+1910,Polar,Europe,-11.8388,1.2554,-0.7226
+1910,Polar,North America,-18.492,0.5991,-0.3626
+1910,Polar,South America,-8.9819,1.7207,-0.2822
+1910,Temperate,Africa,14.5281,2.2414,0.1015
+1910,Temperate,Antarctica,-1.999,2.6624,-0.1914
+1910,Temperate,Asia,8.2281,2.4271,-0.0401
+1910,Temperate,Asia/Europe,-9.1397,1.2896,-0.5033
+1910,Temperate,Europe,7.9922,2.5713,-0.054
+1910,Temperate,North America,6.6987,2.6569,0.1001
+1910,Temperate,Oceania,14.2743,2.6308,-0.134
+1910,Temperate,South America,9.4565,2.7149,0.1419
+1910,Tropical,Africa,25.9003,2.563,-0.1434
+1910,Tropical,Asia,26.6679,4.7035,-0.0882
+1910,Tropical,North America,25.5002,3.2739,0.1111
+1910,Tropical,Oceania,26.2457,5.443,-0.0028
+1910,Tropical,South America,25.0093,3.6171,0.0593
+1911,Polar,Antarctica,-34.0771,0.6386,-0.1489
+1911,Polar,Asia/Europe,-16.7872,0.7534,-0.8205
+1911,Polar,Europe,-10.8916,1.4602,-0.641
+1911,Polar,North America,-18.1494,0.6445,-0.3382
+1911,Polar,South America,-8.8152,1.8231,0.2531
+1911,Temperate,Africa,14.4156,2.2697,0.0596
+1911,Temperate,Antarctica,-2.1101,2.6569,-0.3162
+1911,Temperate,Asia,8.2599,2.2578,-0.2022
+1911,Temperate,Asia/Europe,-9.1467,1.3612,-0.5217
+1911,Temperate,Europe,7.9686,2.5502,-0.3555
+1911,Temperate,North America,6.8126,2.5826,0.1076
+1911,Temperate,Oceania,14.261,2.6129,-0.1001
+1911,Temperate,South America,9.4925,2.6628,0.0977
+1911,Tropical,Africa,25.8633,2.7395,-0.0333
+1911,Tropical,Asia,26.7326,4.1677,-0.177
+1911,Tropical,North America,25.5062,3.1435,-0.1656
+1911,Tropical,Oceania,26.3152,5.8693,0.1085
+1911,Tropical,South America,24.907,3.6886,0.0602
+1912,Polar,Antarctica,-33.8815,0.6752,-0.0739
+1912,Polar,Asia/Europe,-18.1045,0.7956,-0.0144
+1912,Polar,Europe,-9.678,1.4215,0.2343
+1912,Polar,North America,-19.5701,0.6167,-0.2238
+1912,Polar,South America,-8.7039,1.7859,0.5784
+1912,Temperate,Africa,14.4298,2.209,-0.0179
+1912,Temperate,Antarctica,-1.9141,2.726,0.1751
+1912,Temperate,Asia,8.1479,2.3255,-0.291
+1912,Temperate,Asia/Europe,-9.3264,1.2717,-0.4667
+1912,Temperate,Europe,7.8429,2.656,0.054
+1912,Temperate,North America,6.4731,2.5062,-0.0605
+1912,Temperate,Oceania,14.1829,2.6359,-0.2416
+1912,Temperate,South America,9.5084,2.6688,0.0777
+1912,Tropical,Africa,25.9956,2.5621,0.2467
+1912,Tropical,Asia,26.7197,4.5946,-0.2887
+1912,Tropical,North America,25.4771,3.1508,-0.2358
+1912,Tropical,Oceania,26.3164,5.7019,0.1511
+1912,Tropical,South America,25.1304,3.746,-0.064
+1913,Polar,Antarctica,-33.1713,0.6588,0.0662
+1913,Polar,Asia/Europe,-17.897,0.7065,-0.4451
+1913,Polar,Europe,-11.0303,1.4628,0.1796
+1913,Polar,North America,-18.9622,0.6148,-0.5485
+1913,Polar,South America,-8.6464,1.7235,0.4099
+1913,Temperate,Africa,14.2482,2.3607,0.1583
+1913,Temperate,Antarctica,-2.2356,2.5481,-0.071
+1913,Temperate,Asia,8.3124,2.412,-0.2726
+1913,Temperate,Asia/Europe,-9.4227,1.3134,-0.3806
+1913,Temperate,Europe,8.0274,2.5672,-0.0073
+1913,Temperate,North America,6.4265,2.6101,0.0485
+1913,Temperate,Oceania,14.3035,2.5912,-0.1882
+1913,Temperate,South America,9.5431,2.7224,0.2038
+1913,Tropical,Africa,26.0415,2.5863,-0.0728
+1913,Tropical,Asia,26.7069,4.1533,-0.2074
+1913,Tropical,North America,25.5968,3.3866,-0.0339
+1913,Tropical,Oceania,26.3067,5.7549,0.0481
+1913,Tropical,South America,24.9535,3.7289,0.1318
+1914,Polar,Antarctica,-34.451,0.635,-0.1029
+1914,Polar,Asia/Europe,-18.0736,0.7108,-1.0395
+1914,Polar,Europe,-10.0018,1.3083,-0.3984
+1914,Polar,North America,-18.9496,0.611,-0.6918
+1914,Polar,South America,-8.1644,1.7241,-0.2323
+1914,Temperate,Africa,14.3527,2.2849,0.2679
+1914,Temperate,Antarctica,-2.4813,2.6711,-0.4801
+1914,Temperate,Asia,8.0548,2.4864,-0.0249
+1914,Temperate,Asia/Europe,-10.0406,1.282,-0.5584
+1914,Temperate,Europe,8.1505,2.5582,-0.1912
+1914,Temperate,North America,6.6441,2.5358,0.0814
+1914,Temperate,Oceania,14.3022,2.5799,-0.1416
+1914,Temperate,South America,9.7329,2.6323,0.0491
+1914,Tropical,Africa,26.1566,2.697,-0.0597
+1914,Tropical,Asia,26.839,4.4771,-0.3634
+1914,Tropical,North America,25.8685,3.7844,0.3068
+1914,Tropical,Oceania,26.335,5.5251,-0.1208
+1914,Tropical,South America,25.3095,3.8171,0.1123
+1915,Polar,Antarctica,-34.1395,0.6695,-0.1882
+1915,Polar,Asia/Europe,-17.6668,0.7503,-0.7976
+1915,Polar,Europe,-9.6531,1.4852,-0.5309
+1915,Polar,North America,-19.8798,0.6291,-0.4301
+1915,Polar,South America,-8.5817,1.8042,0.2596
+1915,Temperate,Africa,14.4054,2.2315,0.048
+1915,Temperate,Antarctica,-2.2179,2.7028,0.0425
+1915,Temperate,Asia,8.0076,2.3489,-0.0243
+1915,Temperate,Asia/Europe,-9.4967,1.2676,-0.5814
+1915,Temperate,Europe,8.1952,2.5361,-0.2659
+1915,Temperate,North America,6.4339,2.54,0.0039
+1915,Temperate,Oceania,14.2035,2.7042,-0.1408
+1915,Temperate,South America,9.5803,2.6766,0.1741
+1915,Tropical,Africa,25.7454,2.8663,0.6168
+1915,Tropical,Asia,26.6162,4.9071,0.01
+1915,Tropical,North America,25.3339,3.0808,-0.0733
+1915,Tropical,Oceania,26.0719,5.2414,-0.1204
+1915,Tropical,South America,24.8886,3.5075,0.0135
+1916,Polar,Antarctica,-34.1249,0.6254,-0.2562
+1916,Polar,Asia/Europe,-17.3846,0.8296,0.0094
+1916,Polar,Europe,-10.0707,1.374,0.5884
+1916,Polar,North America,-20.2613,0.6461,-0.4789
+1916,Polar,South America,-9.303,1.6952,0.045
+1916,Temperate,Africa,14.4767,2.2023,-0.1406
+1916,Temperate,Antarctica,-2.2571,2.7139,0.2
+1916,Temperate,Asia,8.7524,2.367,-0.3142
+1916,Temperate,Asia/Europe,-8.9376,1.438,-0.205
+1916,Temperate,Europe,8.5636,2.5691,-0.3063
+1916,Temperate,North America,6.3252,2.4794,-0.1539
+1916,Temperate,Oceania,14.3211,2.6924,-0.0509
+1916,Temperate,South America,9.5506,2.6467,0.2311
+1916,Tropical,Africa,25.5987,2.5588,0.0419
+1916,Tropical,Asia,26.5141,5.1664,0.5239
+1916,Tropical,North America,25.2551,3.1331,-0.117
+1916,Tropical,Oceania,26.0,5.3922,-0.0136
+1916,Tropical,South America,24.5408,3.7067,0.06
+1917,Polar,Antarctica,-34.2823,0.6389,-0.4449
+1917,Polar,Asia/Europe,-15.9405,0.8409,0.5767
+1917,Polar,Europe,-9.5744,1.5083,-0.1127
+1917,Polar,North America,-18.7975,0.6463,0.0899
+1917,Polar,South America,-9.6639,1.6733,-0.0299
+1917,Temperate,Africa,14.4832,2.2192,-0.0438
+1917,Temperate,Antarctica,-2.0844,2.7006,0.2093
+1917,Temperate,Asia,9.0006,2.3452,-0.1019
+1917,Temperate,Asia/Europe,-7.5729,1.3788,0.0918
+1917,Temperate,Europe,8.3089,2.6218,-0.1993
+1917,Temperate,North America,6.5142,2.5903,-0.0112
+1917,Temperate,Oceania,14.2751,2.6525,0.0079
+1917,Temperate,South America,9.4564,2.638,0.0597
+1917,Tropical,Africa,25.8387,2.6689,-0.0787
+1917,Tropical,Asia,26.6024,4.5252,0.166
+1917,Tropical,North America,25.6059,3.2305,-0.1921
+1917,Tropical,Oceania,26.2134,5.6459,0.0716
+1917,Tropical,South America,24.9522,3.6574,0.1307
+1918,Polar,Antarctica,-33.4703,0.6928,0.3998
+1918,Polar,Asia/Europe,-17.1675,0.7936,0.3724
+1918,Polar,Europe,-10.5116,1.3557,0.2619
+1918,Polar,North America,-18.1081,0.648,-0.0493
+1918,Polar,South America,-8.4863,1.7864,0.3013
+1918,Temperate,Africa,14.5153,2.3296,0.0336
+1918,Temperate,Antarctica,-2.2343,2.682,0.1785
+1918,Temperate,Asia,9.0573,2.4403,0.0149
+1918,Temperate,Asia/Europe,-8.8361,1.4469,0.3211
+1918,Temperate,Europe,8.518,2.5883,0.1893
+1918,Temperate,North America,6.7992,2.5649,0.0069
+1918,Temperate,Oceania,14.3273,2.5032,-0.3962
+1918,Temperate,South America,9.4649,2.6116,-0.0405
+1918,Tropical,Africa,26.1908,2.7838,0.1099
+1918,Tropical,Asia,26.652,4.1957,-0.2575
+1918,Tropical,North America,25.687,3.0641,-0.3828
+1918,Tropical,Oceania,26.3693,5.9172,0.0681
+1918,Tropical,South America,25.2732,3.5674,-0.164
+1919,Polar,Antarctica,-33.3387,0.6987,0.1642
+1919,Polar,Asia/Europe,-18.2789,0.7788,-0.0109
+1919,Polar,Europe,-10.7199,1.4007,-0.3241
+1919,Polar,North America,-18.8586,0.6847,0.1777
+1919,Polar,South America,-8.9077,1.7049,-0.306
+1919,Temperate,Africa,14.4497,2.3464,0.4778
+1919,Temperate,Antarctica,-2.1564,2.6621,-0.0665
+1919,Temperate,Asia,9.0692,2.4142,0.1788
+1919,Temperate,Asia/Europe,-9.3686,1.3692,-0.0912
+1919,Temperate,Europe,7.9047,2.6472,0.0314
+1919,Temperate,North America,6.9681,2.5552,0.0574
+1919,Temperate,Oceania,14.3386,2.5898,-0.1803
+1919,Temperate,South America,9.4733,2.5738,-0.3326
+1919,Tropical,Africa,26.4685,2.6595,0.2411
+1919,Tropical,Asia,26.9672,4.4236,-0.3647
+1919,Tropical,North America,25.9763,3.8235,-0.1098
+1919,Tropical,Oceania,26.4892,5.6193,-0.117
+1919,Tropical,South America,25.8619,3.6755,-0.1122
+1920,Polar,Antarctica,-33.7876,0.634,-0.021
+1920,Polar,Asia/Europe,-17.4113,0.7623,-0.3084
+1920,Polar,Europe,-10.1415,1.423,-0.0161
+1920,Polar,North America,-18.7816,0.6284,0.0616
+1920,Polar,South America,-8.2771,1.7617,0.1571
+1920,Temperate,Africa,14.3855,2.2341,0.0195
+1920,Temperate,Antarctica,-2.1445,2.6478,-0.0512
+1920,Temperate,Asia,8.8808,2.4248,0.06
+1920,Temperate,Asia/Europe,-9.1183,1.3964,-0.0044
+1920,Temperate,Europe,8.3072,2.5396,-0.2471
+1920,Temperate,North America,6.5017,2.5852,0.1087
+1920,Temperate,Oceania,14.3209,2.6448,-0.1915
+1920,Temperate,South America,9.7007,2.5986,-0.0678
+1920,Tropical,Africa,26.1419,2.5436,-0.1314
+1920,Tropical,Asia,26.8178,4.8419,-0.0198
+1920,Tropical,North America,25.1162,2.9047,-0.0334
+1920,Tropical,Oceania,26.2368,5.589,0.1
+1920,Tropical,South America,24.8984,3.9799,0.4275
+1921,Polar,Antarctica,-33.9068,0.668,0.0204
+1921,Polar,Asia/Europe,-16.0507,0.8013,-0.1049
+1921,Polar,Europe,-11.3983,1.2684,-0.3879
+1921,Polar,North America,-18.7044,0.6593,-0.009
+1921,Polar,South America,-8.7925,1.6703,-0.2309
+1921,Temperate,Africa,14.3882,2.234,0.0026
+1921,Temperate,Antarctica,-2.0915,2.6113,-0.5384
+1921,Temperate,Asia,8.821,2.2661,-0.1425
+1921,Temperate,Asia/Europe,-7.8296,1.4183,-0.0438
+1921,Temperate,Europe,7.9739,2.5721,-0.2078
+1921,Temperate,North America,6.52,2.5609,0.2777
+1921,Temperate,Oceania,14.4066,2.7759,0.0572
+1921,Temperate,South America,9.629,2.5836,-0.0455
+1921,Tropical,Africa,25.8057,2.6026,-0.2611
+1921,Tropical,Asia,26.5112,5.135,0.2879
+1921,Tropical,North America,24.991,2.8038,-0.562
+1921,Tropical,Oceania,26.0321,5.2699,0.1614
+1921,Tropical,South America,24.6234,3.8918,0.4895
+1922,Polar,Antarctica,-33.8725,0.6677,-0.0172
+1922,Polar,Asia/Europe,-17.2251,0.7146,-0.2472
+1922,Polar,Europe,-10.1454,1.529,0.0858
+1922,Polar,North America,-19.5045,0.6304,-0.0691
+1922,Polar,South America,-10.3212,1.5425,-0.4996
+1922,Temperate,Africa,14.4481,2.2904,-0.1436
+1922,Temperate,Antarctica,-1.7789,2.6065,-0.2359
+1922,Temperate,Asia,8.86,2.3275,-0.2968
+1922,Temperate,Asia/Europe,-8.5809,1.5274,0.5367
+1922,Temperate,Europe,8.418,2.5963,-0.0987
+1922,Temperate,North America,6.3648,2.5923,0.1107
+1922,Temperate,Oceania,14.1874,2.6943,0.1426
+1922,Temperate,South America,9.2093,2.6666,-0.1443
+1922,Tropical,Africa,25.6746,2.5545,-0.2015
+1922,Tropical,Asia,26.4063,3.8356,0.0561
+1922,Tropical,North America,25.8196,3.4903,-0.3894
+1922,Tropical,Oceania,26.2047,5.9772,0.2173
+1922,Tropical,South America,24.8752,3.5576,0.0297
+1923,Polar,Antarctica,-33.7249,0.6149,-0.2672
+1923,Polar,Asia/Europe,-17.5353,0.7644,-0.8881
+1923,Polar,Europe,-11.2875,1.5056,0.3177
+1923,Polar,North America,-19.1163,0.6477,-0.1004
+1923,Polar,South America,-7.0433,1.9358,0.2255
+1923,Temperate,Africa,14.3356,2.2518,0.0822
+1923,Temperate,Antarctica,-2.6131,2.6803,-0.0954
+1923,Temperate,Asia,9.1991,2.5259,0.2548
+1923,Temperate,Asia/Europe,-8.7456,1.3956,0.4931
+1923,Temperate,Europe,8.4464,2.6655,0.0639
+1923,Temperate,North America,6.6568,2.5413,0.1205
+1923,Temperate,Oceania,14.3836,2.5333,-0.183
+1923,Temperate,South America,9.5729,2.6408,0.0661
+1923,Tropical,Africa,26.4221,2.5429,0.0055
+1923,Tropical,Asia,27.0998,4.4744,-0.6192
+1923,Tropical,North America,26.1102,4.444,0.4558
+1923,Tropical,Oceania,26.4263,5.5477,-0.1035
+1923,Tropical,South America,25.5682,3.7971,-0.2729
+1924,Polar,Antarctica,-34.2249,0.6549,-0.1045
+1924,Polar,Asia/Europe,-16.5701,0.8409,-0.0746
+1924,Polar,Europe,-10.2568,1.4256,-0.2165
+1924,Polar,North America,-18.6187,0.6205,-0.5999
+1924,Polar,South America,-9.3274,1.7428,0.4379
+1924,Temperate,Africa,14.3331,2.1608,-0.0675
+1924,Temperate,Antarctica,-2.7569,2.5951,-0.518
+1924,Temperate,Asia,9.0626,2.2568,-0.1938
+1924,Temperate,Asia/Europe,-8.0421,1.4861,0.6309
+1924,Temperate,Europe,8.3932,2.6596,0.2685
+1924,Temperate,North America,6.7413,2.5372,0.0384
+1924,Temperate,Oceania,14.3764,2.7455,0.0792
+1924,Temperate,South America,9.4371,2.4929,-0.0977
+1924,Tropical,Africa,25.8128,2.8059,0.091
+1924,Tropical,Asia,26.6952,5.1293,0.2678
+1924,Tropical,North America,25.1624,3.2095,0.2208
+1924,Tropical,Oceania,26.094,5.2435,-0.0029
+1924,Tropical,South America,24.6527,3.7449,0.4034
+1925,Polar,Antarctica,-34.5565,0.608,-0.0681
+1925,Polar,Asia/Europe,-17.2596,0.6861,-0.2182
+1925,Polar,Europe,-10.6723,1.3467,-0.1795
+1925,Polar,North America,-18.7375,0.6157,-0.1162
+1925,Polar,South America,-8.599,1.9096,0.6065
+1925,Temperate,Africa,14.3223,2.1652,-0.3313
+1925,Temperate,Antarctica,-2.3778,2.6876,-0.3768
+1925,Temperate,Asia,8.4696,2.3296,-0.2391
+1925,Temperate,Asia/Europe,-9.5764,1.3382,0.097
+1925,Temperate,Europe,7.8155,2.5424,-0.1016
+1925,Temperate,North America,6.2997,2.5373,-0.0642
+1925,Temperate,Oceania,14.4597,2.7448,0.1062
+1925,Temperate,South America,9.4074,2.5942,-0.1405
+1925,Tropical,Africa,25.6927,2.8217,0.465
+1925,Tropical,Asia,26.6241,4.7239,0.4256
+1925,Tropical,North America,25.3793,3.2473,-0.0054
+1925,Tropical,Oceania,26.1207,5.4417,0.0216
+1925,Tropical,South America,24.516,3.6186,-0.0214
+1926,Polar,Antarctica,-35.5403,0.6447,-0.7615
+1926,Polar,Asia/Europe,-16.8655,0.6659,-1.4196
+1926,Polar,Europe,-9.6598,1.4292,0.0722
+1926,Polar,North America,-19.1118,0.6043,-0.8745
+1926,Polar,South America,-10.4566,1.6554,0.3337
+1926,Temperate,Africa,14.4972,2.2452,-0.2081
+1926,Temperate,Antarctica,-2.3453,2.6622,0.1962
+1926,Temperate,Asia,8.5308,2.3616,-0.1442
+1926,Temperate,Asia/Europe,-8.9249,1.3667,-0.3281
+1926,Temperate,Europe,8.4955,2.5995,-0.3105
+1926,Temperate,North America,6.1927,2.611,0.2133
+1926,Temperate,Oceania,14.4416,2.6454,-0.0759
+1926,Temperate,South America,9.17,2.5651,-0.0283
+1926,Tropical,Africa,26.0464,2.8373,0.4225
+1926,Tropical,Asia,26.7314,3.9759,-0.2453
+1926,Tropical,North America,25.8567,3.2054,-0.1996
+1926,Tropical,Oceania,26.3473,6.0127,0.1535
+1926,Tropical,South America,25.3612,3.3756,-0.0502
+1927,Polar,Antarctica,-33.8229,0.6707,-0.0956
+1927,Polar,Asia/Europe,-16.8192,0.8061,-0.828
+1927,Polar,Europe,-10.5445,1.5148,-0.1959
+1927,Polar,North America,-18.5656,0.6493,-0.3371
+1927,Polar,South America,-8.8532,1.8007,0.2201
+1927,Temperate,Africa,14.646,2.2725,-0.0307
+1927,Temperate,Antarctica,-1.8881,2.7367,0.1763
+1927,Temperate,Asia,9.3207,2.4715,-0.0641
+1927,Temperate,Asia/Europe,-7.941,1.4213,0.3252
+1927,Temperate,Europe,8.0717,2.6694,0.2926
+1927,Temperate,North America,6.5232,2.5262,0.0225
+1927,Temperate,Oceania,14.2958,2.5433,-0.1507
+1927,Temperate,South America,9.3718,2.6814,-0.0357
+1927,Tropical,Africa,26.4882,2.5478,0.1309
+1927,Tropical,Asia,27.0632,4.7562,-0.1343
+1927,Tropical,North America,26.0629,3.8226,-0.0137
+1927,Tropical,Oceania,26.4088,5.5579,-0.0709
+1927,Tropical,South America,25.9522,3.5115,-0.4372
+1928,Polar,Antarctica,-33.6036,0.6356,-0.0505
+1928,Polar,Asia/Europe,-17.6682,0.7541,-0.0121
+1928,Polar,Europe,-8.8825,1.6029,0.5123
+1928,Polar,North America,-19.8328,0.7092,0.1914
+1928,Polar,South America,-9.1016,1.6513,-0.3044
+1928,Temperate,Africa,14.4074,2.2156,-0.0126
+1928,Temperate,Antarctica,-2.0891,2.6644,0.0062
+1928,Temperate,Asia,8.435,2.4609,0.1232
+1928,Temperate,Asia/Europe,-9.2346,1.2817,-0.2369
+1928,Temperate,Europe,8.3781,2.4399,-0.3598
+1928,Temperate,North America,6.2545,2.4477,-0.1259
+1928,Temperate,Oceania,14.4388,2.7929,0.1633
+1928,Temperate,South America,9.4397,2.541,0.0543
+1928,Tropical,Africa,26.0956,2.8057,-0.0302
+1928,Tropical,Asia,26.8213,5.016,0.2345
+1928,Tropical,North America,25.1055,3.2216,0.077
+1928,Tropical,Oceania,26.0995,5.2994,0.012
+1928,Tropical,South America,24.6975,3.796,0.0408
+1929,Polar,Antarctica,-34.2988,0.6251,-0.5152
+1929,Polar,Asia/Europe,-16.4145,0.8675,0.184
+1929,Polar,Europe,-8.2979,1.6554,1.8088
+1929,Polar,North America,-19.9579,0.6639,0.4627
+1929,Polar,South America,-9.4749,1.5864,-0.4068
+1929,Temperate,Africa,14.4916,2.2179,-0.2295
+1929,Temperate,Antarctica,-2.0815,2.7078,0.2785
+1929,Temperate,Asia,8.8151,2.3684,0.0341
+1929,Temperate,Asia/Europe,-8.6328,1.4096,-0.5439
+1929,Temperate,Europe,8.7291,2.5645,-0.5581
+1929,Temperate,North America,6.2806,2.4434,-0.2008
+1929,Temperate,Oceania,14.3554,2.8442,0.2875
+1929,Temperate,South America,9.3343,2.5526,-0.0026
+1929,Tropical,Africa,25.6271,2.6865,0.221
+1929,Tropical,Asia,26.4926,4.6885,0.3865
+1929,Tropical,North America,25.2033,3.2757,0.1013
+1929,Tropical,Oceania,26.0065,5.4988,0.0711
+1929,Tropical,South America,24.6312,3.475,0.0873
+1930,Polar,Antarctica,-34.3239,0.6978,-0.1735
+1930,Polar,Asia/Europe,-17.2228,0.8657,0.4128
+1930,Polar,Europe,-9.3055,1.4944,0.7595
+1930,Polar,North America,-19.731,0.6606,-0.1548
+1930,Polar,South America,-8.6182,1.5411,-1.2597
+1930,Temperate,Africa,14.3969,2.2262,0.102
+1930,Temperate,Antarctica,-1.6409,2.6679,-0.0504
+1930,Temperate,Asia,8.7354,2.4023,-0.0155
+1930,Temperate,Asia/Europe,-8.6934,1.3863,0.1314
+1930,Temperate,Europe,8.607,2.6235,0.0259
+1930,Temperate,North America,6.5362,2.5371,-0.1534
+1930,Temperate,Oceania,14.2984,2.6922,0.0627
+1930,Temperate,South America,9.382,2.6618,-0.2086
+1930,Tropical,Africa,25.9127,2.432,-0.0945
+1930,Tropical,Asia,26.7568,4.6223,0.1002
+1930,Tropical,North America,25.7055,3.2695,-0.0996
+1930,Tropical,Oceania,26.3864,5.7512,0.0506
+1930,Tropical,South America,25.2303,3.5835,-0.2279
+1931,Polar,Antarctica,-33.7474,0.6848,0.248
+1931,Polar,Asia/Europe,-18.0988,0.7478,0.4703
+1931,Polar,Europe,-9.9017,1.5642,0.5549
+1931,Polar,North America,-19.2025,0.678,0.0205
+1931,Polar,South America,-8.6963,1.7119,-0.4105
+1931,Temperate,Africa,14.7095,2.3809,0.2028
+1931,Temperate,Antarctica,-2.0912,2.7532,0.3579
+1931,Temperate,Asia,9.357,2.5179,0.0838
+1931,Temperate,Asia/Europe,-8.7682,1.4263,0.3144
+1931,Temperate,Europe,8.8803,2.7302,0.3966
+1931,Temperate,North America,6.7956,2.5697,0.0121
+1931,Temperate,Oceania,14.3822,2.4621,-0.1831
+1931,Temperate,South America,9.5064,2.6539,-0.0977
+1931,Tropical,Africa,26.5602,2.6396,0.0075
+1931,Tropical,Asia,27.0904,3.9623,-0.255
+1931,Tropical,North America,26.3532,3.9262,0.1481
+1931,Tropical,Oceania,26.4497,5.9236,-0.0728
+1931,Tropical,South America,25.9918,3.462,-0.3864
+1932,Polar,Antarctica,-33.9363,0.6692,0.0911
+1932,Polar,Asia/Europe,-16.8647,0.7936,-0.2362
+1932,Polar,Europe,-8.1988,1.4654,0.7971
+1932,Polar,North America,-17.741,0.6686,0.3389
+1932,Polar,South America,-8.0557,1.8462,0.0725
+1932,Temperate,Africa,14.5354,2.2264,0.148
+1932,Temperate,Antarctica,-2.0844,2.6687,0.2703
+1932,Temperate,Asia,9.0437,2.4552,0.226
+1932,Temperate,Asia/Europe,-9.0132,1.3879,-0.0647
+1932,Temperate,Europe,8.6249,2.6578,0.241
+1932,Temperate,North America,6.7628,2.5225,0.0454
+1932,Temperate,Oceania,14.5793,2.6565,-0.1232
+1932,Temperate,South America,9.5538,2.5534,-0.0343
+1932,Tropical,Africa,26.4033,2.7307,0.2612
+1932,Tropical,Asia,27.1159,4.9694,-0.2799
+1932,Tropical,North America,25.8024,3.6458,0.1668
+1932,Tropical,Oceania,26.303,5.3427,-0.1224
+1932,Tropical,South America,25.4866,3.626,-0.1547
+1933,Polar,Antarctica,-34.0025,0.6539,0.0296
+1933,Polar,Asia/Europe,-18.4723,0.7479,-0.5535
+1933,Polar,Europe,-10.6186,1.4599,-0.0336
+1933,Polar,North America,-19.3315,0.6399,-0.2141
+1933,Polar,South America,-8.6468,1.8026,0.9377
+1933,Temperate,Africa,14.6061,2.1946,-0.3798
+1933,Temperate,Antarctica,-2.4559,2.7051,-0.1782
+1933,Temperate,Asia,8.8486,2.3643,-0.1005
+1933,Temperate,Asia/Europe,-9.6359,1.4546,0.3188
+1933,Temperate,Europe,8.4178,2.5486,-0.2072
+1933,Temperate,North America,6.4625,2.4603,-0.0377
+1933,Temperate,Oceania,14.4333,2.7492,0.1976
+1933,Temperate,South America,9.6298,2.6632,-0.0672
+1933,Tropical,Africa,25.7764,2.6122,-0.0212
+1933,Tropical,Asia,26.634,5.1858,0.5466
+1933,Tropical,North America,25.126,2.9891,0.0377
+1933,Tropical,Oceania,25.9879,5.2192,-0.0397
+1933,Tropical,South America,24.6988,3.8948,0.4136
+1934,Polar,Antarctica,-33.8951,0.6879,-0.1779
+1934,Polar,Asia/Europe,-17.2188,0.8507,-0.0088
+1934,Polar,Europe,-10.7322,1.5251,0.2927
+1934,Polar,North America,-19.3902,0.619,-0.4926
+1934,Polar,South America,-7.8972,1.7099,0.0455
+1934,Temperate,Africa,14.5873,2.2762,-0.0957
+1934,Temperate,Antarctica,-1.8207,2.6829,0.0729
+1934,Temperate,Asia,9.1628,2.2923,-0.3334
+1934,Temperate,Asia/Europe,-8.5315,1.4321,0.5893
+1934,Temperate,Europe,7.9412,2.5719,-0.2008
+1934,Temperate,North America,6.336,2.5965,0.0409
+1934,Temperate,Oceania,14.3225,2.6299,0.0373
+1934,Temperate,South America,9.5038,2.7112,0.0653
+1934,Tropical,Africa,25.9708,2.5953,-0.0315
+1934,Tropical,Asia,26.5059,4.2864,0.179
+1934,Tropical,North America,25.5948,3.2576,-0.2437
+1934,Tropical,Oceania,26.2228,5.8311,0.1632
+1934,Tropical,South America,24.9976,3.75,0.1738
+1935,Polar,Antarctica,-32.5759,0.7031,0.3252
+1935,Polar,Asia/Europe,-17.6197,0.7105,-0.3535
+1935,Polar,Europe,-8.7368,1.5172,0.3881
+1935,Polar,North America,-18.4791,0.6605,-0.177
+1935,Polar,South America,-7.5976,1.7006,-0.0992
+1935,Temperate,Africa,14.5518,2.3638,0.2824
+1935,Temperate,Antarctica,-2.0466,2.6979,0.267
+1935,Temperate,Asia,8.7389,2.5815,0.1388
+1935,Temperate,Asia/Europe,-9.7098,1.3078,-0.5997
+1935,Temperate,Europe,8.1148,2.5656,-0.1167
+1935,Temperate,North America,6.7391,2.6656,0.1621
+1935,Temperate,Oceania,14.449,2.5462,-0.2278
+1935,Temperate,South America,9.6151,2.6518,0.0746
+1935,Tropical,Africa,26.5364,2.3759,-0.1889
+1935,Tropical,Asia,27.1222,4.3289,-0.4253
+1935,Tropical,North America,26.1381,3.7962,0.1678
+1935,Tropical,Oceania,26.4454,5.7025,-0.1273
+1935,Tropical,South America,25.6502,3.7646,-0.181
+1936,Polar,Antarctica,-34.1182,0.6596,0.3369
+1936,Polar,Asia/Europe,-17.5927,0.8245,-0.2904
+1936,Polar,Europe,-9.9824,1.48,0.3487
+1936,Polar,North America,-18.198,0.6248,-0.2822
+1936,Polar,South America,-8.277,1.8008,0.2815
+1936,Temperate,Africa,14.6446,2.212,0.039
+1936,Temperate,Antarctica,-1.9017,2.7193,-0.0128
+1936,Temperate,Asia,8.8572,2.4035,0.0213
+1936,Temperate,Asia/Europe,-9.3337,1.4261,0.2476
+1936,Temperate,Europe,8.2926,2.5714,-0.086
+1936,Temperate,North America,6.8841,2.5347,0.1128
+1936,Temperate,Oceania,14.3174,2.7246,-0.0106
+1936,Temperate,South America,9.7154,2.5958,0.0926
+1936,Tropical,Africa,26.2322,2.49,-0.424
+1936,Tropical,Asia,26.9671,4.9347,-0.0409
+1936,Tropical,North America,25.4744,3.3327,0.026
+1936,Tropical,Oceania,26.3927,5.554,-0.0882
+1936,Tropical,South America,24.9663,3.8084,0.2402
+1937,Polar,Antarctica,-34.2027,0.6731,-0.1439
+1937,Polar,Asia/Europe,-17.8996,0.8539,0.5477
+1937,Polar,Europe,-10.5243,1.4734,0.5285
+1937,Polar,North America,-19.7088,0.6468,-0.1901
+1937,Polar,South America,-8.3593,1.6725,0.1834
+1937,Temperate,Africa,14.7043,2.2366,-0.2315
+1937,Temperate,Antarctica,-1.9069,2.7128,0.3808
+1937,Temperate,Asia,8.8725,2.2866,-0.2348
+1937,Temperate,Asia/Europe,-9.267,1.2914,-0.1101
+1937,Temperate,Europe,8.0752,2.5409,-0.2092
+1937,Temperate,North America,6.5119,2.5468,-0.0217
+1937,Temperate,Oceania,14.5162,2.7266,0.2002
+1937,Temperate,South America,9.7148,2.5959,0.0217
+1937,Tropical,Africa,25.767,2.6488,-0.1729
+1937,Tropical,Asia,26.6025,4.6876,0.3145
+1937,Tropical,North America,25.4966,3.3094,-0.0497
+1937,Tropical,Oceania,26.1191,5.6515,0.2267
+1937,Tropical,South America,24.7618,3.5925,0.0621
+1938,Polar,Antarctica,-33.031,0.729,0.3004
+1938,Polar,Asia/Europe,-16.1884,0.8001,0.4417
+1938,Polar,Europe,-8.2694,1.5523,0.8568
+1938,Polar,North America,-17.7597,0.6861,0.3218
+1938,Polar,South America,-8.1968,1.5869,-0.8524
+1938,Temperate,Africa,14.6645,2.3744,0.1919
+1938,Temperate,Antarctica,-1.7449,2.5779,-0.0271
+1938,Temperate,Asia,9.2573,2.6018,0.0292
+1938,Temperate,Asia/Europe,-7.9971,1.3583,-0.4912
+1938,Temperate,Europe,8.6173,2.7318,0.2135
+1938,Temperate,North America,7.2166,2.5589,0.1353
+1938,Temperate,Oceania,14.4344,2.5343,-0.1067
+1938,Temperate,South America,9.55,2.7532,0.0387
+1938,Tropical,Africa,26.3349,2.3624,-0.0947
+1938,Tropical,Asia,26.9321,4.3305,-0.085
+1938,Tropical,North America,26.2353,3.8434,0.2647
+1938,Tropical,Oceania,26.4035,5.7992,-0.0249
+1938,Tropical,South America,25.8514,3.3631,-0.5239
+1939,Polar,Antarctica,-32.2102,0.6867,0.7258
+1939,Polar,Asia/Europe,-16.3742,0.8558,0.0211
+1939,Polar,Europe,-10.9269,1.2517,-0.1999
+1939,Polar,North America,-17.2556,0.6842,0.5204
+1939,Polar,South America,-8.1453,1.6899,-0.2011
+1939,Temperate,Africa,14.5744,2.2867,0.3955
+1939,Temperate,Antarctica,-1.5063,2.592,-0.8116
+1939,Temperate,Asia,9.4205,2.4945,0.4227
+1939,Temperate,Asia/Europe,-9.1115,1.3361,0.0479
+1939,Temperate,Europe,7.8468,2.7286,0.2812
+1939,Temperate,North America,6.9948,2.5726,0.0591
+1939,Temperate,Oceania,14.4437,2.6633,0.165
+1939,Temperate,South America,9.7924,2.6005,0.0984
+1939,Tropical,Africa,26.6079,2.5502,-0.1769
+1939,Tropical,Asia,27.2349,4.7057,-0.0587
+1939,Tropical,North America,26.3271,4.259,0.5596
+1939,Tropical,Oceania,26.5933,5.2523,-0.3697
+1939,Tropical,South America,25.7942,3.8225,-0.2011
+1940,Polar,Antarctica,-33.8628,0.6883,0.259
+1940,Polar,Asia/Europe,-15.8337,0.7454,0.1986
+1940,Polar,Europe,-9.232,1.2925,-0.6759
+1940,Polar,North America,-17.0023,0.6535,0.3424
+1940,Polar,South America,-9.3313,1.7099,-0.6572
+1940,Temperate,Africa,14.3128,2.1932,-0.1434
+1940,Temperate,Antarctica,-2.2003,2.6538,-0.4212
+1940,Temperate,Asia,8.6876,2.3568,-0.0481
+1940,Temperate,Asia/Europe,-8.8454,1.337,-0.5718
+1940,Temperate,Europe,8.2325,2.5996,0.2091
+1940,Temperate,North America,7.1206,2.5288,0.0452
+1940,Temperate,Oceania,14.3787,2.7514,0.2174
+1940,Temperate,South America,9.5539,2.5605,-0.2408
+1940,Tropical,Africa,26.0057,2.6501,-0.1096
+1940,Tropical,Asia,26.698,5.1646,0.2271
+1940,Tropical,North America,25.3143,3.2963,0.1895
+1940,Tropical,Oceania,26.148,5.2625,0.0396
+1940,Tropical,South America,24.9428,3.8207,0.138
+1941,Polar,Antarctica,-34.3937,0.6386,-0.0391
+1941,Polar,Asia/Europe,-17.5864,0.7282,-0.7565
+1941,Polar,Europe,-9.9158,1.365,-0.6979
+1941,Polar,North America,-18.2718,0.649,-0.0214
+1941,Polar,South America,-9.1042,1.5577,-0.2623
+1941,Temperate,Africa,14.4198,2.171,-0.2563
+1941,Temperate,Antarctica,-2.2038,2.6585,-0.0198
+1941,Temperate,Asia,8.6964,2.469,0.0156
+1941,Temperate,Asia/Europe,-9.2154,1.3909,-0.3468
+1941,Temperate,Europe,8.3353,2.5915,-0.1735
+1941,Temperate,North America,6.6442,2.4504,-0.087
+1941,Temperate,Oceania,14.4714,2.845,0.1758
+1941,Temperate,South America,9.4812,2.5375,-0.2707
+1941,Tropical,Africa,25.8093,2.566,-0.2484
+1941,Tropical,Asia,26.5886,4.9587,0.4754
+1941,Tropical,North America,25.0521,3.0662,-0.0143
+1941,Tropical,Oceania,25.993,5.3194,0.034
+1941,Tropical,South America,24.5428,4.0361,0.8006
+1942,Polar,Antarctica,-35.1237,0.6392,-0.5136
+1942,Polar,Asia/Europe,-16.2308,0.798,-0.3509
+1942,Polar,Europe,-9.6678,1.5135,0.1008
+1942,Polar,North America,-18.9004,0.6257,-0.4539
+1942,Polar,South America,-9.6823,1.7787,-0.4993
+1942,Temperate,Africa,14.4971,2.1961,-0.2382
+1942,Temperate,Antarctica,-2.4368,2.7607,0.152
+1942,Temperate,Asia,8.6318,2.4256,0.024
+1942,Temperate,Asia/Europe,-8.4823,1.3416,0.1929
+1942,Temperate,Europe,8.515,2.626,0.1624
+1942,Temperate,North America,6.5004,2.5645,0.0228
+1942,Temperate,Oceania,14.3447,2.6125,0.0223
+1942,Temperate,South America,9.4712,2.5812,-0.0999
+1942,Tropical,Africa,25.9297,2.7491,-0.046
+1942,Tropical,Asia,26.6365,4.6368,0.2103
+1942,Tropical,North America,25.4537,3.0746,-0.229
+1942,Tropical,Oceania,26.1793,5.5722,0.0733
+1942,Tropical,South America,24.7866,3.7373,0.2446
+1943,Polar,Antarctica,-33.8263,0.6882,-0.3579
+1943,Polar,Asia/Europe,-16.0779,0.7724,-0.0228
+1943,Polar,Europe,-10.2319,1.5572,0.5633
+1943,Polar,North America,-18.8526,0.6436,-0.2371
+1943,Polar,South America,-9.3336,1.6279,-0.1774
+1943,Temperate,Africa,14.5541,2.2257,-0.1077
+1943,Temperate,Antarctica,-1.9257,2.7029,0.4899
+1943,Temperate,Asia,8.753,2.377,-0.0629
+1943,Temperate,Asia/Europe,-7.6693,1.4121,0.1861
+1943,Temperate,Europe,8.334,2.5866,0.0128
+1943,Temperate,North America,6.2598,2.6087,0.097
+1943,Temperate,Oceania,14.4477,2.6762,-0.1377
+1943,Temperate,South America,9.2632,2.6747,0.1106
+1943,Tropical,Africa,25.9535,2.7336,0.3018
+1943,Tropical,Asia,26.6225,4.2459,-0.176
+1943,Tropical,North America,25.5783,2.9009,-0.4431
+1943,Tropical,Oceania,26.2734,5.8897,0.1609
+1943,Tropical,South America,25.0827,3.4741,0.0036
+1944,Polar,Antarctica,-34.0468,0.644,0.1491
+1944,Polar,Asia/Europe,-17.2102,0.7503,-0.7127
+1944,Polar,Europe,-9.2576,1.3515,-0.0121
+1944,Polar,North America,-18.3011,0.6906,0.3059
+1944,Polar,South America,-8.4026,1.7812,-0.0215
+1944,Temperate,Africa,14.5326,2.3094,0.2747
+1944,Temperate,Antarctica,-2.088,2.6849,0.1781
+1944,Temperate,Asia,8.629,2.4886,0.2325
+1944,Temperate,Asia/Europe,-8.8579,1.3957,-0.3655
+1944,Temperate,Europe,8.6277,2.5579,-0.2001
+1944,Temperate,North America,6.8186,2.5164,0.161
+1944,Temperate,Oceania,14.3156,2.6343,-0.0151
+1944,Temperate,South America,9.6825,2.6375,-0.0666
+1944,Tropical,Africa,26.5073,2.3774,-0.2066
+1944,Tropical,Asia,27.1677,4.2823,-0.2986
+1944,Tropical,North America,25.9648,3.8573,-0.0127
+1944,Tropical,Oceania,26.5319,5.8451,0.0058
+1944,Tropical,South America,25.5499,3.7368,-0.2689
+1945,Polar,Antarctica,-34.2205,0.6466,-0.1945
+1945,Polar,Asia/Europe,-16.6296,0.742,-0.1446
+1945,Polar,Europe,-9.4288,1.265,-0.4406
+1945,Polar,North America,-18.235,0.6567,0.2394
+1945,Polar,South America,-8.4347,1.7652,0.0274
+1945,Temperate,Africa,14.5246,2.2132,0.1388
+1945,Temperate,Antarctica,-2.4398,2.7256,-0.0398
+1945,Temperate,Asia,8.0967,2.3321,-0.0057
+1945,Temperate,Asia/Europe,-9.4229,1.3854,0.1116
+1945,Temperate,Europe,8.1335,2.5206,-0.295
+1945,Temperate,North America,6.5439,2.558,-0.0401
+1945,Temperate,Oceania,14.3555,2.6603,0.0822
+1945,Temperate,South America,9.6473,2.554,-0.0395
+1945,Tropical,Africa,26.1923,2.8005,0.1555
+1945,Tropical,Asia,26.805,4.7293,-0.1908
+1945,Tropical,North America,25.4366,3.0541,0.0726
+1945,Tropical,Oceania,26.4307,5.6038,0.1888
+1945,Tropical,South America,25.1226,3.7483,0.3443
+1946,Polar,Antarctica,-32.7838,0.6966,0.1027
+1946,Polar,Asia/Europe,-17.4028,0.8475,-0.0569
+1946,Polar,Europe,-10.2981,1.4475,-0.7584
+1946,Polar,North America,-18.3762,0.6305,-0.2615
+1946,Polar,South America,-8.7449,1.6839,0.452
+1946,Temperate,Africa,14.648,2.4163,0.0846
+1946,Temperate,Antarctica,-2.0032,2.5952,0.0786
+1946,Temperate,Asia,9.076,2.4631,-0.0173
+1946,Temperate,Asia/Europe,-7.6714,1.3928,0.252
+1946,Temperate,Europe,8.5974,2.6885,0.0717
+1946,Temperate,North America,6.5765,2.623,0.1441
+1946,Temperate,Oceania,14.2524,2.5742,-0.0734
+1946,Temperate,South America,9.6204,2.6812,-0.022
+1946,Tropical,Africa,26.3142,2.4484,0.0526
+1946,Tropical,Asia,26.9326,4.2896,-0.0883
+1946,Tropical,North America,26.2706,3.5772,-0.262
+1946,Tropical,Oceania,26.4019,5.8429,0.1071
+1946,Tropical,South America,25.7218,3.5075,0.1313
+1947,Polar,Antarctica,-33.241,0.6873,0.3063
+1947,Polar,Asia/Europe,-17.528,0.8244,0.3791
+1947,Polar,Europe,-11.3616,1.4258,0.0434
+1947,Polar,North America,-18.3081,0.6913,0.4175
+1947,Polar,South America,-7.3796,1.8703,0.3316
+1947,Temperate,Africa,14.6354,2.3094,0.4435
+1947,Temperate,Antarctica,-2.4377,2.7203,-0.2793
+1947,Temperate,Asia,9.5333,2.5108,0.3718
+1947,Temperate,Asia/Europe,-8.473,1.427,0.1813
+1947,Temperate,Europe,8.2164,2.749,0.3885
+1947,Temperate,North America,6.7092,2.4973,0.0226
+1947,Temperate,Oceania,14.422,2.5282,-0.0517
+1947,Temperate,South America,9.8067,2.6945,0.1251
+1947,Tropical,Africa,26.672,2.5228,-0.2957
+1947,Tropical,Asia,27.269,4.5728,-0.18
+1947,Tropical,North America,26.2159,4.2738,0.278
+1947,Tropical,Oceania,26.5595,5.4451,-0.2647
+1947,Tropical,South America,25.9094,3.7772,-0.161
+1948,Polar,Antarctica,-34.4059,0.6112,0.0001
+1948,Polar,Asia/Europe,-16.5202,0.8365,0.3042
+1948,Polar,Europe,-9.6706,1.537,0.56
+1948,Polar,North America,-18.9681,0.6737,0.7049
+1948,Polar,South America,-8.3601,1.913,1.2019
+1948,Temperate,Africa,14.494,2.2419,0.0097
+1948,Temperate,Antarctica,-2.4815,2.6475,0.0894
+1948,Temperate,Asia,9.0406,2.4315,0.1268
+1948,Temperate,Asia/Europe,-8.0571,1.4129,0.2237
+1948,Temperate,Europe,8.7341,2.5828,0.0625
+1948,Temperate,North America,6.409,2.4956,-0.13
+1948,Temperate,Oceania,14.4544,2.7678,0.0677
+1948,Temperate,South America,9.7755,2.5397,0.0177
+1948,Tropical,Africa,25.9346,2.7623,0.1631
+1948,Tropical,Asia,26.9171,5.1635,0.2307
+1948,Tropical,North America,25.0846,3.3661,0.4297
+1948,Tropical,Oceania,26.0478,5.13,-0.0617
+1948,Tropical,South America,24.6806,3.8653,0.3099
+1949,Polar,Antarctica,-34.6856,0.6147,-0.5899
+1949,Polar,Asia/Europe,-17.7406,0.7353,-0.0977
+1949,Polar,Europe,-10.3308,1.4972,0.5075
+1949,Polar,North America,-19.3094,0.6267,-0.0414
+1949,Polar,South America,-9.3063,1.6677,-0.0946
+1949,Temperate,Africa,14.4424,2.1845,-0.201
+1949,Temperate,Antarctica,-3.0179,2.7009,0.0011
+1949,Temperate,Asia,9.1742,2.3908,-0.0344
+1949,Temperate,Asia/Europe,-8.3903,1.412,0.4178
+1949,Temperate,Europe,8.7809,2.6316,0.0317
+1949,Temperate,North America,6.4741,2.4584,-0.0793
+1949,Temperate,Oceania,14.4081,2.8499,0.3586
+1949,Temperate,South America,9.5566,2.525,-0.0497
+1949,Tropical,Africa,25.6494,2.4154,-0.1837
+1949,Tropical,Asia,26.5137,5.2298,0.7482
+1949,Tropical,North America,24.8619,3.0189,0.1375
+1949,Tropical,Oceania,25.8293,5.1257,-0.0014
+1949,Tropical,South America,24.2082,4.2245,0.9081
+1950,Polar,Antarctica,-33.573,0.6448,-0.4071
+1950,Polar,Asia/Europe,-16.8144,0.806,-0.5221
+1950,Polar,Europe,-9.1624,1.4813,0.385
+1950,Polar,North America,-18.763,0.6021,-0.5179
+1950,Polar,South America,-9.2648,1.4887,-0.9253
+1950,Temperate,Africa,14.4985,2.3109,-0.1089
+1950,Temperate,Antarctica,-2.2156,2.5453,-0.4151
+1950,Temperate,Asia,8.9466,2.3143,-0.1379
+1950,Temperate,Asia/Europe,-8.9043,1.387,-0.1192
+1950,Temperate,Europe,8.5312,2.6724,0.2678
+1950,Temperate,North America,6.2471,2.5754,-0.1218
+1950,Temperate,Oceania,14.2616,2.7455,0.3011
+1950,Temperate,South America,9.5195,2.632,-0.0042
+1950,Tropical,Africa,25.8643,2.6588,-0.3233
+1950,Tropical,Asia,26.5558,4.2592,0.2245
+1950,Tropical,North America,25.5891,3.0293,-0.3463
+1950,Tropical,Oceania,26.2208,5.8393,0.1013
+1950,Tropical,South America,25.0739,3.5444,0.3138
+1951,Polar,Antarctica,-33.9375,0.6543,-0.1434
+1951,Polar,Asia/Europe,-15.5754,0.7846,-0.1973
+1951,Polar,Europe,-9.8543,1.438,-0.1037
+1951,Polar,North America,-17.3305,0.6638,-0.4542
+1951,Polar,South America,-10.4083,1.6081,-0.6309
+1951,Temperate,Africa,14.4722,2.3598,0.258
+1951,Temperate,Antarctica,-2.8188,2.6142,-0.4996
+1951,Temperate,Asia,8.2943,2.5018,0.1002
+1951,Temperate,Asia/Europe,-9.0712,1.2955,-0.5587
+1951,Temperate,Europe,8.5501,2.6069,-0.0347
+1951,Temperate,North America,6.8264,2.6335,0.2895
+1951,Temperate,Oceania,14.2168,2.4729,-0.0671
+1951,Temperate,South America,9.287,2.7601,0.1079
+1951,Tropical,Africa,26.6631,2.3831,-0.0334
+1951,Tropical,Asia,27.036,4.1632,-0.4045
+1951,Tropical,North America,26.368,3.6346,-0.2352
+1951,Tropical,Oceania,26.5484,6.024,-0.0079
+1951,Tropical,South America,26.1278,3.5097,-0.3231
+1952,Polar,Antarctica,-34.0736,0.6428,-0.0573
+1952,Polar,Asia/Europe,-17.0383,0.8496,0.4006
+1952,Polar,Europe,-11.4099,1.371,-0.0285
+1952,Polar,North America,-17.7109,0.6878,0.553
+1952,Polar,South America,-8.231,1.8932,0.4029
+1952,Temperate,Africa,14.4114,2.2071,0.1784
+1952,Temperate,Antarctica,-3.1398,2.6142,-0.4975
+1952,Temperate,Asia,8.7674,2.3417,0.1118
+1952,Temperate,Asia/Europe,-8.4573,1.4582,0.1865
+1952,Temperate,Europe,8.4998,2.6472,-0.0184
+1952,Temperate,North America,6.9086,2.5999,0.1743
+1952,Temperate,Oceania,14.3227,2.6973,0.0091
+1952,Temperate,South America,9.6595,2.6225,0.0748
+1952,Tropical,Africa,26.4145,2.5505,-0.3441
+1952,Tropical,Asia,27.223,5.0039,-0.1576
+1952,Tropical,North America,25.9701,3.8402,0.0348
+1952,Tropical,Oceania,26.5132,5.1902,-0.2325
+1952,Tropical,South America,25.7675,3.9308,0.0419
+1953,Polar,Antarctica,-35.0254,0.6306,-0.2285
+1953,Polar,Asia/Europe,-15.9728,0.852,0.7814
+1953,Polar,Europe,-10.3318,1.4565,-0.0583
+1953,Polar,North America,-18.2712,0.7086,0.8581
+1953,Polar,South America,-8.8105,1.9097,0.5017
+1953,Temperate,Africa,14.4582,2.1898,-0.2751
+1953,Temperate,Antarctica,-2.7241,2.715,-0.2082
+1953,Temperate,Asia,8.9137,2.2576,-0.2836
+1953,Temperate,Asia/Europe,-8.3384,1.4697,0.5062
+1953,Temperate,Europe,8.5309,2.6525,0.2597
+1953,Temperate,North America,6.5989,2.5363,0.0076
+1953,Temperate,Oceania,14.2077,2.7825,0.2064
+1953,Temperate,South America,9.4871,2.5233,-0.0689
+1953,Tropical,Africa,25.6995,2.803,0.0645
+1953,Tropical,Asia,26.5884,4.7271,0.3039
+1953,Tropical,North America,25.2602,3.2509,0.1007
+1953,Tropical,Oceania,26.1235,5.4478,0.1184
+1953,Tropical,South America,24.6215,3.6237,0.231
+1954,Polar,Antarctica,-34.015,0.6576,-0.4688
+1954,Polar,Asia/Europe,-17.5584,0.7148,-0.0463
+1954,Polar,Europe,-10.0128,1.3574,0.3092
+1954,Polar,North America,-18.1336,0.6414,0.5667
+1954,Polar,South America,-8.7622,1.7315,0.6352
+1954,Temperate,Africa,14.566,2.2794,-0.0663
+1954,Temperate,Antarctica,-2.2119,2.6636,0.409
+1954,Temperate,Asia,8.5215,2.236,-0.3099
+1954,Temperate,Asia/Europe,-9.6707,1.487,0.2444
+1954,Temperate,Europe,8.0881,2.6624,-0.022
+1954,Temperate,North America,6.634,2.5374,-0.06
+1954,Temperate,Oceania,14.2965,2.7332,0.0251
+1954,Temperate,South America,9.5247,2.6053,-0.0877
+1954,Tropical,Africa,25.8474,2.6237,0.2997
+1954,Tropical,Asia,26.6091,4.3174,-0.0588
+1954,Tropical,North America,25.5205,2.9261,-0.2362
+1954,Tropical,Oceania,26.2654,5.9079,0.2438
+1954,Tropical,South America,25.023,3.6017,0.0164
+1955,Polar,Antarctica,-33.2686,0.6829,0.4884
+1955,Polar,Asia/Europe,-16.5973,0.8207,-0.373
+1955,Polar,Europe,-11.2804,1.3604,-0.6201
+1955,Polar,North America,-17.6932,0.6446,-0.1924
+1955,Polar,South America,-9.1308,1.6395,-0.6334
+1955,Temperate,Africa,14.4278,2.3113,0.1219
+1955,Temperate,Antarctica,-1.9119,2.5703,-0.5305
+1955,Temperate,Asia,8.6631,2.3883,-0.1808
+1955,Temperate,Asia/Europe,-8.4088,1.3752,0.3936
+1955,Temperate,Europe,8.6004,2.7986,0.6432
+1955,Temperate,North America,7.0426,2.5906,0.0535
+1955,Temperate,Oceania,14.3559,2.6546,-0.0147
+1955,Temperate,South America,9.5526,2.6983,0.1206
+1955,Tropical,Africa,26.1905,2.5664,0.1486
+1955,Tropical,Asia,26.9514,4.3174,-0.2904
+1955,Tropical,North America,26.0054,3.872,-0.0636
+1955,Tropical,Oceania,26.4932,5.6666,0.0042
+1955,Tropical,South America,25.782,3.427,-0.3742
+1956,Polar,Antarctica,-33.7046,0.6657,0.091
+1956,Polar,Asia/Europe,-17.7019,0.7098,-0.4578
+1956,Polar,Europe,-10.7055,1.456,-0.4214
+1956,Polar,North America,-18.7715,0.6341,-0.1059
+1956,Polar,South America,-9.3697,1.6313,0.1961
+1956,Temperate,Africa,14.4596,2.2921,0.125
+1956,Temperate,Antarctica,-2.2576,2.6296,-0.6345
+1956,Temperate,Asia,8.4772,2.4069,-0.1394
+1956,Temperate,Asia/Europe,-9.7506,1.347,-0.1384
+1956,Temperate,Europe,8.2821,2.6779,0.3901
+1956,Temperate,North America,6.797,2.5427,0.0591
+1956,Temperate,Oceania,14.2781,2.5994,0.06
+1956,Temperate,South America,9.5397,2.7052,0.2041
+1956,Tropical,Africa,26.2211,2.6326,0.0341
+1956,Tropical,Asia,26.9925,4.1504,-0.2462
+1956,Tropical,North America,26.0879,3.4128,-0.0426
+1956,Tropical,Oceania,26.5408,5.8969,-0.0322
+1956,Tropical,South America,25.9336,3.3479,-0.5192
+1957,Polar,Antarctica,-33.3818,0.6737,-0.0186
+1957,Polar,Asia/Europe,-16.4276,0.8421,-0.322
+1957,Polar,Europe,-9.5546,1.4941,0.1215
+1957,Polar,North America,-17.2463,0.6437,-0.1997
+1957,Polar,South America,-10.2026,1.6512,-0.7513
+1957,Temperate,Africa,14.521,2.2247,0.1869
+1957,Temperate,Antarctica,-2.3424,2.6093,-0.2571
+1957,Temperate,Asia,8.5915,2.5057,0.2387
+1957,Temperate,Asia/Europe,-9.6531,1.3795,-0.3212
+1957,Temperate,Europe,8.0701,2.6974,0.258
+1957,Temperate,North America,6.8292,2.5117,-0.0838
+1957,Temperate,Oceania,14.2456,2.6068,-0.0318
+1957,Temperate,South America,9.2634,2.6378,-0.0526
+1957,Tropical,Africa,26.6845,2.3626,-0.1517
+1957,Tropical,Asia,27.1493,4.9144,-0.1604
+1957,Tropical,North America,25.9841,3.9683,0.3817
+1957,Tropical,Oceania,26.4583,5.4707,-0.0966
+1957,Tropical,South America,25.8071,3.7146,-0.4221
+1958,Polar,Antarctica,-32.924,0.6853,0.5297
+1958,Polar,Asia/Europe,-18.8059,0.7835,0.0425
+1958,Polar,Europe,-11.1336,1.3859,0.6661
+1958,Polar,North America,-19.5439,0.6675,0.0937
+1958,Polar,South America,-8.6839,1.7364,-0.142
+1958,Temperate,Africa,14.5797,2.2135,-0.1602
+1958,Temperate,Antarctica,-2.2051,2.6537,-0.2534
+1958,Temperate,Asia,9.1495,2.3286,-0.0466
+1958,Temperate,Asia/Europe,-8.7135,1.4715,0.5468
+1958,Temperate,Europe,8.3851,2.5277,-0.1068
+1958,Temperate,North America,6.366,2.4882,-0.1897
+1958,Temperate,Oceania,14.4169,2.6991,0.0157
+1958,Temperate,South America,9.4444,2.5483,-0.1651
+1958,Tropical,Africa,26.1093,2.9376,-0.0741
+1958,Tropical,Asia,26.8076,4.3702,0.0766
+1958,Tropical,North America,25.4918,3.1684,0.1979
+1958,Tropical,Oceania,26.356,5.6444,0.1172
+1958,Tropical,South America,25.0873,3.6967,0.2798
+1959,Polar,Antarctica,-32.5917,0.7049,0.5016
+1959,Polar,Asia/Europe,-16.7068,0.7725,0.1871
+1959,Polar,Europe,-11.7867,1.466,-0.1226
+1959,Polar,North America,-19.3897,0.6685,0.2358
+1959,Polar,South America,-9.1296,1.5719,-0.4568
+1959,Temperate,Africa,14.4859,2.2853,0.0673
+1959,Temperate,Antarctica,-1.8529,2.695,-0.1487
+1959,Temperate,Asia,8.8486,2.3407,-0.02
+1959,Temperate,Asia/Europe,-8.5381,1.3582,0.2186
+1959,Temperate,Europe,8.2587,2.5683,-0.4026
+1959,Temperate,North America,6.4263,2.5884,-0.0464
+1959,Temperate,Oceania,14.2824,2.6592,-0.037
+1959,Temperate,South America,9.5006,2.6111,-0.1337
+1959,Tropical,Africa,25.9247,2.7518,0.4755
+1959,Tropical,Asia,26.6149,4.5369,-0.1102
+1959,Tropical,North America,25.5914,3.0586,-0.1137
+1959,Tropical,Oceania,26.2816,5.6659,0.2211
+1959,Tropical,South America,25.2906,3.4941,-0.1764
+1960,Polar,Antarctica,-32.6224,0.7037,0.3925
+1960,Polar,Asia/Europe,-16.0363,0.7932,-0.1416
+1960,Polar,Europe,-9.2015,1.4216,0.1517
+1960,Polar,North America,-17.9965,0.6376,0.3565
+1960,Polar,South America,-9.6058,1.6293,-0.4807
+1960,Temperate,Africa,14.5119,2.3888,0.2072
+1960,Temperate,Antarctica,-2.097,2.6479,0.1879
+1960,Temperate,Asia,8.4617,2.4552,0.052
+1960,Temperate,Asia/Europe,-8.6787,1.1772,-0.9282
+1960,Temperate,Europe,8.4553,2.6769,0.2463
+1960,Temperate,North America,6.8398,2.6468,0.1432
+1960,Temperate,Oceania,14.1288,2.5374,-0.284
+1960,Temperate,South America,9.4649,2.6655,-0.2256
+1960,Tropical,Africa,26.2961,2.57,0.2851
+1960,Tropical,Asia,26.9549,4.1735,-0.2642
+1960,Tropical,North America,26.239,3.6478,-0.2265
+1960,Tropical,Oceania,26.5111,5.9424,0.0756
+1960,Tropical,South America,26.1581,3.1704,-0.6165
+1961,Polar,Antarctica,-34.4379,0.6252,0.3369
+1961,Polar,Asia/Europe,-17.6739,0.7887,0.1391
+1961,Polar,Europe,-9.3487,1.5039,0.2021
+1961,Polar,North America,-18.8142,0.6843,0.2723
+1961,Polar,South America,-9.2449,1.8199,-0.191
+1961,Temperate,Africa,14.6029,2.2308,0.2012
+1961,Temperate,Antarctica,-2.3134,2.795,0.0988
+1961,Temperate,Asia,8.5731,2.51,0.4203
+1961,Temperate,Asia/Europe,-9.5346,1.297,-1.0401
+1961,Temperate,Europe,8.3545,2.6409,0.1251
+1961,Temperate,North America,6.506,2.4476,0.0069
+1961,Temperate,Oceania,14.363,2.6414,-0.0074
+1961,Temperate,South America,9.6738,2.582,-0.1037
+1961,Tropical,Africa,26.6465,2.6907,0.2344
+1961,Tropical,Asia,27.2163,4.5877,-0.2489
+1961,Tropical,North America,26.0825,4.2281,0.3907
+1961,Tropical,Oceania,26.5317,5.2471,-0.3074
+1961,Tropical,South America,25.8949,3.8245,-0.3572
+1962,Polar,Antarctica,-33.9178,0.6657,-0.0912
+1962,Polar,Asia/Europe,-16.9078,0.7821,0.0715
+1962,Polar,Europe,-10.4288,1.5396,0.9493
+1962,Polar,North America,-19.4895,0.6512,0.4024
+1962,Polar,South America,-8.7441,1.8838,0.6676
+1962,Temperate,Africa,14.4284,2.2286,-0.1215
+1962,Temperate,Antarctica,-2.4293,2.6912,0.3886
+1962,Temperate,Asia,8.4429,2.3882,0.0861
+1962,Temperate,Asia/Europe,-8.4273,1.3806,-0.1958
+1962,Temperate,Europe,8.1411,2.4253,-0.3715
+1962,Temperate,North America,5.7057,2.4665,-0.2235
+1962,Temperate,Oceania,14.3246,2.8132,0.0796
+1962,Temperate,South America,9.5648,2.4375,-0.1745
+1962,Tropical,Africa,25.9795,2.6524,0.1507
+1962,Tropical,Asia,26.8205,5.5147,0.4989
+1962,Tropical,North America,24.8109,3.106,0.2138
+1962,Tropical,Oceania,25.8622,5.016,-0.0524
+1962,Tropical,South America,24.4141,4.0363,0.5398
+1963,Polar,Antarctica,-34.0596,0.6286,-0.2072
+1963,Polar,Asia/Europe,-16.6305,0.867,0.4185
+1963,Polar,Europe,-11.3067,1.429,0.3703
+1963,Polar,North America,-19.3509,0.6421,-0.122
+1963,Polar,South America,-9.3039,1.8368,0.7907
+1963,Temperate,Africa,14.3086,2.0895,-0.5793
+1963,Temperate,Antarctica,-1.8212,2.6746,-0.0257
+1963,Temperate,Asia,8.8879,2.3319,-0.1801
+1963,Temperate,Asia/Europe,-7.3006,1.4803,0.5963
+1963,Temperate,Europe,8.0504,2.5879,-0.1755
+1963,Temperate,North America,6.0064,2.4335,-0.2689
+1963,Temperate,Oceania,14.3524,2.8735,0.3427
+1963,Temperate,South America,9.1737,2.5268,-0.0747
+1963,Tropical,Africa,25.1704,2.4634,-0.0465
+1963,Tropical,Asia,26.1371,5.0104,0.8382
+1963,Tropical,North America,24.8616,3.3595,0.1057
+1963,Tropical,Oceania,25.6809,5.141,0.0308
+1963,Tropical,South America,24.0251,3.8856,0.4611
+1964,Polar,Antarctica,-34.4063,0.6539,-0.4223
+1964,Polar,Asia/Europe,-18.1044,0.7306,-0.1176
+1964,Polar,Europe,-9.5695,1.4339,-0.1294
+1964,Polar,North America,-18.5166,0.6587,-0.2149
+1964,Polar,South America,-9.2523,1.6065,-0.2158
+1964,Temperate,Africa,14.3745,2.3641,-0.0901
+1964,Temperate,Antarctica,-1.916,2.6479,-0.1254
+1964,Temperate,Asia,8.2949,2.5221,0.0237
+1964,Temperate,Asia/Europe,-11.0225,1.1322,-0.6454
+1964,Temperate,Europe,7.9686,2.6125,-0.0584
+1964,Temperate,North America,6.0841,2.535,-0.0578
+1964,Temperate,Oceania,14.26,2.4646,-0.1148
+1964,Temperate,South America,9.0033,2.677,-0.1533
+1964,Tropical,Africa,26.0254,2.3828,-0.3178
+1964,Tropical,Asia,26.5473,3.7546,-0.2159
+1964,Tropical,North America,25.9346,3.8445,0.1802
+1964,Tropical,Oceania,26.0029,5.9272,0.0029
+1964,Tropical,South America,25.5242,3.4262,-0.3564
+1965,Polar,Antarctica,-33.7287,0.6186,-0.363
+1965,Polar,Asia/Europe,-17.331,0.7222,-0.8647
+1965,Polar,Europe,-10.3161,1.5004,0.0072
+1965,Polar,North America,-19.331,0.5881,-0.55
+1965,Polar,South America,-8.8712,1.8475,0.1844
+1965,Temperate,Africa,14.3546,2.2722,0.209
+1965,Temperate,Antarctica,-2.1483,2.6422,-0.2377
+1965,Temperate,Asia,8.7809,2.5377,0.3992
+1965,Temperate,Asia/Europe,-9.6261,1.3021,-1.0533
+1965,Temperate,Europe,7.8844,2.6363,0.2031
+1965,Temperate,North America,6.0878,2.4546,-0.1237
+1965,Temperate,Oceania,14.3529,2.6164,-0.1982
+1965,Temperate,South America,9.315,2.5672,-0.0936
+1965,Tropical,Africa,26.3744,2.4126,-0.3467
+1965,Tropical,Asia,27.0019,4.8532,-0.3265
+1965,Tropical,North America,25.7592,4.4849,0.4928
+1965,Tropical,Oceania,26.2629,5.0807,-0.3096
+1965,Tropical,South America,25.4459,4.0401,-0.0235
+1966,Polar,Antarctica,-34.3408,0.6205,-0.356
+1966,Polar,Asia/Europe,-18.2591,0.7526,-0.564
+1966,Polar,Europe,-10.3445,1.4042,0.3659
+1966,Polar,North America,-19.2095,0.6596,-0.3557
+1966,Polar,South America,-8.4895,1.69,-0.0482
+1966,Temperate,Africa,14.2614,2.1243,-0.3574
+1966,Temperate,Antarctica,-2.4107,2.6617,-0.0866
+1966,Temperate,Asia,8.884,2.3944,-0.0753
+1966,Temperate,Asia/Europe,-9.5323,1.3998,-0.1084
+1966,Temperate,Europe,7.8901,2.4748,-0.355
+1966,Temperate,North America,6.2263,2.4636,-0.1821
+1966,Temperate,Oceania,14.3467,2.7293,0.1417
+1966,Temperate,South America,9.4658,2.5095,-0.109
+1966,Tropical,Africa,25.5492,2.5539,-0.2327
+1966,Tropical,Asia,26.5005,5.3546,0.649
+1966,Tropical,North America,24.7954,2.9846,0.2918
+1966,Tropical,Oceania,25.7791,5.2785,0.0563
+1966,Tropical,South America,24.3944,3.8145,0.2751
+1967,Polar,Antarctica,-33.8792,0.6837,-0.1105
+1967,Polar,Asia/Europe,-19.3143,0.7467,-0.5338
+1967,Polar,Europe,-11.7505,1.2431,-0.7688
+1967,Polar,North America,-19.5336,0.6374,-0.1949
+1967,Polar,South America,-8.7128,1.6606,-0.0255
+1967,Temperate,Africa,14.4552,2.2591,-0.3857
+1967,Temperate,Antarctica,-2.2955,2.578,-0.1279
+1967,Temperate,Asia,8.1699,2.3107,-0.0984
+1967,Temperate,Asia/Europe,-10.0662,1.3383,-0.355
+1967,Temperate,Europe,7.5481,2.609,-0.3532
+1967,Temperate,North America,6.4439,2.5632,-0.1277
+1967,Temperate,Oceania,14.3101,2.7373,0.1457
+1967,Temperate,South America,9.1847,2.589,-0.2488
+1967,Tropical,Africa,25.744,2.3648,-0.4875
+1967,Tropical,Asia,26.4128,4.3422,0.3926
+1967,Tropical,North America,25.7324,3.0273,-0.3759
+1967,Tropical,Oceania,26.1347,5.9658,0.2087
+1967,Tropical,South America,25.0487,3.5177,0.2553
+1968,Polar,Antarctica,-33.4561,0.6863,0.3805
+1968,Polar,Asia/Europe,-17.8932,0.7884,-0.1422
+1968,Polar,Europe,-11.2458,1.2364,-0.9736
+1968,Polar,North America,-17.8276,0.6136,-0.2443
+1968,Polar,South America,-9.0468,1.6542,-0.4835
+1968,Temperate,Africa,14.4626,2.3086,0.2044
+1968,Temperate,Antarctica,-2.0465,2.6586,-0.574
+1968,Temperate,Asia,8.5287,2.4571,0.2196
+1968,Temperate,Asia/Europe,-10.4301,1.4,-0.054
+1968,Temperate,Europe,7.5822,2.6416,0.0246
+1968,Temperate,North America,6.4791,2.6031,0.104
+1968,Temperate,Oceania,14.2904,2.5872,0.0797
+1968,Temperate,South America,9.4702,2.6354,-0.2117
+1968,Tropical,Africa,26.4853,2.4395,-0.3875
+1968,Tropical,Asia,26.9739,4.4482,-0.238
+1968,Tropical,North America,26.1884,4.0578,-0.0907
+1968,Tropical,Oceania,26.4575,5.5971,-0.1255
+1968,Tropical,South America,26.1407,3.5154,-0.406
+1969,Polar,Antarctica,-34.2011,0.6547,-0.0284
+1969,Polar,Asia/Europe,-18.0041,0.7366,-0.567
+1969,Polar,Europe,-11.2605,1.4322,-0.891
+1969,Polar,North America,-18.4456,0.6643,-0.2101
+1969,Polar,South America,-8.5942,1.8241,0.0507
+1969,Temperate,Africa,14.6295,2.2348,-0.137
+1969,Temperate,Antarctica,-2.3328,2.7578,0.0018
+1969,Temperate,Asia,8.8658,2.5139,0.2397
+1969,Temperate,Asia/Europe,-9.7289,1.3617,-0.0279
+1969,Temperate,Europe,7.8386,2.5778,0.0202
+1969,Temperate,North America,6.3435,2.5331,0.0454
+1969,Temperate,Oceania,14.322,2.595,0.0161
+1969,Temperate,South America,9.6429,2.6077,0.0705
+1969,Tropical,Africa,26.4821,2.4479,-0.3766
+1969,Tropical,Asia,27.151,4.6847,-0.0477
+1969,Tropical,North America,26.1667,3.7359,0.0578
+1969,Tropical,Oceania,26.6038,5.6464,-0.0902
+1969,Tropical,South America,25.789,3.7846,0.0227
+1970,Polar,Antarctica,-33.2178,0.6667,0.4258
+1970,Polar,Asia/Europe,-16.8264,0.8187,0.0511
+1970,Polar,Europe,-11.9114,1.3638,0.051
+1970,Polar,North America,-19.3164,0.627,-0.1103
+1970,Polar,South America,-7.5646,1.8872,0.9398
+1970,Temperate,Africa,14.4611,2.2393,-0.1516
+1970,Temperate,Antarctica,-2.259,2.611,0.1494
+1970,Temperate,Asia,8.9469,2.413,0.1658
+1970,Temperate,Asia/Europe,-8.0664,1.4744,0.2997
+1970,Temperate,Europe,7.9999,2.6307,-0.1162
+1970,Temperate,North America,5.9335,2.4569,-0.0779
+1970,Temperate,Oceania,14.4848,2.7191,-0.0593
+1970,Temperate,South America,9.5684,2.591,-0.0321
+1970,Tropical,Africa,25.9445,2.684,0.0109
+1970,Tropical,Asia,26.7257,4.9412,0.0441
+1970,Tropical,North America,25.0714,3.0248,-0.2063
+1970,Tropical,Oceania,26.0808,5.3974,0.0606
+1970,Tropical,South America,24.8631,3.6908,0.1516
+1971,Polar,Antarctica,-33.1069,0.6617,-0.1896
+1971,Polar,Asia/Europe,-17.0022,0.8683,0.5775
+1971,Polar,Europe,-10.9822,1.4027,0.2375
+1971,Polar,North America,-19.9229,0.6304,0.1357
+1971,Polar,South America,-9.001,1.637,0.3964
+1971,Temperate,Africa,14.2755,2.1963,-0.1155
+1971,Temperate,Antarctica,-2.2571,2.5758,-0.3936
+1971,Temperate,Asia,8.9697,2.4246,-0.0035
+1971,Temperate,Asia/Europe,-7.9703,1.4791,0.5101
+1971,Temperate,Europe,8.0566,2.5169,-0.2053
+1971,Temperate,North America,5.9944,2.4059,-0.3089
+1971,Temperate,Oceania,14.39,2.8805,0.2603
+1971,Temperate,South America,9.3422,2.5477,-0.0339
+1971,Tropical,Africa,25.6522,2.5432,-0.1643
+1971,Tropical,Asia,26.4533,4.9691,0.4573
+1971,Tropical,North America,24.8916,3.0166,-0.2407
+1971,Tropical,Oceania,25.9038,5.2678,0.0956
+1971,Tropical,South America,24.3892,3.8361,0.3393
+1972,Polar,Antarctica,-33.6662,0.6862,0.1355
+1972,Polar,Asia/Europe,-14.9013,0.8639,0.9359
+1972,Polar,Europe,-9.0251,1.5266,0.2473
+1972,Polar,North America,-18.4764,0.6315,-0.1816
+1972,Polar,South America,-10.3959,1.4659,-1.4292
+1972,Temperate,Africa,14.3497,2.3012,-0.0212
+1972,Temperate,Antarctica,-1.968,2.6655,-0.5168
+1972,Temperate,Asia,8.2796,2.3649,-0.0507
+1972,Temperate,Asia/Europe,-8.4984,1.3295,0.1125
+1972,Temperate,Europe,8.1187,2.6098,-0.2055
+1972,Temperate,North America,6.0259,2.5594,-0.1396
+1972,Temperate,Oceania,14.2982,2.5638,0.1489
+1972,Temperate,South America,9.3614,2.6435,-0.0934
+1972,Tropical,Africa,25.7484,2.6796,-0.1178
+1972,Tropical,Asia,26.4035,3.9118,-0.0768
+1972,Tropical,North America,25.7476,3.3569,-0.0983
+1972,Tropical,Oceania,26.1777,6.0521,0.1523
+1972,Tropical,South America,25.1341,3.5759,0.0752
+1973,Polar,Antarctica,-33.4041,0.6796,0.2684
+1973,Polar,Asia/Europe,-16.8315,0.8042,-0.0015
+1973,Polar,Europe,-10.6272,1.3372,-0.1411
+1973,Polar,North America,-18.9057,0.6079,-0.5709
+1973,Polar,South America,-8.5512,1.8282,-0.0333
+1973,Temperate,Africa,14.6033,2.3338,0.1163
+1973,Temperate,Antarctica,-2.2601,2.7338,0.3259
+1973,Temperate,Asia,8.8385,2.5097,0.3154
+1973,Temperate,Asia/Europe,-8.6895,1.3552,-0.1905
+1973,Temperate,Europe,8.1398,2.6966,0.2942
+1973,Temperate,North America,6.3917,2.506,-0.0148
+1973,Temperate,Oceania,14.4431,2.5679,-0.3462
+1973,Temperate,South America,9.5761,2.5956,-0.1068
+1973,Tropical,Africa,26.4553,2.7528,0.4767
+1973,Tropical,Asia,26.987,4.3165,-0.4904
+1973,Tropical,North America,25.9245,3.9614,0.1165
+1973,Tropical,Oceania,26.4542,5.3941,-0.1343
+1973,Tropical,South America,25.7728,3.7382,-0.0067
+1974,Polar,Antarctica,-33.6715,0.6253,0.0119
+1974,Polar,Asia/Europe,-17.2255,0.8221,0.1144
+1974,Polar,Europe,-10.9052,1.2892,-0.69
+1974,Polar,North America,-19.1106,0.6498,-0.3217
+1974,Polar,South America,-9.5164,1.7191,0.208
+1974,Temperate,Africa,14.5356,2.219,0.007
+1974,Temperate,Antarctica,-2.2824,2.6931,-0.0705
+1974,Temperate,Asia,8.7519,2.2956,-0.0211
+1974,Temperate,Asia/Europe,-8.8425,1.4591,0.0262
+1974,Temperate,Europe,7.7813,2.637,0.1164
+1974,Temperate,North America,6.2049,2.4694,-0.0047
+1974,Temperate,Oceania,14.4454,2.659,-0.0942
+1974,Temperate,South America,9.5696,2.607,0.021
+1974,Tropical,Africa,26.0396,2.9132,0.57
+1974,Tropical,Asia,26.7025,4.5764,0.0033
+1974,Tropical,North America,25.4853,3.0945,0.0223
+1974,Tropical,Oceania,26.3314,5.5449,-0.0252
+1974,Tropical,South America,25.1472,3.5903,0.1961
+1975,Polar,Antarctica,-33.9026,0.6587,-0.1346
+1975,Polar,Asia/Europe,-15.7551,0.8805,0.7532
+1975,Polar,Europe,-10.1336,1.3924,-0.3743
+1975,Polar,North America,-19.249,0.631,-0.0095
+1975,Polar,South America,-9.3608,1.6768,0.0484
+1975,Temperate,Africa,14.4295,2.2006,-0.1896
+1975,Temperate,Antarctica,-2.2897,2.6665,0.1949
+1975,Temperate,Asia,8.6968,2.2573,-0.3628
+1975,Temperate,Asia/Europe,-8.0172,1.4246,0.4146
+1975,Temperate,Europe,7.8195,2.6376,0.1926
+1975,Temperate,North America,6.3812,2.5226,-0.2113
+1975,Temperate,Oceania,14.5637,2.7091,-0.1027
+1975,Temperate,South America,9.4598,2.5473,0.006
+1975,Tropical,Africa,25.9688,2.6261,0.1612
+1975,Tropical,Asia,26.6068,4.846,0.0668
+1975,Tropical,North America,25.2251,3.0187,-0.1197
+1975,Tropical,Oceania,26.1809,5.5136,0.1067
+1975,Tropical,South America,24.9034,3.5959,-0.177
+1976,Polar,Antarctica,-33.7657,0.6701,0.1213
+1976,Polar,Asia/Europe,-16.9032,0.8304,0.7801
+1976,Polar,Europe,-9.8648,1.4657,0.2578
+1976,Polar,North America,-18.4477,0.6418,-0.1154
+1976,Polar,South America,-9.3203,1.7216,-0.2027
+1976,Temperate,Africa,14.472,2.3404,-0.0121
+1976,Temperate,Antarctica,-2.0379,2.6919,-0.0131
+1976,Temperate,Asia,8.28,2.3563,-0.3651
+1976,Temperate,Asia/Europe,-9.2383,1.3763,0.0213
+1976,Temperate,Europe,8.1198,2.5895,-0.1403
+1976,Temperate,North America,6.829,2.6092,0.073
+1976,Temperate,Oceania,14.3844,2.6176,0.0375
+1976,Temperate,South America,9.4312,2.6825,-0.0892
+1976,Tropical,Africa,26.1067,2.5958,-0.0797
+1976,Tropical,Asia,26.6547,4.068,-0.0978
+1976,Tropical,North America,25.7695,3.251,-0.3482
+1976,Tropical,Oceania,26.4016,5.9221,0.1038
+1976,Tropical,South America,25.4831,3.43,-0.073
+1977,Polar,Antarctica,-33.5214,0.6768,-0.188
+1977,Polar,Asia/Europe,-17.3113,0.78,0.0022
+1977,Polar,Europe,-10.6358,1.4011,-0.0577
+1977,Polar,North America,-18.1954,0.681,-0.0325
+1977,Polar,South America,-9.6832,1.6807,-0.1736
+1977,Temperate,Africa,14.4687,2.2455,0.2276
+1977,Temperate,Antarctica,-1.9264,2.6792,0.1987
+1977,Temperate,Asia,8.7974,2.4908,0.2923
+1977,Temperate,Asia/Europe,-9.3151,1.3647,-0.0162
+1977,Temperate,Europe,8.3675,2.6162,0.0748
+1977,Temperate,North America,6.6802,2.562,0.1269
+1977,Temperate,Oceania,14.261,2.5965,0.0038
+1977,Temperate,South America,9.5389,2.6817,0.1864
+1977,Tropical,Africa,26.6013,2.5914,-0.0312
+1977,Tropical,Asia,27.1363,4.4329,-0.3618
+1977,Tropical,North America,25.9969,3.8954,-0.0202
+1977,Tropical,Oceania,26.5938,5.5911,-0.0857
+1977,Tropical,South America,25.8927,3.5274,-0.1749
+1978,Polar,Antarctica,-33.4158,0.6545,0.3334
+1978,Polar,Asia/Europe,-16.1841,0.804,0.2288
+1978,Polar,Europe,-10.6329,1.3032,-0.5005
+1978,Polar,North America,-18.4802,0.6488,0.3476
+1978,Polar,South America,-8.3441,1.7362,-0.0087
+1978,Temperate,Africa,14.4743,2.2011,-0.0399
+1978,Temperate,Antarctica,-2.1523,2.6336,-0.2658
+1978,Temperate,Asia,8.77,2.3349,0.0371
+1978,Temperate,Asia/Europe,-8.6054,1.3914,-0.1633
+1978,Temperate,Europe,7.8944,2.5862,-0.1331
+1978,Temperate,North America,6.6088,2.5697,0.1298
+1978,Temperate,Oceania,14.4128,2.6219,-0.1208
+1978,Temperate,South America,9.8588,2.6142,0.1092
+1978,Tropical,Africa,26.1882,2.7303,-0.0
+1978,Tropical,Asia,26.9615,4.7595,-0.0238
+1978,Tropical,North America,25.5613,3.0762,-0.2663
+1978,Tropical,Oceania,26.4798,5.6756,0.1504
+1978,Tropical,South America,25.294,3.5933,-0.07
+1979,Polar,Antarctica,-33.2546,0.6757,-0.031
+1979,Polar,Asia/Europe,-17.5246,0.7622,-0.1677
+1979,Polar,Europe,-9.858,1.3907,-0.2436
+1979,Polar,North America,-17.9708,0.6649,0.2823
+1979,Polar,South America,-9.8495,1.6858,0.0011
+1979,Temperate,Africa,14.6311,2.306,-0.079
+1979,Temperate,Antarctica,-2.0558,2.61,-0.2983
+1979,Temperate,Asia,8.4317,2.4314,0.0973
+1979,Temperate,Asia/Europe,-10.1568,1.3068,-0.517
+1979,Temperate,Europe,7.8792,2.5991,-0.1761
+1979,Temperate,North America,6.3098,2.5443,-0.0293
+1979,Temperate,Oceania,14.4817,2.6566,-0.0572
+1979,Temperate,South America,9.6121,2.7128,0.2326
+1979,Tropical,Africa,26.0768,2.4537,0.0281
+1979,Tropical,Asia,26.7996,4.5063,0.0356
+1979,Tropical,North America,25.8343,3.1383,-0.3076
+1979,Tropical,Oceania,26.3671,5.7274,0.149
+1979,Tropical,South America,25.3886,3.5234,-0.2036
+1980,Polar,Antarctica,-33.1874,0.7035,0.7012
+1980,Polar,Asia/Europe,-17.0673,0.7925,0.0675
+1980,Polar,Europe,-8.9163,1.5487,0.3082
+1980,Polar,North America,-18.616,0.6496,-0.0303
+1980,Polar,South America,-8.744,1.7362,-0.1754
+1980,Temperate,Africa,14.8501,2.3837,0.2681
+1980,Temperate,Antarctica,-2.292,2.7697,0.0421
+1980,Temperate,Asia,8.8111,2.4732,0.1249
+1980,Temperate,Asia/Europe,-9.4336,1.2706,-0.3671
+1980,Temperate,Europe,8.3365,2.6668,0.0277
+1980,Temperate,North America,6.4132,2.5633,0.0732
+1980,Temperate,Oceania,14.4011,2.4418,-0.0762
+1980,Temperate,South America,9.5615,2.7677,0.0643
+1980,Tropical,Africa,26.5194,2.3286,-0.237
+1980,Tropical,Asia,27.1276,4.2966,-0.0522
+1980,Tropical,North America,26.4494,4.0686,0.0444
+1980,Tropical,Oceania,26.5157,5.9057,-0.0288
+1980,Tropical,South America,26.3178,3.4611,-0.3941
+1981,Polar,Antarctica,-33.7581,0.6741,-0.033
+1981,Polar,Asia/Europe,-17.9012,0.8272,0.1962
+1981,Polar,Europe,-10.4177,1.4223,0.3436
+1981,Polar,North America,-17.7942,0.6559,-0.0035
+1981,Polar,South America,-7.7535,1.8773,0.4874
+1981,Temperate,Africa,14.7195,2.2713,0.3214
+1981,Temperate,Antarctica,-2.3097,2.7247,0.5726
+1981,Temperate,Asia,9.2949,2.5637,0.4975
+1981,Temperate,Asia/Europe,-10.0593,1.4994,-0.118
+1981,Temperate,Europe,8.3562,2.644,0.3918
+1981,Temperate,North America,6.7968,2.4513,-0.1079
+1981,Temperate,Oceania,14.4208,2.6668,0.0017
+1981,Temperate,South America,9.7736,2.5856,-0.0851
+1981,Tropical,Africa,26.6451,2.5853,-0.3201
+1981,Tropical,Asia,27.1369,4.7769,-0.044
+1981,Tropical,North America,26.0141,4.3344,0.4662
+1981,Tropical,Oceania,26.386,5.0598,-0.2761
+1981,Tropical,South America,25.5307,3.98,-0.0128
+1982,Polar,Antarctica,-34.8007,0.6312,-0.4081
+1982,Polar,Asia/Europe,-16.5864,0.868,0.5931
+1982,Polar,Europe,-8.8188,1.6382,0.8547
+1982,Polar,North America,-18.7097,0.6845,0.1459
+1982,Polar,South America,-8.0078,1.8168,0.1577
+1982,Temperate,Africa,14.5952,2.1794,-0.1947
+1982,Temperate,Antarctica,-2.24,2.807,0.491
+1982,Temperate,Asia,9.143,2.3816,0.1259
+1982,Temperate,Asia/Europe,-7.7541,1.4324,0.4915
+1982,Temperate,Europe,8.4497,2.4871,-0.2864
+1982,Temperate,North America,6.4091,2.4782,-0.1234
+1982,Temperate,Oceania,14.5112,2.8091,0.2002
+1982,Temperate,South America,9.8173,2.5839,0.1202
+1982,Tropical,Africa,25.9093,2.5322,-0.2479
+1982,Tropical,Asia,26.6873,5.2707,0.5212
+1982,Tropical,North America,24.8511,3.1699,0.2108
+1982,Tropical,Oceania,25.914,5.0534,-0.0502
+1982,Tropical,South America,24.4812,3.8847,0.4518
+1983,Polar,Antarctica,-33.0648,0.6434,-0.3106
+1983,Polar,Asia/Europe,-16.229,0.7771,0.1373
+1983,Polar,Europe,-8.4162,1.3858,0.3993
+1983,Polar,North America,-18.4883,0.6054,-0.1918
+1983,Polar,South America,-8.1858,1.7261,0.7948
+1983,Temperate,Africa,14.5461,2.2241,-0.2127
+1983,Temperate,Antarctica,-1.7755,2.6911,0.4415
+1983,Temperate,Asia,8.3666,2.3317,-0.1024
+1983,Temperate,Asia/Europe,-8.1399,1.3807,-0.079
+1983,Temperate,Europe,7.8832,2.5327,-0.6398
+1983,Temperate,North America,6.0014,2.5678,-0.0287
+1983,Temperate,Oceania,14.4233,2.8192,0.2525
+1983,Temperate,South America,9.6304,2.7031,0.2754
+1983,Tropical,Africa,25.5414,2.5944,-0.2254
+1983,Tropical,Asia,26.2001,4.4801,0.3911
+1983,Tropical,North America,25.1526,3.1685,-0.0501
+1983,Tropical,Oceania,25.9734,5.4339,0.032
+1983,Tropical,South America,24.4427,3.6308,0.2131
+1984,Polar,Antarctica,-33.3319,0.6718,0.0654
+1984,Polar,Asia/Europe,-17.3346,0.7323,-0.5244
+1984,Polar,Europe,-11.0744,1.3945,-0.5219
+1984,Polar,North America,-18.5687,0.5964,-0.9043
+1984,Polar,South America,-8.0226,1.813,0.0827
+1984,Temperate,Africa,14.7288,2.4314,0.2762
+1984,Temperate,Antarctica,-2.3526,2.6938,0.0981
+1984,Temperate,Asia,8.2146,2.4925,0.168
+1984,Temperate,Asia/Europe,-9.1502,1.3499,-0.2636
+1984,Temperate,Europe,8.2557,2.5973,-0.1236
+1984,Temperate,North America,6.3439,2.6633,0.1698
+1984,Temperate,Oceania,14.4207,2.502,-0.0685
+1984,Temperate,South America,9.3799,2.6352,0.1846
+1984,Tropical,Africa,26.3901,2.5448,-0.1149
+1984,Tropical,Asia,26.778,3.8817,-0.3998
+1984,Tropical,North America,26.2073,3.6604,-0.0635
+1984,Tropical,Oceania,26.3597,5.9102,-0.0466
+1984,Tropical,South America,25.692,3.5528,-0.2224
+1985,Polar,Antarctica,-34.2385,0.6316,-0.0121
+1985,Polar,Asia/Europe,-18.3299,0.8132,-0.1276
+1985,Polar,Europe,-11.2481,1.3049,-0.4487
+1985,Polar,North America,-17.9094,0.6546,-0.1718
+1985,Polar,South America,-7.8144,1.8757,0.6063
+1985,Temperate,Africa,14.5856,2.2237,0.3196
+1985,Temperate,Antarctica,-2.4725,2.7205,0.198
+1985,Temperate,Asia,8.9826,2.4636,0.3424
+1985,Temperate,Asia/Europe,-9.1253,1.4126,-0.0971
+1985,Temperate,Europe,7.9308,2.6374,0.0682
+1985,Temperate,North America,6.3172,2.562,0.1351
+1985,Temperate,Oceania,14.5313,2.6916,0.1383
+1985,Temperate,South America,9.7445,2.5118,-0.2657
+1985,Tropical,Africa,26.6079,2.687,0.1208
+1985,Tropical,Asia,27.1343,4.7631,-0.275
+1985,Tropical,North America,25.9403,3.9357,0.0743
+1985,Tropical,Oceania,26.4446,5.202,-0.2689
+1985,Tropical,South America,25.5937,3.7709,-0.1546
+1986,Polar,Antarctica,-34.4464,0.6224,-0.541
+1986,Polar,Asia/Europe,-17.2642,0.8193,0.3015
+1986,Polar,Europe,-11.4254,1.4092,-0.6473
+1986,Polar,North America,-18.5745,0.5878,-0.0079
+1986,Polar,South America,-8.0263,1.7003,0.1384
+1986,Temperate,Africa,14.5552,2.2199,-0.1511
+1986,Temperate,Antarctica,-2.002,2.775,0.4285
+1986,Temperate,Asia,8.5506,2.3576,-0.1238
+1986,Temperate,Asia/Europe,-9.0843,1.3878,0.1731
+1986,Temperate,Europe,8.1377,2.5808,-0.0589
+1986,Temperate,North America,6.5977,2.4707,-0.0231
+1986,Temperate,Oceania,14.5049,2.712,0.1316
+1986,Temperate,South America,9.7695,2.587,-0.0445
+1986,Tropical,Africa,25.8279,2.7897,0.1366
+1986,Tropical,Asia,26.6833,4.6772,0.158
+1986,Tropical,North America,25.1181,3.0561,-0.1184
+1986,Tropical,Oceania,26.1245,5.5086,0.0853
+1986,Tropical,South America,24.7642,3.5992,-0.0128
+1987,Polar,Antarctica,-33.2186,0.6795,-0.206
+1987,Polar,Asia/Europe,-16.0928,0.7748,-0.1052
+1987,Polar,Europe,-9.7008,1.4304,-0.1637
+1987,Polar,North America,-18.1424,0.5966,-0.9346
+1987,Polar,South America,-9.3259,1.611,-0.3004
+1987,Temperate,Africa,14.638,2.2926,-0.058
+1987,Temperate,Antarctica,-2.0912,2.6475,0.4732
+1987,Temperate,Asia,8.7341,2.3916,-0.006
+1987,Temperate,Asia/Europe,-8.5224,1.3957,-0.0682
+1987,Temperate,Europe,8.1158,2.6156,-0.0027
+1987,Temperate,North America,6.1523,2.5545,-0.0721
+1987,Temperate,Oceania,14.3953,2.7115,-0.0135
+1987,Temperate,South America,9.5303,2.6601,-0.0037
+1987,Tropical,Africa,25.9963,2.6529,0.019
+1987,Tropical,Asia,26.5753,4.2052,0.0492
+1987,Tropical,North America,25.7976,2.9746,-0.2948
+1987,Tropical,Oceania,26.3399,5.8182,0.1427
+1987,Tropical,South America,25.3857,3.4427,-0.0974
+1988,Polar,Antarctica,-33.6818,0.7163,0.3415
+1988,Polar,Asia/Europe,-15.9498,0.7252,-0.1437
+1988,Polar,Europe,-10.2379,1.2651,-0.1468
+1988,Polar,North America,-17.4085,0.619,-0.4482
+1988,Polar,South America,-8.122,1.7276,-0.3201
+1988,Temperate,Africa,14.7079,2.2606,0.161
+1988,Temperate,Antarctica,-2.0145,2.7413,-0.079
+1988,Temperate,Asia,8.4383,2.4619,0.1456
+1988,Temperate,Asia/Europe,-9.7135,1.1758,-0.3694
+1988,Temperate,Europe,8.3686,2.665,0.066
+1988,Temperate,North America,6.7091,2.6294,0.0601
+1988,Temperate,Oceania,14.4979,2.5441,-0.0755
+1988,Temperate,South America,9.8586,2.6616,0.0485
+1988,Tropical,Africa,26.5839,2.5278,-0.0829
+1988,Tropical,Asia,27.1306,4.4395,-0.364
+1988,Tropical,North America,26.1574,3.4103,-0.3729
+1988,Tropical,Oceania,26.6047,5.8338,-0.018
+1988,Tropical,South America,26.0183,3.4139,-0.4877
+1989,Polar,Antarctica,-33.4369,0.6482,0.4598
+1989,Polar,Asia/Europe,-17.398,0.8131,-0.2378
+1989,Polar,Europe,-10.2521,1.3226,-0.7358
+1989,Polar,North America,-17.4996,0.6955,0.0345
+1989,Polar,South America,-7.7626,1.9557,0.8923
+1989,Temperate,Africa,14.8266,2.1917,-0.1976
+1989,Temperate,Antarctica,-2.2921,2.7357,0.3528
+1989,Temperate,Asia,8.726,2.3971,0.0314
+1989,Temperate,Asia/Europe,-8.8254,1.3669,-0.799
+1989,Temperate,Europe,8.0722,2.5135,0.0013
+1989,Temperate,North America,6.5893,2.5354,0.0253
+1989,Temperate,Oceania,14.6056,2.684,-0.0797
+1989,Temperate,South America,9.8407,2.6201,0.0577
+1989,Tropical,Africa,26.5024,2.5087,-0.3977
+1989,Tropical,Asia,27.1508,4.8894,-0.0432
+1989,Tropical,North America,25.683,3.1697,-0.3474
+1989,Tropical,Oceania,26.5401,5.5753,0.1104
+1989,Tropical,South America,25.3732,3.8176,-0.254
+1990,Polar,Antarctica,-33.6337,0.6318,-0.4166
+1990,Polar,Asia/Europe,-15.9294,0.8129,-0.0328
+1990,Polar,Europe,-9.5746,1.3308,-0.6393
+1990,Polar,North America,-18.6755,0.6557,0.3437
+1990,Polar,South America,-8.8786,1.7793,0.575
+1990,Temperate,Africa,14.6692,2.2136,-0.2564
+1990,Temperate,Antarctica,-2.2482,2.7003,0.1853
+1990,Temperate,Asia,9.0294,2.4032,-0.0828
+1990,Temperate,Asia/Europe,-8.2889,1.5155,0.7569
+1990,Temperate,Europe,8.1704,2.6044,-0.302
+1990,Temperate,North America,6.327,2.4618,-0.0206
+1990,Temperate,Oceania,14.632,2.6891,0.1353
+1990,Temperate,South America,9.7067,2.5405,-0.0886
+1990,Tropical,Africa,26.2387,2.9589,0.1606
+1990,Tropical,Asia,26.9211,4.4016,0.066
+1990,Tropical,North America,25.6004,3.1707,-0.1104
+1990,Tropical,Oceania,26.3922,5.5393,0.085
+1990,Tropical,South America,25.0656,3.6108,0.1915
+1991,Polar,Antarctica,-33.5965,0.6841,-0.0053
+1991,Polar,Asia/Europe,-15.5862,0.8163,0.1351
+1991,Polar,Europe,-9.2755,1.4329,-0.0335
+1991,Polar,North America,-17.8853,0.6314,0.0898
+1991,Polar,South America,-7.4933,2.0293,0.7923
+1991,Temperate,Africa,14.6613,2.1434,-0.2641
+1991,Temperate,Antarctica,-2.0012,2.7561,0.3093
+1991,Temperate,Asia,8.9295,2.4039,0.0723
+1991,Temperate,Asia/Europe,-7.6897,1.5186,0.2735
+1991,Temperate,Europe,8.273,2.636,0.0452
+1991,Temperate,North America,6.667,2.5398,0.005
+1991,Temperate,Oceania,14.5029,2.6875,-0.0651
+1991,Temperate,South America,9.761,2.5539,0.1351
+1991,Tropical,Africa,26.0891,2.6117,0.2251
+1991,Tropical,Asia,26.8229,4.8761,-0.0495
+1991,Tropical,North America,25.3842,3.2768,-0.0875
+1991,Tropical,Oceania,26.2805,5.4215,0.1584
+1991,Tropical,South America,24.6025,3.6926,-0.0513
+1992,Polar,Antarctica,-33.199,0.7018,0.2033
+1992,Polar,Asia/Europe,-15.2065,0.8288,0.3143
+1992,Polar,Europe,-8.7934,1.3653,-0.2486
+1992,Polar,North America,-18.2201,0.6283,-0.3884
+1992,Polar,South America,-8.8184,1.6434,0.8928
+1992,Temperate,Africa,14.6785,2.254,-0.276
+1992,Temperate,Antarctica,-1.4933,2.7281,0.4671
+1992,Temperate,Asia,8.6479,2.2785,-0.0795
+1992,Temperate,Asia/Europe,-7.4372,1.4014,0.4293
+1992,Temperate,Europe,8.7857,2.696,0.1617
+1992,Temperate,North America,6.3745,2.6459,0.0224
+1992,Temperate,Oceania,14.2915,2.6483,-0.0492
+1992,Temperate,South America,9.5546,2.6853,0.018
+1992,Tropical,Africa,25.8159,2.5204,-0.1673
+1992,Tropical,Asia,26.3676,4.2022,0.1123
+1992,Tropical,North America,25.6331,3.0113,-0.1838
+1992,Tropical,Oceania,26.262,5.8069,0.0634
+1992,Tropical,South America,25.2132,3.2818,-0.2525
+1993,Polar,Antarctica,-32.6356,0.6937,0.4008
+1993,Polar,Asia/Europe,-17.1192,0.7476,0.0448
+1993,Polar,Europe,-12.6045,1.3416,-0.8023
+1993,Polar,North America,-18.545,0.6664,-0.1016
+1993,Polar,South America,-7.4657,1.7338,-0.5282
+1993,Temperate,Africa,14.6899,2.3423,0.3911
+1993,Temperate,Antarctica,-1.5156,2.6221,0.0127
+1993,Temperate,Asia,9.0953,2.4176,-0.0936
+1993,Temperate,Asia/Europe,-7.865,1.4174,0.2898
+1993,Temperate,Europe,7.9786,2.6455,0.2803
+1993,Temperate,North America,6.8718,2.6521,0.3048
+1993,Temperate,Oceania,14.3829,2.5383,-0.2343
+1993,Temperate,South America,9.7584,2.7153,-0.0454
+1993,Tropical,Africa,26.506,2.2399,-0.3527
+1993,Tropical,Asia,27.0529,4.4008,-0.2659
+1993,Tropical,North America,26.3012,3.6724,-0.3456
+1993,Tropical,Oceania,26.6242,5.7767,-0.1154
+1993,Tropical,South America,26.1435,3.5147,-0.33
+1994,Polar,Antarctica,-32.8159,0.6937,0.3485
+1994,Polar,Asia/Europe,-15.394,0.8633,-0.2335
+1994,Polar,Europe,-10.95,1.4744,-0.3028
+1994,Polar,North America,-18.8684,0.6201,-0.1531
+1994,Polar,South America,-8.2961,1.759,-0.0365
+1994,Temperate,Africa,14.7513,2.2435,0.0734
+1994,Temperate,Antarctica,-1.8099,2.7443,-0.0384
+1994,Temperate,Asia,9.4405,2.4203,0.2252
+1994,Temperate,Asia/Europe,-7.7225,1.3225,0.0639
+1994,Temperate,Europe,8.108,2.6235,0.1706
+1994,Temperate,North America,6.6576,2.5155,0.1287
+1994,Temperate,Oceania,14.5907,2.695,0.0616
+1994,Temperate,South America,9.8387,2.5884,0.067
+1994,Tropical,Africa,26.6265,2.7542,-0.2218
+1994,Tropical,Asia,27.2415,4.5954,-0.1017
+1994,Tropical,North America,25.9408,4.1367,0.2131
+1994,Tropical,Oceania,26.6339,5.2086,-0.1907
+1994,Tropical,South America,25.774,3.7557,-0.3005
+1995,Polar,Antarctica,-34.0101,0.6838,0.2617
+1995,Polar,Asia/Europe,-16.6094,0.8798,0.9659
+1995,Polar,Europe,-9.8518,1.5395,0.7812
+1995,Polar,North America,-18.8382,0.6757,-0.1316
+1995,Polar,South America,-8.9188,1.7743,0.3974
+1995,Temperate,Africa,14.8042,2.1486,-0.2359
+1995,Temperate,Antarctica,-1.7425,2.7563,0.58
+1995,Temperate,Asia,9.1851,2.3108,-0.0956
+1995,Temperate,Asia/Europe,-7.1371,1.4549,-0.2294
+1995,Temperate,Europe,8.3133,2.5583,-0.2467
+1995,Temperate,North America,6.1806,2.4956,-0.0668
+1995,Temperate,Oceania,14.5372,2.8564,0.2708
+1995,Temperate,South America,9.708,2.4416,-0.0713
+1995,Tropical,Africa,26.0392,2.7579,0.4015
+1995,Tropical,Asia,26.8076,5.2254,0.3312
+1995,Tropical,North America,25.4668,2.9766,0.1785
+1995,Tropical,Oceania,26.2246,5.1815,0.0193
+1995,Tropical,South America,24.8954,3.5718,-0.0114
+1996,Polar,Antarctica,-33.1262,0.7286,0.1774
+1996,Polar,Asia/Europe,-17.7522,0.8483,0.9657
+1996,Polar,Europe,-10.2418,1.3087,0.1907
+1996,Polar,North America,-18.6681,0.6942,0.4653
+1996,Polar,South America,-9.3465,1.5724,-0.5631
+1996,Temperate,Africa,14.8749,2.2394,-0.2633
+1996,Temperate,Antarctica,-1.5175,2.6663,0.3268
+1996,Temperate,Asia,9.3801,2.2866,-0.2332
+1996,Temperate,Asia/Europe,-8.0489,1.5093,0.5238
+1996,Temperate,Europe,8.6775,2.7299,0.1274
+1996,Temperate,North America,6.7039,2.552,-0.0615
+1996,Temperate,Oceania,14.6415,2.6444,0.0679
+1996,Temperate,South America,9.5967,2.6725,-0.0982
+1996,Tropical,Africa,26.2035,2.733,0.2414
+1996,Tropical,Asia,26.8199,4.0111,0.2492
+1996,Tropical,North America,26.1203,3.4023,-0.2957
+1996,Tropical,Oceania,26.5128,5.9101,0.1299
+1996,Tropical,South America,25.5378,3.3614,-0.3046
+1997,Polar,Antarctica,-32.5514,0.6988,0.4207
+1997,Polar,Asia/Europe,-16.7777,0.8342,0.4833
+1997,Polar,Europe,-10.1309,1.4261,-0.6628
+1997,Polar,North America,-17.7612,0.7324,0.8705
+1997,Polar,South America,-8.5834,1.8575,0.0661
+1997,Temperate,Africa,14.8861,2.3577,0.3092
+1997,Temperate,Antarctica,-1.6534,2.7342,0.2063
+1997,Temperate,Asia,9.7598,2.5279,0.3689
+1997,Temperate,Asia/Europe,-7.4236,1.5063,0.652
+1997,Temperate,Europe,8.8871,2.6272,0.2611
+1997,Temperate,North America,7.2591,2.6062,0.1343
+1997,Temperate,Oceania,14.7449,2.5047,-0.1465
+1997,Temperate,South America,9.7622,2.7168,0.127
+1997,Tropical,Africa,27.1144,2.4104,-0.0794
+1997,Tropical,Asia,27.4447,4.2837,-0.4303
+1997,Tropical,North America,26.6967,4.1739,0.2516
+1997,Tropical,Oceania,26.8857,5.8171,-0.1587
+1997,Tropical,South America,26.7424,3.1558,-0.7931
+1998,Polar,Antarctica,-32.1285,0.6648,0.6161
+1998,Polar,Asia/Europe,-16.3717,0.8397,0.416
+1998,Polar,Europe,-10.3736,1.5722,0.3603
+1998,Polar,North America,-19.0203,0.6916,0.9846
+1998,Polar,South America,-8.7441,1.7332,0.7581
+1998,Temperate,Africa,14.848,2.2587,0.1362
+1998,Temperate,Antarctica,-1.7744,2.6686,0.1571
+1998,Temperate,Asia,9.6506,2.4255,0.3331
+1998,Temperate,Asia/Europe,-7.691,1.5216,1.0376
+1998,Temperate,Europe,9.0421,2.6317,0.1822
+1998,Temperate,North America,7.136,2.4898,0.0538
+1998,Temperate,Oceania,14.8446,2.7259,0.0038
+1998,Temperate,South America,9.8444,2.636,0.2236
+1998,Tropical,Africa,26.7156,2.6864,-0.1492
+1998,Tropical,Asia,27.2943,5.006,0.0177
+1998,Tropical,North America,25.7713,3.1565,-0.1454
+1998,Tropical,Oceania,26.6749,5.5273,0.0803
+1998,Tropical,South America,25.6876,3.2826,-0.9019
+1999,Polar,Antarctica,-33.2469,0.6846,0.2855
+1999,Polar,Asia/Europe,-14.8494,0.8662,0.5265
+1999,Polar,Europe,-9.5028,1.4709,0.9156
+1999,Polar,North America,-17.5398,0.6758,0.5031
+1999,Polar,South America,-8.155,1.7163,-0.3282
+1999,Temperate,Africa,14.8119,2.1925,-0.1898
+1999,Temperate,Antarctica,-1.823,2.7489,0.1015
+1999,Temperate,Asia,9.6,2.2728,-0.1016
+1999,Temperate,Asia/Europe,-6.2841,1.516,0.5523
+1999,Temperate,Europe,8.5058,2.6095,-0.0068
+1999,Temperate,North America,6.9262,2.5415,-0.0531
+1999,Temperate,Oceania,14.7303,2.8384,0.3
+1999,Temperate,South America,9.8397,2.6128,0.2167
+1999,Tropical,Africa,26.0615,2.9766,0.3294
+1999,Tropical,Asia,26.7616,4.4275,0.282
+1999,Tropical,North America,25.4971,3.2825,-0.1186
+1999,Tropical,Oceania,26.399,5.3628,0.1681
+1999,Tropical,South America,25.0337,3.4874,-0.1666
+2000,Polar,Antarctica,-32.9009,0.7074,0.4391
+2000,Polar,Asia/Europe,-15.6557,0.8041,0.4428
+2000,Polar,Europe,-8.8468,1.3476,-0.3585
+2000,Polar,North America,-17.2866,0.6028,-0.1227
+2000,Polar,South America,-9.1341,1.7157,0.1727
+2000,Temperate,Africa,14.8842,2.2524,0.0151
+2000,Temperate,Antarctica,-1.7455,2.7329,0.3944
+2000,Temperate,Asia,9.2025,2.3647,0.0066
+2000,Temperate,Asia/Europe,-7.5598,1.4366,0.5353
+2000,Temperate,Europe,8.6099,2.7855,0.2751
+2000,Temperate,North America,6.9782,2.6055,0.2234
+2000,Temperate,Oceania,14.7426,2.6932,-0.038
+2000,Temperate,South America,9.7597,2.6242,0.1655
+2000,Tropical,Africa,26.3106,2.6762,0.4944
+2000,Tropical,Asia,26.9552,4.1812,-0.2304
+2000,Tropical,North America,25.9432,3.0609,0.019
+2000,Tropical,Oceania,26.672,5.9617,0.2409
+2000,Tropical,South America,25.5322,3.3789,-0.3788
+2001,Polar,Antarctica,-32.4238,0.7273,0.8757
+2001,Polar,Asia/Europe,-16.1192,0.8415,0.073
+2001,Polar,Europe,-8.4481,1.6248,0.4471
+2001,Polar,North America,-17.593,0.6864,-0.2594
+2001,Polar,South America,-8.3299,1.716,0.2248
+2001,Temperate,Africa,14.9613,2.3847,0.1996
+2001,Temperate,Antarctica,-1.752,2.7231,0.4527
+2001,Temperate,Asia,9.3893,2.4116,0.0797
+2001,Temperate,Asia/Europe,-7.297,1.4488,0.4873
+2001,Temperate,Europe,9.0866,2.6068,0.3217
+2001,Temperate,North America,7.2265,2.6976,0.3289
+2001,Temperate,Oceania,14.6471,2.5223,-0.0449
+2001,Temperate,South America,9.7348,2.76,-0.0294
+2001,Tropical,Africa,26.8747,2.3467,-0.0715
+2001,Tropical,Asia,27.2813,4.268,-0.2783
+2001,Tropical,North America,26.8184,3.6689,-0.328
+2001,Tropical,Oceania,26.7895,6.0192,0.0474
+2001,Tropical,South America,26.6096,3.3895,-0.6058
+2002,Polar,Antarctica,-33.5401,0.6791,0.1007
+2002,Polar,Asia/Europe,-16.7909,0.8534,0.4043
+2002,Polar,Europe,-8.285,1.5321,0.7748
+2002,Polar,North America,-17.2154,0.647,0.0833
+2002,Polar,South America,-7.5251,2.0388,0.2916
+2002,Temperate,Africa,15.1052,2.2739,0.2589
+2002,Temperate,Antarctica,-2.1729,2.7199,0.1241
+2002,Temperate,Asia,9.4459,2.5143,0.3408
+2002,Temperate,Asia/Europe,-8.5664,1.3723,0.2767
+2002,Temperate,Europe,8.9089,2.7261,0.3047
+2002,Temperate,North America,6.8205,2.5727,0.2098
+2002,Temperate,Oceania,14.8095,2.61,-0.0806
+2002,Temperate,South America,10.1016,2.6141,0.1771
+2002,Tropical,Africa,27.1008,2.6697,-0.0759
+2002,Tropical,Asia,27.5467,4.3196,-0.3362
+2002,Tropical,North America,26.6494,4.7049,0.3199
+2002,Tropical,Oceania,26.9634,5.343,-0.2086
+2002,Tropical,South America,26.2526,3.6459,-0.3598
+2003,Polar,Antarctica,-33.7944,0.6498,0.0787
+2003,Polar,Asia/Europe,-15.8672,0.8144,0.6604
+2003,Polar,Europe,-9.1252,1.4566,0.75
+2003,Polar,North America,-16.8394,0.6745,0.318
+2003,Polar,South America,-7.4008,1.9213,1.5301
+2003,Temperate,Africa,15.0905,2.1996,-0.155
+2003,Temperate,Antarctica,-2.024,2.8378,0.7238
+2003,Temperate,Asia,9.2414,2.4714,0.1425
+2003,Temperate,Asia/Europe,-7.5401,1.4723,-0.0929
+2003,Temperate,Europe,8.6827,2.6191,0.0281
+2003,Temperate,North America,7.3417,2.4641,-0.0119
+2003,Temperate,Oceania,14.8199,2.7208,-0.0292
+2003,Temperate,South America,10.0728,2.5546,0.0683
+2003,Tropical,Africa,26.194,2.7888,0.2421
+2003,Tropical,Asia,27.0909,5.4107,0.228
+2003,Tropical,North America,25.4176,3.1618,0.3043
+2003,Tropical,Oceania,26.2057,5.1166,-0.0485
+2003,Tropical,South America,25.1421,3.5537,-0.0069
+2004,Polar,Antarctica,-33.1146,0.7002,0.5968
+2004,Polar,Asia/Europe,-14.9465,0.8909,0.5227
+2004,Polar,Europe,-6.6066,1.554,0.3802
+2004,Polar,North America,-16.6678,0.7108,0.494
+2004,Polar,South America,-7.9187,1.9695,1.1304
+2004,Temperate,Africa,15.1277,2.1529,-0.4173
+2004,Temperate,Antarctica,-1.9376,2.75,0.7671
+2004,Temperate,Asia,9.4873,2.4383,0.2194
+2004,Temperate,Asia/Europe,-7.6894,1.4533,0.4355
+2004,Temperate,Europe,9.0669,2.4851,-0.2634
+2004,Temperate,North America,6.836,2.4892,-0.0617
+2004,Temperate,Oceania,14.7983,2.781,0.0636
+2004,Temperate,South America,9.8064,2.5163,0.0422
+2004,Tropical,Africa,26.1256,2.6009,0.0728
+2004,Tropical,Asia,26.7713,5.1321,0.9011
+2004,Tropical,North America,25.3592,3.1151,-0.0723
+2004,Tropical,Oceania,26.2546,5.3155,0.0515
+2004,Tropical,South America,24.7006,3.8556,0.145
+2005,Polar,Antarctica,-32.2105,0.6734,0.3605
+2005,Polar,Asia/Europe,-15.1246,0.8504,0.9265
+2005,Polar,Europe,-7.1322,1.6787,1.0713
+2005,Polar,North America,-17.8178,0.6882,0.3022
+2005,Polar,South America,-8.4348,1.7111,0.6403
+2005,Temperate,Africa,14.8702,2.3148,-0.1027
+2005,Temperate,Antarctica,-1.3231,2.6135,0.0707
+2005,Temperate,Asia,9.2271,2.4432,0.122
+2005,Temperate,Asia/Europe,-8.0234,1.312,0.0686
+2005,Temperate,Europe,8.8132,2.5729,-0.2194
+2005,Temperate,North America,6.8639,2.5973,0.0658
+2005,Temperate,Oceania,14.7003,2.7258,0.2204
+2005,Temperate,South America,9.782,2.6649,0.0654
+2005,Tropical,Africa,26.2491,2.7135,0.1509
+2005,Tropical,Asia,26.9327,4.0222,0.0096
+2005,Tropical,North America,26.0102,3.1674,-0.2468
+2005,Tropical,Oceania,26.5708,5.8902,0.2106
+2005,Tropical,South America,25.3082,3.4059,-0.0889
+2006,Polar,Antarctica,-32.4795,0.7158,0.3396
+2006,Polar,Asia/Europe,-16.3154,0.8671,0.5623
+2006,Polar,Europe,-7.7759,1.453,1.0384
+2006,Polar,North America,-15.7964,0.6949,0.59
+2006,Polar,South America,-8.6647,1.6651,-0.1811
+2006,Temperate,Africa,14.8621,2.3664,0.4317
+2006,Temperate,Antarctica,-1.0972,2.7594,-0.0786
+2006,Temperate,Asia,9.1363,2.5295,0.5455
+2006,Temperate,Asia/Europe,-9.5469,1.3115,-0.6552
+2006,Temperate,Europe,8.8842,2.7228,-0.0219
+2006,Temperate,North America,7.5558,2.5488,0.2082
+2006,Temperate,Oceania,14.7287,2.5371,-0.088
+2006,Temperate,South America,9.9797,2.6365,0.0776
+2006,Tropical,Africa,27.1785,2.5331,-0.1517
+2006,Tropical,Asia,27.4084,4.2978,-0.4536
+2006,Tropical,North America,26.595,4.2808,0.271
+2006,Tropical,Oceania,26.8886,5.6754,-0.0423
+2006,Tropical,South America,26.3949,3.4295,-0.6208
+2007,Polar,Antarctica,-32.8491,0.6855,0.6531
+2007,Polar,Asia/Europe,-15.3293,0.8088,0.6646
+2007,Polar,Europe,-8.9367,1.3703,-0.3067
+2007,Polar,North America,-16.8819,0.6565,-0.0134
+2007,Polar,South America,-8.089,1.8109,0.1835
+2007,Temperate,Africa,14.887,2.2975,0.3302
+2007,Temperate,Antarctica,-1.7901,2.7631,0.3102
+2007,Temperate,Asia,9.3456,2.4784,0.4812
+2007,Temperate,Asia/Europe,-7.1212,1.4628,0.0831
+2007,Temperate,Europe,8.6988,2.6502,0.3047
+2007,Temperate,North America,6.9882,2.5347,0.0554
+2007,Temperate,Oceania,14.6415,2.5906,-0.0943
+2007,Temperate,South America,10.024,2.6494,0.0316
+2007,Tropical,Africa,26.8053,2.7693,0.0103
+2007,Tropical,Asia,27.3274,4.4339,-0.203
+2007,Tropical,North America,26.3546,3.3863,0.1029
+2007,Tropical,Oceania,26.9788,5.751,-0.0352
+2007,Tropical,South America,25.9341,3.4956,-0.2725
+2008,Polar,Antarctica,-32.4178,0.7017,0.6217
+2008,Polar,Asia/Europe,-15.5318,0.8079,0.275
+2008,Polar,Europe,-9.0536,1.3698,-0.1617
+2008,Polar,North America,-16.5065,0.6357,-0.0013
+2008,Polar,South America,-8.9942,1.7786,0.5612
+2008,Temperate,Africa,14.972,2.2644,0.0628
+2008,Temperate,Antarctica,-2.1719,2.6622,0.6638
+2008,Temperate,Asia,9.3575,2.4589,0.4106
+2008,Temperate,Asia/Europe,-8.4889,1.4584,0.2091
+2008,Temperate,Europe,8.552,2.6685,0.2386
+2008,Temperate,North America,7.3156,2.5835,0.0053
+2008,Temperate,Oceania,14.8615,2.6225,-0.1727
+2008,Temperate,South America,9.8103,2.6148,0.0557
+2008,Tropical,Africa,26.9425,2.5102,-0.1395
+2008,Tropical,Asia,27.3964,4.5979,-0.0445
+2008,Tropical,North America,26.2515,3.0769,-0.1437
+2008,Tropical,Oceania,26.8836,5.9168,0.1557
+2008,Tropical,South America,25.9471,3.59,-0.2638
+2009,Polar,Antarctica,-31.9823,0.6909,0.6993
+2009,Polar,Asia/Europe,-16.4387,0.728,-0.2567
+2009,Polar,Europe,-9.0152,1.4112,-0.3595
+2009,Polar,North America,-17.4428,0.657,-0.1657
+2009,Polar,South America,-9.0055,1.5969,-0.1208
+2009,Temperate,Africa,14.9017,2.342,0.1325
+2009,Temperate,Antarctica,-1.6295,2.6569,-0.3149
+2009,Temperate,Asia,8.9472,2.4749,0.2751
+2009,Temperate,Asia/Europe,-8.4541,1.3743,0.0596
+2009,Temperate,Europe,8.6969,2.5436,-0.2507
+2009,Temperate,North America,7.1929,2.5838,0.1752
+2009,Temperate,Oceania,14.6312,2.5414,0.0233
+2009,Temperate,South America,10.0113,2.741,0.16
+2009,Tropical,Africa,26.9447,2.6321,-0.2224
+2009,Tropical,Asia,27.3956,4.1402,-0.2193
+2009,Tropical,North America,26.622,3.3684,-0.3896
+2009,Tropical,Oceania,26.9526,6.0589,0.1442
+2009,Tropical,South America,26.4065,3.3439,-0.3592
+2010,Polar,Antarctica,-32.947,0.6549,0.336
+2010,Polar,Asia/Europe,-16.4998,0.8132,-0.0331
+2010,Polar,Europe,-9.1457,1.4434,0.0736
+2010,Polar,North America,-16.5811,0.7498,0.6823
+2010,Polar,South America,-8.9529,2.0029,0.61
+2010,Temperate,Africa,14.8879,2.2372,0.2562
+2010,Temperate,Antarctica,-2.3271,2.8093,0.2349
+2010,Temperate,Asia,9.7241,2.5853,0.5584
+2010,Temperate,Asia/Europe,-8.1599,1.4831,0.6837
+2010,Temperate,Europe,8.3913,2.5457,-0.2079
+2010,Temperate,North America,6.9855,2.5193,0.0401
+2010,Temperate,Oceania,14.7994,2.5932,-0.0994
+2010,Temperate,South America,9.9851,2.7196,0.4304
+2010,Tropical,Africa,27.3666,2.356,-0.2205
+2010,Tropical,Asia,27.6687,4.4464,-0.3724
+2010,Tropical,North America,26.5652,4.1832,0.1429
+2010,Tropical,Oceania,27.0366,5.5284,-0.1609
+2010,Tropical,South America,26.1766,4.0443,-0.0302
+2011,Polar,Antarctica,-33.174,0.6768,0.1971
+2011,Polar,Asia/Europe,-15.2493,0.7861,-0.1543
+2011,Polar,Europe,-9.457,1.4337,0.0576
+2011,Polar,North America,-16.7702,0.6764,1.0546
+2011,Polar,South America,-7.396,2.0178,1.4747
+2011,Temperate,Africa,15.0489,2.2061,-0.1623
+2011,Temperate,Antarctica,-2.1873,2.7514,0.7265
+2011,Temperate,Asia,9.5788,2.4371,0.3522
+2011,Temperate,Asia/Europe,-7.7284,1.5154,0.5315
+2011,Temperate,Europe,8.6601,2.4623,-0.2593
+2011,Temperate,North America,7.2419,2.5627,0.1119
+2011,Temperate,Oceania,14.7937,2.6846,-0.0319
+2011,Temperate,South America,10.0261,2.5012,0.2013
+2011,Tropical,Africa,26.8851,2.5872,-0.3423
+2011,Tropical,Asia,27.4361,5.2597,0.2195
+2011,Tropical,North America,25.9776,3.2253,0.0813
+2011,Tropical,Oceania,26.8625,5.4453,0.0008
+2011,Tropical,South America,25.572,3.7294,0.2244
+2012,Polar,Antarctica,-34.3043,0.6779,0.1594
+2012,Polar,Asia/Europe,-15.5374,0.8359,0.2172
+2012,Polar,Europe,-8.7758,1.5337,0.0192
+2012,Polar,North America,-17.1443,0.6764,0.0359
+2012,Polar,South America,-9.0691,1.7771,0.8011
+2012,Temperate,Africa,15.1801,2.1957,-0.2096
+2012,Temperate,Antarctica,-2.158,2.7361,0.474
+2012,Temperate,Asia,9.575,2.4596,0.1583
+2012,Temperate,Asia/Europe,-7.6994,1.4956,0.4466
+2012,Temperate,Europe,9.0871,2.6244,-0.3305
+2012,Temperate,North America,6.9109,2.5116,0.1518
+2012,Temperate,Oceania,14.6544,2.7618,0.161
+2012,Temperate,South America,9.8724,2.5552,-0.0537
+2012,Tropical,Africa,26.3522,2.713,0.1169
+2012,Tropical,Asia,26.9518,5.0047,0.6278
+2012,Tropical,North America,25.6791,3.0961,-0.1855
+2012,Tropical,Oceania,26.5721,5.2323,-0.0294
+2012,Tropical,South America,25.2919,3.6694,0.1047
+2013,Polar,Antarctica,-33.2102,0.68,0.18
+2013,Polar,Asia/Europe,-15.1149,0.8431,0.7016
+2013,Polar,Europe,-9.3953,1.4496,0.7843
+2013,Polar,North America,-17.0394,0.6819,0.4899
+2013,Polar,South America,-8.6669,1.6317,-0.0065
+2013,Temperate,Africa,15.1581,2.3054,-0.0066
+2013,Temperate,Antarctica,-1.6026,2.759,0.4524
+2013,Temperate,Asia,9.8334,2.4976,0.4067
+2013,Temperate,Asia/Europe,-7.015,1.5591,0.9384
+2013,Temperate,Europe,8.8131,2.6105,0.0838
+2013,Temperate,North America,7.2128,2.6482,0.1685
+2013,Temperate,Oceania,14.7412,2.5803,-0.0282
+2013,Temperate,South America,9.8486,2.739,0.0981
+2013,Tropical,Africa,26.7359,2.5501,-0.0199
+2013,Tropical,Asia,27.2565,4.2365,0.1863
+2013,Tropical,North America,26.4292,3.2269,-0.2623
+2013,Tropical,Oceania,26.8225,5.9035,0.0474
+2013,Tropical,South America,26.1588,3.4074,-0.2326
+2014,Polar,Antarctica,-32.3456,0.675,0.1011
+2014,Polar,Asia/Europe,-15.2335,0.8461,0.8597
+2014,Polar,Europe,-8.4936,1.6525,0.9946
+2014,Polar,North America,-16.301,0.693,0.6108
+2014,Polar,South America,-8.1067,1.9393,0.7445
+2014,Temperate,Africa,15.1081,2.3266,0.4626
+2014,Temperate,Antarctica,-1.7278,2.7269,0.3895
+2014,Temperate,Asia,9.7825,2.5942,0.6528
+2014,Temperate,Asia/Europe,-7.8465,1.4286,0.5017
+2014,Temperate,Europe,8.8882,2.636,0.1772
+2014,Temperate,North America,7.2389,2.5603,0.174
+2014,Temperate,Oceania,14.8512,2.5565,-0.0429
+2014,Temperate,South America,9.9229,2.6674,0.2572
+2014,Tropical,Africa,27.2281,2.6559,-0.1357
+2014,Tropical,Asia,27.6059,3.9994,-0.4199
+2014,Tropical,North America,26.8496,4.2024,-0.0171
+2014,Tropical,Oceania,27.1375,5.8133,-0.1108
+2014,Tropical,South America,26.5095,3.8509,-0.0089
