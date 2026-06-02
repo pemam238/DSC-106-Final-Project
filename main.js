@@ -88,10 +88,10 @@ let globeBuilt   = false;
 let globeStepNow = -1;
 
 const GLOBE_STOPS = [
-  { lon:  20, lat: -10 },  // Africa
-  { lon: -55, lat: -15 },  // South America
-  { lon:  90, lat:  35 },  // Asia
-  { lon:  15, lat:  50 },  // Europe
+  { lon:  18, lat:  -8 },  // Africa
+  { lon: -58, lat: -15 },  // South America
+  { lon:  85, lat:  25 },  // Asia
+  { lon:  12, lat:  50 },  // Europe
 ];
 
 // Same continent color logic as the old flat map
@@ -191,19 +191,15 @@ async function buildGlobe() {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(BG_COLOR);
 
-  const camera = new THREE.PerspectiveCamera(36, W / H, 0.1, 100);
-  camera.position.z = 3.2;
-  camera.position.x = -0.7;
+  const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 100);
+  camera.position.set(0, 0, 2.8);
+  camera.lookAt(0.5, 0, 0);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-  const sun = new THREE.DirectionalLight(0xfff8f0, 0.7);
-  sun.position.set(5, 3, 4);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.82));
+  const sun = new THREE.DirectionalLight(0xfff4e8, 0.45);
+  sun.position.set(4, 2, 3);
   scene.add(sun);
-  const fill = new THREE.DirectionalLight(0xffffff, 0.15);
-  fill.position.set(-3, -1, 2);
-  scene.add(fill);
 
-  // ── Draw world onto an offscreen canvas texture ──────────────────
   const TEX_W = 4096, TEX_H = 2048;
   const offscreen = document.createElement('canvas');
   offscreen.width  = TEX_W;
@@ -213,86 +209,214 @@ async function buildGlobe() {
   const world = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r => r.json());
   const countries = topojson.feature(world, world.objects.countries);
 
-  // Equirectangular projection fills the texture exactly
   const projection = d3.geoEquirectangular()
     .scale(TEX_W / (2 * Math.PI))
     .translate([TEX_W / 2, TEX_H / 2]);
   const pathGen = d3.geoPath().projection(projection).context(ctx);
 
-  // Ocean background
-  ctx.fillStyle = '#c8dff0';
-  ctx.fillRect(0, 0, TEX_W, TEX_H);
+  // ── Three texture modes ──────────────────────────────────────────
+  // Continent-level data for temp/precip modes
+  const CONT_DATA = {
+    "Africa":        { temp: 22.91, pr: 1.748 },
+    "Asia":          { temp: 14.21, pr: 2.098 },
+    "Europe":        { temp:  6.12, pr: 1.916 },
+    "North America": { temp:  4.31, pr: 1.589 },
+    "South America": { temp: 21.50, pr: 3.511 },
+    "Oceania":       { temp: 20.04, pr: 1.021 },
+    "Antarctica":    { temp:-32.49, pr: 0.590 },
+  };
 
-  // Country fills
-  countries.features.forEach(feature => {
-    const id  = parseInt(feature.id, 10);
-    ctx.beginPath();
-    pathGen(feature);
-    if (isNaN(id)) {
-      ctx.fillStyle = '#ede8df';
+  const ISO_CONT = {};
+  [12,24,72,108,120,132,140,174,175,178,180,204,231,232,262,266,270,288,
+   324,384,404,426,430,434,450,454,466,478,504,508,516,562,566,624,638,
+   646,678,686,694,706,710,716,728,729,748,768,788,800,818,834,854,894
+  ].forEach(id => { ISO_CONT[id] = "Africa"; });
+  [8,20,40,56,70,100,112,191,196,203,208,233,246,250,276,300,336,348,
+   352,372,380,388,398,428,438,440,442,470,492,496,499,528,578,616,620,
+   642,643,674,688,703,705,724,752,756,804,807,826
+  ].forEach(id => { ISO_CONT[id] = "Europe"; });
+  [4,31,48,50,51,64,96,104,116,144,156,268,356,360,364,368,376,392,400,
+   408,410,414,418,422,458,462,512,524,586,608,634,682,702,704,760,762,
+   764,792,795,860,887
+  ].forEach(id => { ISO_CONT[id] = "Asia"; });
+  [28,44,52,84,124,188,192,214,222,320,332,340,388,484,558,591,630,840
+  ].forEach(id => { ISO_CONT[id] = "North America"; });
+  [32,68,76,152,170,218,328,600,604,740,858,862
+  ].forEach(id => { ISO_CONT[id] = "South America"; });
+  [36,90,242,296,520,540,548,554,583,584,585,776,798,882
+  ].forEach(id => { ISO_CONT[id] = "Oceania"; });
+  [10].forEach(id => { ISO_CONT[id] = "Antarctica"; });
+
+  // Load country-level CSV data
+  let csvData = {};
+  try {
+    const csvText = await fetch('dataframes/climate_agg_country.csv').then(r => r.text());
+    const lines = csvText.trim().split('\n');
+    const headers = lines[0].split(',');
+    const yearIdx  = headers.indexOf('year');
+    const countryIdx = headers.indexOf('country');
+    const tempIdx  = headers.indexOf('mean_temp_C');
+    const prIdx    = headers.indexOf('mean_pr_mm_day');
+    // Use most recent year available per country
+    lines.slice(1).forEach(line => {
+      const cols = line.split(',');
+      const year = parseInt(cols[yearIdx]);
+      const country = cols[countryIdx];
+      const temp = parseFloat(cols[tempIdx]);
+      const pr   = parseFloat(cols[prIdx]);
+      if (!csvData[country] || year > csvData[country].year) {
+        csvData[country] = { year, temp, pr };
+      }
+    });
+  } catch(e) {
+    console.warn('CSV load failed, using fallback continent data', e);
+  }
+
+  // ISO numeric → country name mapping (subset for key countries)
+  const ISO_NAME = {
+    4:'Afghanistan',12:'Algeria',24:'Angola',32:'Argentina',36:'Australia',
+    50:'Bangladesh',56:'Belgium',64:'Bhutan',68:'Bolivia',76:'Brazil',
+    84:'Belize',100:'Bulgaria',104:'Myanmar',116:'Cambodia',120:'Cameroon',
+    124:'Canada',144:'Sri Lanka',152:'Chile',156:'China',170:'Colombia',
+    188:'Costa Rica',191:'Croatia',196:'Cyprus',203:'Czechia',
+    208:'Denmark',214:'Dominican Republic',218:'Ecuador',818:'Egypt',
+    222:'El Salvador',231:'Ethiopia',246:'Finland',250:'France',
+    276:'Germany',288:'Ghana',300:'Greece',320:'Guatemala',
+    324:'Guinea',332:'Haiti',340:'Honduras',348:'Hungary',
+    356:'India',360:'Indonesia',364:'Iran',368:'Iraq',
+    372:'Ireland',376:'Israel',380:'Italy',388:'Jamaica',
+    392:'Japan',400:'Jordan',398:'Kazakhstan',404:'Kenya',
+    408:'North Korea',410:'South Korea',414:'Kuwait',418:'Laos',
+    422:'Lebanon',434:'Libya',440:'Lithuania',442:'Luxembourg',
+    458:'Malaysia',466:'Mali',484:'Mexico',496:'Mongolia',
+    504:'Morocco',508:'Mozambique',516:'Namibia',524:'Nepal',
+    528:'Netherlands',554:'New Zealand',558:'Nicaragua',562:'Niger',
+    566:'Nigeria',578:'Norway',512:'Oman',586:'Pakistan',
+    591:'Panama',600:'Paraguay',604:'Peru',608:'Philippines',
+    616:'Poland',620:'Portugal',630:'Puerto Rico',
+    634:'Qatar',642:'Romania',643:'Russia',682:'Saudi Arabia',
+    686:'Senegal',694:'Sierra Leone',703:'Slovakia',705:'Slovenia',
+    706:'Somalia',710:'South Africa',724:'Spain',729:'Sudan',
+    752:'Sweden',756:'Switzerland',760:'Syria',764:'Thailand',
+    788:'Tunisia',792:'Turkey',800:'Uganda',804:'Ukraine',
+    784:'United Arab Emirates',826:'United Kingdom',840:'United States',
+    858:'Uruguay',860:'Uzbekistan',862:'Venezuela',704:'Vietnam',
+    887:'Yemen',894:'Zambia',716:'Zimbabwe',
+  };
+  
+  function tempToColor(t) {
+    const n = Math.max(0, Math.min(1, (t - (-35)) / (25 - (-35))));
+    // cool blue → warm orange diverging
+    if (n < 0.5) {
+      const v = n / 0.5;
+      const r = Math.round(180 + v * (245 - 180));
+      const g = Math.round(210 + v * (220 - 210));
+      const b = Math.round(240 + v * (185 - 240));
+      return `rgb(${r},${g},${b})`;
     } else {
-      ctx.fillStyle = DROUGHT_HIGH.has(id) ? '#f0a050'
-                    : DROUGHT_MED.has(id)  ? '#f5d4a0'
-                    : '#ede8df';
+      const v = (n - 0.5) / 0.5;
+      const r = Math.round(245 + v * (200 - 245));
+      const g = Math.round(220 + v * (80  - 220));
+      const b = Math.round(185 + v * (30  - 185));
+      return `rgb(${r},${g},${b})`;
     }
-    ctx.fill();
-  });
+  }
 
-  // Country borders
-  ctx.beginPath();
-  pathGen(topojson.mesh(world, world.objects.countries, (a, b) => a !== b));
-  ctx.strokeStyle = 'rgba(255,255,255,0.7)';
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
+  function prToColor(pr) {
+    const n = Math.max(0, Math.min(1, (pr - 0.4) / (3.8 - 0.4)));
+    // dry orange → wet blue
+    const r = Math.round(240 + n * (60  - 240));
+    const g = Math.round(180 + n * (140 - 180));
+    const b = Math.round(100 + n * (220 - 100));
+    return `rgb(${r},${g},${b})`;
+  }
 
-  // Outer border (coastlines)
-  ctx.beginPath();
-  pathGen(topojson.mesh(world, world.objects.countries, (a, b) => a === b));
-  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-  ctx.lineWidth = 1.0;
-  ctx.stroke();
+  let currentMode = 'drought';
 
+  function drawTexture(mode) {
+    currentMode = mode;
+    ctx.fillStyle = '#c8dff0';
+    ctx.fillRect(0, 0, TEX_W, TEX_H);
+
+    countries.features.forEach(feature => {
+      const id   = parseInt(feature.id, 10);
+      const cont = ISO_CONT[id];
+      const data = cont ? CONT_DATA[cont] : null;
+      ctx.beginPath();
+      pathGen(feature);
+
+      const countryName = ISO_NAME[id];
+      const csvRow = countryName ? csvData[countryName] : null;
+
+      if (mode === 'drought') {
+        ctx.fillStyle = isNaN(id) ? '#ede8df'
+          : DROUGHT_HIGH.has(id) ? '#f0a050'
+          : DROUGHT_MED.has(id)  ? '#f5d4a0'
+          : '#ede8df';
+      } else if (mode === 'temp') {
+        const t = csvRow ? csvRow.temp : (data ? data.temp : null);
+        ctx.fillStyle = t != null ? tempToColor(t) : '#ede8df';
+      } else {
+        const p = csvRow ? csvRow.pr : (data ? data.pr : null);
+        ctx.fillStyle = p != null ? prToColor(p) : '#ede8df';
+      }
+
+      ctx.fill();
+    });
+
+    // Borders
+    ctx.beginPath();
+    pathGen(topojson.mesh(world, world.objects.countries, (a, b) => a !== b));
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.beginPath();
+    pathGen(topojson.mesh(world, world.objects.countries, (a, b) => a === b));
+    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+    ctx.lineWidth = 1.0;
+    ctx.stroke();
+  }
+
+  drawTexture('drought');
   const texture = new THREE.CanvasTexture(offscreen);
 
-  // ── Sphere with texture ──────────────────────────────────────────
+  // Expose mode switcher globally so buttons can call it
+  window._setGlobeMode = (mode) => {
+    drawTexture(mode);
+    texture.needsUpdate = true;
+    // Update legend
+    document.querySelectorAll('.globe-mode-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.mode === mode);
+    });
+    const legendDrought = document.getElementById('legend-drought');
+    const legendTemp    = document.getElementById('legend-temp-globe');
+    const legendPr      = document.getElementById('legend-pr-globe');
+    if (legendDrought) legendDrought.style.display = mode === 'drought' ? 'flex' : 'none';
+    if (legendTemp)    legendTemp.style.display    = mode === 'temp'    ? 'flex' : 'none';
+    if (legendPr)      legendPr.style.display      = mode === 'precip'  ? 'flex' : 'none';
+  };
+
   const RADIUS = 1;
   const globeGroup = new THREE.Group();
-
-  const sphereMesh = new THREE.Mesh(
+  globeGroup.add(new THREE.Mesh(
     new THREE.SphereGeometry(RADIUS, 64, 64),
-    new THREE.MeshPhongMaterial({
-      map: texture,
-      shininess: 8,
-      specular: new THREE.Color(0xaaaaaa),
-    })
-  );
-  globeGroup.add(sphereMesh);
-
-  // Thin atmosphere rim
-  const atmosMesh = new THREE.Mesh(
-    new THREE.SphereGeometry(RADIUS * 1.005, 64, 64),
-    new THREE.MeshPhongMaterial({
-      color: 0xc8dff0,
-      transparent: true,
-      opacity: 0.06,
-      side: THREE.BackSide
-    })
-  );
-  globeGroup.add(atmosMesh);
-
+    new THREE.MeshLambertMaterial({ map: texture })
+  ));
   scene.add(globeGroup);
+
+  // ── Rotation: Three.js equirectangular wraps so that
+  //    rotY=0 puts lon=0 (Greenwich) facing +Z (camera).
+  //    To face longitude L: rotY = L * PI/180
+  function stopToRot(stop) {
+    return {
+      y: -stop.lon * Math.PI / 180,
+      x: -stop.lat * Math.PI / 180 * 0.55
+    };
+  }
 
   let targetRotY = 0, targetRotX = 0;
   let currentRotY = 0, currentRotX = 0;
-
-  // Three.js equirectangular mapping: lon 0 faces +X axis at rotY=0
-  // We want lon 0 to face the camera (+Z), so offset by -PI/2
-  function stopToRot(stop) {
-    return {
-      y: -(stop.lon * Math.PI / 180) - Math.PI / 2,
-      x: -(stop.lat * Math.PI / 180) * 0.5
-    };
-  }
 
   function applyGlobeStep(step) {
     if (step === globeStepNow) return;
@@ -304,7 +428,6 @@ async function buildGlobe() {
     targetRotX = rot.x;
   }
 
-  // Set initial rotation so Africa faces front on load
   const initRot = stopToRot(GLOBE_STOPS[0]);
   currentRotY = initRot.y;
   currentRotX = initRot.x;

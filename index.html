@@ -126,6 +126,36 @@
       </div>
     </div>
 
+    <div id="globe-controls">
+      <div id="globe-mode-btns">
+        <button class="globe-mode-btn active" data-mode="drought" onclick="window._setGlobeMode('drought')">Drought Risk</button>
+        <button class="globe-mode-btn" data-mode="temp" onclick="window._setGlobeMode('temp')">Temperature</button>
+        <button class="globe-mode-btn" data-mode="precip" onclick="window._setGlobeMode('precip')">Precipitation</button>
+      </div>
+
+      <div id="legend-drought" class="globe-legend" style="display:flex">
+        <div class="gl-row"><div class="gl-swatch" style="background:#f0a050"></div><span class="gl-label">High drought risk</span></div>
+        <div class="gl-row"><div class="gl-swatch" style="background:#f5d4a0"></div><span class="gl-label">Moderate risk</span></div>
+        <div class="gl-row"><div class="gl-swatch" style="background:#ede8df"></div><span class="gl-label">Lower risk</span></div>
+      </div>
+
+      <div id="legend-temp-globe" class="globe-legend" style="display:none">
+        <div class="gl-gradient-row">
+          <span class="gl-label">Colder</span>
+          <div class="gl-gradient" style="background: linear-gradient(to right, #b4d2f0, #f5dcb9, #c85020)"></div>
+          <span class="gl-label">Hotter</span>
+        </div>
+      </div>
+
+      <div id="legend-pr-globe" class="globe-legend" style="display:none">
+        <div class="gl-gradient-row">
+          <span class="gl-label">Drier</span>
+          <div class="gl-gradient" style="background: linear-gradient(to right, #f0b464, #b0c890, #3c8cdc)"></div>
+          <span class="gl-label">Wetter</span>
+        </div>
+      </div>
+    </div>
+
     <div id="globe-progress">
       <span class="gp-dot active" data-idx="0"></span>
       <span class="gp-dot" data-idx="1"></span>
