@@ -1,0 +1,228 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  height: 100%;
+  background: #111;
+}
+
+/* ── Slides ──────────────────────────────────── */
+.slide {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── Slide 1 ─────────────────────────────────── */
+#slide-1 {
+  background-image: url('cracked-earth.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#slide-1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.slide-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.4rem, 7vw, 6rem);
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.5);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.byline {
+  font-weight: 400;
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.82);
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  color: #fff;
+}
+
+.scroll-arrow {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  color: rgba(255,255,255,0.75);
+  animation: bounce 2s ease-in-out infinite;
+  cursor: pointer;
+  user-select: none;
+}
+
+.scroll-arrow span {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.scroll-arrow svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0);   opacity: .75; }
+  50%       { transform: translateX(-50%) translateY(8px); opacity: 1;   }
+}
+
+/* ── Slide 2 ─────────────────────────────────── */
+#slide-2 {
+  background: #f5f0e8;
+  flex-direction: column;
+  gap: 1.8rem;
+  padding: 2rem;
+}
+
+.hot-cold-question {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  color: #2a2a2a;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 1;
+}
+
+.hot-cold-frame {
+  position: relative;
+  width: min(860px, 90vw);
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  background-image: url('hot-cold.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.hot-cold-halves {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 1;
+  transition: opacity 0.4s;
+}
+
+.half {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 2rem;
+  transition: background 0.3s;
+}
+
+.half:hover {
+  background: rgba(0,0,0,0.18);
+  cursor: pointer;
+}
+
+.choice-btn {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  letter-spacing: 0.16em;
+  color: #fff;
+  background: rgba(255,255,255,0.18);
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 50px;
+  padding: 0.75rem 2.4rem;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.2s, transform 0.15s;
+}
+
+.choice-btn:hover {
+  background: rgba(255,255,255,0.32);
+  transform: scale(1.05);
+}
+
+.reveal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  padding: 2rem;
+}
+
+.reveal-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.reveal-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.8rem, 5vw, 4rem);
+  color: #fff;
+  text-align: center;
+  line-height: 1.15;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.5);
+}
+
+.reveal-sub {
+  font-weight: 400;
+  font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+  color: rgba(255,255,255,0.82);
+  text-align: center;
+  max-width: 480px;
+  letter-spacing: 0.04em;
+}
+
+/* ── Slide 3 ─────────────────────────────────── */
+#slide-3 {
+  background: #0d0d0d;
+}

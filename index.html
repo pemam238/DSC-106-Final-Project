@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drier Than You Think</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="global.css" />
+</head>
+<body>
+
+  <!-- SLIDE 1 -->
+  <section class="slide" id="slide-1">
+    <div class="slide-content">
+      <h1 class="title">DRIER THAN YOU THINK</h1>
+      <p class="byline">By Your Name &nbsp;·&nbsp; DSC 106</p>
+    </div>
+    <div class="scroll-arrow">
+      <span>scroll</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <polyline points="19 12 12 19 5 12"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — Hot or Cold question -->
+  <section class="slide" id="slide-2">
+    <p class="hot-cold-question">Where do you think droughts strike?</p>
+    <div class="hot-cold-frame">
+      <div class="hot-cold-halves">
+        <div class="half left-half">
+          <button class="choice-btn" id="btn-hot" onclick="chooseClimate()">HOT</button>
+        </div>
+        <div class="half right-half">
+          <button class="choice-btn" id="btn-cold" onclick="chooseClimate()">COLD</button>
+        </div>
+      </div>
+      <div class="reveal-overlay" id="reveal-overlay">
+        <h2 class="reveal-text">Both.<br/>Droughts don't pick sides.</h2>
+        <p class="reveal-sub">From the Sahara to the Arctic tundra — water scarcity is everywhere.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 — Filler -->
+  <section class="slide" id="slide-3">
+    <div class="slide-content">
+      <h2 class="subtitle">More to come...</h2>
+    </div>
+  </section>
+
+  <script src="main.js"></script>
+</body>
+</html>
