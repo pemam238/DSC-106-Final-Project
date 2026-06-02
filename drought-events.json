@@ -1,0 +1,72 @@
+[
+    {
+      "id": "great-drought",
+      "index": 1,
+      "title": "The Great Drought",
+      "period": "1875 – 1878",
+      "region": "Asia & Africa",
+      "lat": 22.5,
+      "lon": 80.0,
+      "zoomFactor": 3.0,
+      "tagline": "The deadliest drought in modern history",
+      "body": "Triggered by a record-breaking El Niño, a historic positive Indian Ocean Dipole, and unusually warm North Atlantic waters, this convergence caused near-total monsoon failure across Asia and Africa. The resulting famines in Northern China and India claimed an estimated 30 to 50 million lives — catastrophically chronicled as the 'Late Victorian Holocausts.'",
+      "stat": "30–50M",
+      "statLabel": "estimated fatalities"
+    },
+    {
+      "id": "dust-bowl",
+      "index": 2,
+      "title": "The North American Dust Bowl",
+      "period": "1930 – 1939",
+      "region": "Great Plains, USA & Canada",
+      "lat": 37.5,
+      "lon": -100.0,
+      "zoomFactor": 3.2,
+      "tagline": "A man-made catastrophe amplified by nature",
+      "body": "Driven by cool Pacific and warm Atlantic sea-surface temperatures, this drought was catastrophically amplified by decades of poor soil management. Massive 'Black Blizzard' dust storms stripped topsoil across the Great Plains, forcing millions to abandon their homes. It remains the benchmark ecological disaster of 20th-century North America.",
+      "stat": "3.5M",
+      "statLabel": "people displaced"
+    },
+    {
+      "id": "sahel",
+      "index": 3,
+      "title": "The Great Sahel Drought",
+      "period": "Late 1960s – 1985",
+      "region": "Sahel, Sub-Saharan Africa",
+      "lat": 14.0,
+      "lon": 17.0,
+      "zoomFactor": 3.0,
+      "tagline": "Two decades of creeping desertification",
+      "body": "Shifting Atlantic sea-surface temperatures pushed monsoon rains steadily southward, triggering one of the most persistent structural droughts of the 20th century. The Sahara's edge advanced relentlessly across Mauritania, Mali, Niger, Chad, and Sudan. The 1983–1985 peak triggered the Ethiopian famine, sparking a landmark global humanitarian response.",
+      "stat": "20+ years",
+      "statLabel": "of persistent drought"
+    },
+    {
+      "id": "millennium-drought",
+      "index": 4,
+      "title": "The Millennium Drought",
+      "period": "1997 – 2009",
+      "region": "Southeastern Australia",
+      "lat": -34.0,
+      "lon": 144.0,
+      "zoomFactor": 3.4,
+      "tagline": "Australia's worst drought on record",
+      "body": "Unprecedented autumn and winter rainfall deficits dried out major river systems across southeastern Australia over twelve years. Catastrophic wildfires swept through parched landscapes, mandatory water restrictions hit every major city, and the Murray-Darling Basin nearly collapsed. The crisis fundamentally rewrote Australia's national water-security policy.",
+      "stat": "12 years",
+      "statLabel": "of sustained rainfall deficit"
+    },
+    {
+      "id": "horn-of-africa",
+      "index": 5,
+      "title": "East African Droughts",
+      "period": "2010 – 2023",
+      "region": "Horn of Africa",
+      "lat": 5.0,
+      "lon": 42.0,
+      "zoomFactor": 3.2,
+      "tagline": "Five consecutive failed rainy seasons",
+      "body": "By 2023, the Horn of Africa had endured five consecutive failed rainy seasons — the worst drought in 40 years. Millions of livestock perished, harvests failed entirely, and mass displacement swept across Somalia, Ethiopia, and Kenya. The crisis laid bare the acute vulnerability of the region to rising global temperatures and a climate system pushed past its limits.",
+      "stat": "5",
+      "statLabel": "consecutive failed rainy seasons"
+    }
+  ]
