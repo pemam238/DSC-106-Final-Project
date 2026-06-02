@@ -178,6 +178,7 @@ async function buildGlobe() {
 
   await loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js');
   await loadScript('https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js');
+  await loadScript('https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js');
   await new Promise(r => setTimeout(r, 50));
 
   const canvas = document.getElementById('globe-canvas');
@@ -195,98 +196,116 @@ async function buildGlobe() {
   scene.background = new THREE.Color(BG_COLOR);
 
   const camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 100);
-  camera.position.z = 2.8;
+  camera.position.z = 2.2;
 
-  // Lighting — soft and warm, matching the page aesthetic
-  scene.add(new THREE.AmbientLight(0xffffff, 0.75));
-  const sun = new THREE.DirectionalLight(0xfff8f0, 0.85);
+  scene.add(new THREE.AmbientLight(0xffffff, 1.0));
+  const sun = new THREE.DirectionalLight(0xfff8f0, 0.4);
   sun.position.set(3, 2, 4);
   scene.add(sun);
-  const fill = new THREE.DirectionalLight(0xf0f4f8, 0.25);
-  fill.position.set(-3, -1, -2);
-  scene.add(fill);
 
-  const RADIUS = 1;
-
-  // Ocean sphere
-  const oceanMesh = new THREE.Mesh(
-    new THREE.SphereGeometry(RADIUS, 64, 64),
-    new THREE.MeshPhongMaterial({ color: COL_OCEAN, shininess: 18, specular: 0xaaccee })
-  );
+  // ── Draw world onto an offscreen canvas texture ──────────────────
+  const TEX_W = 4096, TEX_H = 2048;
+  const offscreen = document.createElement('canvas');
+  offscreen.width  = TEX_W;
+  offscreen.height = TEX_H;
+  const ctx = offscreen.getContext('2d');
 
   const world = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r => r.json());
   const countries = topojson.feature(world, world.objects.countries);
 
-  function lonLatToVec3(lon, lat, r) {
-    const phi   = (90 - lat)  * (Math.PI / 180);
-    const theta = (lon + 180) * (Math.PI / 180);
-    return new THREE.Vector3(
-      -r * Math.sin(phi) * Math.cos(theta),
-       r * Math.cos(phi),
-       r * Math.sin(phi) * Math.sin(theta)
-    );
-  }
+  // Equirectangular projection fills the texture exactly
+  const projection = d3.geoEquirectangular()
+    .scale(TEX_W / (2 * Math.PI))
+    .translate([TEX_W / 2, TEX_H / 2]);
+  const pathGen = d3.geoPath().projection(projection).context(ctx);
 
-  const globeGroup = new THREE.Group();
-  globeGroup.add(oceanMesh);
+  // Ocean background
+  ctx.fillStyle = '#c8dff0';
+  ctx.fillRect(0, 0, TEX_W, TEX_H);
 
-  const borderMat = new THREE.LineBasicMaterial({ color: COL_BORDER, opacity: 0.55, transparent: true });
-
+  // Country fills
   countries.features.forEach(feature => {
     const id  = parseInt(feature.id, 10);
-    const col = DROUGHT_HIGH.has(id) ? COL_HIGH
-              : DROUGHT_MED.has(id)  ? COL_MED
-              : COL_LOW;
-
-    const landMat = new THREE.MeshPhongMaterial({ color: col, shininess: 6 });
-
-    const polys = feature.geometry.type === 'Polygon'
-      ? [feature.geometry.coordinates]
-      : feature.geometry.coordinates;
-
-    polys.forEach(poly => {
-      const ring = poly[0];
-      if (!ring || ring.length < 4) return;
-
-      const pts = ring.map(([ln, lt]) => lonLatToVec3(ln, lt, RADIUS + 0.003));
-      globeGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), borderMat));
-
-      // Fan triangulation from centroid
-      let cx = 0, cy = 0, cz = 0;
-      pts.forEach(p => { cx += p.x; cy += p.y; cz += p.z; });
-      cx /= pts.length; cy /= pts.length; cz /= pts.length;
-      const cLen = Math.sqrt(cx*cx + cy*cy + cz*cz);
-      const centre = new THREE.Vector3(
-        cx/cLen*(RADIUS+0.001), cy/cLen*(RADIUS+0.001), cz/cLen*(RADIUS+0.001)
-      );
-
-      const verts = [];
-      for (let i = 0; i < pts.length - 1; i++) {
-        verts.push(centre.x, centre.y, centre.z);
-        verts.push(pts[i].x,   pts[i].y,   pts[i].z);
-        verts.push(pts[i+1].x, pts[i+1].y, pts[i+1].z);
-      }
-      const fillGeo = new THREE.BufferGeometry();
-      fillGeo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
-      fillGeo.computeVertexNormals();
-      globeGroup.add(new THREE.Mesh(fillGeo, landMat));
-    });
+    ctx.beginPath();
+    pathGen(feature);
+    ctx.fillStyle = DROUGHT_HIGH.has(id) ? '#f0a050'
+                  : DROUGHT_MED.has(id)  ? '#f5d4a0'
+                  : '#ede8df';
+    ctx.fill();
   });
+
+  // Country borders
+  ctx.beginPath();
+  pathGen(topojson.mesh(world, world.objects.countries, (a, b) => a !== b));
+  ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Outer border (coastlines)
+  ctx.beginPath();
+  pathGen(topojson.mesh(world, world.objects.countries, (a, b) => a === b));
+  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  ctx.lineWidth = 1.0;
+  ctx.stroke();
+
+  const texture = new THREE.CanvasTexture(offscreen);
+
+  // ── Sphere with texture ──────────────────────────────────────────
+  const RADIUS = 1;
+  const globeGroup = new THREE.Group();
+
+  const sphereMesh = new THREE.Mesh(
+    new THREE.SphereGeometry(RADIUS, 64, 64),
+    new THREE.MeshPhongMaterial({
+      map: texture,
+      shininess: 8,
+      specular: new THREE.Color(0xaaaaaa),
+    })
+  );
+  globeGroup.add(sphereMesh);
+
+  // Thin atmosphere rim
+  const atmosMesh = new THREE.Mesh(
+    new THREE.SphereGeometry(RADIUS * 1.005, 64, 64),
+    new THREE.MeshPhongMaterial({
+      color: 0xc8dff0,
+      transparent: true,
+      opacity: 0.06,
+      side: THREE.BackSide
+    })
+  );
+  globeGroup.add(atmosMesh);
 
   scene.add(globeGroup);
 
   let targetRotY = 0, targetRotX = 0;
   let currentRotY = 0, currentRotX = 0;
 
+  // Three.js equirectangular mapping: lon 0 faces +X axis at rotY=0
+  // We want lon 0 to face the camera (+Z), so offset by -PI/2
+  function stopToRot(stop) {
+    return {
+      y: -(stop.lon * Math.PI / 180) - Math.PI / 2,
+      x: -(stop.lat * Math.PI / 180) * 0.5
+    };
+  }
+
   function applyGlobeStep(step) {
     if (step === globeStepNow) return;
     globeStepNow = step;
     if (step < 0) return;
     setGlobePanel(step);
-    const stop = GLOBE_STOPS[step];
-    targetRotY = -(stop.lon * Math.PI / 180);
-    targetRotX = -(stop.lat * Math.PI / 180) * 0.45;
+    const rot = stopToRot(GLOBE_STOPS[step]);
+    targetRotY = rot.y;
+    targetRotX = rot.x;
   }
+
+  // Set initial rotation so Africa faces front on load
+  const initRot = stopToRot(GLOBE_STOPS[0]);
+  currentRotY = initRot.y;
+  currentRotX = initRot.x;
+  targetRotY  = initRot.y;
+  targetRotX  = initRot.x;
 
   (function animate() {
     requestAnimationFrame(animate);
