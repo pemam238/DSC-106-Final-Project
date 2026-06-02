@@ -287,12 +287,11 @@ function applyMapStep(step) {
    let globeBuilt   = false;
    let globeStepNow = -1;
    
-   // Continent camera positions: [lon, lat] in degrees, then converted to 3D
    const GLOBE_STOPS = [
-     { lon:  20, lat: -10, label: 'Africa/Oceania'   }, // Africa centred
-     { lon: -55, lat: -15, label: 'South America'    },
-     { lon:  90, lat:  35, label: 'Asia/N.America'   }, // rotates back west
-     { lon:  15, lat:  50, label: 'Europe'            },
+     { lon:  20, lat: -10 },
+     { lon: -55, lat: -15 },
+     { lon:  90, lat:  35 },
+     { lon:  15, lat:  50 },
    ];
    
    function getGlobeStep() {
@@ -323,51 +322,51 @@ function applyMapStep(step) {
    
      await loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js');
      await loadScript('https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js');
+     await new Promise(r => setTimeout(r, 50));
    
      const canvas = document.getElementById('globe-canvas');
-     if (!canvas) return;
+     if (!canvas || typeof THREE === 'undefined') { globeBuilt = false; return; }
    
      const W = canvas.clientWidth  || window.innerWidth;
      const H = canvas.clientHeight || window.innerHeight;
    
-     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+     renderer.setClearColor(0xf0ede6, 1);
      renderer.setSize(W, H);
      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
    
      const scene  = new THREE.Scene();
-     const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
-     camera.position.z = 2.6;
+     scene.background = new THREE.Color(0xf0ede6);
    
-     // Lighting
-     scene.add(new THREE.AmbientLight(0xffffff, 0.45));
-     const sun = new THREE.DirectionalLight(0xfff4e0, 1.1);
-     sun.position.set(4, 2, 4);
+     const camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 100);
+     camera.position.z = 2.8;
+   
+     scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+     const sun = new THREE.DirectionalLight(0xfff8f0, 0.9);
+     sun.position.set(3, 2, 4);
      scene.add(sun);
+     const fill = new THREE.DirectionalLight(0xe8f0f8, 0.3);
+     fill.position.set(-3, -1, -2);
+     scene.add(fill);
    
      const RADIUS = 1;
-   
-     // Ocean sphere
      const oceanGeo = new THREE.SphereGeometry(RADIUS, 64, 64);
-     const oceanMat = new THREE.MeshPhongMaterial({ color: 0x1a4f7a, shininess: 60 });
-     scene.add(new THREE.Mesh(oceanGeo, oceanMat));
+     const oceanMat = new THREE.MeshPhongMaterial({ color: 0xc8dff0, shininess: 20, specular: 0xaaccee });
    
-     // Atmosphere glow ring (slightly bigger, transparent)
-     const atmosGeo = new THREE.SphereGeometry(RADIUS * 1.02, 64, 64);
-     const atmosMat = new THREE.MeshPhongMaterial({
-       color: 0x4fa3d8, transparent: true, opacity: 0.08, side: THREE.FrontSide
-     });
-     scene.add(new THREE.Mesh(atmosGeo, atmosMat));
-   
-     // Load world topo for land
      const world = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r => r.json());
      const countries = topojson.feature(world, world.objects.countries);
    
-     // Drought-risk color per country id (rough continent buckets)
-     const HIGH_RISK  = new Set([12,24,72,204,270,288,324,384,426,430,434,466,478,504,516,562,566,624,686,706,710,716,729,748,768,788,854,36,90,598]);
-     const MED_RISK   = new Set([50,104,356,364,368,410,414,418,586,608,634,682,702,704,764,792,860,484,558,591,840,152,170,218,600,604]);
+     const HIGH_RISK = new Set([
+       12,24,72,204,270,288,324,384,426,430,434,466,478,504,516,562,566,
+       624,686,706,710,716,729,748,768,788,854,36,90,598
+     ]);
+     const MED_RISK = new Set([
+       50,104,356,364,368,586,608,634,682,702,704,764,792,
+       484,558,591,840,152,170,218,600,604
+     ]);
    
      function lonLatToVec3(lon, lat, r) {
-       const phi   = (90 - lat) * (Math.PI / 180);
+       const phi   = (90 - lat)  * (Math.PI / 180);
        const theta = (lon + 180) * (Math.PI / 180);
        return new THREE.Vector3(
          -r * Math.sin(phi) * Math.cos(theta),
@@ -376,14 +375,17 @@ function applyMapStep(step) {
        );
      }
    
-     // Draw each country as extruded polygon on sphere surface
-     function addCountry(feature) {
-       const id  = parseInt(feature.id, 10);
-       const col = HIGH_RISK.has(id) ? 0xc87941
-                  : MED_RISK.has(id) ? 0x8fa87c
-                  : 0x4a7c5e;
+     const globeGroup = new THREE.Group();
+     globeGroup.add(new THREE.Mesh(oceanGeo, oceanMat));
    
-       const mat = new THREE.MeshPhongMaterial({ color: col, shininess: 12 });
+     countries.features.forEach(feature => {
+       const id  = parseInt(feature.id, 10);
+       const col = HIGH_RISK.has(id) ? 0xf0a050
+                 : MED_RISK.has(id)  ? 0xf5d4a0
+                 : 0xe8e2d9;
+   
+       const landMat   = new THREE.MeshPhongMaterial({ color: col, shininess: 8 });
+       const borderMat = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.6, transparent: true });
    
        const polys = feature.geometry.type === 'Polygon'
          ? [feature.geometry.coordinates]
@@ -392,83 +394,55 @@ function applyMapStep(step) {
        polys.forEach(poly => {
          const ring = poly[0];
          if (!ring || ring.length < 4) return;
-         const pts = ring.map(([ln, lt]) => lonLatToVec3(ln, lt, RADIUS + 0.003));
-         const geo = new THREE.BufferGeometry().setFromPoints(pts);
-         const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.12, transparent: true }));
-         scene.add(line);
    
-         // Fill with triangulated fan from centroid
-         const cx = pts.reduce((s,p) => s+p.x, 0) / pts.length;
-         const cy = pts.reduce((s,p) => s+p.y, 0) / pts.length;
-         const cz = pts.reduce((s,p) => s+p.z, 0) / pts.length;
-         const cLen = Math.sqrt(cx*cx+cy*cy+cz*cz);
-         const centre = new THREE.Vector3(cx/cLen*(RADIUS+0.001), cy/cLen*(RADIUS+0.001), cz/cLen*(RADIUS+0.001));
+         const pts = ring.map(([ln, lt]) => lonLatToVec3(ln, lt, RADIUS + 0.003));
+         globeGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), borderMat));
+   
+         let cx = 0, cy = 0, cz = 0;
+         pts.forEach(p => { cx += p.x; cy += p.y; cz += p.z; });
+         cx /= pts.length; cy /= pts.length; cz /= pts.length;
+         const cLen = Math.sqrt(cx*cx + cy*cy + cz*cz);
+         const centre = new THREE.Vector3(
+           cx/cLen*(RADIUS+0.001), cy/cLen*(RADIUS+0.001), cz/cLen*(RADIUS+0.001)
+         );
    
          const verts = [];
          for (let i = 0; i < pts.length - 1; i++) {
            verts.push(centre.x, centre.y, centre.z);
-           verts.push(pts[i].x, pts[i].y, pts[i].z);
+           verts.push(pts[i].x,   pts[i].y,   pts[i].z);
            verts.push(pts[i+1].x, pts[i+1].y, pts[i+1].z);
          }
          const fillGeo = new THREE.BufferGeometry();
          fillGeo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
          fillGeo.computeVertexNormals();
-         scene.add(new THREE.Mesh(fillGeo, mat));
+         globeGroup.add(new THREE.Mesh(fillGeo, landMat));
        });
-     }
+     });
    
-     countries.features.forEach(addCountry);
+     scene.add(globeGroup);
    
-     // Globe group for rotation — only add mesh objects, not lights
-    const globeGroup = new THREE.Group();
-    const toMove = [...scene.children];
-    toMove.forEach(c => {
-      scene.remove(c);
-      globeGroup.add(c);
-    });
-    scene.add(globeGroup);
-    // Re-add lights to scene so they illuminate from fixed positions
-    const ambient2 = new THREE.AmbientLight(0xffffff, 0.45);
-    scene.add(ambient2);
-    scene.add(sun);
-   
-     // Target rotation state
-     let targetRotY = 0;
-     let targetRotX = 0;
-     let currentRotY = 0;
-     let currentRotX = 0;
-   
-     function stopToRotation(stop) {
-       // rotY: we want that longitude facing camera (camera is at +Z)
-       // longitude 0 = front when rotY=0, so rotY = -lon in radians
-       const rotY = -(stop.lon * Math.PI / 180);
-       const rotX = -(stop.lat * Math.PI / 180) * 0.5;
-       return { rotY, rotX };
-     }
+     let targetRotY = 0, targetRotX = 0;
+     let currentRotY = 0, currentRotX = 0;
    
      function applyGlobeStep(step) {
        if (step === globeStepNow) return;
        globeStepNow = step;
        if (step < 0) return;
        setGlobePanel(step);
-       const rot = stopToRotation(GLOBE_STOPS[step]);
-       targetRotY = rot.rotY;
-       targetRotX = rot.rotX;
+       const stop = GLOBE_STOPS[step];
+       targetRotY = -(stop.lon * Math.PI / 180);
+       targetRotX = -(stop.lat * Math.PI / 180) * 0.45;
      }
    
-     // Animate
-     function animate() {
+     (function animate() {
        requestAnimationFrame(animate);
-       // Smooth lerp toward target
-       currentRotY += (targetRotY - currentRotY) * 0.04;
-       currentRotX += (targetRotX - currentRotX) * 0.04;
+       currentRotY += (targetRotY - currentRotY) * 0.045;
+       currentRotX += (targetRotX - currentRotX) * 0.045;
        globeGroup.rotation.y = currentRotY;
        globeGroup.rotation.x = currentRotX;
        renderer.render(scene, camera);
-     }
-     animate();
+     })();
    
-     // Resize
      window.addEventListener('resize', () => {
        const w = canvas.clientWidth, h = canvas.clientHeight;
        renderer.setSize(w, h);
@@ -476,17 +450,14 @@ function applyMapStep(step) {
        camera.updateProjectionMatrix();
      });
    
-     // Apply current step immediately
      const s = getGlobeStep();
      if (s >= 0) applyGlobeStep(s);
    
-     // Hook scroll
-     window._globeReady = true;
+     window._globeReady     = true;
      window._applyGlobeStep = applyGlobeStep;
-     window._getGlobeStep  = getGlobeStep;
+     window._getGlobeStep   = getGlobeStep;
    }
    
-   // Integrate with existing scroll handler — patch isOnMapTrack and applyMapStep references
    function isOnMapTrack() {
      const t = document.getElementById('slide-map-track');
      if (!t) return false;
@@ -494,11 +465,11 @@ function applyMapStep(step) {
      return rect.top <= 0 && rect.bottom > window.innerHeight;
    }
    
-   function applyMapStep() {
-     if (!window._globeReady) return;
-     window._applyGlobeStep(window._getGlobeStep());
-   }
-   
-   async function buildMap() {
-     await buildGlobe();
+   function loadScript(src) {
+     return new Promise((resolve, reject) => {
+       if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+       const s = document.createElement('script');
+       s.src = src; s.onload = resolve; s.onerror = reject;
+       document.head.appendChild(s);
+     });
    }
