@@ -12,7 +12,7 @@ html {
 body {
   font-family: 'Montserrat', sans-serif;
   height: 100%;
-  background: #111;
+  background: #f0ede6;
 }
 
 /* ── Slides ──────────────────────────────────── */
@@ -357,7 +357,7 @@ body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: #f0ede6 !important;
+  background: #f0ede6;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -372,16 +372,6 @@ body {
 
 
 /* ── Annotation panel ────────────────────────── */
-#globe-panels {
-  position: absolute;
-  right: 5vw;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(220px, 24vw, 300px);
-  z-index: 10;
-  pointer-events: none;
-}
-
 .globe-panel {
   position: absolute;
   top: 0;
@@ -391,12 +381,24 @@ body {
   transform: translateY(28px);
   transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1),
               transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  pointer-events: none;
 }
 
 .globe-panel.active {
   opacity: 1;
   transform: translateY(0);
-  position: relative;
+  pointer-events: auto;
+}
+
+#globe-panels {
+  position: absolute;
+  left: 5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(220px, 24vw, 300px);
+  height: 260px;
+  z-index: 10;
+  pointer-events: none;
 }
 
 .gp-label {

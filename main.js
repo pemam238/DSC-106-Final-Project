@@ -18,6 +18,7 @@ document.addEventListener('touchmove', (e) => {
 }, { passive: false });
 
 window.addEventListener('scroll', () => {
+
   driveMapEntrance();
 
   if (!buttonPressed) {
@@ -68,7 +69,7 @@ function drivePanels() {
   else panelR.classList.remove('visible');
 }
 
-/* ── Map entrance: clean fade ───────────────────── */
+/* ── Map entrance: fade previous out, globe fades in, bg always warm ── */
 function driveMapEntrance() {
   const mapTrack = document.getElementById('slide-map-track');
   const mapScene = document.getElementById('scene-map');
@@ -78,20 +79,17 @@ function driveMapEntrance() {
   const rect     = mapTrack.getBoundingClientRect();
   const progress = Math.max(0, Math.min(1, -rect.top / window.innerHeight));
 
+  // Scene 2 fades out and lifts — background stays warm the whole time
   if (scene2) {
-    const exitProg = Math.min(1, progress * 2.2);
-    scene2.style.transform = `translateY(${-exitProg * 60}px)`;
+    const exitProg = Math.min(1, progress * 2.0);
+    scene2.style.transform = `translateY(${-exitProg * 50}px)`;
     scene2.style.opacity   = (1 - exitProg).toFixed(3);
   }
 
-  const mapFade = Math.max(0, Math.min(1, (progress - 0.35) / 0.5));
+  // Globe scene always has the warm background — just fade opacity in
+  mapScene.style.backgroundColor = '#f0ede6';
+  const mapFade = Math.max(0, Math.min(1, (progress - 0.3) / 0.55));
   mapScene.style.opacity = mapFade.toFixed(3);
-
-  // Blend warm #f5f0e8 → globe background #f0ede6 (stays in same warm family)
-  const r = Math.round(245 + (240 - 245) * mapFade);
-  const g = Math.round(240 + (237 - 240) * mapFade);
-  const b = Math.round(232 + (230 - 232) * mapFade);
-  mapScene.style.backgroundColor = `rgb(${r},${g},${b})`;
 }
 
 driveMapEntrance();
@@ -195,13 +193,17 @@ async function buildGlobe() {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(BG_COLOR);
 
-  const camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 100);
-  camera.position.z = 2.2;
+  const camera = new THREE.PerspectiveCamera(36, W / H, 0.1, 100);
+  camera.position.z = 3.2;
+  camera.position.x = -0.7;
 
-  scene.add(new THREE.AmbientLight(0xffffff, 1.0));
-  const sun = new THREE.DirectionalLight(0xfff8f0, 0.4);
-  sun.position.set(3, 2, 4);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const sun = new THREE.DirectionalLight(0xfff8f0, 0.7);
+  sun.position.set(5, 3, 4);
   scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.15);
+  fill.position.set(-3, -1, 2);
+  scene.add(fill);
 
   // ── Draw world onto an offscreen canvas texture ──────────────────
   const TEX_W = 4096, TEX_H = 2048;
