@@ -2,21 +2,24 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-html {
+ }
+ 
+ 
+ html {
   overflow-y: scroll;
   height: 100%;
-}
-
-body {
+ }
+ 
+ 
+ body {
   font-family: 'Montserrat', sans-serif;
   height: 100%;
   background: #111;
-}
-
-/* ── Slides ──────────────────────────────────── */
-.slide {
+ }
+ 
+ 
+ /* ── Slides ──────────────────────────────────── */
+ .slide {
   position: relative;
   width: 100%;
   height: 100vh;
@@ -24,37 +27,42 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-}
-
-/* ── Slide 1 ─────────────────────────────────── */
-#slide-1 {
+ }
+ 
+ 
+ /* ── Slide 1 ─────────────────────────────────── */
+ #slide-1 {
   background-image: url('cracked-earth.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
-
-#slide-1::before {
+ }
+ 
+ 
+ #slide-1::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
     linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.72)),
     rgba(0,0,0,0.25);
-}
-
-.slide-content {
+ }
+ 
+ 
+ .slide-content {
   position: relative;
   z-index: 1;
   text-align: center;
   padding: 0 1.5rem;
-}
-
-.hero-content {
+ }
+ 
+ 
+ .hero-content {
   max-width: 900px;
-}
-
-.title {
+ }
+ 
+ 
+ .title {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,14 +73,16 @@ body {
   text-shadow: 0 4px 30px rgba(0,0,0,0.65);
   line-height: 0.88;
   margin-bottom: 1.6rem;
-}
-
-.title span:nth-child(2) {
+ }
+ 
+ 
+ .title span:nth-child(2) {
   font-size: 0.62em;
   letter-spacing: 0.22em;
-}
-
-.context-text {
+ }
+ 
+ 
+ .context-text {
   color: rgba(255,255,255,0.72);
   font-size: clamp(0.85rem, 1.5vw, 1rem);
   line-height: 1.75;
@@ -80,23 +90,26 @@ body {
   max-width: 580px;
   margin: 0 auto 1.4rem;
   font-weight: 400;
-}
-
-.byline {
+ }
+ 
+ 
+ .byline {
   font-weight: 400;
   font-size: clamp(0.78rem, 1.5vw, 0.95rem);
   letter-spacing: 0.12em;
   color: rgba(255,255,255,0.45);
   text-transform: uppercase;
-}
-
-.subtitle {
+ }
+ 
+ 
+ .subtitle {
   font-weight: 700;
   font-size: clamp(1.5rem, 4vw, 3rem);
   color: #fff;
-}
-
-.scroll-arrow {
+ }
+ 
+ 
+ .scroll-arrow {
   position: absolute;
   bottom: 2.2rem;
   left: 50%;
@@ -110,34 +123,40 @@ body {
   animation: bounce 2s ease-in-out infinite;
   cursor: pointer;
   user-select: none;
-}
-
-.scroll-arrow span {
+ }
+ 
+ 
+ .scroll-arrow span {
   font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-}
-
-.scroll-arrow svg {
+ }
+ 
+ 
+ .scroll-arrow svg {
   width: 1.5rem;
   height: 1.5rem;
-}
-
-@keyframes bounce {
+ }
+ 
+ 
+ @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0);   opacity: .55; }
   50%       { transform: translateX(-50%) translateY(8px); opacity: .9;  }
-}
-
-/* ── Slide 2 track — sticky scroll sequence ──── */
-#slide-2-track {
+ }
+ 
+ 
+ /* ── Slide 2 track — sticky scroll sequence ──── */
+ #slide-2-track {
   position: relative;
-}
-
-.scroll-spacer {
+ }
+ 
+ 
+ .scroll-spacer {
   height: 300vh;
-}
-
-.sticky-scene {
+ }
+ 
+ 
+ .sticky-scene {
   position: sticky;
   top: 0;
   height: 100vh;
@@ -150,10 +169,11 @@ body {
   gap: 1.8rem;
   padding: 2rem;
   overflow: hidden;
-}
-
-/* ── Hot/Cold question UI ─────────────────────── */
-.hot-cold-question {
+ }
+ 
+ 
+ /* ── Hot/Cold question UI ─────────────────────── */
+ .hot-cold-question {
   font-weight: 700;
   font-size: clamp(1.1rem, 3vw, 1.8rem);
   color: #2a2a2a;
@@ -162,9 +182,10 @@ body {
   text-align: center;
   z-index: 1;
   position: relative;
-}
-
-.hot-cold-frame {
+ }
+ 
+ 
+ .hot-cold-frame {
   position: relative;
   width: min(860px, 90vw);
   aspect-ratio: 16 / 9;
@@ -175,31 +196,35 @@ body {
   background-size: cover;
   background-position: center;
   z-index: 1;
-}
-
-.hot-cold-halves {
+ }
+ 
+ 
+ .hot-cold-halves {
   position: absolute;
   inset: 0;
   display: flex;
   z-index: 1;
   transition: opacity 0.4s;
-}
-
-.half {
+ }
+ 
+ 
+ .half {
   flex: 1;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   padding-bottom: 2rem;
   transition: background 0.3s;
-}
-
-.half:hover {
+ }
+ 
+ 
+ .half:hover {
   background: rgba(0,0,0,0.18);
   cursor: pointer;
-}
-
-.choice-btn {
+ }
+ 
+ 
+ .choice-btn {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
   font-size: clamp(1rem, 2.5vw, 1.4rem);
@@ -213,14 +238,16 @@ body {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   transition: background 0.2s, transform 0.15s;
-}
-
-.choice-btn:hover {
+ }
+ 
+ 
+ .choice-btn:hover {
   background: rgba(255,255,255,0.32);
   transform: scale(1.05);
-}
-
-.reveal-overlay {
+ }
+ 
+ 
+ .reveal-overlay {
   position: absolute;
   inset: 0;
   background: rgba(0,0,0,0.65);
@@ -234,14 +261,16 @@ body {
   pointer-events: none;
   transition: opacity 0.5s ease;
   padding: 2rem;
-}
-
-.reveal-overlay.visible {
+ }
+ 
+ 
+ .reveal-overlay.visible {
   opacity: 1;
   pointer-events: auto;
-}
-
-.reveal-text {
+ }
+ 
+ 
+ .reveal-text {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
   font-size: clamp(1.8rem, 5vw, 4rem);
@@ -249,19 +278,21 @@ body {
   text-align: center;
   line-height: 1.15;
   text-shadow: 0 2px 24px rgba(0,0,0,0.5);
-}
-
-.reveal-sub {
+ }
+ 
+ 
+ .reveal-sub {
   font-weight: 400;
   font-size: clamp(0.85rem, 1.8vw, 1.1rem);
   color: rgba(255,255,255,0.82);
   text-align: center;
   max-width: 480px;
   letter-spacing: 0.04em;
-}
-
-/* ── Side panels ─────────────────────────────── */
-.side-panel {
+ }
+ 
+ 
+ /* ── Side panels ─────────────────────────────── */
+ .side-panel {
   position: absolute;
   top: 0;
   width: calc((100% - min(860px, 90vw)) / 2);
@@ -273,192 +304,346 @@ body {
   pointer-events: none;
   z-index: 2;
   overflow: hidden;
-}
-
-.left-panel  { left: 0; }
-.right-panel { right: 0; }
-
-.side-panel-inner {
+ }
+ 
+ 
+ .left-panel  { left: 0; }
+ .right-panel { right: 0; }
+ 
+ 
+ .side-panel-inner {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
   transform: translateY(60px);
   opacity: 0;
   transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s ease;
-}
-
-.left-panel.visible .side-panel-inner,
-.right-panel.visible .side-panel-inner {
+ }
+ 
+ 
+ .left-panel.visible .side-panel-inner,
+ .right-panel.visible .side-panel-inner {
   transform: translateY(0);
   opacity: 1;
-}
-
-.panel-label {
+ }
+ 
+ 
+ .panel-label {
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #8B5E3C;
   margin-bottom: 0.2rem;
-}
-
-.panel-heading {
+ }
+ 
+ 
+ .panel-heading {
   font-size: clamp(1rem, 1.8vw, 1.35rem);
   font-weight: 900;
   color: #1a1a1a;
   letter-spacing: 0.04em;
   line-height: 1.2;
   text-transform: uppercase;
-}
-
-.panel-heading em {
+ }
+ 
+ 
+ .panel-heading em {
   font-style: normal;
   color: #8B5E3C;
-}
-
-.panel-body {
+ }
+ 
+ 
+ .panel-body {
   font-size: clamp(0.75rem, 1.1vw, 0.88rem);
   color: #2e2e2e;
   line-height: 1.8;
   font-weight: 400;
-}
-
-.panel-body em {
+ }
+ 
+ 
+ .panel-body em {
   font-style: italic;
   color: #8B5E3C;
   font-weight: 600;
-}
-
-.panel-divider {
+ }
+ 
+ 
+ .panel-divider {
   width: 2rem;
   height: 2px;
   background: #8B5E3C;
   border: none;
   margin: 0;
-}
-
-/* ═══════════════════════════════════════════════
+ }
+ 
+ 
+ /* ═══════════════════════════════════════════════
    MAP — Full-screen with floating ocean blurbs
    ═══════════════════════════════════════════════ */
-#slide-map-track {
+ #slide-map-track {
   position: relative;
-}
-
-.map-scroll-space {
-  height: 500vh;
-}
-
-/* Full-screen sticky scene — map is the background */
-.map-scene {
-  opacity: 0;
-  transition: none;
+ }
+ 
+ 
+ .map-scroll-space {
+  height: 400vh;
+ }
+ 
+ 
+ /* Full-screen sticky scene — map is the background */
+ .map-scene {
   position: sticky;
   top: 0;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: #f0ede6 !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#globe-canvas {
+  background: #c8e4f5;
+  padding: 0;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 0;
+ }
+ 
+ 
+ /* Map fills 100% of sticky scene */
+ #map-wrapper {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-}
-
-
-/* ── Annotation panel ────────────────────────── */
-#globe-panels {
-  position: absolute;
-  right: 5vw;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(220px, 24vw, 300px);
-  z-index: 10;
-  pointer-events: none;
-}
-
-.globe-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
+ }
+ 
+ 
+ #world-map {
   width: 100%;
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1),
-              transform 0.6s cubic-bezier(0.22,1,0.36,1);
-}
-
-.globe-panel.active {
-  opacity: 1;
-  transform: translateY(0);
-  position: relative;
-}
-
-.gp-label {
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #8B5E3C;
-  margin-bottom: 0.5rem;
-}
-
-.gp-head {
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  font-weight: 900;
-  color: #1a1a1a;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  line-height: 1.1;
-  margin-bottom: 0.6rem;
-}
-
-.gp-rule {
-  width: 2rem;
-  height: 2px;
-  background: #c87941;
-  border: none;
-  margin: 0 0 0.8rem;
-}
-
-.gp-body {
-  font-size: clamp(0.75rem, 1vw, 0.85rem);
-  color: #2e2e2e;
-  line-height: 1.8;
-  font-weight: 400;
-}
-
-/* ── Progress dots ───────────────────────────── */
-#globe-progress {
+  height: 100%;
+  display: block;
+  background: #c8e4f5;
+ }
+ 
+ 
+ /* Country paths */
+ .country {
+  stroke: rgba(255,255,255,0.55);
+  stroke-width: 0.5;
+  transition: fill 0.05s linear;
+  cursor: default;
+ }
+ 
+ 
+ .graticule {
+  fill: none;
+  stroke: rgba(160,200,230,0.25);
+  stroke-width: 0.3;
+ }
+ 
+ 
+ .sphere {
+  fill: #c8e4f5;
+ }
+ 
+ 
+ /* ── Legend — bottom center ─────────────────── */
+ .map-legend-container {
   position: absolute;
-  bottom: 2.2rem;
+  bottom: 1.4rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 0.6rem;
-  z-index: 10;
-}
-
-.gp-dot {
-  width: 7px;
+  flex-direction: column;
+  gap: 0.35rem;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: rgba(245,240,232,0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 8px;
+  padding: 0.6rem 1.1rem;
+  min-width: 300px;
+  pointer-events: none;
+ }
+ 
+ 
+ .map-legend-container.show {
+  opacity: 1;
+ }
+ 
+ 
+ .legend-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #3a3028;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transition: opacity 0.4s;
+ }
+ 
+ 
+ .legend-row.hidden {
+  opacity: 0;
+  pointer-events: none;
+ }
+ 
+ 
+ .legend-gradient {
+  flex: 1;
   height: 7px;
-  border-radius: 50%;
-  background: rgba(42,42,42,0.2);
-  transition: background 0.35s, transform 0.35s;
-  cursor: default;
-}
-
-.gp-dot.active {
-  background: #8B5E3C;
-  transform: scale(1.3);
-}
-
-/* ── Slide 3 ─────────────────────────────────── */
-#slide-3 {
+  border-radius: 4px;
+ }
+ 
+ 
+ .legend-gradient-temp {
+  background: linear-gradient(to right, #f5f0e8, #f7b89a, #e85530, #7b1a0a);
+ }
+ 
+ 
+ .legend-gradient-pr {
+  background: linear-gradient(to right, #f5f0e8, #a8d4f0, #3b8bd4, #0c3f6e);
+ }
+ 
+ 
+ /* ── Floating ocean blurb boxes ─────────────── */
+ #map-panels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+ }
+ 
+ 
+ .map-panel {
+  position: absolute;
+  width: clamp(200px, 22vw, 280px);
+  background: rgba(10, 8, 5, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  /* hidden state */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1),
+              transform 0.55s cubic-bezier(0.22,1,0.36,1);
+ }
+ 
+ 
+ /* Panel 0 — right side (Pacific Ocean area) */
+ #mp-0 {
+  right: 3.5vw;
+  top: 50%;
+  transform: translateY(calc(-50% + 40px));
+ }
+ #mp-0.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%);
+ }
+ #mp-0.exit-up {
+  opacity: 0;
+  transform: translateY(calc(-50% - 60px));
+ }
+ 
+ 
+ /* Panel 1 — left side (Atlantic Ocean area) */
+ #mp-1 {
+  left: 3.5vw;
+  top: 42%;
+  transform: translateY(calc(-50% + 40px));
+ }
+ #mp-1.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%);
+ }
+ #mp-1.exit-up {
+  opacity: 0;
+  transform: translateY(calc(-50% - 60px));
+ }
+ 
+ 
+ /* Panel 2 — right side (Indian Ocean area) */
+ #mp-2 {
+  right: 3.5vw;
+  top: 62%;
+  transform: translateY(calc(-50% + 40px));
+ }
+ #mp-2.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%);
+ }
+ #mp-2.exit-up {
+  opacity: 0;
+  transform: translateY(calc(-50% - 60px));
+ }
+ 
+ 
+ .mp-head {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+  color: #f5f0e8;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+ }
+ 
+ 
+ .mp-body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.72rem, 1vw, 0.82rem);
+  color: rgba(245,240,232,0.8);
+  line-height: 1.7;
+ }
+ 
+ 
+ .mp-body em {
+  font-style: normal;
+  font-weight: 700;
+  color: #f5b87a;
+ }
+ 
+ 
+ /* Tooltip */
+ #map-tooltip {
+  position: absolute;
+  background: rgba(20,12,4,0.88);
+  color: #f5f0e8;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 5px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  z-index: 20;
+  letter-spacing: 0.03em;
+ }
+ 
+ 
+ /* ── Slide 3 ─────────────────────────────────── */
+ #slide-3 {
   background: #0d0d0d;
-}
+ }
+ 
+ 
+ /* ── Slide 2 → Map crossfade ─────────────────── */
+ .map-scene {
+  opacity: 0;
+  transition: none; /* scroll-driven, not CSS transition */
+  background: #f5f0e8 !important;
+ }
+ 
+ 

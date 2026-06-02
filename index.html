@@ -1,149 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Where Droughts Hide</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="global.css" />
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>Drier Than You Think</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+ <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+ <link rel="stylesheet" href="global.css" />
 </head>
 <body>
 
-  <!-- SLIDE 1 -->
-  <section class="slide" id="slide-1">
-    <div class="slide-content hero-content">
-      <h1 class="title">
-        <span>WHERE</span>
-        <span>DROUGHTS</span>
-        <span>HIDE</span>
-      </h1>
-      <p class="context-text">
-        Exploring patterns of dryness across a changing climate.
-      </p>
-    </div>
-    <div class="scroll-arrow">
-      <span>scroll</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-           stroke-linecap="round" stroke-linejoin="round">
-        <line x1="12" y1="5" x2="12" y2="19"/>
-        <polyline points="19 12 12 19 5 12"/>
-      </svg>
-    </div>
-  </section>
 
-  <!-- SLIDE 2 — sticky scroll sequence -->
-  <section id="slide-2-track">
+ <!-- SLIDE 1 -->
+ <section class="slide" id="slide-1">
+   <div class="slide-content hero-content">
+     <h1 class="title">
+       <span>DRIER</span>
+       <span>THAN</span>
+       <span>YOU THINK</span>
+     </h1>
+     <p class="context-text">
+       Drought is not just a desert problem. Using climate model precipitation data,
+       this visualization explores where unusually dry conditions appear across the world —
+       including places we may not expect.
+     </p>
+   </div>
+   <div class="scroll-arrow">
+     <span>scroll</span>
+     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+       <line x1="12" y1="5" x2="12" y2="19"/>
+       <polyline points="19 12 12 19 5 12"/>
+     </svg>
+   </div>
+ </section>
 
-    <!-- Panel A: Hot or Cold question (sticky viewport) -->
-    <div class="sticky-scene" id="scene-question">
-      <p class="hot-cold-question">WHERE DO YOU THINK DROUGHTS STRIKE?</p>
-      <div class="hot-cold-frame">
-        <div class="hot-cold-halves" id="hot-cold-halves">
-          <div class="half left-half">
-            <button class="choice-btn" id="btn-hot" onclick="chooseClimate()">HOT</button>
-          </div>
-          <div class="half right-half">
-            <button class="choice-btn" id="btn-cold" onclick="chooseClimate()">COLD</button>
-          </div>
-        </div>
-        <div class="reveal-overlay" id="reveal-overlay">
-          <h2 class="reveal-text">Both.
-          <p class="reveal-sub">Drought can occur anywhere precipitation falls below what's expected.</p>
-        </div>
-      </div>
 
-      <!-- Side panels that slide in -->
-      <div class="side-panel left-panel" id="panel-left">
-        <div class="side-panel-inner">
-          <p class="panel-label">Definition</p>
-          <h3 class="panel-heading">What is a <em>drought?</em></h3>
-          <hr class="panel-divider" />
-          <p class="panel-body">
-            A drought is a prolonged period of abnormally low precipitation
-            relative to what a region typically receives. It's not about
-            absolute dryness, but <em>deficit.</em>
-          </p>
-          <p class="panel-body">
-            When rain or snow falls well below historical averages for weeks,
-            months, or years, soils dry out, rivers shrink, and water supplies
-            dwindle.
-          </p>
-        </div>
-      </div>
-      
-      <div class="side-panel right-panel" id="panel-right">
-        <div class="side-panel-inner">
-          <p class="panel-label">Surprise</p>
-          <h3 class="panel-heading">Temperature is only part of the story.</h3>
-          <hr class="panel-divider" />
-          <p class="panel-body">
-            Drought is not measured by heat alone. It happens when a place receives
-            significantly less rain or snow than it normally expects.
-          </p>
-          <p class="panel-body">
-            That means drought can appear in many different climates; wherever the
-            usual pattern of precipitation breaks!
-          </p>
-        </div>
-      </div>
-    </div>
-    <!-- Scroll space for the 3 steps -->
-    <div class="scroll-spacer"></div>
+ <!-- SLIDE 2 — sticky scroll sequence -->
+ <section id="slide-2-track">
 
-  </section>
-<!-- SLIDE MAP — Globe Scrollytelling -->
-<section id="slide-map-track">
-  <div class="sticky-scene map-scene" id="scene-map">
 
-    <canvas id="globe-canvas"></canvas>
+   <!-- Panel A: Hot or Cold question (sticky viewport) -->
+   <div class="sticky-scene" id="scene-question">
+     <p class="hot-cold-question">Where do you think droughts strike?</p>
+     <div class="hot-cold-frame">
+       <div class="hot-cold-halves" id="hot-cold-halves">
+         <div class="half left-half">
+           <button class="choice-btn" id="btn-hot" onclick="chooseClimate()">HOT</button>
+         </div>
+         <div class="half right-half">
+           <button class="choice-btn" id="btn-cold" onclick="chooseClimate()">COLD</button>
+         </div>
+       </div>
+       <div class="reveal-overlay" id="reveal-overlay">
+         <h2 class="reveal-text">Both.<br/>Droughts don't pick sides.</h2>
+         <p class="reveal-sub">From the Sahara to the Arctic tundra — water scarcity is everywhere.</p>
+       </div>
+     </div>
 
-    <div id="globe-panels">
-      <div class="globe-panel active" id="gp-0">
-        <p class="gp-label">01 / Africa & Oceania</p>
-        <h3 class="gp-head">Hot and dry</h3>
-        <hr class="gp-rule" />
-        <p class="gp-body">Sub-Saharan Africa and interior Australia combine intense heat with some of the lowest rainfall on the planet — the textbook drought zone.</p>
-      </div>
-      <div class="globe-panel" id="gp-1">
-        <p class="gp-label">02 / South America</p>
-        <h3 class="gp-head">The paradox</h3>
-        <hr class="gp-rule" />
-        <p class="gp-body">The Amazon is the wettest place on Earth, yet neighbouring northeast Brazil suffers chronic drought. Proximity is no guarantee of rain.</p>
-      </div>
-      <div class="globe-panel" id="gp-2">
-        <p class="gp-label">03 / Asia & North America</p>
-        <h3 class="gp-head">Hidden dryness</h3>
-        <hr class="gp-rule" />
-        <p class="gp-body">Central Asia and the American West sit far from ocean moisture. As temperatures rise, snowpack shrinks — turning seasonal dry spells into multi-year droughts.</p>
-      </div>
-      <div class="globe-panel" id="gp-3">
-        <p class="gp-label">04 / Europe</p>
-        <h3 class="gp-head">The new frontier</h3>
-        <hr class="gp-rule" />
-        <p class="gp-body">Southern Europe now regularly records drought conditions once considered rare. The Mediterranean basin is drying faster than almost anywhere else on the planet.</p>
-      </div>
-    </div>
 
-    <div id="globe-progress">
-      <span class="gp-dot active" data-idx="0"></span>
-      <span class="gp-dot" data-idx="1"></span>
-      <span class="gp-dot" data-idx="2"></span>
-      <span class="gp-dot" data-idx="3"></span>
-    </div>
+     <!-- Side panels that slide in -->
+     <div class="side-panel left-panel" id="panel-left">
+       <div class="side-panel-inner">
+         <p class="panel-label">Definition</p>
+         <h3 class="panel-heading">What is a <em>drought?</em></h3>
+         <hr class="panel-divider" />
+         <p class="panel-body">
+           A drought is a prolonged period of abnormally low precipitation
+           relative to what a region typically receives. It's not about
+           absolute dryness — it's about <em>deficit.</em>
+         </p>
+         <p class="panel-body">
+           When rain or snow falls well below historical averages for weeks,
+           months, or years, soils dry out, rivers shrink, and water supplies
+           dwindle — slowly and silently.
+         </p>
+       </div>
+     </div>
+    
+     <div class="side-panel right-panel" id="panel-right">
+       <div class="side-panel-inner">
+         <p class="panel-label">Surprise</p>
+         <h3 class="panel-heading">Not just a <em>desert</em> problem.</h3>
+         <hr class="panel-divider" />
+         <p class="panel-body">
+           We picture drought in cracked, sunbaked landscapes — but drought
+           doesn't care about temperature. A rainforest, a snowy mountain
+           range, even the Arctic tundra can run dry.
+         </p>
+         <p class="panel-body">
+           What matters is the <em>gap</em> between what falls and what's
+           expected. Places that depend on reliable rain are often the
+           most vulnerable when that rhythm breaks.
+         </p>
+       </div>
+     </div>
+   </div>
+   <!-- Scroll space for the 3 steps -->
+   <div class="scroll-spacer"></div>
 
-  </div>
-  <div class="map-scroll-space"></div>
-</section>
 
-  <!-- SLIDE 3 — More to come -->
-  <section class="slide" id="slide-3">
-    <div class="slide-content">
-      <h2 class="subtitle">More to come...</h2>
-    </div>
-  </section>
+ </section>
+<!-- SLIDE MAP — Heat & Precipitation Scrollytelling -->
+ <section id="slide-map-track">
+   <div class="sticky-scene map-scene" id="scene-map">
 
-  <script src="main.js"></script>
+
+     <div id="map-wrapper">
+       <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+       <div id="map-tooltip"></div>
+
+
+       <!-- Legend -->
+       <div class="map-legend-container" id="map-legend">
+         <div class="legend-row" id="legend-temp">
+           <span class="legend-label">Cooler</span>
+           <div class="legend-gradient legend-gradient-temp"></div>
+           <span class="legend-label">Hotter</span>
+         </div>
+         <div class="legend-row hidden" id="legend-pr">
+           <span class="legend-label">Drier</span>
+           <div class="legend-gradient legend-gradient-pr"></div>
+           <span class="legend-label">Wetter</span>
+         </div>
+       </div>
+     </div>
+
+
+     <!-- Text panels -->
+     <div id="map-panels">
+       <div class="map-panel active" id="mp-0">
+         <p class="mp-head">Where is it hottest?</p>
+         <p class="mp-body">Temperature varies dramatically across continents — the map fills with heat.</p>
+       </div>
+       <div class="map-panel" id="mp-1">
+         <p class="mp-head">Now add precipitation</p>
+         <p class="mp-body">Blue overlay shows mean rainfall. Hot and dry don't always overlap.</p>
+       </div>
+       <div class="map-panel" id="mp-2">
+         <p class="mp-head">The drought paradox</p>
+         <p class="mp-body">South America is both hot <em>and</em> wet. Oceania and Africa are hot <em>but dry</em> — drought risk grows where heat and low rainfall combine.</p>
+       </div>
+     </div>
+
+
+   </div>
+   <div class="map-scroll-space"></div>
+ </section>
+ <!-- SLIDE 3 — More to come -->
+ <section class="slide" id="slide-3">
+   <div class="slide-content">
+     <h2 class="subtitle">More to come...</h2>
+   </div>
+ </section>
+
+
+ <script src="main.js"></script>
 </body>
 </html>
+
