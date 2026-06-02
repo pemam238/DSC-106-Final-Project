@@ -7,17 +7,13 @@
 }
 
 :root {
-  --bg: #0a0a0b;
-  --surface: #111113;
-  --drought-light: #ff6b35;
-  --drought-mid: #c0392b;
-  --drought-dark: #6b0f1a;
-  --drought-severe: #3d0008;
-  --text-primary: #f0ece4;
-  --text-secondary: #a09a8e;
-  --text-accent: #e8c99a;
+  --bg: #faf3dd;
+  --surface: #121311;
+  --text-primary: #4a2a15;
+  --text-secondary: #b66a30;
+  --text-accent: #a2501d;
   --mono: 'DM Mono', monospace;
-  --serif: 'Playfair Display', serif;
+  --serif: 'Montserrat', serif;
 }
 
 html {
@@ -55,19 +51,17 @@ body {
 
 /* ── Land + graticule ── */
 .graticule {
-  fill: none;
-  stroke: #1e2028;
-  stroke-width: 0.4;
+  display:none;
 }
 
 .land {
-  fill: #1a1c22;
-  stroke: #2a2d38;
+  fill: #c4ba95;
+  stroke: #2a2d3845;
   stroke-width: 0.3;
 }
 
 .sphere {
-  fill: #08090d;
+  fill: #e2dbbe;
 }
 
 /* ── Overlay text ── */
@@ -123,7 +117,7 @@ body {
 
 .main-title em {
   font-style: italic;
-  color: var(--drought-light);
+  color: #904415;
 }
 
 .subtitle {

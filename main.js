@@ -15,7 +15,7 @@ let dotLayer;
 
 /* ── Opacity scale (average_spi is negative; more negative = worse) ── */
 const opacityScale = d3.scalePow()
-  .exponent(0.5)           // higher = more dramatic gap
+  .exponent(0.2)           // higher = more dramatic gap
   .domain([-3.5, -1.0])
   .range([0.98, 0.3])      // wider range too
   .clamp(true);
@@ -105,8 +105,8 @@ function renderYear(year) {
         .attr('class', 'drought-dot')
         .attr('cx', coords[0])
         .attr('cy', coords[1])
-        .attr('r', 1.2)
-        .attr('fill', '#ff4422')
+        .attr('r', 2)
+        .attr('fill', '#a15323b8')
         .style('opacity', opacityScale(d.spi));
   });
 
