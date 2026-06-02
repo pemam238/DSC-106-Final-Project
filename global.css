@@ -82,14 +82,6 @@ body {
   font-weight: 400;
 }
 
-.byline {
-  font-weight: 400;
-  font-size: clamp(0.78rem, 1.5vw, 0.95rem);
-  letter-spacing: 0.12em;
-  color: rgba(255,255,255,0.45);
-  text-transform: uppercase;
-}
-
 .subtitle {
   font-weight: 700;
   font-size: clamp(1.5rem, 4vw, 3rem);
@@ -124,15 +116,14 @@ body {
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0);   opacity: .55; }
-  50%       { transform: translateX(-50%) translateY(8px); opacity: .9;  }
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: .55; }
+  50% { transform: translateX(-50%) translateY(8px); opacity: .9; }
 }
 
-/* ── Slide 2 track — sticky scroll sequence ──── */
+/* ── Slide 2 ─────────────────────────────────── */
 #slide-2-track {
   position: relative;
   z-index: 2;
-  scroll-snap-align: start;
 }
 
 .scroll-spacer {
@@ -154,7 +145,6 @@ body {
   overflow: hidden;
 }
 
-/* ── Hot/Cold question UI ─────────────────────── */
 .hot-cold-question {
   font-weight: 700;
   font-size: clamp(1.1rem, 3vw, 1.8rem);
@@ -277,7 +267,7 @@ body {
   overflow: hidden;
 }
 
-.left-panel  { left: 0; }
+.left-panel { left: 0; }
 .right-panel { right: 0; }
 
 .side-panel-inner {
@@ -339,20 +329,17 @@ body {
   margin: 0;
 }
 
-/* ═══════════════════════════════════════════════
-   MAP — Full-screen with floating ocean blurbs
-   ═══════════════════════════════════════════════ */
-   #slide-map-track {
-    position: relative;
-    z-index: 1;
-    margin-top: 0;
-  }
+/* ── Globe section ───────────────────────────── */
+#slide-map-track {
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+}
 
 .map-scroll-space {
   height: 500vh;
 }
 
-/* Full-screen sticky scene — map is the background */
 .map-scene {
   opacity: 1;
   transition: none;
@@ -367,15 +354,35 @@ body {
   justify-content: center;
 }
 
+/* IMPORTANT: smaller globe, right side, never cut off */
 #globe-canvas {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  right: 6vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(48vw, 680px);
+  height: min(72vh, 680px);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.45s ease;
 }
 
+#globe-canvas.ready {
+  opacity: 1;
+}
 
-/* ── Annotation panel ────────────────────────── */
+/* ── Annotation panels ───────────────────────── */
+#globe-panels {
+  position: absolute;
+  left: 6vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(240px, 27vw, 360px);
+  height: 300px;
+  z-index: 10;
+  pointer-events: none;
+}
+
 .globe-panel {
   position: absolute;
   top: 0;
@@ -391,18 +398,6 @@ body {
 .globe-panel.active {
   opacity: 1;
   transform: translateY(0);
-  pointer-events: auto;
-}
-
-#globe-panels {
-  position: absolute;
-  left: 5vw;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(220px, 24vw, 300px);
-  height: 260px;
-  z-index: 10;
-  pointer-events: none;
 }
 
 .gp-label {
@@ -433,16 +428,17 @@ body {
 }
 
 .gp-body {
-  font-size: clamp(0.75rem, 1vw, 0.85rem);
+  font-size: clamp(0.75rem, 1vw, 0.88rem);
   color: #2e2e2e;
   line-height: 1.8;
   font-weight: 400;
 }
 
+/* ── Globe controls ──────────────────────────── */
 #globe-controls {
   position: absolute;
   bottom: 2rem;
-  right: 5vw;
+  right: 6vw;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -545,12 +541,40 @@ body {
   border-radius: 50%;
   background: rgba(42,42,42,0.2);
   transition: background 0.35s, transform 0.35s;
-  cursor: default;
 }
 
 .gp-dot.active {
   background: #8B5E3C;
   transform: scale(1.3);
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 900px) {
+  #globe-canvas {
+    right: 50%;
+    top: 58%;
+    transform: translate(50%, -50%);
+    width: min(82vw, 560px);
+    height: min(58vh, 560px);
+    opacity: 0.4;
+  }
+
+  #globe-panels {
+    left: 7vw;
+    top: 34%;
+    width: min(78vw, 360px);
+  }
+
+  #globe-controls {
+    right: 50%;
+    transform: translateX(50%);
+    align-items: center;
+  }
+
+  #globe-mode-btns {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 /* ── Slide 3 ─────────────────────────────────── */
