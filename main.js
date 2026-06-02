@@ -71,28 +71,14 @@ function drivePanels() {
 
 /* ── Map entrance: fade previous out, globe fades in, bg always warm ── */
 function driveMapEntrance() {
-  const mapTrack = document.getElementById('slide-map-track');
-  const mapScene = document.getElementById('scene-map');
-  const scene2   = document.getElementById('scene-question');
-  if (!mapTrack || !mapScene) return;
-
-  const rect     = mapTrack.getBoundingClientRect();
-  const progress = Math.max(0, Math.min(1, -rect.top / window.innerHeight));
-
-  // Scene 2 fades out and lifts — background stays warm the whole time
-  if (scene2) {
-    const exitProg = Math.min(1, progress * 2.0);
-    scene2.style.transform = `translateY(${-exitProg * 50}px)`;
-    scene2.style.opacity   = (1 - exitProg).toFixed(3);
-  }
-
-  // Globe scene always has the warm background — just fade opacity in
-  mapScene.style.backgroundColor = '#f0ede6';
-  const mapFade = Math.max(0, Math.min(1, (progress - 0.3) / 0.55));
-  mapScene.style.opacity = mapFade.toFixed(3);
+  const scene2 = document.getElementById('scene-question');
+  if (!scene2) return;
+  const rect = scene2.getBoundingClientRect();
+  // Fade scene-question out as it scrolls up off screen
+  const prog = Math.max(0, Math.min(1, -rect.top / (window.innerHeight * 0.4)));
+  scene2.style.opacity   = (1 - prog).toFixed(3);
+  scene2.style.transform = `translateY(${-prog * 30}px)`;
 }
-
-driveMapEntrance();
 
 /* ═══════════════════════════════════════════════
    GLOBE SCROLLYTELLING — Three.js
@@ -111,14 +97,26 @@ const GLOBE_STOPS = [
 // Same continent color logic as the old flat map
 // warm gray base → amber → orange, matching #f5f0e8 palette
 const DROUGHT_HIGH = new Set([
-  12,24,72,204,270,288,324,384,426,430,434,466,478,504,516,562,566,
-  624,686,706,710,716,729,748,768,788,854, // Africa
-  36,90,598                                 // Australia + Pacific
+  // Africa — Sahara, Sahel, Horn, Southern Africa dry zones
+  12,24,72,204,262,270,288,324,384,404,426,430,434,450,454,466,478,
+  496,504,508,516,562,566,624,638,646,678,686,694,706,710,716,728,
+  729,740,748,768,788,800,818,834,854,894,
+  // Australia + Pacific dry
+  36,90,598,520
 ]);
+
 const DROUGHT_MED = new Set([
-  50,104,356,364,368,586,608,634,682,702,704,764,792, // S/SE Asia
-  484,558,591,840,                                     // Mexico, C.Am, USA
-  152,170,218,600,604                                  // S. America dry belt
+  // South/SE/Central Asia
+  4,50,64,104,144,356,360,364,368,398,408,410,414,418,422,458,462,
+  524,586,608,634,682,702,704,760,762,764,792,795,860,887,
+  // North America dry belt
+  124,484,558,591,630,840,
+  // South America dry belt
+  32,68,152,170,218,600,604,858,862,
+  // Southern Europe / Mediterranean
+  12,203,300,380,620,703,724,807,
+  // China interior + Mongolia
+  156,496
 ]);
 
 // Palette matching your original diverging scale:
@@ -230,9 +228,13 @@ async function buildGlobe() {
     const id  = parseInt(feature.id, 10);
     ctx.beginPath();
     pathGen(feature);
-    ctx.fillStyle = DROUGHT_HIGH.has(id) ? '#f0a050'
-                  : DROUGHT_MED.has(id)  ? '#f5d4a0'
-                  : '#ede8df';
+    if (isNaN(id)) {
+      ctx.fillStyle = '#ede8df';
+    } else {
+      ctx.fillStyle = DROUGHT_HIGH.has(id) ? '#f0a050'
+                    : DROUGHT_MED.has(id)  ? '#f5d4a0'
+                    : '#ede8df';
+    }
     ctx.fill();
   });
 

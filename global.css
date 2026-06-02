@@ -131,6 +131,8 @@ body {
 /* ── Slide 2 track — sticky scroll sequence ──── */
 #slide-2-track {
   position: relative;
+  z-index: 2;
+  scroll-snap-align: start;
 }
 
 .scroll-spacer {
@@ -340,9 +342,11 @@ body {
 /* ═══════════════════════════════════════════════
    MAP — Full-screen with floating ocean blurbs
    ═══════════════════════════════════════════════ */
-#slide-map-track {
-  position: relative;
-}
+   #slide-map-track {
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
+  }
 
 .map-scroll-space {
   height: 500vh;
@@ -350,7 +354,7 @@ body {
 
 /* Full-screen sticky scene — map is the background */
 .map-scene {
-  opacity: 0;
+  opacity: 1;
   transition: none;
   position: sticky;
   top: 0;
