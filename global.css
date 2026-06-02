@@ -345,237 +345,120 @@ body {
 }
 
 .map-scroll-space {
-  height: 400vh;
+  height: 500vh;
 }
 
 /* Full-screen sticky scene — map is the background */
 .map-scene {
+  opacity: 0;
+  transition: none;
   position: sticky;
   top: 0;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: #c8e4f5;
-  padding: 0;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: stretch;
-  gap: 0;
+  background: #0d1b2e !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Map fills 100% of sticky scene */
-#map-wrapper {
+#globe-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
 }
 
-#world-map {
-  width: 100%;
-  height: 100%;
-  display: block;
-  background: #c8e4f5;
-}
 
-/* Country paths */
-.country {
-  stroke: rgba(255,255,255,0.55);
-  stroke-width: 0.5;
-  transition: fill 0.05s linear;
-  cursor: default;
-}
-
-.graticule {
-  fill: none;
-  stroke: rgba(160,200,230,0.25);
-  stroke-width: 0.3;
-}
-
-.sphere {
-  fill: #c8e4f5;
-}
-
-/* ── Legend — bottom center ─────────────────── */
-.map-legend-container {
+/* ── Annotation panel ────────────────────────── */
+#globe-panels {
   position: absolute;
-  bottom: 1.4rem;
+  right: 5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(220px, 24vw, 300px);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.globe-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1),
+              transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+
+.globe-panel.active {
+  opacity: 1;
+  transform: translateY(0);
+  position: relative;
+}
+
+.gp-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #7fb3d3;
+  margin-bottom: 0.5rem;
+}
+
+.gp-head {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 900;
+  color: #f5f0e8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  margin-bottom: 0.6rem;
+}
+
+.gp-rule {
+  width: 2rem;
+  height: 2px;
+  background: #c87941;
+  border: none;
+  margin: 0 0 0.8rem;
+}
+
+.gp-body {
+  font-size: clamp(0.75rem, 1vw, 0.85rem);
+  color: rgba(245,240,232,0.75);
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+/* ── Progress dots ───────────────────────────── */
+#globe-progress {
+  position: absolute;
+  bottom: 2.2rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  background: rgba(245,240,232,0.82);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border-radius: 8px;
-  padding: 0.6rem 1.1rem;
-  min-width: 300px;
-  pointer-events: none;
-}
-
-.map-legend-container.show {
-  opacity: 1;
-}
-
-.legend-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #3a3028;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  transition: opacity 0.4s;
-}
-
-.legend-row.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.legend-gradient {
-  flex: 1;
-  height: 7px;
-  border-radius: 4px;
-}
-
-.legend-gradient-temp {
-  background: linear-gradient(to right, #f5f0e8, #f7b89a, #e85530, #7b1a0a);
-}
-
-.legend-gradient-pr {
-  background: linear-gradient(to right, #f5f0e8, #a8d4f0, #3b8bd4, #0c3f6e);
-}
-
-/* ── Floating ocean blurb boxes ─────────────── */
-#map-panels {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+  gap: 0.6rem;
   z-index: 10;
 }
 
-.map-panel {
-  position: absolute;
-  width: clamp(200px, 22vw, 280px);
-  background: rgba(10, 8, 5, 0.78);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 10px;
-  padding: 1.1rem 1.3rem;
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-  /* hidden state */
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1),
-              transform 0.55s cubic-bezier(0.22,1,0.36,1);
+.gp-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(245,240,232,0.28);
+  transition: background 0.35s, transform 0.35s;
+  cursor: default;
 }
 
-/* Panel 0 — right side (Pacific Ocean area) */
-#mp-0 {
-  right: 3.5vw;
-  top: 50%;
-  transform: translateY(calc(-50% + 40px));
-}
-#mp-0.active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(-50%);
-}
-#mp-0.exit-up {
-  opacity: 0;
-  transform: translateY(calc(-50% - 60px));
-}
-
-/* Panel 1 — left side (Atlantic Ocean area) */
-#mp-1 {
-  left: 3.5vw;
-  top: 42%;
-  transform: translateY(calc(-50% + 40px));
-}
-#mp-1.active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(-50%);
-}
-#mp-1.exit-up {
-  opacity: 0;
-  transform: translateY(calc(-50% - 60px));
-}
-
-/* Panel 2 — right side (Indian Ocean area) */
-#mp-2 {
-  right: 3.5vw;
-  top: 62%;
-  transform: translateY(calc(-50% + 40px));
-}
-#mp-2.active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(-50%);
-}
-#mp-2.exit-up {
-  opacity: 0;
-  transform: translateY(calc(-50% - 60px));
-}
-
-.mp-head {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: clamp(0.85rem, 1.4vw, 1.05rem);
-  color: #f5f0e8;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.mp-body {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-  font-size: clamp(0.72rem, 1vw, 0.82rem);
-  color: rgba(245,240,232,0.8);
-  line-height: 1.7;
-}
-
-.mp-body em {
-  font-style: normal;
-  font-weight: 700;
-  color: #f5b87a;
-}
-
-/* Tooltip */
-#map-tooltip {
-  position: absolute;
-  background: rgba(20,12,4,0.88);
-  color: #f5f0e8;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 5px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.15s;
-  white-space: nowrap;
-  z-index: 20;
-  letter-spacing: 0.03em;
+.gp-dot.active {
+  background: #f5f0e8;
+  transform: scale(1.3);
 }
 
 /* ── Slide 3 ─────────────────────────────────── */
 #slide-3 {
   background: #0d0d0d;
-}
-
-/* ── Slide 2 → Map crossfade ─────────────────── */
-.map-scene {
-  opacity: 0;
-  transition: none; /* scroll-driven, not CSS transition */
-  background: #f5f0e8 !important;
 }

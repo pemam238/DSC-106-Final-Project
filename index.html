@@ -93,48 +93,50 @@
     <div class="scroll-spacer"></div>
 
   </section>
-<!-- SLIDE MAP — Heat & Precipitation Scrollytelling -->
-  <section id="slide-map-track">
-    <div class="sticky-scene map-scene" id="scene-map">
+<!-- SLIDE MAP — Globe Scrollytelling -->
+<section id="slide-map-track">
+  <div class="sticky-scene map-scene" id="scene-map">
 
-      <div id="map-wrapper">
-        <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
-        <div id="map-tooltip"></div>
+    <canvas id="globe-canvas"></canvas>
 
-        <!-- Legend -->
-        <div class="map-legend-container" id="map-legend">
-          <div class="legend-row" id="legend-temp">
-            <span class="legend-label">Cooler</span>
-            <div class="legend-gradient legend-gradient-temp"></div>
-            <span class="legend-label">Hotter</span>
-          </div>
-          <div class="legend-row hidden" id="legend-pr">
-            <span class="legend-label">Drier</span>
-            <div class="legend-gradient legend-gradient-pr"></div>
-            <span class="legend-label">Wetter</span>
-          </div>
-        </div>
+    <div id="globe-panels">
+      <div class="globe-panel active" id="gp-0">
+        <p class="gp-label">01 / Africa & Oceania</p>
+        <h3 class="gp-head">Hot and dry</h3>
+        <hr class="gp-rule" />
+        <p class="gp-body">Sub-Saharan Africa and interior Australia combine intense heat with some of the lowest rainfall on the planet — the textbook drought zone.</p>
       </div>
-
-      <!-- Text panels -->
-      <div id="map-panels">
-        <div class="map-panel active" id="mp-0">
-          <p class="mp-head">Where is it hottest?</p>
-          <p class="mp-body">Temperature varies dramatically across continents — the map fills with heat.</p>
-        </div>
-        <div class="map-panel" id="mp-1">
-          <p class="mp-head">Now add precipitation</p>
-          <p class="mp-body">Blue overlay shows mean rainfall. Hot and dry don't always overlap.</p>
-        </div>
-        <div class="map-panel" id="mp-2">
-          <p class="mp-head">The drought paradox</p>
-          <p class="mp-body">South America is both hot <em>and</em> wet. Oceania and Africa are hot <em>but dry</em> — drought risk grows where heat and low rainfall combine.</p>
-        </div>
+      <div class="globe-panel" id="gp-1">
+        <p class="gp-label">02 / South America</p>
+        <h3 class="gp-head">The paradox</h3>
+        <hr class="gp-rule" />
+        <p class="gp-body">The Amazon is the wettest place on Earth, yet neighbouring northeast Brazil suffers chronic drought. Proximity is no guarantee of rain.</p>
       </div>
-
+      <div class="globe-panel" id="gp-2">
+        <p class="gp-label">03 / Asia & North America</p>
+        <h3 class="gp-head">Hidden dryness</h3>
+        <hr class="gp-rule" />
+        <p class="gp-body">Central Asia and the American West sit far from ocean moisture. As temperatures rise, snowpack shrinks — turning seasonal dry spells into multi-year droughts.</p>
+      </div>
+      <div class="globe-panel" id="gp-3">
+        <p class="gp-label">04 / Europe</p>
+        <h3 class="gp-head">The new frontier</h3>
+        <hr class="gp-rule" />
+        <p class="gp-body">Southern Europe now regularly records drought conditions once considered rare. The Mediterranean basin is drying faster than almost anywhere else on the planet.</p>
+      </div>
     </div>
-    <div class="map-scroll-space"></div>
-  </section>
+
+    <div id="globe-progress">
+      <span class="gp-dot active" data-idx="0"></span>
+      <span class="gp-dot" data-idx="1"></span>
+      <span class="gp-dot" data-idx="2"></span>
+      <span class="gp-dot" data-idx="3"></span>
+    </div>
+
+  </div>
+  <div class="map-scroll-space"></div>
+</section>
+
   <!-- SLIDE 3 — More to come -->
   <section class="slide" id="slide-3">
     <div class="slide-content">
