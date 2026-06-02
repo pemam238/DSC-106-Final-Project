@@ -97,7 +97,48 @@
     <div class="scroll-spacer"></div>
 
   </section>
+<!-- SLIDE MAP — Heat & Precipitation Scrollytelling -->
+  <section id="slide-map-track">
+    <div class="sticky-scene map-scene" id="scene-map">
 
+      <div id="map-wrapper">
+        <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+        <div id="map-tooltip"></div>
+
+        <!-- Legend -->
+        <div class="map-legend-container" id="map-legend">
+          <div class="legend-row" id="legend-temp">
+            <span class="legend-label">Cooler</span>
+            <div class="legend-gradient legend-gradient-temp"></div>
+            <span class="legend-label">Hotter</span>
+          </div>
+          <div class="legend-row hidden" id="legend-pr">
+            <span class="legend-label">Drier</span>
+            <div class="legend-gradient legend-gradient-pr"></div>
+            <span class="legend-label">Wetter</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text panels -->
+      <div id="map-panels">
+        <div class="map-panel active" id="mp-0">
+          <p class="mp-head">Where is it hottest?</p>
+          <p class="mp-body">Temperature varies dramatically across continents — the map fills with heat.</p>
+        </div>
+        <div class="map-panel" id="mp-1">
+          <p class="mp-head">Now add precipitation</p>
+          <p class="mp-body">Blue overlay shows mean rainfall. Hot and dry don't always overlap.</p>
+        </div>
+        <div class="map-panel" id="mp-2">
+          <p class="mp-head">The drought paradox</p>
+          <p class="mp-body">South America is both hot <em>and</em> wet. Oceania and Africa are hot <em>but dry</em> — drought risk grows where heat and low rainfall combine.</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="map-scroll-space"></div>
+  </section>
   <!-- SLIDE 3 — More to come -->
   <section class="slide" id="slide-3">
     <div class="slide-content">
