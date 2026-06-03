@@ -145,13 +145,15 @@ body {
 
 /* Hot/Cold question UI */
 .hot-cold-question {
-  font-weight: 700;
-  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  font-weight: 800;
+  font-size: clamp(3.2rem, 5vw, 3rem);
   color: #2a2a2a;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   text-align: center;
   z-index: 1;
+  position: relative;
+  margin-bottom: 0.5rem;
 }
 
 .hot-cold-frame {
@@ -183,7 +185,17 @@ body {
   padding-bottom: 2rem;
   transition: background 0.3s;
 }
-.half:hover { background: rgba(0,0,0,0.18); cursor: pointer; }
+
+/* Colored overlays on hover */
+.left-half:hover {
+  background: rgba(230, 57, 70, 0.5);  /* red with 50% opacity */
+  cursor: pointer;
+}
+
+.right-half:hover {
+  background: rgba(30, 96, 145, 0.5);  /* blue with 50% opacity */
+  cursor: pointer;
+}
 
 .choice-btn {
   font-family: 'Montserrat', sans-serif;
@@ -929,12 +941,18 @@ body {
 }
 
 /* ── Climate builder ───────────────────────────── */
+
 #slide-climate {
   background: #f5f0e8;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
+  overflow-y: auto;
+  height: auto;
+  min-height: 100vh;
+  align-items: flex-start;
+  padding: 2rem 1rem;
+}
+
+#slide-climate .climate-builder {
+  margin: 1rem auto;
 }
 .climate-builder {
   width: min(860px, 92vw);
@@ -1091,3 +1109,39 @@ body {
   letter-spacing: 0.06em;
   max-width: 700px;
 }
+
+/* ── Hot/Cold halves as clickable areas ───────── */
+.half {
+  flex: 1;
+  display: flex;
+  align-items: center;          /* center vertically */
+  justify-content: center;      /* center horizontally */
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.half-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 8vw, 4rem);
+  letter-spacing: 0.12em;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  backdrop-filter: none;
+  transition: transform 0.2s;
+}
+
+
+.half:hover .half-label {
+  transform: scale(1.08);
+  background: rgba(0,0,0,0.5);
+}
+
+/* remove old button styles */
+.choice-btn {
+  display: none;
+}
+

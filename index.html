@@ -39,11 +39,11 @@
     <p class="hot-cold-question">Where do you think droughts strike?</p>
     <div class="hot-cold-frame">
       <div class="hot-cold-halves" id="hot-cold-halves">
-        <div class="half left-half">
-          <button class="choice-btn" id="btn-hot" onclick="chooseClimate()">HOT</button>
+        <div class="half left-half" data-choice="hot">
+          <span class="half-label">HOT</span>
         </div>
-        <div class="half right-half">
-          <button class="choice-btn" id="btn-cold" onclick="chooseClimate()">COLD</button>
+        <div class="half right-half" data-choice="cold">
+          <span class="half-label">COLD</span>
         </div>
       </div>
       <div class="reveal-overlay" id="reveal-overlay">
@@ -52,6 +52,7 @@
       </div>
     </div>
 
+    <!-- LEFT PANEL (appears on scroll) -->
     <div class="side-panel left-panel" id="panel-left">
       <div class="side-panel-inner">
         <p class="panel-label">Definition</p>
@@ -70,6 +71,7 @@
       </div>
     </div>
 
+    <!-- RIGHT PANEL (appears on scroll) -->
     <div class="side-panel right-panel" id="panel-right">
       <div class="side-panel-inner">
         <p class="panel-label">Surprise</p>
@@ -89,27 +91,20 @@
   <div class="scroll-spacer"></div>
 </section>
 
-<!-- SLIDE 3 — WORLD MAP SCROLLYTELLING (replaced with working version) -->
+<!-- SLIDE 3 — WORLD MAP SCROLLYTELLING -->
 <section id="slide-3-track">
   <div class="sticky-scene" id="scene-map" style="gap:0;">
-
-    <!-- Full‑width title -->
     <div class="map-top-label" id="map-top-label">
       <p class="map-label-text" id="map-label-text"></p>
     </div>
-
-    <!-- Left column: map only -->
     <div id="map-left-col">
       <div id="world-map-wrap">
         <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
     </div>
-
-    <!-- Right column: info panel -->
     <div class="map-right-panel" id="map-right-panel">
       <div class="country-info-box" id="country-info-box"></div>
     </div>
-
     <div class="map-legend" id="map-legend">
       <div class="legend-label" id="legend-label">Temperature</div>
       <div class="legend-bar" id="legend-bar"></div>
@@ -118,7 +113,6 @@
         <span id="legend-max"></span>
       </div>
     </div>
-
   </div>
   <div class="scroll-spacer" style="height:900vh;"></div>
 </section>
@@ -419,15 +413,6 @@
         <p id="similar-desc"></p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- FINAL OUTRO -->
-<section class="slide" id="slide-outro">
-  <div class="slide-content">
-    <h2 class="subtitle" style="color:#ccc; font-size:clamp(1rem,3vw,2rem); font-weight:400; letter-spacing:0.08em;">
-      Drought is not just about heat — or rain. It's about the gap between what a place expects and what it gets.
-    </h2>
   </div>
 </section>
 

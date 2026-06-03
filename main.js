@@ -36,7 +36,8 @@ document.querySelector('.scroll-arrow')?.addEventListener('click', () => {
   document.getElementById('slide-2-track').scrollIntoView({ behavior: 'smooth' });
 });
 
-function chooseClimate() {
+function chooseClimate(choice) {
+  // choice can be 'hot' or 'cold' – not used for logic but kept for consistency
   document.getElementById('reveal-overlay').classList.add('visible');
   const halves = document.getElementById('hot-cold-halves');
   halves.style.opacity = '0';
@@ -44,6 +45,15 @@ function chooseClimate() {
   buttonPressed = true;
   drivePanels();
 }
+
+// Add click listeners to the half divs
+document.querySelectorAll('.half').forEach(half => {
+  half.addEventListener('click', () => {
+    if (buttonPressed) return;
+    const choice = half.getAttribute('data-choice');
+    chooseClimate(choice);
+  });
+});
 
 const track  = document.getElementById('slide-2-track');
 const panelL = document.getElementById('panel-left');
