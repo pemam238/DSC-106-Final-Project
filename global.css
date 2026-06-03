@@ -702,11 +702,14 @@
   opacity: 1;
   pointer-events: auto;
   transform: translateY(-50%);
+  visibility: visible;
 }
 
 .spi-panel.exit-up {
   opacity: 0;
   transform: translateY(calc(-50% - 60px));
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .spi-label {

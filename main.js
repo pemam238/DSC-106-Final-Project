@@ -632,13 +632,11 @@ function loadScript(src) {
       panels.forEach((p, i) => {
         if (i === idx) {
           p.classList.remove('exit-up');
+          p.classList.remove('hidden-panel');
           p.classList.add('active');
-        } else if (p.classList.contains('active')) {
+        } else {
           p.classList.remove('active');
           p.classList.add('exit-up');
-          setTimeout(() => {
-            if (!p.classList.contains('active')) p.classList.remove('exit-up');
-          }, 600);
         }
       });
   
