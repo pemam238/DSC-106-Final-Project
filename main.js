@@ -383,3 +383,94 @@ function loadScript(src) {
     document.head.appendChild(s);
   });
 }
+
+/* ── Build Your Own Climate slider ───────────── */
+(function () {
+  const tempSlider   = document.getElementById('temp-slider');
+  const prSlider     = document.getElementById('pr-slider');
+  const tempVal      = document.getElementById('temp-val');
+  const prVal        = document.getElementById('pr-val');
+  const meterVerdict = document.getElementById('meter-verdict');
+  const meterExample = document.getElementById('meter-example');
+  const dialFill     = document.getElementById('dial-fill');
+  const dialTrack    = document.getElementById('dial-track');
+  const dialNeedle   = document.getElementById('dial-needle-g');
+
+  if (!tempSlider || !dialFill) return;
+
+  /* ── Dial geometry ─────────────────────────── */
+ const CX = 130, CY = 130, R = 80;
+ const START_DEG = 270, TOTAL_SWEEP = 180;
+
+  function polarToXY(deg) {
+    const rad = (deg - 90) * Math.PI / 180;
+    return { x: CX + R * Math.cos(rad), y: CY + R * Math.sin(rad) };
+  }
+
+  function arcPath(fromDeg, toDeg) {
+    const s = polarToXY(fromDeg);
+    const e = polarToXY(toDeg);
+    const sweep = ((toDeg - fromDeg + 360) % 360);
+    const large = sweep > 180 ? 1 : 0;
+    return `M ${s.x.toFixed(2)} ${s.y.toFixed(2)} A ${R} ${R} 0 ${large} 1 ${e.x.toFixed(2)} ${e.y.toFixed(2)}`;
+  }
+
+  // Set static track
+  dialTrack.setAttribute('d', arcPath(START_DEG, START_DEG + TOTAL_SWEEP));
+
+  // Compute arc length for dasharray trick
+  const ARC_LEN = (TOTAL_SWEEP / 360) * 2 * Math.PI * R;
+  dialFill.setAttribute('d', arcPath(START_DEG, START_DEG + TOTAL_SWEEP));
+  dialFill.style.strokeDasharray  = ARC_LEN.toFixed(2);
+  dialFill.style.strokeDashoffset = ARC_LEN.toFixed(2); // starts empty
+
+  /* ── Labels & data ─────────────────────────── */
+  const TEMP_LABELS = ['Cold', 'Cool', 'Moderate', 'Warm', 'Hot'];
+  const PR_LABELS   = ['Very Dry', 'Dry', 'Moderate', 'Wet', 'Very Wet'];
+
+  const LEVELS = [
+    { max: 0.22, label: 'Low',       color: '#5a8a3c', example: 'Mild conditions — water supply stable.' },
+    { max: 0.48, label: 'Moderate',  color: '#8B5E3C', example: 'Some stress — seasonal dryness possible.' },
+    { max: 0.72, label: 'High',      color: '#c84b1a', example: 'Vegetation stress; water restrictions likely.' },
+    { max: 1.01, label: 'Very High', color: '#8B0000', example: 'Severe drought conditions expected.' },
+  ];
+
+  function labelFor(val, labels) {
+    const idx = Math.round((val / 100) * (labels.length - 1));
+    return labels[idx];
+  }
+
+  function computeRisk(temp, pr) {
+    return Math.max(0, Math.min(1, (temp / 100) * 0.45 + (1 - pr / 100) * 0.55));
+  }
+
+  function update() {
+    const t = +tempSlider.value;
+    const p = +prSlider.value;
+
+    tempVal.textContent = labelFor(t, TEMP_LABELS);
+    prVal.textContent   = labelFor(p, PR_LABELS);
+
+    const risk  = computeRisk(t, p);
+    const level = LEVELS.find(l => risk < l.max);
+
+    // Dial fill via dashoffset
+    const offset = ARC_LEN * (1 - risk);
+    dialFill.style.strokeDashoffset = offset.toFixed(2);
+    dialFill.style.stroke = level.color;
+
+    // Needle rotation: START_DEG + risk * TOTAL_SWEEP, offset -90 for SVG
+
+// NEW — use SVG transform attribute so origin is guaranteed at pivot point (130,130)
+const needleDeg = (risk * 180) - 90;
+dialNeedle.setAttribute('transform', `rotate(${needleDeg}, 130, 130)`);
+    // Text
+    meterVerdict.textContent = level.label;
+    meterVerdict.style.color = level.color;
+    meterExample.textContent = level.example;
+  }
+
+  tempSlider.addEventListener('input', update);
+  prSlider.addEventListener('input', update);
+  update();
+})();
