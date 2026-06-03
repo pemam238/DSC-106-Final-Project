@@ -115,7 +115,10 @@ fs = gcsfs.GCSFileSystem(token="anon")
 
 def open_zarr(zpath: str) -> xr.Dataset:
     store = fs.get_mapper(zpath)
-    return xr.open_zarr(store, consolidated=True)
+    ds = xr.open_zarr(store, consolidated=True)
+    # Ensure time is monotonically increasing (required for slice indexing)
+    ds = ds.sortby("time")
+    return ds
 
 print("Opening zarr stores (this may take ~30 s on first access) …")
 ds_tas = open_zarr(zpath_tas)
