@@ -474,3 +474,241 @@ function loadScript(src) {
  });
 }
 
+/* ═══════════════════════════════════════════════
+   SPI RAIN DOT SCROLLYTELLING
+   ═══════════════════════════════════════════════ */
+
+   (function () {
+
+    /* ── Step config ─────────────────────────── */
+    const SPI_STEPS = [
+      { spi: 0.0,  label: 'Normal rainfall',   dropRate: 1.0,  color: [120, 190, 255] },
+      { spi: 0.0,  label: 'What is SPI?',      dropRate: 1.0,  color: [120, 190, 255] },
+      { spi: -0.6, label: 'Mild drought',      dropRate: 0.52, color: [200, 160, 100] },
+      { spi: -1.5, label: 'Severe drought',    dropRate: 0.18, color: [210, 100,  50] },
+      { spi: -2.1, label: 'Extreme drought',   dropRate: 0.04, color: [180,  50,  20] },
+    ];
+  
+    /* SPI range: -2.5 to +1.5 → needle 0%→100% */
+    function spiToNeedle(spi) {
+      return Math.max(0, Math.min(100, ((spi + 2.5) / 4.0) * 100));
+    }
+  
+    function spiToColor(spi) {
+      // interpolate between orange-red (dry) and blue (wet)
+      const t = Math.max(0, Math.min(1, (spi + 2.5) / 4.0));
+      const r = Math.round(180 + (90 - 180) * t);
+      const g = Math.round(60 + (170 - 60) * t);
+      const b = Math.round(20 + (255 - 20) * t);
+      return `rgb(${r},${g},${b})`;
+    }
+  
+    /* ── Canvas setup ────────────────────────── */
+    const canvas = document.getElementById('spi-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+  
+    let W, H;
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', () => { resize(); drops.length = 0; });
+  
+    /* ── Drop pool ────────────────────────────── */
+    const drops = [];
+    let currentStep = 0;
+    let targetDropRate = 1.0;
+    let currentDropColor = [120, 190, 255];
+    let targetDropColor  = [120, 190, 255];
+    let animColor = [120, 190, 255];
+  
+    // Splash rings that fade out
+    const splashes = [];
+  
+    function spawnDrop() {
+      const step = SPI_STEPS[currentStep] || SPI_STEPS[0];
+      // Color lerp toward target
+      animColor = animColor.map((c, i) => c + (step.color[i] - c) * 0.05);
+  
+      drops.push({
+        x: Math.random() * W,
+        y: -8 - Math.random() * 40,
+        vy: 3.5 + Math.random() * 4.5,
+        r: 2.2 + Math.random() * 2.2,
+        opacity: 0.55 + Math.random() * 0.4,
+        color: [...animColor],
+        wobble: (Math.random() - 0.5) * 0.4,
+      });
+    }
+  
+    /* ── Render loop ──────────────────────────── */
+    let lastTime = 0;
+    let spawnAccum = 0;
+  
+    function tick(now) {
+      const dt = Math.min(now - lastTime, 50);
+      lastTime = now;
+  
+      ctx.clearRect(0, 0, W, H);
+  
+      // Subtle background gradient
+      const bg = ctx.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, '#0d1a2a');
+      bg.addColorStop(1, '#060e18');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+  
+      // Ground line
+      const groundY = H * 0.88;
+      ctx.beginPath();
+      ctx.moveTo(0, groundY);
+      ctx.lineTo(W, groundY);
+      ctx.strokeStyle = 'rgba(100,160,220,0.15)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+  
+      // Spawn drops
+      const step = SPI_STEPS[currentStep] || SPI_STEPS[0];
+      const baseRate = 2.8; // drops per 16ms at full rate
+      spawnAccum += (baseRate * step.dropRate * dt) / 16;
+      while (spawnAccum >= 1) {
+        spawnDrop();
+        spawnAccum -= 1;
+      }
+  
+      // Update & draw drops
+      for (let i = drops.length - 1; i >= 0; i--) {
+        const d = drops[i];
+        d.y  += d.vy;
+        d.x  += d.wobble;
+  
+        if (d.y >= groundY) {
+          // Spawn splash
+          splashes.push({ x: d.x, y: groundY, r: d.r * 1.2, maxR: d.r * 7, life: 1.0, color: d.color });
+          drops.splice(i, 1);
+          continue;
+        }
+  
+        const [r, g, b] = d.color;
+        ctx.beginPath();
+        // Elongated teardrop using ellipse
+        ctx.save();
+        ctx.translate(d.x, d.y);
+        ctx.scale(1, 1.6);
+        ctx.arc(0, 0, d.r, 0, Math.PI * 2);
+        ctx.restore();
+        ctx.fillStyle = `rgba(${r},${g},${b},${d.opacity})`;
+        ctx.fill();
+      }
+  
+      // Splashes
+      for (let i = splashes.length - 1; i >= 0; i--) {
+        const s = splashes[i];
+        s.life -= 0.045;
+        s.r += (s.maxR - s.r) * 0.2;
+        if (s.life <= 0) { splashes.splice(i, 1); continue; }
+        const [r, g, b] = s.color;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${s.life * 0.35})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+  
+      // Puddle at base (size reflects drought)
+      const puddleAlpha = 0.07 + step.dropRate * 0.13;
+      const puddleGrad = ctx.createLinearGradient(0, groundY, 0, H);
+      puddleGrad.addColorStop(0, `rgba(${animColor[0]},${animColor[1]},${animColor[2]},${puddleAlpha})`);
+      puddleGrad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = puddleGrad;
+      ctx.fillRect(0, groundY, W, H - groundY);
+  
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  
+    /* ── Panel switching ──────────────────────── */
+    function setSpiPanel(idx) {
+      const panels = document.querySelectorAll('.spi-panel');
+      panels.forEach((p, i) => {
+        if (i === idx) {
+          p.classList.remove('exit-up');
+          p.classList.add('active');
+        } else if (p.classList.contains('active')) {
+          p.classList.remove('active');
+          p.classList.add('exit-up');
+          setTimeout(() => {
+            if (!p.classList.contains('active')) p.classList.remove('exit-up');
+          }, 600);
+        }
+      });
+  
+      // Animate meter needle + stat for the active panel
+      const step = SPI_STEPS[idx];
+      if (!step) return;
+  
+      const needleEl = document.getElementById(`spi-needle-${idx}`);
+      const statEl   = document.getElementById(`spi-stat-${idx}`);
+      if (!needleEl || !statEl) return;
+  
+      const needlePct = spiToNeedle(step.spi);
+      needleEl.style.left = needlePct + '%';
+      statEl.style.color  = spiToColor(step.spi);
+  
+      // Count-up animation on the stat
+      const targetSpi = step.spi;
+      const startSpi  = 0;
+      const startTime = performance.now();
+      const dur = 900;
+      function countUp(now) {
+        const t = Math.min(1, (now - startTime) / dur);
+        const ease = 1 - Math.pow(1 - t, 3);
+        const val = startSpi + (targetSpi - startSpi) * ease;
+        statEl.textContent = `SPI = ${val >= 0 ? '+' : ''}${val.toFixed(2)}`;
+        if (t < 1) requestAnimationFrame(countUp);
+      }
+      requestAnimationFrame(countUp);
+    }
+  
+    /* ── Scroll driver ────────────────────────── */
+    function getSpiScrollStep() {
+      const track = document.getElementById('slide-spi-track');
+      if (!track) return -1;
+      const rect  = track.getBoundingClientRect();
+      const total = track.offsetHeight - window.innerHeight;
+      const prog  = Math.max(0, Math.min(1, -rect.top / total));
+      if (prog < 0.01)  return 0;
+      if (prog < 0.22)  return 0;
+      if (prog < 0.42)  return 1;
+      if (prog < 0.62)  return 2;
+      if (prog < 0.82)  return 3;
+      return 4;
+    }
+  
+    function isOnSpiTrack() {
+      const t = document.getElementById('slide-spi-track');
+      if (!t) return false;
+      const rect = t.getBoundingClientRect();
+      return rect.top <= 0 && rect.bottom > window.innerHeight;
+    }
+  
+    let spiStepNow = -1;
+  
+    function driveSpi() {
+      if (!isOnSpiTrack()) return;
+      const step = getSpiScrollStep();
+      if (step === spiStepNow) return;
+      spiStepNow = step;
+      currentStep = step;
+      setSpiPanel(step);
+    }
+  
+    // Hook into existing scroll listener
+    window.addEventListener('scroll', driveSpi);
+    // Seed panel 0 on load
+    setSpiPanel(0);
+  
+  })();
+

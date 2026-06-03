@@ -645,5 +645,169 @@
   transition: none; /* scroll-driven, not CSS transition */
   background: #f5f0e8 !important;
  }
+
+ /* ═══════════════════════════════════════════════
+   SPI RAIN DOT SECTION
+   ═══════════════════════════════════════════════ */
+
+#slide-spi-track {
+  position: relative;
+}
+
+.spi-scroll-space {
+  height: 500vh;
+}
+
+.spi-scene {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #0d1a2a;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
+  gap: 0;
+  flex-direction: column;
+}
+
+#spi-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Panels ─────────────────────────────────── */
+#spi-panels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.spi-panel {
+  position: absolute;
+  left: 3.5vw;
+  top: 50%;
+  transform: translateY(calc(-50% + 40px));
+  width: clamp(210px, 24vw, 300px);
+  background: rgba(8, 18, 30, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 10px;
+  padding: 1.3rem 1.5rem 1.4rem;
+  border: 1px solid rgba(100, 180, 255, 0.12);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1),
+              transform 0.55s cubic-bezier(0.22,1,0.36,1);
+}
+
+.spi-panel.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%);
+}
+
+.spi-panel.exit-up {
+  opacity: 0;
+  transform: translateY(calc(-50% - 60px));
+}
+
+.spi-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #5ab4ff;
+  margin-bottom: 0.4rem;
+}
+
+.spi-head {
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  font-weight: 900;
+  color: #e8f4ff;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.spi-divider {
+  width: 2rem;
+  height: 2px;
+  background: #5ab4ff;
+  border: none;
+  margin: 0 0 0.7rem;
+}
+
+.spi-body {
+  font-size: clamp(0.72rem, 1vw, 0.84rem);
+  color: rgba(200, 230, 255, 0.78);
+  line-height: 1.8;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.spi-body em {
+  font-style: normal;
+  font-weight: 700;
+  color: #5ab4ff;
+}
+
+/* ── SPI meter ─────────────────────────────── */
+.spi-meter {
+  margin-bottom: 0.5rem;
+}
+
+.spi-meter-track {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #7b1a0a, #e85530, #f5f0e8, #3b8bd4, #0c3f6e);
+  margin-bottom: 0.3rem;
+  overflow: visible;
+}
+
+.spi-meter-fill {
+  display: none;
+}
+
+.spi-meter-needle {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 3px;
+  height: 16px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(255,255,255,0.8);
+  transition: left 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.spi-meter-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(200,230,255,0.45);
+}
+
+.spi-stat {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #5ab4ff;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.5s;
+}
  
  
