@@ -482,11 +482,11 @@ function loadScript(src) {
 
     /* ── Step config ─────────────────────────── */
     const SPI_STEPS = [
-      { spi: 0.0,  label: 'Normal rainfall',   dropRate: 1.0,  color: [120, 190, 255] },
-      { spi: 0.0,  label: 'What is SPI?',      dropRate: 1.0,  color: [120, 190, 255] },
-      { spi: -0.6, label: 'Mild drought',      dropRate: 0.52, color: [200, 160, 100] },
-      { spi: -1.5, label: 'Severe drought',    dropRate: 0.18, color: [210, 100,  50] },
-      { spi: -2.1, label: 'Extreme drought',   dropRate: 0.04, color: [180,  50,  20] },
+      { spi: 0.0,  label: 'Normal rainfall',   dropRate: 1.0,  color: [70, 140, 210] },
+      { spi: 0.0,  label: 'What is SPI?',      dropRate: 1.0,  color: [70, 140, 210] },
+      { spi: -0.6, label: 'Mild drought',      dropRate: 0.52, color: [180, 130,  70] },
+      { spi: -1.5, label: 'Severe drought',    dropRate: 0.18, color: [200,  80,  30] },
+      { spi: -2.1, label: 'Extreme drought',   dropRate: 0.04, color: [160,  35,  10] },
     ];
   
     /* SPI range: -2.5 to +1.5 → needle 0%→100% */
@@ -520,9 +520,9 @@ function loadScript(src) {
     const drops = [];
     let currentStep = 0;
     let targetDropRate = 1.0;
-    let currentDropColor = [120, 190, 255];
-    let targetDropColor  = [120, 190, 255];
-    let animColor = [120, 190, 255];
+    let currentDropColor = [90, 160, 220];
+    let targetDropColor  = [90, 160, 220];
+    let animColor = [90, 160, 220];
   
     // Splash rings that fade out
     const splashes = [];
@@ -554,10 +554,7 @@ function loadScript(src) {
       ctx.clearRect(0, 0, W, H);
   
       // Subtle background gradient
-      const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, '#0d1a2a');
-      bg.addColorStop(1, '#060e18');
-      ctx.fillStyle = bg;
+      ctx.fillStyle = '#f5f0e8';
       ctx.fillRect(0, 0, W, H);
   
       // Ground line
@@ -565,7 +562,7 @@ function loadScript(src) {
       ctx.beginPath();
       ctx.moveTo(0, groundY);
       ctx.lineTo(W, groundY);
-      ctx.strokeStyle = 'rgba(100,160,220,0.15)';
+      ctx.strokeStyle = 'rgba(139,94,60,0.2)';
       ctx.lineWidth = 1;
       ctx.stroke();
   
