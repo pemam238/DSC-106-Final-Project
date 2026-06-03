@@ -120,41 +120,65 @@ driveMapEntrance();
   ═══════════════════════════════════════════════ */
 
 
-const CONTINENT_DATA = {
- "Africa":        { temp: 22.91, pr: 1.748 },
- "Asia":          { temp: 14.21, pr: 2.098 },
- "Europe":        { temp:  6.12, pr: 1.916 },
- "North America": { temp:  4.31, pr: 1.589 },
- "South America": { temp: 21.50, pr: 3.511 },
- "Oceania":       { temp: 20.04, pr: 1.021 },
- "Antarctica":    { temp:-32.49, pr: 0.590 },
+const COUNTRY_DATA = {};
+async function loadCSV() {
+  const csvText = await fetch('country_summary.csv').then(r => r.text());
+  csvText.trim().split('\n').slice(1).forEach(line => {
+    const [country, , spiBase, spiMod, temp, tempMod, spiChange, tempChange] = line.split(',');
+    COUNTRY_DATA[country] = {
+      temp:       parseFloat(temp),
+      tempMod:    parseFloat(tempMod),
+      spiBase:    parseFloat(spiBase),
+      spiMod:     parseFloat(spiMod),
+      spiChange:  parseFloat(spiChange),
+      tempChange: parseFloat(tempChange),
+    };
+  });
+}
+const csvLoaded = loadCSV();
+
+// world-atlas ISO 3166 name → CSV country name
+const NAME_ALIASES = {
+  'United States of America':                       'United States',
+  'Russian Federation':                             'Russia',
+  'Syrian Arab Republic':                           'Syria',
+  'Iran, Islamic Republic of':                      'Iran',
+  "Korea, Republic of":                             'South Korea',
+  "Korea, Democratic People's Republic of":         'North Korea',
+  'Congo, the Democratic Republic of the':          'DR Congo',
+  'Congo':                                          'Republic of Congo',
+  'United Kingdom of Great Britain and Northern Ireland': 'United Kingdom',
+  'Tanzania, United Republic of':                   'Tanzania',
+  'Bolivia, Plurinational State of':                'Bolivia',
+  'Venezuela, Bolivarian Republic of':              'Venezuela',
+  'Micronesia, Federated States of':                'Micronesia',
+  'Moldova, Republic of':                           'Moldova',
+  'North Macedonia':                                'North Macedonia',
+  "Macedonia, the former Yugoslav Republic of":     'North Macedonia',
+  'Viet Nam':                                       'Vietnam',
+  "Lao People's Democratic Republic":               'Laos',
+  'Libya':                                          'Libya',
+  'Czechia':                                        'Czech Republic',
+  'Czech Republic':                                 'Czech Republic',
+  'Eswatini':                                       'Swaziland',
+  'Palestine, State of':                            'Palestine',
+  'Cabo Verde':                                     'Cape Verde',
+  "Côte d'Ivoire":                                  'Ivory Coast',
+  "Cote d'Ivoire":                                  'Ivory Coast',
+  'Timor-Leste':                                    'East Timor',
 };
 
-
-const ISO_TO_CONT = (() => {
- const m = {};
- [12,24,72,108,120,132,140,174,175,178,180,204,231,232,266,270,288,
-  324,384,404,426,430,434,450,454,466,478,504,508,516,562,566,624,
-  638,646,678,686,694,706,710,716,728,729,748,768,788,800,818,834,854,894
- ].forEach(id => { m[id] = "Africa"; });
- [8,20,40,56,70,100,112,191,196,203,208,233,246,250,276,300,336,348,
-  352,372,380,388,398,428,438,440,442,470,492,496,499,528,578,616,
-  620,642,643,674,688,703,705,724,752,756,804,807,826
- ].forEach(id => { m[id] = "Europe"; });
- [4,31,48,50,51,64,96,104,116,144,156,268,356,360,364,368,376,392,
-  400,408,410,414,418,422,458,462,512,524,586,608,634,682,702,704,
-  762,764,792,795,860,887,760,275
- ].forEach(id => { m[id] = "Asia"; });
- [28,44,52,84,124,188,192,214,222,320,332,340,388,484,558,591,630,840
- ].forEach(id => { m[id] = "North America"; });
- [32,68,76,152,170,218,328,600,604,740,858,862
- ].forEach(id => { m[id] = "South America"; });
- [36,90,242,296,520,540,548,554,583,584,585,776,798,882
- ].forEach(id => { m[id] = "Oceania"; });
- [10].forEach(id => { m[id] = "Antarctica"; });
- return m;
-})();
-
+function resolveCountryName(atlasName) {
+  if (!atlasName) return null;
+  if (COUNTRY_DATA[atlasName]) return atlasName;
+  const alias = NAME_ALIASES[atlasName];
+  if (alias && COUNTRY_DATA[alias]) return alias;
+  const lower = atlasName.toLowerCase();
+  for (const key of Object.keys(COUNTRY_DATA)) {
+    if (key.toLowerCase() === lower) return key;
+  }
+  return null;
+}
 
 /* ── Color helpers ──────────────────────────────── */
 function tempColor(t) {
@@ -173,9 +197,10 @@ function tempColor(t) {
 }
 
 
-function prOpacity(pr) {
- const prMin = 0.5, prMax = 3.6;
- return Math.max(0.05, Math.min(0.82, (pr-prMin)/(prMax-prMin)*0.82));
+function prOpacity(spi) {
+  // More negative SPI = drier = stronger blue overlay
+  const spiMin = -0.5, spiMax = 0.5;
+  return Math.max(0.05, Math.min(0.82, (spi - spiMin) / (spiMax - spiMin) * 0.82));
 }
 
 
@@ -199,7 +224,7 @@ function animateTempFill() {
    const t    = Math.min(1,(now-start)/DUR);
    const ease = 1-Math.pow(1-t,3);
    countryPaths.forEach(({path,contName}) => {
-     const data = CONTINENT_DATA[contName];
+     const data = COUNTRY_DATA[contName];
      if (!data) { path.style.fill='#e8dfd2'; return; }
      const rgb = rgbParse(tempColor(data.temp));
      path.style.fill = `rgb(${Math.round(245+(rgb[0]-245)*ease)},${Math.round(242+(rgb[1]-242)*ease)},${Math.round(236+(rgb[2]-236)*ease)})`;
@@ -217,9 +242,9 @@ function animatePrOverlay(targetStep) {
  function frame(now) {
    const t=Math.min(1,(now-start)/DUR), ease=1-Math.pow(1-t,2);
    precipOverlays.forEach(({path,contName},i)=>{
-     const data=CONTINENT_DATA[contName];
+     const data=COUNTRY_DATA[contName];
      if (!data) return;
-     const final=prOpacity(data.pr)*targetOpacity;
+     const final=prOpacity(data.spiBase)*targetOpacity;
      path.setAttribute('opacity',(starts[i]+(final-starts[i])*ease).toFixed(3));
    });
    if (t<1) requestAnimationFrame(frame);
@@ -322,15 +347,24 @@ async function buildMap() {
 
 
  try {
+   await csvLoaded;
    await loadScript('https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js');
    await loadScript('https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js');
 
+ const [world, countryNames] = await Promise.all([
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r=>r.json()),
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries.tsv').then(r=>r.text())
+]);
 
-   const world = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r=>r.json());
+const isoToName = {};
+countryNames.trim().split('\n').slice(1).forEach(line => {
+  const [iso, , name] = line.split('\t');
+  isoToName[iso] = name;
+});
 
+const countries = topojson.feature(world, world.objects.countries);
 
-   const countries = topojson.feature(world, world.objects.countries);
-   const ns = 'http://www.w3.org/2000/svg';
+ const ns = 'http://www.w3.org/2000/svg';
 
 
    const W = svgEl.clientWidth  || window.innerWidth;
@@ -365,9 +399,10 @@ async function buildMap() {
    svgEl.appendChild(prGroup);
 
 
-   countries.features.forEach(feature => {
-     const id       = parseInt(feature.id, 10);
-     const contName = ISO_TO_CONT[id] || null;
+  countries.features.forEach(feature => {
+    const isoKey      = String(feature.id).padStart(3, '0');
+    const countryName = isoToName[isoKey] || null;
+    const contName    = resolveCountryName(countryName);
      const d        = pathGen(feature);
      if (!d) return;
 
@@ -401,15 +436,15 @@ async function buildMap() {
      const entry = countryPaths.find(c=>c.path===target) || precipOverlays.find(c=>c.path===target);
      if (!entry) return;
      const cont = entry.contName;
-     const data = cont ? CONTINENT_DATA[cont] : null;
+     const data = cont ? COUNTRY_DATA[cont] : null;
      if (!cont || !data) { tooltip.style.opacity='0'; return; }
 
-
-     tooltip.innerHTML = [
-       `<strong>${cont}</strong>`,
-       `<span style="font-weight:400;opacity:0.82">Avg temp: ${data.temp>0?'+':''}${data.temp}°C</span>`,
-       `<span style="font-weight:400;opacity:0.82">Precip: ${data.pr} mm/day</span>`,
-     ].join('<br>');
+  tooltip.innerHTML = [
+    `<strong>${cont}</strong>`,
+    `<span style="font-weight:400;opacity:0.82">Avg temp: ${data.temp>0?'+':''}${data.temp.toFixed(1)}°C</span>`,
+    `<span style="font-weight:400;opacity:0.82">SPI (baseline): ${data.spiBase.toFixed(2)}</span>`,
+    `<span style="font-weight:400;opacity:0.82">SPI (modern): ${data.spiMod.toFixed(2)}</span>`,
+  ].join('<br>');
      tooltip.style.opacity = '1';
      const r = wrapper.getBoundingClientRect();
      tooltip.style.left = Math.min(e.clientX-r.left+14, r.width-160)+'px';
