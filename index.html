@@ -94,13 +94,50 @@
 
   </section>
 
-  <!-- SLIDE 3 — More to come -->
-  <section class="slide" id="slide-3">
+<!-- SLIDE 3 — World map sequence -->
+  <section id="slide-3-track">
+    <div class="sticky-scene" id="scene-map" style="gap:0;">
+
+      <!-- Full-width title -->
+      <div class="map-top-label" id="map-top-label">
+        <p class="map-label-text" id="map-label-text"></p>
+      </div>
+
+      <!-- Left column: map only -->
+      <div id="map-left-col">
+        <div id="world-map-wrap">
+          <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+      </div>
+
+      <!-- Right column: info panel -->
+      <div class="map-right-panel" id="map-right-panel">
+        <div class="country-info-box" id="country-info-box"></div>
+      </div>
+
+      <div class="map-legend" id="map-legend">
+        <div class="legend-label" id="legend-label">Temperature</div>
+        <div class="legend-bar" id="legend-bar"></div>
+        <div class="legend-ends">
+          <span id="legend-min"></span>
+          <span id="legend-max"></span>
+        </div>
+      </div>
+
+    </div>
+    <div class="scroll-spacer" style="height:900vh;"></div>
+  </section>
+
+  <!-- Final outro -->
+  <section class="slide" id="slide-outro">
     <div class="slide-content">
-      <h2 class="subtitle">More to come...</h2>
+      <h2 class="subtitle" style="color:#ccc; font-size:clamp(1rem,3vw,2rem); font-weight:400; letter-spacing:0.08em;">
+        Drought is not just about heat — or rain. It's about the gap between what a place expects and what it gets.
+      </h2>
     </div>
   </section>
 
   <script src="main.js"></script>
+  <div id="map-tooltip"></div>
 </body>
 </html>
