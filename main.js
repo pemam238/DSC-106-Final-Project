@@ -487,6 +487,10 @@ function loadScript(src) {
   const dialNeedle   = document.getElementById('dial-needle-g');
 
   if (!tempSlider || !dialFill) return;
+  let COUNTRY_CLIMATES = [];
+
+const similarName = document.getElementById('similar-name');
+const similarDesc = document.getElementById('similar-desc');
 
   /* ── Dial geometry ─────────────────────────── */
  const CX = 130, CY = 130, R = 80;
@@ -533,7 +537,93 @@ function loadScript(src) {
   function computeRisk(temp, pr) {
     return Math.max(0, Math.min(1, (temp / 100) * 0.45 + (1 - pr / 100) * 0.55));
   }
+async function loadCountryClimateData() {
+  try {
+    const response = await fetch("climate_agg_country.csv");
 
+    if (!response.ok) throw new Error("Could not find climate_agg_country.csv");
+
+    const text = await response.text();
+    const lines = text.trim().split("\n");
+    const headers = lines[0].split(",").map(h => h.trim());
+
+    const countries = {};
+
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(",");
+      const row = {};
+      headers.forEach((h, idx) => { row[h] = values[idx]?.trim(); });
+
+      const country = row.country;
+      if (!country) continue;
+
+      if (!countries[country]) {
+        countries[country] = {
+          country,
+          continent: row.continent,
+          climate_zone: row.climate_zone,
+          tempSum: 0,
+          prSum: 0,
+          spiSum: 0,
+          count: 0
+        };
+      }
+
+      countries[country].tempSum += Number(row.mean_temp_C);
+      countries[country].prSum   += Number(row.mean_pr_mm_day);
+      countries[country].spiSum  += Number(row.mean_spi);
+      countries[country].count   += 1;
+    }
+
+    COUNTRY_CLIMATES = Object.values(countries).map(d => ({
+      country: d.country,
+      continent: d.continent,
+      climate_zone: d.climate_zone,
+      temp: d.tempSum / d.count,
+      pr: d.prSum / d.count,
+      spi: d.spiSum / d.count
+    }));
+
+    console.log("Loaded climates:", COUNTRY_CLIMATES.length);
+    update();
+
+  } catch(err) {
+    console.error("Failed to load climate_agg_country.csv:", err);
+    if (similarName) similarName.textContent = "Climate data not found";
+    if (similarDesc) similarDesc.textContent = "Make sure climate_agg_country.csv is in the same folder as index.html.";
+  }
+}
+
+function normalizeTemp(temp) {
+  const minTemp = -35;
+  const maxTemp = 30;
+  return Math.max(0, Math.min(100, ((temp - minTemp) / (maxTemp - minTemp)) * 100));
+}
+
+function normalizePrecip(pr) {
+  const minPr = 0;
+  const maxPr = 12;
+  return Math.max(0, Math.min(100, ((pr - minPr) / (maxPr - minPr)) * 100));
+}
+
+function findMostSimilarClimates(userTemp, userPr, count = 3) {
+  if (!COUNTRY_CLIMATES.length) return [];
+
+  return COUNTRY_CLIMATES
+    .map(c => {
+      const tempNorm = normalizeTemp(c.temp);
+      const prNorm = normalizePrecip(c.pr);
+
+      const distance = Math.sqrt(
+        Math.pow(userTemp - tempNorm, 2) +
+        Math.pow(userPr - prNorm, 2)
+      );
+
+      return { ...c, distance };
+    })
+    .sort((a, b) => a.distance - b.distance)
+    .slice(0, count);
+}
   function update() {
     const t = +tempSlider.value;
     const p = +prSlider.value;
@@ -558,10 +648,22 @@ dialNeedle.setAttribute('transform', `rotate(${needleDeg}, 130, 130)`);
     meterVerdict.textContent = level.label;
     meterVerdict.style.color = level.color;
     meterExample.textContent = level.example;
+    const matches = findMostSimilarClimates(t, p);
+
+if (matches.length && similarName && similarDesc) {
+  similarName.textContent = matches[0].country;
+
+  similarDesc.innerHTML = matches
+    .map((m, i) =>
+      `${i + 1}. ${m.country} (${m.continent}) — ${m.temp.toFixed(1)}°C, ${m.pr.toFixed(2)} mm/day`
+    )
+    .join("<br>");
+}
   }
 
   tempSlider.addEventListener('input', update);
   prSlider.addEventListener('input', update);
+  loadCountryClimateData();
   update();
 })();
 
