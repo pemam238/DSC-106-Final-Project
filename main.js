@@ -1,43 +1,103 @@
 /* ───────────────────────────────────────────────
-   SCROLL LOCK & PANEL LOGIC (Slide 2)
+   SCROLL PROGRESS + CHAPTER NAV + PANEL LOGIC
    ─────────────────────────────────────────────── */
 let buttonPressed = false;
 
-function isOnSlide2() {
-  const track = document.getElementById('slide-2-track');
-  const rect = track.getBoundingClientRect();
-  return rect.top <= 0 && rect.bottom > window.innerHeight;
+// ── Progress bar ────────────────────────────────
+const progressBar = document.getElementById('story-progress-bar');
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  const pct = total > 0 ? (scrolled / total) * 100 : 0;
+  if (progressBar) progressBar.style.width = pct + '%';
 }
 
-document.addEventListener('wheel', (e) => {
-  if (buttonPressed) return;
-  if (isOnSlide2()) e.preventDefault();
-}, { passive: false });
+// ── Chapter nav ─────────────────────────────────
+const chapterNav = document.getElementById('chapter-nav');
+const chapterLabel = document.getElementById('chapter-label');
+const chapterDots = document.querySelectorAll('.chapter-dot');
+const CHAPTERS = [
+  { id: 'slide-1',       label: 'Intro' },
+  { id: 'slide-2-track', label: 'Hot or Cold?' },
+  { id: 'slide-3-track', label: 'The World' },
+  { id: 'slide-spi-track', label: 'Measuring Drought' },
+  { id: 'slide-case-track', label: 'Two Deserts' },
+  { id: 'slide-climate', label: 'Build a Climate' },
+];
 
-document.addEventListener('touchmove', (e) => {
-  if (buttonPressed) return;
-  if (isOnSlide2()) e.preventDefault();
-}, { passive: false });
-
-window.addEventListener('scroll', () => {
-  if (!buttonPressed) {
-    if (isOnSlide2()) {
-      const track = document.getElementById('slide-2-track');
-      window.scrollTo({ top: track.offsetTop, behavior: 'instant' });
-    }
-    return;
-  }
-  drivePanels();
-  driveMap();      // Map scrollytelling
-  driveSpi();      // SPI rain dots
+chapterDots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const target = document.getElementById(dot.dataset.target);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
 });
+
+function updateChapterNav() {
+  const scrollMid = window.scrollY + window.innerHeight * 0.4;
+  let activeIdx = 0;
+  CHAPTERS.forEach((ch, i) => {
+    const el = document.getElementById(ch.id);
+    if (el && el.offsetTop <= scrollMid) activeIdx = i;
+  });
+  chapterDots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  if (chapterLabel) chapterLabel.textContent = CHAPTERS[activeIdx]?.label || '';
+  if (chapterNav) {
+    if (window.scrollY > window.innerHeight * 0.5) {
+      chapterNav.classList.add('visible');
+    } else {
+      chapterNav.classList.remove('visible');
+    }
+  }
+}
+
+// ── Section reveal on scroll ─────────────────────
+const revealEls = document.querySelectorAll('.section-reveal');
+function updateReveals() {
+  revealEls.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.88) {
+      el.classList.add('revealed');
+    }
+  });
+}
+
+// ── Panel logic (slide 2) ────────────────────────
+const track  = document.getElementById('slide-2-track');
+const panelL = document.getElementById('panel-left');
+const panelR = document.getElementById('panel-right');
+
+function drivePanels() {
+  if (!track) return;
+  const trackTop    = track.getBoundingClientRect().top;
+  const trackHeight = track.offsetHeight;
+  const vh          = window.innerHeight;
+  const progress    = Math.max(0, Math.min(1, -trackTop / (trackHeight - vh)));
+  if (progress > 0.25) panelL.classList.add('visible');
+  else panelL.classList.remove('visible');
+  if (progress > 0.55) panelR.classList.add('visible');
+  else panelR.classList.remove('visible');
+}
+
+// ── Unified scroll handler ───────────────────────
+window.addEventListener('scroll', () => {
+  updateProgress();
+  updateChapterNav();
+  updateReveals();
+  drivePanels();
+  driveMap();
+  driveSpi();
+}, { passive: true });
+
+// Init on load
+updateProgress();
+updateChapterNav();
+updateReveals();
 
 document.querySelector('.scroll-arrow')?.addEventListener('click', () => {
   document.getElementById('slide-2-track').scrollIntoView({ behavior: 'smooth' });
 });
 
 function chooseClimate(choice) {
-  // choice can be 'hot' or 'cold' – not used for logic but kept for consistency
   document.getElementById('reveal-overlay').classList.add('visible');
   const halves = document.getElementById('hot-cold-halves');
   halves.style.opacity = '0';
@@ -54,21 +114,6 @@ document.querySelectorAll('.half').forEach(half => {
     chooseClimate(choice);
   });
 });
-
-const track  = document.getElementById('slide-2-track');
-const panelL = document.getElementById('panel-left');
-const panelR = document.getElementById('panel-right');
-
-function drivePanels() {
-  const trackTop    = track.getBoundingClientRect().top;
-  const trackHeight = track.offsetHeight;
-  const vh          = window.innerHeight;
-  const progress    = Math.max(0, Math.min(1, -trackTop / (trackHeight - vh)));
-  if (progress > 0.25) panelL.classList.add('visible');
-  else panelL.classList.remove('visible');
-  if (progress > 0.55) panelR.classList.add('visible');
-  else panelR.classList.remove('visible');
-}
 
 /* ══════════════════════════════════════════════
    SLIDE 3 — WORLD MAP SCROLLYTELLING (from original)
@@ -603,14 +648,17 @@ loadTopojsonAndMap();
     const dt = Math.min(now - lastTime, 50);
     lastTime = now;
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#f5f0e8';
+    const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+    bgGrad.addColorStop(0, '#0a0f1a');
+    bgGrad.addColorStop(1, '#0d2040');
+    ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, W, H);
     const groundY = H * 0.88;
     ctx.beginPath();
     ctx.moveTo(0, groundY);
     ctx.lineTo(W, groundY);
-    ctx.strokeStyle = 'rgba(139,94,60,0.2)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(210,160,80,0.6)';
+    ctx.lineWidth = 2;
     ctx.stroke();
 
     const step = SPI_STEPS[currentStep] || SPI_STEPS[0];
@@ -650,10 +698,10 @@ loadTopojsonAndMap();
       ctx.stroke();
     }
 
-    const puddleAlpha = 0.07 + step.dropRate * 0.13;
-    const puddleGrad = ctx.createLinearGradient(0, groundY, 0, H);
-    puddleGrad.addColorStop(0, `rgba(${animColor[0]},${animColor[1]},${animColor[2]},${puddleAlpha})`);
-    puddleGrad.addColorStop(1, 'rgba(0,0,0,0)');
+  const puddleAlpha = 0.2 + step.dropRate * 0.25;
+  const puddleGrad = ctx.createLinearGradient(0, groundY, 0, H);
+  puddleGrad.addColorStop(0, `rgba(180,120,40,${puddleAlpha})`);
+  puddleGrad.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = puddleGrad;
     ctx.fillRect(0, groundY, W, H - groundY);
     requestAnimationFrame(tick);

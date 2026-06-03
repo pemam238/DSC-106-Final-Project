@@ -19,19 +19,33 @@ body {
 .slide {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
+/* ── Section fade-in on scroll ─────────────────── */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+}
+.section-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ── Slide 1 ─────────────────────────────────── */
 #slide-1 {
+  min-height: 100vh;
+  padding: 6rem 1.5rem 8rem;
   background-image: url('cracked-earth.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #slide-1::before {
@@ -126,7 +140,7 @@ body {
 
 /* ── Slide 2 track ─────────────────────────────── */
 #slide-2-track { position: relative; }
-.scroll-spacer { height: 300vh; }
+.scroll-spacer { height: 250vh; }
 
 .sticky-scene {
   position: sticky;
@@ -504,7 +518,7 @@ body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: #f5f0e8;
+  background: #0d0d0d;
 }
 #spi-canvas {
   position: absolute;
@@ -521,16 +535,17 @@ body {
 }
 .spi-panel {
   position: absolute;
-  left: 3.5vw;
+  left: 50%;
   top: 50%;
-  transform: translateY(calc(-50% + 40px));
-  width: clamp(210px, 24vw, 300px);
-  background: rgba(255, 252, 245, 0.88);
+  transform: translateX(-50%) translateY(calc(-50% + 40px));
+  width: 90vw;
+  max-width: 380px;
+  background: rgba(20, 15, 10, 0.88);
   backdrop-filter: blur(12px);
   border-radius: 10px;
   padding: 1.3rem 1.5rem 1.4rem;
   border: 1px solid rgba(139,94,60,0.18);
-  box-shadow: 0 8px 40px rgba(100,60,20,0.12);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
@@ -539,14 +554,15 @@ body {
 .spi-panel.active {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
   visibility: visible;
 }
 .spi-panel.exit-up {
   opacity: 0;
-  transform: translateY(calc(-50% - 60px));
+  transform: translateX(-50%) translateY(calc(-50% - 60px));
   visibility: hidden;
 }
+
 .spi-label {
   font-size: 0.65rem;
   font-weight: 700;
@@ -558,7 +574,7 @@ body {
 .spi-head {
   font-size: clamp(1rem, 1.8vw, 1.3rem);
   font-weight: 900;
-  color: #1a1a1a;
+  color: #f0ebe3;
   letter-spacing: 0.04em;
   line-height: 1.2;
   text-transform: uppercase;
@@ -573,7 +589,7 @@ body {
 }
 .spi-body {
   font-size: clamp(0.72rem, 1vw, 0.84rem);
-  color: #2e2e2e;
+  color: rgba(240,235,225,0.75);
   line-height: 1.8;
   margin-bottom: 1rem;
 }
@@ -946,9 +962,9 @@ body {
   background: #f5f0e8;
   overflow-y: auto;
   height: auto;
-  min-height: 100vh;
+  min-height: auto;
   align-items: flex-start;
-  padding: 2rem 1rem;
+  padding: 5rem 1rem 6rem;
 }
 
 #slide-climate .climate-builder {
@@ -1101,6 +1117,8 @@ body {
 /* ── Slide outro ────────────────────────────────── */
 #slide-outro {
   background: #0d0d0d;
+  min-height: 60vh;
+  padding: 6rem 1.5rem;
 }
 #slide-outro .subtitle {
   color: rgba(255,255,255,0.7);
@@ -1145,3 +1163,108 @@ body {
   display: none;
 }
 
+
+/* ── Progress indicator ─────────────────────────── */
+#story-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(139,94,60,0.12);
+  z-index: 999;
+  pointer-events: none;
+}
+#story-progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, #8B5E3C, #c84b1a);
+  width: 0%;
+  transition: width 0.15s ease;
+}
+
+/* ── Chapter nav ────────────────────────────────── */
+#chapter-nav {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.5rem;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: rgba(245,240,232,0.82);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  padding: 0.45rem 1rem 0.45rem 0.8rem;
+  border: 1px solid rgba(139,94,60,0.15);
+  box-shadow: 0 2px 12px rgba(100,60,20,0.1);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+#chapter-nav.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.chapter-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(139,94,60,0.25);
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+  border: none;
+}
+.chapter-dot.active {
+  background: #8B5E3C;
+  transform: scale(1.4);
+}
+#chapter-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8B5E3C;
+  min-width: 80px;
+  transition: opacity 0.3s;
+}
+
+/* ── Section dividers (connective tissue) ──────── */
+.section-divider {
+  background: #f5f0e8;
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+.divider-line {
+  width: 1px;
+  height: 3rem;
+  background: linear-gradient(to bottom, transparent, rgba(139,94,60,0.35), transparent);
+}
+.divider-text {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(139,94,60,0.5);
+}
+
+/* ── Case study: scroll-driven instead of slideshow ── */
+#slide-case-track {
+  position: relative;
+  background: #f5f0e8;
+}
+.case-scroll-space { height: 100vh; }
+.case-scene {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #f5f0e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
