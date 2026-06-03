@@ -57,7 +57,7 @@
 <!-- SLIDE 2 — Hot/Cold question + sticky panels -->
 <section id="slide-2-track">
   <div class="sticky-scene" id="scene-question">
-    <p class="hot-cold-question">Where do you think droughts strike?</p>
+    <p class="hot-cold-question">Where do <em style="color:#8B5E3C; font-style:normal;">you</em> think<br><span class="big-word">droughts</span>strike?</p>
     <div class="hot-cold-frame">
       <div class="hot-cold-halves" id="hot-cold-halves">
         <div class="half left-half" data-choice="hot">
@@ -438,6 +438,8 @@
     </div>
 
     <div class="drought-meter-wrap">
+      <div class="meter-left-col">
+      <p class="meter-verdict" id="meter-verdict" id="meter-verdict-top">—</p>
       <p class="meter-label">DROUGHT RISK</p>
       <div class="dial-wrap">
         <svg id="dial-svg" viewBox="0 0 260 140">
@@ -454,8 +456,9 @@
           <text x="232" y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">V.HIGH</text>
         </svg>
       </div>
-      <p class="meter-verdict" id="meter-verdict">—</p>
       <p class="meter-example" id="meter-example"></p>
+  </div>
+  <div class="meter-right-col">
       <div class="similar-climate-card">
         <p class="similar-label">YOUR CLIMATE IS MOST SIMILAR TO:</p>
         <h3 id="similar-name">Loading...</h3>

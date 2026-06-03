@@ -160,7 +160,7 @@ body {
 /* Hot/Cold question UI */
 .hot-cold-question {
   font-weight: 800;
-  font-size: clamp(3.2rem, 5vw, 3rem);
+  font-size: clamp(2.8rem, 5vw, 4rem);
   color: #2a2a2a;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -168,11 +168,17 @@ body {
   z-index: 1;
   position: relative;
   margin-bottom: 0.5rem;
+  line-height: 1.05;
+}
+.hot-cold-question .big-word {
+  font-size: 1.5em;
+  display: block;
+  line-height: 1;
 }
 
 .hot-cold-frame {
   position: relative;
-  width: min(860px, 90vw);
+  width: min(640px, 72vw);
   aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
@@ -267,27 +273,45 @@ body {
 .side-panel {
   position: absolute;
   top: 0;
-  width: calc((100% - min(860px, 90vw)) / 2);
+  width: calc((100% - min(640px, 72vw)) / 2);
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 1rem;
+  padding: 0 2rem;
   pointer-events: none;
   z-index: 2;
   overflow: hidden;
 }
-.left-panel  { left: 0; }
-.right-panel { right: 0; }
 
-.side-panel-inner {
+.left-panel  { left: 0; justify-content: flex-end; padding-right: 1.5rem; align-items: flex-start; padding-top: 22rem; }
+.right-panel { right: 0; justify-content: flex-start; padding-left: 1.5rem; align-items: flex-start; padding-top: 22rem; }
+
+.left-panel .side-panel-inner {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
   transform: translateY(60px);
   opacity: 0;
   transition: transform 0.75s cubic-bezier(0.22,1,0.36,1), opacity 0.65s ease;
+  text-align: right;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 250px;
 }
+.right-panel .side-panel-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  transform: translateY(60px);
+  opacity: 0;
+  transition: transform 0.75s cubic-bezier(0.22,1,0.36,1), opacity 0.65s ease;
+  text-align: left;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 250px;
+}
+
 .left-panel.visible .side-panel-inner,
 .right-panel.visible .side-panel-inner {
   transform: translateY(0);
@@ -318,6 +342,7 @@ body {
   font-weight: 400;
 }
 .panel-body em { font-style: italic; color: #8B5E3C; font-weight: 600; }
+
 .panel-divider {
   width: 2rem;
   height: 2px;
@@ -325,7 +350,6 @@ body {
   border: none;
   margin: 0;
 }
-
 /* ── WORLD MAP (slide 3) ───────────────────────── */
 #slide-3-track { position: relative; }
 #scene-map {
@@ -964,7 +988,7 @@ body {
   height: auto;
   min-height: auto;
   align-items: flex-start;
-  padding: 5rem 1rem 6rem;
+  padding: 2rem 1rem 2rem;
 }
 
 #slide-climate .climate-builder {
@@ -975,7 +999,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.2rem;
+  gap: 0.6rem;
 }
 .climate-title {
   font-weight: 900;
@@ -1051,9 +1075,10 @@ body {
 .drought-meter-wrap {
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 3rem;
   padding-top: 1.2rem;
   border-top: 1px solid rgba(139,94,60,0.15);
 }
@@ -1267,4 +1292,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.meter-left-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+.meter-right-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }

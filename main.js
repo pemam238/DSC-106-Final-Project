@@ -1207,6 +1207,8 @@ loadTopojsonAndMap();
     dialNeedle.setAttribute('transform', `rotate(${needleDeg}, 130, 130)`);
     meterVerdict.textContent = level.label;
     meterVerdict.style.color = level.color;
+    const meterVerdictTop = document.getElementById('meter-verdict-top');
+    if (meterVerdictTop) { meterVerdictTop.textContent = level.label; meterVerdictTop.style.color = level.color; }
     meterExample.textContent = level.example;
     const matches = findMostSimilarClimates(t, p);
     if (matches.length && similarName && similarDesc) {
