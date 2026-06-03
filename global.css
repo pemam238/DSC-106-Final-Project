@@ -801,285 +801,450 @@
 }
  
 /* ═══════════════════════════════════════════════
-   CASE STUDY — Great Basin vs Death Valley
-   Append to bottom of global.css
+   CASE STUDY — warm palette redesign
+   REPLACE everything after your existing CSS with this block.
    ═══════════════════════════════════════════════ */
 
-   #slide-case-track {
-    position: relative;
-  }
-  
-  .case-scroll-space {
-    height: 500vh;
-  }
-  
-  .case-scene {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background: #0a1520;
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: stretch;
-    padding: 0;
-    gap: 0;
-  }
-  
-  /* ── Dark sand background texture via radial gradients ── */
-  #case-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 80% 60%, rgba(90, 50, 20, 0.18) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 40% at 20% 30%, rgba(40, 80, 130, 0.12) 0%, transparent 70%),
-      #0a1520;
-    pointer-events: none;
-    z-index: 0;
-  }
-  
-  /* ── Panels (left column) ───────────────────────── */
-  #case-panels {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 30vw;
-    max-width: 320px;
-    min-width: 220px;
-    height: 100%;
-    pointer-events: none;
-    z-index: 10;
-  }
-  
-  .case-panel {
-    position: absolute;
-    left: 3.5vw;
-    top: 50%;
-    transform: translateY(calc(-50% + 40px));
-    width: calc(30vw - 3.5vw - 1.5rem);
-    max-width: 280px;
-    background: rgba(8, 18, 30, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 10px;
-    padding: 1.3rem 1.5rem 1.4rem;
-    border: 1px solid rgba(100, 160, 220, 0.12);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.55);
-    opacity: 0;
-    pointer-events: none;
-    transition:
-      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  
-  .case-panel.active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(-50%);
-  }
-  
-  .case-panel.exit-up {
-    opacity: 0;
-    transform: translateY(calc(-50% - 60px));
-  }
-  
-  .case-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #7ab8e8;
-    margin-bottom: 0.4rem;
-  }
-  
-  .case-head {
-    font-size: clamp(1.05rem, 1.9vw, 1.4rem);
-    font-weight: 900;
-    color: #e8f4ff;
-    letter-spacing: 0.04em;
-    line-height: 1.15;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-  
-  .case-divider {
-    width: 2rem;
-    height: 2px;
-    background: #5B8DB8;
-    border: none;
-    margin: 0 0 0.75rem;
-  }
-  
-  .case-body {
-    font-size: clamp(0.72rem, 1vw, 0.84rem);
-    color: rgba(200, 225, 255, 0.78);
-    line-height: 1.8;
-    font-weight: 400;
-    margin-bottom: 0.9rem;
-  }
-  
-  .case-body em {
-    font-style: normal;
-    font-weight: 700;
-    color: #7ab8e8;
-  }
-  
-  /* ── Intro coordinate tags ──────────────────────── */
-  .case-coords {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
-    margin-top: 0.2rem;
-  }
-  
-  .case-coord-row {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-  }
-  
-  .case-dot {
-    display: inline-block;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  
-  .case-coord-name {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    flex-shrink: 0;
-  }
-  
-  .case-coord-val {
-    font-size: 0.68rem;
-    color: rgba(180, 210, 240, 0.55);
-    font-variant-numeric: tabular-nums;
-  }
-  
-  /* ── SPI Legend (panel 2) ───────────────────────── */
-  .case-spi-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    margin-top: 0.3rem;
-    padding-top: 0.6rem;
-    border-top: 1px solid rgba(100, 160, 220, 0.15);
-  }
-  
-  .case-legend-row {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-size: 0.68rem;
-    color: rgba(180, 210, 245, 0.72);
-    font-weight: 400;
-    letter-spacing: 0.04em;
-  }
-  
-  .case-legend-line {
-    display: inline-block;
-    width: 20px;
-    height: 3px;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-  
-  .case-legend-dash {
-    display: inline-block;
-    width: 20px;
-    height: 1px;
-    border-top: 2px dashed rgba(255, 200, 100, 0.7);
-    flex-shrink: 0;
-  }
-  
-  /* ── Chart area (right column) ──────────────────── */
-  #case-chart-area {
-    position: absolute;
-    right: 0;
-    top: 0;
-    /* Left edge clears the panel column */
-    left: calc(30vw + 1rem);
-    max-left: 340px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 5;
-    padding: 2rem 3rem 2rem 1rem;
-  }
-  
-  #case-chart-svg {
-    width: 100%;
-    height: 100%;
-    max-height: 75vh;
-    overflow: visible;
-  }
-  
-  /* ── D3 chart element styles ────────────────────── */
-  .case-axis text {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    fill: rgba(180, 210, 245, 0.55);
-    letter-spacing: 0.04em;
-  }
-  
-  .case-axis line,
-  .case-axis path {
-    stroke: rgba(100, 160, 220, 0.18);
-  }
-  
-  .case-axis-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    fill: rgba(180, 210, 245, 0.45);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  
-  .case-bar-gb { fill: #5B8DB8; }
-  .case-bar-dv { fill: #C0622B; }
-  
-  .case-bar-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    fill: rgba(220, 240, 255, 0.75);
-    text-anchor: middle;
-  }
-  
-  .case-chart-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    fill: rgba(220, 240, 255, 0.55);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-anchor: middle;
-  }
-  
-  .case-threshold-line {
-    stroke: rgba(255, 190, 80, 0.6);
-    stroke-width: 1;
-    stroke-dasharray: 5 4;
-  }
-  
-  .case-threshold-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 9px;
-    fill: rgba(255, 190, 80, 0.65);
-    letter-spacing: 0.06em;
-  }
-  
-  .case-chart-group {
-    opacity: 0;
-    transition: opacity 0.6s ease;
-  }
-  .case-chart-group.visible {
-    opacity: 1;
-  }
+/* ── Track & scroll space ───────────────────── */
+#slide-case-track {
+  position: relative;
+}
+
+.case-scroll-space {
+  height: 500vh;
+}
+
+/* ── Sticky scene — warm sand base ─────────── */
+.case-scene {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #f5f0e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Steps: each occupies the full viewport,
+      stacked absolutely, crossfade via opacity ── */
+.case-step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 4vw;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s ease;
+}
+
+.case-step.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─────────────────────────────────────────────
+   STEP 0 — Intro: centered two-column cards
+   ───────────────────────────────────────────── */
+.case-intro-inner {
+  max-width: 860px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.case-kicker {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #8B5E3C;
+}
+
+.case-intro-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  color: #1a1a1a;
+  line-height: 1.05;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.case-intro-sub {
+  font-size: clamp(0.8rem, 1.3vw, 0.95rem);
+  color: #4a3a2a;
+  max-width: 560px;
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+/* Intro image cards */
+.case-intro-cards {
+  display: flex;
+  gap: 1.4rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.case-loc-card {
+  flex: 1;
+  max-width: 340px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ece6d9;
+  box-shadow: 0 6px 28px rgba(90,50,10,0.13);
+  /* slide-up on entry */
+  transform: translateY(50px);
+  opacity: 0;
+  transition:
+    transform 0.7s cubic-bezier(0.22,1,0.36,1),
+    opacity   0.6s ease;
+}
+
+.case-loc-card.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+#card-dv { transition-delay: 0.15s; }
+
+.case-loc-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.case-loc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.case-loc-card:hover .case-loc-img {
+  transform: scale(1.04);
+}
+
+.case-loc-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(60,40,10,0.45) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.case-loc-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 1rem 1rem;
+}
+
+.case-loc-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-bottom: 0.1rem;
+}
+
+.case-loc-name {
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.case-loc-coords {
+  font-size: 0.7rem;
+  color: #7a6248;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.case-loc-tag {
+  font-size: 0.68rem;
+  color: #8B5E3C;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────
+   STEPS 1–3 — Split layout
+   ───────────────────────────────────────────── */
+.case-split-layout {
+  display: flex;
+  align-items: center;
+  gap: 3vw;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.case-split-reversed {
+  flex-direction: row-reverse;
+}
+
+/* Text column */
+.case-split-text {
+  flex: 0 0 300px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Chart column */
+.case-split-chart {
+  flex: 1;
+  min-width: 0;
+  height: clamp(260px, 46vh, 400px);
+}
+
+.case-chart-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ── Directional slide-in animations ─────────── */
+.case-from-left,
+.case-from-right {
+  opacity: 0;
+  transition:
+    transform 0.72s cubic-bezier(0.22,1,0.36,1),
+    opacity   0.6s ease;
+}
+
+.case-from-left  { transform: translateX(-56px); }
+.case-from-right { transform: translateX(56px);  }
+
+.case-step.active .case-from-left,
+.case-step.active .case-from-right {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.case-step.active .case-from-right {
+  transition-delay: 0.12s;
+}
+
+/* ── Shared text elements ────────────────────── */
+.case-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8B5E3C;
+}
+
+.case-split-head {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  color: #1a1a1a;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.case-divider {
+  width: 2rem;
+  height: 2px;
+  background: #8B5E3C;
+  border: none;
+  margin: 0;
+}
+
+.case-body {
+  font-size: clamp(0.75rem, 1.1vw, 0.88rem);
+  color: #2e2e2e;
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+.case-body em {
+  font-style: normal;
+  font-weight: 700;
+  color: #8B5E3C;
+}
+
+/* ── Thumbnail image ─────────────────────────── */
+.case-thumb-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.3rem;
+}
+
+.case-thumb {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 7px;
+  box-shadow: 0 4px 18px rgba(90,50,10,0.14);
+  display: block;
+}
+
+.case-thumb-caption {
+  font-size: 0.64rem;
+  color: #8B5E3C;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* ── SPI legend ──────────────────────────────── */
+.case-spi-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(139,94,60,0.2);
+}
+
+.case-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.68rem;
+  color: #4a3a2a;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.case-legend-line {
+  display: inline-block;
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.case-legend-dash {
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  border-top: 2px dashed rgba(139,94,60,0.65);
+  flex-shrink: 0;
+}
+
+/* ── Stat pills (step 3) ─────────────────────── */
+.case-stat-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.3rem;
+}
+
+.case-stat-pill {
+  background: #ece6d9;
+  border: 1px solid rgba(139,94,60,0.22);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  /* stagger on step activation */
+  opacity: 0;
+  transform: translateX(-20px);
+  transition:
+    opacity  0.5s ease,
+    transform 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+
+.case-step.active .case-stat-pill:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.35s;
+}
+
+.case-step.active .case-stat-pill:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.52s;
+}
+
+.case-stat-num {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  color: #8B5E3C;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.case-stat-desc {
+  font-size: 0.72rem;
+  color: #2e2e2e;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.case-stat-both {
+  font-size: 0.62rem;
+  color: #8B5E3C;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── D3 chart element styles (warm) ──────────── */
+.case-axis text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  fill: #7a6248;
+  letter-spacing: 0.04em;
+}
+
+.case-axis line,
+.case-axis path {
+  stroke: rgba(139,94,60,0.18);
+}
+
+.case-axis-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  fill: #8B5E3C;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.case-chart-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  fill: #5a3e25;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-anchor: middle;
+}
+
+.case-bar-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  fill: #3a2510;
+  text-anchor: middle;
+}
+
+.case-threshold-line {
+  stroke: rgba(139,94,60,0.55);
+  stroke-width: 1;
+  stroke-dasharray: 5 4;
+}
+
+.case-threshold-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  fill: #8B5E3C;
+  letter-spacing: 0.06em;
+}

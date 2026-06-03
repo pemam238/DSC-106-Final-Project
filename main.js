@@ -710,45 +710,30 @@ function loadScript(src) {
   })();
 
 /* ═══════════════════════════════════════════════
-   CASE STUDY — Great Basin vs Death Valley
-   Append this entire block to the bottom of main.js
+   CASE STUDY — warm palette redesign
+   REPLACE the entire old case study IIFE at the
+   bottom of main.js with this block.
    ═══════════════════════════════════════════════ */
 
    (function () {
 
-    /* ── Constants ──────────────────────────────── */
-    const GB_COLOR  = '#5B8DB8';
-    const DV_COLOR  = '#C0622B';
-    const GB_LIGHT  = 'rgba(91, 141, 184, 0.18)';
-    const DV_LIGHT  = 'rgba(192, 98, 43, 0.18)';
+    /* ── Colors (match Python script + warm palette) */
+    const GB_COLOR   = '#5B8DB8';
+    const DV_COLOR   = '#C0622B';
+    const AXIS_COLOR = 'rgba(139,94,60,0.18)';
+    const TEXT_COLOR = '#7a6248';
+    const SAND       = '#f5f0e8';
   
-    /* ── State ──────────────────────────────────── */
-    let caseBuilt    = false;
-    let caseStepNow  = -1;
-    let annualData   = null;   // [{year, gb_tas, dv_tas, gb_pr, dv_pr}]
-    let spiData      = null;   // [{date, gb_spi, dv_spi}]
+    /* ── State ─────────────────────────────────── */
+    let caseBuilt   = false;
+    let caseStepNow = -1;
+    let annualData  = null;
+    let spiData     = null;
+    let chartsDrawn = { 1: false, 2: false, 3: false };
   
     /* ── CSV loading ────────────────────────────── */
-  
-    /*
-      Expected CSV files in the same folder as index.html:
-  
-      case_study_annual.csv
-        year, gb_tas, dv_tas, gb_pr, dv_pr
-        1950, 9.72,   14.54,  24.4,  22.5
-        ...
-  
-      case_study_spi.csv
-        date, gb_spi, dv_spi
-        1950-01, 0.12, -0.33
-        ...
-  
-      The Python script outputs these from the CMIP6 data.
-      Column names must match exactly (case-sensitive).
-    */
-  
     function parseCSV(text) {
-      const lines = text.trim().split('\n');
+      const lines   = text.trim().split('\n');
       const headers = lines[0].split(',').map(h => h.trim());
       return lines.slice(1).map(line => {
         const vals = line.split(',');
@@ -773,7 +758,7 @@ function loadScript(src) {
           dv_spi: d.dv_spi,
         }));
       } catch (err) {
-        console.warn('Case study CSVs not found:', err);
+        console.warn('Case study CSVs not found — using fallback stats.', err);
       }
     }
   
@@ -789,7 +774,7 @@ function loadScript(src) {
   
     function getCaseScrollStep() {
       const t = document.getElementById('slide-case-track');
-      if (!t) return -1;
+      if (!t) return 0;
       const rect  = t.getBoundingClientRect();
       const total = t.offsetHeight - window.innerHeight;
       const prog  = Math.max(0, Math.min(1, -rect.top / total));
@@ -800,555 +785,360 @@ function loadScript(src) {
       return 3;
     }
   
-    /* ── Panel switcher ─────────────────────────── */
-    function setCasePanel(idx) {
-      const panels = document.querySelectorAll('.case-panel');
-      panels.forEach((p, i) => {
-        if (i === idx) {
-          p.classList.remove('exit-up');
-          p.classList.add('active');
-        } else if (p.classList.contains('active')) {
-          p.classList.remove('active');
-          p.classList.add('exit-up');
-          setTimeout(() => {
-            if (!p.classList.contains('active')) p.classList.remove('exit-up');
-          }, 600);
-        }
+    /* ── Step switcher ──────────────────────────── */
+    function setCaseStep(idx) {
+      document.querySelectorAll('.case-step').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
       });
+      /* Trigger intro cards on step 0 */
+      if (idx === 0) {
+        setTimeout(() => {
+          document.getElementById('card-gb')?.classList.add('visible');
+        }, 80);
+        setTimeout(() => {
+          document.getElementById('card-dv')?.classList.add('visible');
+        }, 230);
+      }
     }
   
-    /* ── D3 chart helpers ───────────────────────── */
-  
-    /* Shared dimensions */
+    /* ── Shared D3 helpers ──────────────────────── */
     function chartDims(svgEl) {
-      const W = svgEl.clientWidth  || 600;
-      const H = svgEl.clientHeight || 400;
-      const margin = { top: 44, right: 28, bottom: 52, left: 54 };
-      return {
-        W, H,
-        iW: W - margin.left - margin.right,
-        iH: H - margin.top  - margin.bottom,
-        margin,
-      };
+      const W = svgEl.clientWidth  || 560;
+      const H = svgEl.clientHeight || 340;
+      const margin = { top: 38, right: 20, bottom: 48, left: 50 };
+      return { W, H, iW: W - margin.left - margin.right,
+                      iH: H - margin.top  - margin.bottom, margin };
     }
   
-    /* Animated bar grow: set initial height=0, transition to target */
+    function styleAxis(g) {
+      g.selectAll('text')
+        .style('font-family', "'Montserrat', sans-serif")
+        .style('font-size',   '10px')
+        .style('fill',        TEXT_COLOR);
+      g.selectAll('line, path').style('stroke', AXIS_COLOR);
+      return g;
+    }
+  
     function animateBars(bars, yScale, innerH, dur = 800) {
       bars
-        .attr('y', innerH)
-        .attr('height', 0)
-        .transition()
-        .duration(dur)
-        .ease(d3.easeCubicOut)
+        .attr('y', innerH).attr('height', 0)
+        .transition().duration(dur).ease(d3.easeCubicOut)
         .attr('y',      d => yScale(d.value))
         .attr('height', d => innerH - yScale(d.value));
     }
   
-    /* Animated line draw via stroke-dasharray trick */
-    function animateLine(path, dur = 1200) {
+    function animateLine(path, dur = 1300) {
       const len = path.node().getTotalLength();
       path
         .attr('stroke-dasharray',  `${len} ${len}`)
         .attr('stroke-dashoffset', len)
-        .transition()
-        .duration(dur)
-        .ease(d3.easeLinear)
+        .transition().duration(dur).ease(d3.easeLinear)
         .attr('stroke-dashoffset', 0);
     }
   
-    /* Shared axis style */
-    function styleAxis(g) {
-      g.selectAll('text').style('font-family', "'Montserrat', sans-serif")
-                         .style('font-size',   '10px')
-                         .style('fill',        'rgba(180,210,245,0.55)');
-      g.selectAll('line, path').style('stroke', 'rgba(100,160,220,0.18)');
-      return g;
+    function addGridlines(g, yScale, iW) {
+      g.append('g').attr('class', 'case-axis')
+       .call(d3.axisLeft(yScale).ticks(5).tickSize(-iW).tickFormat(''))
+       .select('.domain').remove();
+      g.selectAll('.case-axis line').style('stroke', 'rgba(139,94,60,0.10)');
     }
   
-    /* ── Chart 1: Temp & Precip bar chart ──────────
-       Two grouped bar clusters side-by-side:
-       left cluster = Temperature (°C), right = Precip (mm/month)
-       Each cluster has two bars: GB (blue) and DV (orange)
-    ─────────────────────────────────────────────── */
-    function drawBarChart(svgEl) {
-      if (!annualData || !annualData.length) return;
+    function addTitle(svg, W, margin, text) {
+      svg.append('text').attr('class', 'case-chart-title')
+        .attr('x', W / 2)
+        .attr('y', margin.top * 0.55)
+        .text(text);
+    }
   
+    /* ── Chart 1: Climate profile bars ─────────── */
+    function drawBarChart(svgEl) {
+      if (!annualData?.length) return;
       const svg = d3.select(svgEl);
       svg.selectAll('*').remove();
-  
       const { W, H, iW, iH, margin } = chartDims(svgEl);
       const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
   
-      /* Compute means */
       const gbTas = d3.mean(annualData, d => d.gb_tas);
       const dvTas = d3.mean(annualData, d => d.dv_tas);
       const gbPr  = d3.mean(annualData, d => d.gb_pr);
       const dvPr  = d3.mean(annualData, d => d.dv_pr);
   
-      /* Two metric groups */
-      const groups   = ['Temperature (°C)', 'Precip (mm/mo)'];
-      const maxTemp  = Math.max(gbTas, dvTas) * 1.35;
-      const maxPrecip= Math.max(gbPr,  dvPr)  * 1.35;
+      const groups = ['Temperature (°C)', 'Precip (mm/mo)'];
   
-      /* X — outer band per group */
-      const x0 = d3.scaleBand()
-        .domain(groups)
-        .range([0, iW])
-        .paddingInner(0.38)
-        .paddingOuter(0.18);
+      const x0 = d3.scaleBand().domain(groups).range([0, iW])
+        .paddingInner(0.38).paddingOuter(0.18);
+      const x1 = d3.scaleBand().domain(['Great Basin','Death Valley'])
+        .range([0, x0.bandwidth()]).paddingInner(0.12);
   
-      /* X — inner band per region within group */
-      const x1 = d3.scaleBand()
-        .domain(['Great Basin', 'Death Valley'])
-        .range([0, x0.bandwidth()])
-        .paddingInner(0.12);
+      const yTemp   = d3.scaleLinear().domain([0, Math.max(gbTas,dvTas)*1.38]).range([iH,0]);
+      const yPrecip = d3.scaleLinear().domain([0, Math.max(gbPr,dvPr)*1.38]).range([iH,0]);
+      const yFor    = name => name === 'Temperature (°C)' ? yTemp : yPrecip;
   
-      /* Two separate Y scales (different units) */
-      const yTemp   = d3.scaleLinear().domain([0, maxTemp  ]).range([iH, 0]);
-      const yPrecip = d3.scaleLinear().domain([0, maxPrecip]).range([iH, 0]);
+      addGridlines(g, yTemp, iW);
   
-      const yScaleFor = name => name === 'Temperature (°C)' ? yTemp : yPrecip;
+      styleAxis(g.append('g').attr('class','case-axis')
+        .attr('transform',`translate(0,${iH})`)
+        .call(d3.axisBottom(x0).tickSize(0)))
+       .select('.domain').remove();
+      g.selectAll('.case-axis text').attr('dy','1.4em')
+        .style('font-size','10.5px').style('font-weight','700')
+        .style('fill','#4a3020');
   
-      /* X axis */
-      styleAxis(
-        g.append('g')
-         .attr('class', 'case-axis')
-         .attr('transform', `translate(0,${iH})`)
-         .call(d3.axisBottom(x0).tickSize(0))
-      ).select('.domain').remove();
-      g.selectAll('.case-axis text').attr('dy', '1.4em')
-        .style('font-size', '11px').style('font-weight', '700')
-        .style('fill', 'rgba(220,240,255,0.65)');
-  
-      /* Y axis (left — temperature) */
-      styleAxis(
-        g.append('g')
-         .attr('class', 'case-axis')
-         .call(d3.axisLeft(yTemp).ticks(5).tickSize(-iW))
-      );
-      g.append('text').attr('class', 'case-axis-label')
-        .attr('transform', `rotate(-90)`)
-        .attr('x', -iH / 2).attr('y', -42).attr('text-anchor', 'middle')
+      styleAxis(g.append('g').attr('class','case-axis')
+        .call(d3.axisLeft(yTemp).ticks(5)));
+      g.append('text').attr('class','case-axis-label')
+        .attr('transform','rotate(-90)')
+        .attr('x',-iH/2).attr('y',-38).attr('text-anchor','middle')
         .text('Temperature °C');
   
-      /* Y axis (right — precip) */
-      styleAxis(
-        g.append('g')
-         .attr('class', 'case-axis')
-         .attr('transform', `translate(${iW},0)`)
-         .call(d3.axisRight(yPrecip).ticks(5).tickSize(0))
-      );
-      g.append('text').attr('class', 'case-axis-label')
-        .attr('transform', `rotate(90)`)
-        .attr('x', iH / 2).attr('y', -iW - 38).attr('text-anchor', 'middle')
+      styleAxis(g.append('g').attr('class','case-axis')
+        .attr('transform',`translate(${iW},0)`)
+        .call(d3.axisRight(yPrecip).ticks(5).tickSize(0)));
+      g.append('text').attr('class','case-axis-label')
+        .attr('transform','rotate(90)')
+        .attr('x',iH/2).attr('y',-iW-36).attr('text-anchor','middle')
         .text('Precip mm/mo');
   
-      /* Gridlines */
-      g.append('g').attr('class', 'case-axis').call(
-        d3.axisLeft(yTemp).ticks(5).tickSize(-iW).tickFormat('')
-      ).select('.domain').remove();
-      g.selectAll('.case-axis line').style('stroke', 'rgba(100,160,220,0.10)');
-  
-      /* Data per group */
       const barData = {
         'Temperature (°C)': [
-          { region: 'Great Basin',  value: gbTas, color: GB_COLOR },
-          { region: 'Death Valley', value: dvTas, color: DV_COLOR },
+          {region:'Great Basin',  value:gbTas, color:GB_COLOR},
+          {region:'Death Valley', value:dvTas, color:DV_COLOR},
         ],
         'Precip (mm/mo)': [
-          { region: 'Great Basin',  value: gbPr,  color: GB_COLOR },
-          { region: 'Death Valley', value: dvPr,  color: DV_COLOR },
+          {region:'Great Basin',  value:gbPr,  color:GB_COLOR},
+          {region:'Death Valley', value:dvPr,  color:DV_COLOR},
         ],
       };
   
-      /* Draw groups */
-      const groupG = g.selectAll('.bar-group')
-        .data(groups)
-        .enter().append('g')
-        .attr('class', 'bar-group')
-        .attr('transform', d => `translate(${x0(d)},0)`);
-  
-      groupG.each(function (groupName) {
-        const gEl   = d3.select(this);
-        const yScale = yScaleFor(groupName);
-        const data   = barData[groupName];
-  
-        const bars = gEl.selectAll('rect')
-          .data(data)
-          .enter().append('rect')
+      groups.forEach(gName => {
+        const gEl = g.append('g').attr('transform',`translate(${x0(gName)},0)`);
+        const yS  = yFor(gName);
+        const dat = barData[gName];
+        const bars = gEl.selectAll('rect').data(dat).enter().append('rect')
           .attr('x',     d => x1(d.region))
           .attr('width', x1.bandwidth())
           .attr('rx', 3)
           .attr('fill', d => d.color)
-          .attr('opacity', 0.82);
-  
-        animateBars(bars, yScale, iH);
-  
-        /* Value labels */
-        gEl.selectAll('.bar-val')
-          .data(data)
-          .enter().append('text')
-          .attr('class', 'case-bar-label')
-          .attr('x', d => x1(d.region) + x1.bandwidth() / 2)
-          .attr('y', d => yScale(d.value) - 5)
-          .text(d => groupName === 'Temperature (°C)'
-            ? `${d.value.toFixed(1)}°C`
-            : `${d.value.toFixed(1)}`
-          )
-          .attr('opacity', 0)
-          .transition().delay(800).duration(300).attr('opacity', 1);
+          .attr('opacity', 0.85);
+        animateBars(bars, yS, iH);
+        gEl.selectAll('.bv').data(dat).enter().append('text')
+          .attr('class','case-bar-label')
+          .attr('x', d => x1(d.region) + x1.bandwidth()/2)
+          .attr('y', d => yS(d.value) - 5)
+          .text(d => gName==='Temperature (°C)' ? `${d.value.toFixed(1)}°` : `${d.value.toFixed(1)}`)
+          .attr('opacity',0).transition().delay(820).duration(280).attr('opacity',1);
       });
   
       /* Legend */
-      const leg = g.append('g').attr('transform', `translate(${iW - 160}, -30)`);
-      [['Great Basin', GB_COLOR], ['Death Valley', DV_COLOR]].forEach(([name, col], i) => {
-        leg.append('rect')
-          .attr('x', i * 88).attr('y', 0)
-          .attr('width', 12).attr('height', 12).attr('rx', 2)
-          .attr('fill', col).attr('opacity', 0.85);
-        leg.append('text')
-          .attr('x', i * 88 + 16).attr('y', 10)
-          .style('font-family', "'Montserrat', sans-serif")
-          .style('font-size', '9px').style('fill', 'rgba(200,230,255,0.65)')
-          .text(name);
+      const leg = g.append('g').attr('transform',`translate(${iW-150},-26)`);
+      [['Great Basin',GB_COLOR],['Death Valley',DV_COLOR]].forEach(([n,c],i)=>{
+        leg.append('rect').attr('x',i*84).attr('width',11).attr('height',11)
+          .attr('rx',2).attr('fill',c).attr('opacity',0.88);
+        leg.append('text').attr('x',i*84+15).attr('y',9.5)
+          .style('font-family',"'Montserrat',sans-serif").style('font-size','8.5px')
+          .style('fill',TEXT_COLOR).text(n);
       });
   
-      /* Title */
-      svg.append('text').attr('class', 'case-chart-title')
-        .attr('x', W / 2).attr('y', 18)
-        .text('Mean Temperature & Precipitation · 1950–2014');
+      addTitle(svg, W, margin, 'Mean Temperature & Precipitation · 1950–2014');
     }
   
     /* ── Chart 2: SPI-12 line chart ─────────────── */
     function drawLineChart(svgEl) {
-      if (!spiData || !spiData.length) return;
-  
+      if (!spiData?.length) return;
       const svg = d3.select(svgEl);
       svg.selectAll('*').remove();
-  
       const { W, H, iW, iH, margin } = chartDims(svgEl);
-      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+      const g = svg.append('g').attr('transform',`translate(${margin.left},${margin.top})`);
   
-      const x = d3.scaleTime()
-        .domain(d3.extent(spiData, d => d.date))
-        .range([0, iW]);
+      /* Warm background band for drought zone */
+      const x = d3.scaleTime().domain(d3.extent(spiData,d=>d.date)).range([0,iW]);
+      const y = d3.scaleLinear().domain([-3.0,2.0]).range([iH,0]);
   
-      const y = d3.scaleLinear()
-        .domain([-3.0, 2.0])
-        .range([iH, 0]);
+      /* Drought shade */
+      g.append('rect')
+        .attr('x',0).attr('y',y(-1.0))
+        .attr('width',iW).attr('height',iH - y(-1.0))
+        .attr('fill','rgba(139,94,60,0.06)').attr('rx',0);
   
-      /* Gridlines */
-      g.append('g').attr('class', 'case-axis').call(
-        d3.axisLeft(y).ticks(5).tickSize(-iW).tickFormat('')
-      ).select('.domain').remove();
+      addGridlines(g, y, iW);
   
-      /* Axes */
-      styleAxis(
-        g.append('g').attr('class', 'case-axis')
-         .attr('transform', `translate(0,${iH})`)
-         .call(d3.axisBottom(x).ticks(d3.timeYear.every(10)))
-      );
-      styleAxis(
-        g.append('g').attr('class', 'case-axis')
-         .call(d3.axisLeft(y).ticks(5))
-      );
-  
-      /* Y label */
-      g.append('text').attr('class', 'case-axis-label')
-        .attr('transform', 'rotate(-90)')
-        .attr('x', -iH / 2).attr('y', -42).attr('text-anchor', 'middle')
+      styleAxis(g.append('g').attr('class','case-axis')
+        .attr('transform',`translate(0,${iH})`)
+        .call(d3.axisBottom(x).ticks(d3.timeYear.every(10))));
+      styleAxis(g.append('g').attr('class','case-axis')
+        .call(d3.axisLeft(y).ticks(5)));
+      g.append('text').attr('class','case-axis-label')
+        .attr('transform','rotate(-90)')
+        .attr('x',-iH/2).attr('y',-40).attr('text-anchor','middle')
         .text('SPI-12');
   
       /* Zero line */
-      g.append('line')
-        .attr('x1', 0).attr('x2', iW)
-        .attr('y1', y(0)).attr('y2', y(0))
-        .style('stroke', 'rgba(180,210,245,0.25)')
-        .style('stroke-width', 1);
+      g.append('line').attr('x1',0).attr('x2',iW)
+        .attr('y1',y(0)).attr('y2',y(0))
+        .style('stroke','rgba(139,94,60,0.22)').style('stroke-width',1);
   
-      /* −1.0 threshold dashed */
-      const th = y(-1.0);
-      g.append('line').attr('class', 'case-threshold-line')
-        .attr('x1', 0).attr('x2', iW)
-        .attr('y1', th).attr('y2', th);
-      g.append('text').attr('class', 'case-threshold-label')
-        .attr('x', iW - 2).attr('y', th - 4)
-        .attr('text-anchor', 'end')
+      /* −1.0 threshold */
+      g.append('line').attr('class','case-threshold-line')
+        .attr('x1',0).attr('x2',iW)
+        .attr('y1',y(-1.0)).attr('y2',y(-1.0));
+      g.append('text').attr('class','case-threshold-label')
+        .attr('x',iW-2).attr('y',y(-1.0)-4).attr('text-anchor','end')
         .text('SPI = −1.0');
   
-      /* Drought fill (below zero, GB) */
-      const areaGB = d3.area()
-        .x(d => x(d.date))
-        .y0(y(0))
-        .y1(d => y(Math.min(0, d.gb_spi)))
-        .curve(d3.curveBasis);
+      /* Drought fill areas */
+      const mkArea = key => d3.area()
+        .x(d=>x(d.date)).y0(y(0))
+        .y1(d=>y(Math.min(0,d[key]))).curve(d3.curveBasis);
   
-      g.append('path')
-        .datum(spiData)
-        .attr('d', areaGB)
-        .attr('fill', GB_COLOR)
-        .attr('opacity', 0.12);
-  
-      /* Drought fill (below zero, DV) */
-      const areaDV = d3.area()
-        .x(d => x(d.date))
-        .y0(y(0))
-        .y1(d => y(Math.min(0, d.dv_spi)))
-        .curve(d3.curveBasis);
-  
-      g.append('path')
-        .datum(spiData)
-        .attr('d', areaDV)
-        .attr('fill', DV_COLOR)
-        .attr('opacity', 0.12);
+      g.append('path').datum(spiData).attr('d',mkArea('gb_spi'))
+        .attr('fill',GB_COLOR).attr('opacity',0.13);
+      g.append('path').datum(spiData).attr('d',mkArea('dv_spi'))
+        .attr('fill',DV_COLOR).attr('opacity',0.13);
   
       /* Lines */
-      const lineGB = d3.line()
-        .x(d => x(d.date))
-        .y(d => y(d.gb_spi))
-        .curve(d3.curveBasis);
+      const mkLine = key => d3.line()
+        .x(d=>x(d.date)).y(d=>y(d[key])).curve(d3.curveBasis);
   
-      const lineDV = d3.line()
-        .x(d => x(d.date))
-        .y(d => y(d.dv_spi))
-        .curve(d3.curveBasis);
+      const pGB = g.append('path').datum(spiData)
+        .attr('d',mkLine('gb_spi')).attr('fill','none')
+        .attr('stroke',GB_COLOR).attr('stroke-width',1.8).attr('opacity',0.9);
+      const pDV = g.append('path').datum(spiData)
+        .attr('d',mkLine('dv_spi')).attr('fill','none')
+        .attr('stroke',DV_COLOR).attr('stroke-width',1.8).attr('opacity',0.9);
   
-      const pathGB = g.append('path')
-        .datum(spiData)
-        .attr('d', lineGB)
-        .attr('fill', 'none')
-        .attr('stroke', GB_COLOR)
-        .attr('stroke-width', 1.8)
-        .attr('opacity', 0.88);
+      animateLine(pGB, 1400);
+      animateLine(pDV, 1650);
   
-      const pathDV = g.append('path')
-        .datum(spiData)
-        .attr('d', lineDV)
-        .attr('fill', 'none')
-        .attr('stroke', DV_COLOR)
-        .attr('stroke-width', 1.8)
-        .attr('opacity', 0.88);
-  
-      animateLine(pathGB, 1400);
-      animateLine(pathDV, 1600);
-  
-      /* Title */
-      svg.append('text').attr('class', 'case-chart-title')
-        .attr('x', W / 2).attr('y', 18)
-        .text('SPI-12 Time Series · 1950–2014');
+      addTitle(svg, W, margin, 'SPI-12 Time Series · 1950–2014');
     }
   
-    /* ── Chart 3: Drought frequency grouped bar ── */
+    /* ── Chart 3: Drought frequency bars ────────── */
     function drawFreqChart(svgEl) {
-      /* Use summary stats directly if CSV unavailable,
-         or compute from spiData if available */
       let freqData;
   
-      if (spiData && spiData.length) {
-        const gbVals = spiData.map(d => d.gb_spi).filter(v => !isNaN(v));
-        const dvVals = spiData.map(d => d.dv_spi).filter(v => !isNaN(v));
-  
-        const pct = (arr, lo, hi = Infinity) =>
-          (arr.filter(v => v < lo && (hi === Infinity || v >= hi)).length / arr.length) * 100;
-  
+      if (spiData?.length) {
+        const gbVals = spiData.map(d=>d.gb_spi).filter(v=>!isNaN(v));
+        const dvVals = spiData.map(d=>d.dv_spi).filter(v=>!isNaN(v));
+        const pct = (arr,lo,hi=Infinity) =>
+          arr.filter(v=>v<lo&&(hi===Infinity||v>=hi)).length/arr.length*100;
         freqData = [
-          {
-            category: 'Moderate\n(SPI < −1.0)',
-            gb: pct(gbVals, -1.0, -1.5),
-            dv: pct(dvVals, -1.0, -1.5),
-          },
-          {
-            category: 'Severe\n(SPI < −1.5)',
-            gb: pct(gbVals, -1.5, -2.0),
-            dv: pct(dvVals, -1.5, -2.0),
-          },
-          {
-            category: 'Extreme\n(SPI < −2.0)',
-            gb: pct(gbVals, -2.0),
-            dv: pct(dvVals, -2.0),
-          },
+          {cat:'Moderate\n(< −1.0)',  gb:pct(gbVals,-1.0,-1.5), dv:pct(dvVals,-1.0,-1.5)},
+          {cat:'Severe\n(< −1.5)',    gb:pct(gbVals,-1.5,-2.0), dv:pct(dvVals,-1.5,-2.0)},
+          {cat:'Extreme\n(< −2.0)',   gb:pct(gbVals,-2.0),      dv:pct(dvVals,-2.0)},
         ];
       } else {
-        /* Fallback to known summary stats from the Python script output */
         freqData = [
-          { category: 'Moderate\n(SPI < −1.0)', gb: 14.8, dv: 14.8 },
-          { category: 'Severe\n(SPI < −1.5)',   gb: 3.0,  dv: 3.0  },
-          { category: 'Extreme\n(SPI < −2.0)',  gb: 3.0,  dv: 3.0  },
+          {cat:'Moderate\n(< −1.0)', gb:14.8, dv:14.8},
+          {cat:'Severe\n(< −1.5)',   gb:3.0,  dv:3.0 },
+          {cat:'Extreme\n(< −2.0)',  gb:3.0,  dv:3.0 },
         ];
       }
   
       const svg = d3.select(svgEl);
       svg.selectAll('*').remove();
-  
       const { W, H, iW, iH, margin } = chartDims(svgEl);
-      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+      const g = svg.append('g').attr('transform',`translate(${margin.left},${margin.top})`);
   
-      const cats = freqData.map(d => d.category);
+      const x0 = d3.scaleBand().domain(freqData.map(d=>d.cat)).range([0,iW])
+        .paddingInner(0.38).paddingOuter(0.18);
+      const x1 = d3.scaleBand().domain(['gb','dv']).range([0,x0.bandwidth()]).paddingInner(0.1);
+      const maxV = Math.max(d3.max(freqData,d=>d.gb), d3.max(freqData,d=>d.dv));
+      const y = d3.scaleLinear().domain([0,Math.max(maxV*1.35,6)]).range([iH,0]);
   
-      const x0 = d3.scaleBand()
-        .domain(cats)
-        .range([0, iW])
-        .paddingInner(0.38)
-        .paddingOuter(0.18);
+      addGridlines(g, y, iW);
   
-      const x1 = d3.scaleBand()
-        .domain(['gb', 'dv'])
-        .range([0, x0.bandwidth()])
-        .paddingInner(0.1);
-  
-      const maxVal = Math.max(
-        d3.max(freqData, d => d.gb),
-        d3.max(freqData, d => d.dv)
-      );
-      const y = d3.scaleLinear()
-        .domain([0, Math.max(maxVal * 1.3, 5)])
-        .range([iH, 0]);
-  
-      /* Gridlines */
-      g.append('g').attr('class', 'case-axis').call(
-        d3.axisLeft(y).ticks(5).tickSize(-iW).tickFormat('')
-      ).select('.domain').remove();
-  
-      /* Axes */
-      const xAxisG = g.append('g').attr('class', 'case-axis')
-        .attr('transform', `translate(0,${iH})`)
+      /* X axis with multiline labels */
+      const xAxisG = g.append('g').attr('class','case-axis')
+        .attr('transform',`translate(0,${iH})`)
         .call(d3.axisBottom(x0).tickSize(0));
       xAxisG.select('.domain').remove();
+      xAxisG.selectAll('.tick text').each(function(d){
+        const el = d3.select(this); const parts = d.split('\n');
+        el.text('');
+        parts.forEach((p,i)=>{
+          el.append('tspan').attr('x',0).attr('dy', i===0?'1.3em':'1.2em').text(p);
+        });
+      }).style('font-family',"'Montserrat',sans-serif")
+        .style('font-size','9.5px').style('font-weight','700')
+        .style('fill','#4a3020');
   
-      /* Multi-line tick labels */
-      xAxisG.selectAll('.tick text')
-        .each(function (d) {
-          const el   = d3.select(this);
-          const parts = d.split('\n');
-          el.text('');
-          parts.forEach((p, i) => {
-            el.append('tspan')
-              .attr('x', 0)
-              .attr('dy', i === 0 ? '1.2em' : '1.2em')
-              .text(p);
-          });
-        })
-        .style('font-family', "'Montserrat', sans-serif")
-        .style('font-size', '9.5px')
-        .style('font-weight', '700')
-        .style('fill', 'rgba(210,235,255,0.6)');
-  
-      styleAxis(
-        g.append('g').attr('class', 'case-axis')
-         .call(d3.axisLeft(y).ticks(5).tickFormat(d => d + '%'))
-      );
-  
-      /* 5% reference line */
-      const refY = y(5);
-      g.append('line')
-        .attr('x1', 0).attr('x2', iW)
-        .attr('y1', refY).attr('y2', refY)
-        .style('stroke', 'rgba(255,190,80,0.4)')
-        .style('stroke-width', 1)
-        .style('stroke-dasharray', '4 3');
-      g.append('text').attr('class', 'case-threshold-label')
-        .attr('x', iW - 2).attr('y', refY - 4)
-        .attr('text-anchor', 'end')
-        .text('5% expected under normal climate');
-  
-      /* Y label */
-      g.append('text').attr('class', 'case-axis-label')
-        .attr('transform', 'rotate(-90)')
-        .attr('x', -iH / 2).attr('y', -42).attr('text-anchor', 'middle')
+      styleAxis(g.append('g').attr('class','case-axis')
+        .call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%')));
+      g.append('text').attr('class','case-axis-label')
+        .attr('transform','rotate(-90)')
+        .attr('x',-iH/2).attr('y',-40).attr('text-anchor','middle')
         .text('% of months');
   
-      /* Bars */
-      const groupG = g.selectAll('.freq-group')
-        .data(freqData)
-        .enter().append('g')
-        .attr('class', 'freq-group')
-        .attr('transform', d => `translate(${x0(d.category)},0)`);
+      /* 5% reference */
+      g.append('line').attr('class','case-threshold-line')
+        .attr('x1',0).attr('x2',iW).attr('y1',y(5)).attr('y2',y(5));
+      g.append('text').attr('class','case-threshold-label')
+        .attr('x',iW-2).attr('y',y(5)-4).attr('text-anchor','end')
+        .text('5% expected under normal climate');
   
-      groupG.each(function (d) {
-        const gEl = d3.select(this);
-  
-        const barDat = [
-          { key: 'gb', value: d.gb, color: GB_COLOR, label: `${d.gb.toFixed(1)}%` },
-          { key: 'dv', value: d.dv, color: DV_COLOR, label: `${d.dv.toFixed(1)}%` },
+      freqData.forEach(d=>{
+        const gEl = g.append('g').attr('transform',`translate(${x0(d.cat)},0)`);
+        const dat = [
+          {key:'gb',value:d.gb,color:GB_COLOR},
+          {key:'dv',value:d.dv,color:DV_COLOR},
         ];
-  
-        const bars = gEl.selectAll('rect')
-          .data(barDat)
-          .enter().append('rect')
-          .attr('x',     b => x1(b.key))
-          .attr('width', x1.bandwidth())
-          .attr('rx', 3)
-          .attr('fill',    b => b.color)
-          .attr('opacity', 0.82);
-  
+        const bars = gEl.selectAll('rect').data(dat).enter().append('rect')
+          .attr('x',b=>x1(b.key)).attr('width',x1.bandwidth())
+          .attr('rx',3).attr('fill',b=>b.color).attr('opacity',0.85);
         animateBars(bars, y, iH, 900);
-  
-        gEl.selectAll('.freq-val')
-          .data(barDat)
-          .enter().append('text')
-          .attr('class', 'case-bar-label')
-          .attr('x', b => x1(b.key) + x1.bandwidth() / 2)
-          .attr('y', b => y(b.value) - 4)
-          .text(b => b.label)
-          .attr('opacity', 0)
-          .transition().delay(900).duration(300).attr('opacity', 1);
+        gEl.selectAll('.fv').data(dat).enter().append('text')
+          .attr('class','case-bar-label')
+          .attr('x',b=>x1(b.key)+x1.bandwidth()/2)
+          .attr('y',b=>y(b.value)-4)
+          .text(b=>`${b.value.toFixed(1)}%`)
+          .attr('opacity',0).transition().delay(920).duration(280).attr('opacity',1);
       });
   
-      /* Legend */
-      const leg = g.append('g').attr('transform', `translate(${iW - 160}, -30)`);
-      [['Great Basin', GB_COLOR], ['Death Valley', DV_COLOR]].forEach(([name, col], i) => {
-        leg.append('rect')
-          .attr('x', i * 88).attr('y', 0)
-          .attr('width', 12).attr('height', 12).attr('rx', 2)
-          .attr('fill', col).attr('opacity', 0.85);
-        leg.append('text')
-          .attr('x', i * 88 + 16).attr('y', 10)
-          .style('font-family', "'Montserrat', sans-serif")
-          .style('font-size', '9px').style('fill', 'rgba(200,230,255,0.65)')
-          .text(name);
+      const leg = g.append('g').attr('transform',`translate(${iW-150},-26)`);
+      [['Great Basin',GB_COLOR],['Death Valley',DV_COLOR]].forEach(([n,c],i)=>{
+        leg.append('rect').attr('x',i*84).attr('width',11).attr('height',11)
+          .attr('rx',2).attr('fill',c).attr('opacity',0.88);
+        leg.append('text').attr('x',i*84+15).attr('y',9.5)
+          .style('font-family',"'Montserrat',sans-serif").style('font-size','8.5px')
+          .style('fill',TEXT_COLOR).text(n);
       });
   
-      /* Title */
-      svg.append('text').attr('class', 'case-chart-title')
-        .attr('x', W / 2).attr('y', 18)
-        .text('Drought Category Frequency · SPI-12 · 1950–2014');
+      addTitle(svg, W, margin, 'Drought Category Frequency · SPI-12 · 1950–2014');
     }
   
     /* ── Apply step ──────────────────────────────── */
     async function applyCaseStep(step) {
       if (step === caseStepNow) return;
       caseStepNow = step;
-      setCasePanel(step);
+      setCaseStep(step);
   
-      /* Ensure D3 and data are available before drawing */
       if (typeof d3 === 'undefined') return;
       await caseDataLoaded;
   
-      const svgEl = document.getElementById('case-chart-svg');
-      if (!svgEl) return;
-  
-      if (step === 0) {
-        /* Intro — clear chart */
-        d3.select(svgEl).selectAll('*').remove();
-      } else if (step === 1) {
-        drawBarChart(svgEl);
-      } else if (step === 2) {
-        drawLineChart(svgEl);
-      } else if (step === 3) {
-        drawFreqChart(svgEl);
+      /* Draw each chart only once; redraw on resize separately */
+      if (step === 1 && !chartsDrawn[1]) {
+        const el = document.getElementById('case-chart-svg-1');
+        if (el) { drawBarChart(el);  chartsDrawn[1] = true; }
+      }
+      if (step === 2 && !chartsDrawn[2]) {
+        const el = document.getElementById('case-chart-svg-2');
+        if (el) { drawLineChart(el); chartsDrawn[2] = true; }
+      }
+      if (step === 3 && !chartsDrawn[3]) {
+        const el = document.getElementById('case-chart-svg-3');
+        if (el) { drawFreqChart(el); chartsDrawn[3] = true; }
       }
     }
   
-    /* ── Build (first entry) ────────────────────── */
+    /* ── Build (first entry) ─────────────────────── */
     async function buildCase() {
       if (caseBuilt) return;
       caseBuilt = true;
       await caseDataLoaded;
-      const s = getCaseScrollStep();
-      if (s >= 0) applyCaseStep(s);
+      applyCaseStep(getCaseScrollStep());
     }
   
-    /* ── Scroll driver ──────────────────────────── */
+    /* ── Scroll driver ───────────────────────────── */
     function driveCase() {
       if (!isOnCaseTrack()) return;
       if (!caseBuilt) { buildCase(); return; }
@@ -1356,16 +1146,15 @@ function loadScript(src) {
     }
   
     window.addEventListener('scroll', driveCase);
-    setCasePanel(0); /* seed panel 0 on load */
+    setCaseStep(0); /* seed on load */
   
-    /* ── Resize: redraw active chart ────────────── */
+    /* ── Resize: redraw whichever charts are visible */
     window.addEventListener('resize', () => {
-      if (!caseBuilt || !isOnCaseTrack()) return;
-      const svgEl = document.getElementById('case-chart-svg');
-      if (!svgEl) return;
-      if (caseStepNow === 1) drawBarChart(svgEl);
-      else if (caseStepNow === 2) drawLineChart(svgEl);
-      else if (caseStepNow === 3) drawFreqChart(svgEl);
+      if (!caseBuilt) return;
+      chartsDrawn = { 1: false, 2: false, 3: false };
+      const s = caseStepNow;
+      caseStepNow = -1; /* force re-apply */
+      applyCaseStep(s);
     });
   
   })();
