@@ -707,6 +707,157 @@
 
 .spi-panel.exit-up {
   opacity: 0;
+  transition: none; /* scroll-driven, not CSS transition */
+  background: #f5f0e8 !important;
+}
+
+/* ── Slide: Build Your Own Climate ──────────── */
+#slide-climate {
+  background: #f5f0e8;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+
+.climate-builder {
+  width: min(860px, 92vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.climate-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #8B5E3C;
+}
+
+.climate-title {
+  font-weight: 900;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  text-align: center;
+  line-height: 1.05;
+}
+
+.climate-sub {
+  font-size: clamp(0.78rem, 1.4vw, 0.88rem);
+  color: #2e2e2e;
+  text-align: center;
+  line-height: 1.75;
+  max-width: 500px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  opacity: 0.65;
+  margin-top: -0.8rem;
+}
+
+/* ── Sliders ─────────────────────────────────── */
+.climate-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  width: 100%;
+}
+
+.climate-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.slider-name {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+
+.slider-value {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+/* ── Climate sliders ─────────────────────────── */
+.climate-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  display: block;
+}
+
+#temp-slider {
+  background: linear-gradient(to right, #a8d4f0, #f5c4a0, #c84b1a);
+}
+
+#pr-slider {
+  background: linear-gradient(to right, #8B0000, #f5c4a0, #a8d4f0, #1a6fba);
+}
+
+#temp-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f5f0e8;
+  border: 3px solid #c84b1a;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(200,75,26,0.3);
+  transition: transform 0.15s;
+}
+
+#pr-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f5f0e8;
+  border: 3px solid #1a6fba;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(26,111,186,0.3);
+  transition: transform 0.15s;
+}
+
+#temp-slider::-webkit-slider-thumb:hover,
+#pr-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(42,42,42,0.35);
+}
+
+.climate-slider-group:has(#temp-slider) .slider-name { color: #c84b1a; }
+.climate-slider-group:has(#pr-slider)   .slider-name { color: #1a6fba; }
+
+/* ── Drought meter divider ───────────────────── */
+.climate-divider {
   transform: translateY(calc(-50% - 60px));
   pointer-events: none;
   visibility: hidden;
@@ -736,6 +887,64 @@
   height: 2px;
   background: #8B5E3C;
   border: none;
+  margin: 0 auto;
+}
+
+/* ── Speedometer dial ────────────────────────── */
+.drought-meter-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(139,94,60,0.15);
+}
+
+.meter-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(42,42,42,0.4);
+}
+
+
+.dial-wrap {
+  position: relative;
+  width: min(520px, 80vw);
+  height: auto;
+  overflow: visible;
+}
+
+.dial-wrap svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+
+.meter-verdict {
+  font-weight: 900;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  letter-spacing: 0.1em;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  text-align: center;
+  transition: color 0.4s;
+  margin-top: -0.5rem;
+}
+
+.meter-example {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: rgba(42,42,42,0.5);
+  letter-spacing: 0.05em;
+  text-align: center;
+  min-height: 1.2em;
+  max-width: 340px;
+  line-height: 1.6;
+}
   margin: 0 0 0.7rem;
 }
 
