@@ -435,3 +435,62 @@ for name in LOCS:
     print(f"  % months SPI < −2.0     : {(spi < -2.0).mean()*100:.1f}%")
 
 print("\n[DONE] 4 figures saved.")
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 7.  Export CSVs for the web case study
+# ═══════════════════════════════════════════════════════════════════════════════
+
+import os
+
+# ── case_study_annual.csv ─────────────────────────────────────────────────────
+# One row per year: mean annual temperature (°C) and mean monthly precip (mm/mo)
+
+annual_rows = []
+for year in range(1950, 2015):
+    row = {"year": year}
+    for name, key_tas, key_pr in [
+        ("Great Basin",  "gb_tas", "gb_pr"),
+        ("Death Valley", "dv_tas", "dv_pr"),
+    ]:
+        tas_s = pd.Series(
+            series[name]["tas"].values,
+            index=pd.DatetimeIndex(series[name]["tas"].time.values),
+        )
+        pr_s = pd.Series(
+            series[name]["pr"].values,
+            index=pd.DatetimeIndex(series[name]["pr"].time.values),
+        )
+        yr_mask_tas = tas_s.index.year == year
+        yr_mask_pr  = pr_s.index.year  == year
+        row[key_tas] = round(float(tas_s[yr_mask_tas].mean()), 4) if yr_mask_tas.any() else ""
+        row[key_pr]  = round(float(pr_s[yr_mask_pr].mean() * 30.44), 4) if yr_mask_pr.any() else ""
+    annual_rows.append(row)
+
+annual_df = pd.DataFrame(annual_rows, columns=["year", "gb_tas", "dv_tas", "gb_pr", "dv_pr"])
+annual_df.to_csv("case_study_annual.csv", index=False)
+print("Saved case_study_annual.csv")
+print(annual_df.head(3).to_string(index=False))
+
+# ── case_study_spi.csv ────────────────────────────────────────────────────────
+# One row per month: YYYY-MM date string and SPI-12 for each region
+
+gb_spi = spi_series["Great Basin"].dropna()
+dv_spi = spi_series["Death Valley"].dropna()
+
+# Align both series on their shared index
+combined = pd.DataFrame({
+    "gb_spi": gb_spi,
+    "dv_spi": dv_spi,
+}).dropna()
+
+# Filter to 1950–2014 (same slice used throughout the script)
+combined = combined["1950":"2014"]
+
+spi_df = pd.DataFrame({
+    "date":   combined.index.strftime("%Y-%m"),
+    "gb_spi": combined["gb_spi"].round(4).values,
+    "dv_spi": combined["dv_spi"].round(4).values,
+})
+spi_df.to_csv("case_study_spi.csv", index=False)
+print("Saved case_study_spi.csv")
+print(spi_df.head(3).to_string(index=False))

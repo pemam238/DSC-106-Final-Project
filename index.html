@@ -234,6 +234,110 @@
   <div class="spi-scroll-space"></div>
 </section>
 
+<!-- ═══════════════════════════════════════════════
+     SLIDE CASE STUDY — Great Basin vs Death Valley
+     Insert this block between </section> (end of #slide-spi-track)
+     and <section class="slide" id="slide-3">
+     ═══════════════════════════════════════════════ -->
+
+     <section id="slide-case-track">
+
+      <div class="sticky-scene case-scene" id="scene-case">
+    
+        <!-- Canvas background — reuses same dark bg as SPI section -->
+        <div id="case-bg"></div>
+    
+        <!-- Step panels (left side, same pattern as spi-panels) -->
+        <div id="case-panels">
+    
+          <!-- Step 0: Intro title card -->
+          <div class="case-panel active" id="case-p0">
+            <p class="case-label">Case Study</p>
+            <h3 class="case-head">Great Basin<br>vs<br>Death Valley</h3>
+            <hr class="case-divider"/>
+            <p class="case-body">
+              Two American deserts. One cold, one scorching. Both in persistent
+              drought. Despite sitting just <em>4° of latitude apart</em>, they
+              illustrate drought's defining truth: it's about
+              <em>deficit, not temperature.</em>
+            </p>
+            <div class="case-coords">
+              <div class="case-coord-row">
+                <span class="case-dot" style="background:#5B8DB8"></span>
+                <span class="case-coord-name" style="color:#5B8DB8">Great Basin</span>
+                <span class="case-coord-val">40.67°N · 117.67°W</span>
+              </div>
+              <div class="case-coord-row">
+                <span class="case-dot" style="background:#C0622B"></span>
+                <span class="case-coord-name" style="color:#C0622B">Death Valley</span>
+                <span class="case-coord-val">36.46°N · 116.87°W</span>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Step 1: Bar chart — Temp & Precip -->
+          <div class="case-panel" id="case-p1">
+            <p class="case-label">Chart 1 of 3</p>
+            <h3 class="case-head">Climate<br>Profile</h3>
+            <hr class="case-divider"/>
+            <p class="case-body">
+              Death Valley runs <em>~5°C hotter</em>, but mean monthly precipitation
+              is nearly identical — around <em>22–24 mm/month.</em> Temperature
+              alone doesn't drive drought frequency here.
+            </p>
+          </div>
+    
+          <!-- Step 2: Line chart — SPI-12 -->
+          <div class="case-panel" id="case-p2">
+            <p class="case-label">Chart 2 of 3</p>
+            <h3 class="case-head">SPI-12<br>over Time</h3>
+            <hr class="case-divider"/>
+            <p class="case-body">
+              Both regions track each other closely across 1950–2014. Drought
+              pulses appear nearly <em>in sync</em> — driven by the same
+              large-scale atmospheric patterns over the American West.
+            </p>
+            <div class="case-spi-legend">
+              <div class="case-legend-row">
+                <span class="case-legend-line" style="background:#5B8DB8"></span>
+                <span>Great Basin</span>
+              </div>
+              <div class="case-legend-row">
+                <span class="case-legend-line" style="background:#C0622B"></span>
+                <span>Death Valley</span>
+              </div>
+              <div class="case-legend-row">
+                <span class="case-legend-dash"></span>
+                <span>SPI = −1.0 threshold</span>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Step 3: Bar chart — Drought frequency -->
+          <div class="case-panel" id="case-p3">
+            <p class="case-label">Chart 3 of 3</p>
+            <h3 class="case-head">Drought<br>Frequency</h3>
+            <hr class="case-divider"/>
+            <p class="case-body">
+              Both share identical drought statistics: <em>17.8%</em> of months
+              with SPI below −1.0, <em>3.0%</em> below −2.0. Cold desert or
+              hot desert — the sky doesn't discriminate.
+            </p>
+          </div>
+    
+        </div>
+    
+        <!-- Chart canvas area (right side) -->
+        <div id="case-chart-area">
+          <svg id="case-chart-svg"></svg>
+        </div>
+    
+      </div>
+    
+      <div class="case-scroll-space"></div>
+    
+    </section>
+
  <!-- SLIDE 3 — More to come -->
  <section class="slide" id="slide-3">
    <div class="slide-content">
