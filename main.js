@@ -564,13 +564,7 @@ dialNeedle.setAttribute('transform', `rotate(${needleDeg}, 130, 130)`);
   prSlider.addEventListener('input', update);
   update();
 })();
- return new Promise((resolve, reject) => {
-   if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
-   const s = document.createElement('script');
-   s.src=src; s.onload=resolve; s.onerror=reject;
-   document.head.appendChild(s);
- });
-}
+
 
 /* ═══════════════════════════════════════════════
    SPI RAIN DOT SCROLLYTELLING

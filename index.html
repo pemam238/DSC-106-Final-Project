@@ -10,148 +10,123 @@
  <link rel="stylesheet" href="global.css" />
 </head>
 <body>
+<!-- SLIDE 1 -->
+<section class="slide" id="slide-1">
+  <div class="slide-content hero-content">
+   <h1 class="title">
+     <span>WHERE</span>
+     <span>DROUGHTS</span>
+     <span>HIDE</span>
+   </h1>
+   <p class="context-text">
+     Exploring patterns of dryness across a changing climate.
+   </p>
+  </div>
+  <div class="scroll-arrow">
+    <span>scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+         stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <polyline points="19 12 12 19 5 12"/>
+    </svg>
+  </div>
+</section>
 
-
- <!-- SLIDE 1 -->
- <section class="slide" id="slide-1">
-   <div class="slide-content hero-content">
-    <h1 class="title">
-      <span>WHERE</span>
-      <span>DROUGHTS</span>
-      <span>HIDE</span>
-    </h1>
-    <p class="context-text">
-      Exploring patterns of dryness across a changing climate.
-    </p>
-   </div>
-   <div class="scroll-arrow">
-     <span>scroll</span>
-     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-          stroke-linecap="round" stroke-linejoin="round">
-       <line x1="12" y1="5" x2="12" y2="19"/>
-       <polyline points="19 12 12 19 5 12"/>
-     </svg>
-   </div>
- </section>
-
-
- <!-- SLIDE 2 — sticky scroll sequence -->
- <section id="slide-2-track">
-
-
-   <!-- Panel A: Hot or Cold question (sticky viewport) -->
-   <div class="sticky-scene" id="scene-question">
-     <p class="hot-cold-question">Where do you think droughts strike?</p>
-     <div class="hot-cold-frame">
-       <div class="hot-cold-halves" id="hot-cold-halves">
-         <div class="half left-half">
-           <button class="choice-btn" id="btn-hot" onclick="chooseClimate()">HOT</button>
-         </div>
-         <div class="half right-half">
-           <button class="choice-btn" id="btn-cold" onclick="chooseClimate()">COLD</button>
-         </div>
-       </div>
-       <div class="reveal-overlay" id="reveal-overlay">
-        <h2 class="reveal-text">Both.</h2>
-        <p class="reveal-sub">Drought can occur anywhere precipitation falls below what's expected.</p>
-       </div>
-     </div>
-
-
-     <!-- Side panels that slide in -->
-     <div class="side-panel left-panel" id="panel-left">
-       <div class="side-panel-inner">
-         <p class="panel-label">Definition</p>
-         <h3 class="panel-heading">What is a <em>drought?</em></h3>
-         <hr class="panel-divider" />
-         <p class="panel-body">
-          A drought is a prolonged period of abnormally low precipitation
-          relative to what a region typically receives. It's not about
-          absolute dryness, but <em>deficit.</em>
-        </p>
-        <p class="panel-body">
-          When rain or snow falls well below historical averages for weeks,
-          months, or years, soils dry out, rivers shrink, and water supplies
-          dwindle.
-        </p>
-       </div>
-     </div>
-    
-     <div class="side-panel right-panel" id="panel-right">
-       <div class="side-panel-inner">
-        <p class="panel-label">Surprise</p>
-        <h3 class="panel-heading">Temperature is only part of the story.</h3>
+<!-- SLIDE 2 — sticky scroll sequence -->
+<section id="slide-2-track">
+  <div class="sticky-scene" id="scene-question">
+    <p class="hot-cold-question">Where do you think droughts strike?</p>
+    <div class="hot-cold-frame">
+      <div class="hot-cold-halves" id="hot-cold-halves">
+        <div class="half left-half">
+          <button class="choice-btn" id="btn-hot" onclick="chooseClimate()">HOT</button>
+        </div>
+        <div class="half right-half">
+          <button class="choice-btn" id="btn-cold" onclick="chooseClimate()">COLD</button>
+        </div>
+      </div>
+      <div class="reveal-overlay" id="reveal-overlay">
+       <h2 class="reveal-text">Both.</h2>
+       <p class="reveal-sub">Drought can occur anywhere precipitation falls below what's expected.</p>
+      </div>
+    </div>
+    <div class="side-panel left-panel" id="panel-left">
+      <div class="side-panel-inner">
+        <p class="panel-label">Definition</p>
+        <h3 class="panel-heading">What is a <em>drought?</em></h3>
         <hr class="panel-divider" />
         <p class="panel-body">
-          Drought is not measured by heat alone. It happens when a place receives
-          significantly less rain or snow than it normally expects.
-        </p>
-        <p class="panel-body">
-          That means drought can appear in many different climates; wherever the
-          usual pattern of precipitation breaks!
-        </p>
-       </div>
-     </div>
-   </div>
-   <!-- Scroll space for the 3 steps -->
-   <div class="scroll-spacer"></div>
+         A drought is a prolonged period of abnormally low precipitation
+         relative to what a region typically receives. It's not about
+         absolute dryness, but <em>deficit.</em>
+       </p>
+       <p class="panel-body">
+         When rain or snow falls well below historical averages for weeks,
+         months, or years, soils dry out, rivers shrink, and water supplies
+         dwindle.
+       </p>
+      </div>
+    </div>
+    <div class="side-panel right-panel" id="panel-right">
+      <div class="side-panel-inner">
+       <p class="panel-label">Surprise</p>
+       <h3 class="panel-heading">Temperature is only part of the story.</h3>
+       <hr class="panel-divider" />
+       <p class="panel-body">
+         Drought is not measured by heat alone. It happens when a place receives
+         significantly less rain or snow than it normally expects.
+       </p>
+       <p class="panel-body">
+         That means drought can appear in many different climates; wherever the
+         usual pattern of precipitation breaks!
+       </p>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-spacer"></div>
+</section>
 
-
- </section>
 <!-- SLIDE MAP — Heat & Precipitation Scrollytelling -->
- <section id="slide-map-track">
-   <div class="sticky-scene map-scene" id="scene-map">
+<section id="slide-map-track">
+  <div class="sticky-scene map-scene" id="scene-map">
+    <div id="map-wrapper">
+      <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+      <div id="map-tooltip"></div>
+      <div class="map-legend-container" id="map-legend">
+        <div class="legend-row" id="legend-temp">
+          <span class="legend-label">Cooler</span>
+          <div class="legend-gradient legend-gradient-temp"></div>
+          <span class="legend-label">Hotter</span>
+        </div>
+        <div class="legend-row hidden" id="legend-pr">
+          <span class="legend-label">Drier</span>
+          <div class="legend-gradient legend-gradient-pr"></div>
+          <span class="legend-label">Wetter</span>
+        </div>
+      </div>
+    </div>
+    <div id="map-panels">
+      <div class="map-panel active" id="mp-0">
+        <p class="mp-head">Where is it hottest?</p>
+        <p class="mp-body">Temperature varies dramatically across continents — the map fills with heat.</p>
+      </div>
+      <div class="map-panel" id="mp-1">
+        <p class="mp-head">Now add precipitation</p>
+        <p class="mp-body">Blue overlay shows mean rainfall. Hot and dry don't always overlap.</p>
+      </div>
+      <div class="map-panel" id="mp-2">
+        <p class="mp-head">The drought paradox</p>
+        <p class="mp-body">South America is both hot <em>and</em> wet. Oceania and Africa are hot <em>but dry</em> — drought risk grows where heat and low rainfall combine.</p>
+      </div>
+    </div>
+  </div>
+  <div class="map-scroll-space"></div>
+</section>
 
-
-     <div id="map-wrapper">
-       <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
-       <div id="map-tooltip"></div>
-
-
-       <!-- Legend -->
-       <div class="map-legend-container" id="map-legend">
-         <div class="legend-row" id="legend-temp">
-           <span class="legend-label">Cooler</span>
-           <div class="legend-gradient legend-gradient-temp"></div>
-           <span class="legend-label">Hotter</span>
-         </div>
-         <div class="legend-row hidden" id="legend-pr">
-           <span class="legend-label">Drier</span>
-           <div class="legend-gradient legend-gradient-pr"></div>
-           <span class="legend-label">Wetter</span>
-         </div>
-       </div>
-     </div>
-
-
-     <!-- Text panels -->
-     <div id="map-panels">
-       <div class="map-panel active" id="mp-0">
-         <p class="mp-head">Where is it hottest?</p>
-         <p class="mp-body">Temperature varies dramatically across continents — the map fills with heat.</p>
-       </div>
-       <div class="map-panel" id="mp-1">
-         <p class="mp-head">Now add precipitation</p>
-         <p class="mp-body">Blue overlay shows mean rainfall. Hot and dry don't always overlap.</p>
-       </div>
-       <div class="map-panel" id="mp-2">
-         <p class="mp-head">The drought paradox</p>
-         <p class="mp-body">South America is both hot <em>and</em> wet. Oceania and Africa are hot <em>but dry</em> — drought risk grows where heat and low rainfall combine.</p>
-       </div>
-     </div>
-
-
-   </div>
-   <div class="map-scroll-space"></div>
- </section>
-
- <!-- SLIDE SPI — Dot rain explainer -->
+<!-- SLIDE SPI — Dot rain explainer -->
 <section id="slide-spi-track">
   <div class="sticky-scene spi-scene" id="scene-spi">
-
     <canvas id="spi-canvas"></canvas>
-
-    <!-- Step panels -->
     <div id="spi-panels">
 
       <div class="spi-panel active" id="spi-p0">
@@ -230,11 +205,175 @@
       </div>
 
     </div>
-    <div class="map-scroll-space"></div>
-  </section>
+  </div>
+  <div class="spi-scroll-space"></div>
+</section>
 
+<!-- SLIDE CASE STUDY — Great Basin vs Death Valley -->
+<section id="slide-case-track">
+  <div class="sticky-scene case-scene" id="scene-case">
+    <div id="case-slider-viewport">
+      <div id="case-slider-track">
 
-<!-- With this: -->
+        <!-- Slide 0: Intro -->
+        <div class="case-slide" id="case-slide-0">
+          <div class="case-intro-inner">
+            <p class="case-kicker">Case Study</p>
+            <h2 class="case-intro-title">Two Deserts.<br>One Drought.</h2>
+            <p class="case-intro-sub">
+              Sitting just 4° of latitude apart in the American West, the Great Basin
+              and Death Valley share almost identical drought statistics — despite a
+              5°C temperature gap. Aridity transcends heat.
+            </p>
+            <div class="case-intro-cards">
+              <div class="case-loc-card">
+                <div class="case-loc-img-wrap">
+                  <img src="visualizations/great_basin.jpg" alt="Great Basin desert landscape" class="case-loc-img"/>
+                  <div class="case-loc-img-overlay"></div>
+                </div>
+                <div class="case-loc-meta">
+                  <span class="case-loc-dot" style="background:#5B8DB8"></span>
+                  <span class="case-loc-name" style="color:#4a7aa3">Great Basin</span>
+                  <span class="case-loc-coords">40.67°N · 117.67°W</span>
+                  <span class="case-loc-tag">Cold desert · 9.7°C mean</span>
+                </div>
+              </div>
+              <div class="case-loc-card">
+                <div class="case-loc-img-wrap">
+                  <img src="visualizations/death_valley.jpg" alt="Death Valley desert landscape" class="case-loc-img"/>
+                  <div class="case-loc-img-overlay" style="background:linear-gradient(to top,rgba(139,60,20,0.55) 0%,transparent 60%)"></div>
+                </div>
+                <div class="case-loc-meta">
+                  <span class="case-loc-dot" style="background:#C0622B"></span>
+                  <span class="case-loc-name" style="color:#a84e1e">Death Valley</span>
+                  <span class="case-loc-coords">36.46°N · 116.87°W</span>
+                  <span class="case-loc-tag">Hot desert · 14.5°C mean</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 1: Climate Profile bar chart -->
+        <div class="case-slide" id="case-slide-1">
+          <div class="case-split-layout">
+            <div class="case-split-text">
+              <p class="case-label">Chart 1 of 3</p>
+              <h3 class="case-split-head">Climate<br>Profile</h3>
+              <hr class="case-divider"/>
+              <p class="case-body">
+                Death Valley runs <em>~5°C hotter</em>, yet monthly precipitation
+                is nearly identical — around <em>22–24 mm/month.</em> Temperature
+                alone doesn't explain drought frequency.
+              </p>
+              <div class="case-thumb-wrap">
+                <img src="visualizations/death_valley.jpg" alt="Death Valley" class="case-thumb"/>
+                <span class="case-thumb-caption">Death Valley — the hottest place on Earth</span>
+              </div>
+            </div>
+            <div class="case-split-chart">
+              <svg id="case-chart-svg-1" class="case-chart-svg"></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: SPI-12 line chart -->
+        <div class="case-slide" id="case-slide-2">
+          <div class="case-split-layout case-split-reversed">
+            <div class="case-split-chart">
+              <svg id="case-chart-svg-2" class="case-chart-svg"></svg>
+            </div>
+            <div class="case-split-text">
+              <p class="case-label">Chart 2 of 3</p>
+              <h3 class="case-split-head">SPI-12<br>over Time</h3>
+              <hr class="case-divider"/>
+              <p class="case-body">
+                Both regions track each other closely across 1950–2014. Drought
+                pulses appear nearly <em>in sync</em> — driven by the same
+                large-scale atmospheric patterns over the American West.
+              </p>
+              <div class="case-spi-legend">
+                <div class="case-legend-row">
+                  <span class="case-legend-line" style="background:#5B8DB8"></span>
+                  <span>Great Basin</span>
+                </div>
+                <div class="case-legend-row">
+                  <span class="case-legend-line" style="background:#C0622B"></span>
+                  <span>Death Valley</span>
+                </div>
+                <div class="case-legend-row">
+                  <span class="case-legend-dash"></span>
+                  <span>SPI = −1.0 threshold</span>
+                </div>
+              </div>
+              <div class="case-thumb-wrap">
+                <img src="visualizations/great_basin.jpg" alt="Great Basin" class="case-thumb"/>
+                <span class="case-thumb-caption">Great Basin — cold desert, same deficit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Drought frequency bar chart -->
+        <div class="case-slide" id="case-slide-3">
+          <div class="case-split-layout">
+            <div class="case-split-text">
+              <p class="case-label">Chart 3 of 3</p>
+              <h3 class="case-split-head">Drought<br>Frequency</h3>
+              <hr class="case-divider"/>
+              <p class="case-body">
+                Both share <em>identical</em> drought statistics:
+                <em>17.8%</em> of months with SPI below −1.0,
+                <em>3.0%</em> below −2.0. Cold desert or hot — the
+                sky doesn't discriminate.
+              </p>
+              <div class="case-stat-pills">
+                <div class="case-stat-pill">
+                  <span class="case-stat-num">17.8%</span>
+                  <span class="case-stat-desc">months SPI &lt; −1.0</span>
+                  <span class="case-stat-both">both regions</span>
+                </div>
+                <div class="case-stat-pill">
+                  <span class="case-stat-num">3.0%</span>
+                  <span class="case-stat-desc">months SPI &lt; −2.0</span>
+                  <span class="case-stat-both">both regions</span>
+                </div>
+              </div>
+            </div>
+            <div class="case-split-chart">
+              <svg id="case-chart-svg-3" class="case-chart-svg"></svg>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end case-slider-track -->
+    </div><!-- end case-slider-viewport -->
+
+    <button class="case-arrow case-arrow-left" id="case-prev" aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <button class="case-arrow case-arrow-right" id="case-next" aria-label="Next slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 6 15 12 9 18"/>
+      </svg>
+    </button>
+
+    <div id="case-dots">
+      <button class="case-dot-btn active" data-slide="0" aria-label="Go to slide 1"></button>
+      <button class="case-dot-btn" data-slide="1" aria-label="Go to slide 2"></button>
+      <button class="case-dot-btn" data-slide="2" aria-label="Go to slide 3"></button>
+      <button class="case-dot-btn" data-slide="3" aria-label="Go to slide 4"></button>
+    </div>
+
+  </div><!-- end sticky-scene -->
+  <div class="case-scroll-space"></div>
+</section>
+
+<!-- SLIDE CLIMATE — Build Your Own Climate (predictor) -->
 <section class="slide" id="slide-climate">
   <div class="climate-builder">
     <h2 class="climate-title">BUILD YOUR OWN CLIMATE</h2>
@@ -268,228 +407,40 @@
       </div>
     </div>
 
-<div class="drought-meter-wrap">
-  <p class="meter-label">DROUGHT RISK</p>
-  <div class="dial-wrap">
-    <svg id="dial-svg" viewBox="0 0 260 140" xmlns="http://www.w3.org/2000/svg">
-      <!-- Arc track segments (low → very high) -->
-      <path id="dial-track" d="" fill="none" stroke="rgba(139,94,60,0.12)" stroke-width="18" stroke-linecap="butt"/>
-      <path id="dial-fill"  d="" fill="none" stroke="#8B5E3C"              stroke-width="18" stroke-linecap="round"
-            style="transition: stroke-dashoffset 0.55s cubic-bezier(0.22,1,0.36,1), stroke 0.4s ease;"/>
-      <!-- Tick marks -->
-      <g id="dial-ticks"></g>
-      <!-- Needle -->
-<!-- NEW -->
-<g id="dial-needle-g" >
-  <line x1="130" y1="130" x2="130" y2="45"
-        stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-</g>
-<circle cx="130" cy="130" r="6" fill="#1a1a1a"/>
-<circle cx="130" cy="130" r="3" fill="#f5f0e8"/>
-      <!-- Zone labels -->
-      <text id="lbl-low"       x="28"  y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">LOW</text>
-      <text id="lbl-mod"       x="76"  y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">MOD</text>
-      <text id="lbl-high"      x="184" y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">HIGH</text>
-      <text id="lbl-veryhigh"  x="232" y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">V.HIGH</text>
-    </svg>
-  </div>
-  <p class="meter-verdict" id="meter-verdict">—</p>
-  <p class="meter-example" id="meter-example"></p>
-</div></section>
-
-
-
-  <!-- SLIDE 3 — More to come -->
-  <section class="slide" id="slide-3">
-    <div class="slide-content">
-      <h2 class="subtitle">More to come...</h2>
+    <div class="drought-meter-wrap">
+      <p class="meter-label">DROUGHT RISK</p>
+      <div class="dial-wrap">
+        <svg id="dial-svg" viewBox="0 0 260 140" xmlns="http://www.w3.org/2000/svg">
+          <path id="dial-track" d="" fill="none" stroke="rgba(139,94,60,0.12)" stroke-width="18" stroke-linecap="butt"/>
+          <path id="dial-fill"  d="" fill="none" stroke="#8B5E3C"              stroke-width="18" stroke-linecap="round"
+                style="transition: stroke-dashoffset 0.55s cubic-bezier(0.22,1,0.36,1), stroke 0.4s ease;"/>
+          <g id="dial-ticks"></g>
+          <g id="dial-needle-g">
+            <line x1="130" y1="130" x2="130" y2="45"
+                  stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <circle cx="130" cy="130" r="6" fill="#1a1a1a"/>
+          <circle cx="130" cy="130" r="3" fill="#f5f0e8"/>
+          <text id="lbl-low"      x="28"  y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">LOW</text>
+          <text id="lbl-mod"      x="76"  y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">MOD</text>
+          <text id="lbl-high"     x="184" y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">HIGH</text>
+          <text id="lbl-veryhigh" x="232" y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">V.HIGH</text>
+        </svg>
+      </div>
+      <p class="meter-verdict" id="meter-verdict">—</p>
+      <p class="meter-example" id="meter-example"></p>
     </div>
-  </section>
   </div>
-  <div class="spi-scroll-space"></div>
 </section>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE CASE STUDY — Great Basin vs Death Valley
-     REPLACE the entire old #slide-case-track section
-     ═══════════════════════════════════════════════ -->
+<!-- SLIDE 3 — More to come -->
+<section class="slide" id="slide-3">
+  <div class="slide-content">
+    <h2 class="subtitle">More to come...</h2>
+  </div>
+</section>
 
-     <section id="slide-case-track">
-      <div class="sticky-scene case-scene" id="scene-case">
-    
-        <!-- Slideshow viewport -->
-        <div id="case-slider-viewport">
-          <div id="case-slider-track">
-    
-            <!-- Slide 0: Intro -->
-            <div class="case-slide" id="case-slide-0">
-              <div class="case-intro-inner">
-                <p class="case-kicker">Case Study</p>
-                <h2 class="case-intro-title">Two Deserts.<br>One Drought.</h2>
-                <p class="case-intro-sub">
-                  Sitting just 4° of latitude apart in the American West, the Great Basin
-                  and Death Valley share almost identical drought statistics — despite a
-                  5°C temperature gap. Aridity transcends heat.
-                </p>
-                <div class="case-intro-cards">
-                  <div class="case-loc-card">
-                    <div class="case-loc-img-wrap">
-                      <img src="visualizations/great_basin.jpg" alt="Great Basin desert landscape" class="case-loc-img"/>
-                      <div class="case-loc-img-overlay"></div>
-                    </div>
-                    <div class="case-loc-meta">
-                      <span class="case-loc-dot" style="background:#5B8DB8"></span>
-                      <span class="case-loc-name" style="color:#4a7aa3">Great Basin</span>
-                      <span class="case-loc-coords">40.67°N · 117.67°W</span>
-                      <span class="case-loc-tag">Cold desert · 9.7°C mean</span>
-                    </div>
-                  </div>
-                  <div class="case-loc-card">
-                    <div class="case-loc-img-wrap">
-                      <img src="visualizations/death_valley.jpg" alt="Death Valley desert landscape" class="case-loc-img"/>
-                      <div class="case-loc-img-overlay" style="background:linear-gradient(to top,rgba(139,60,20,0.55) 0%,transparent 60%)"></div>
-                    </div>
-                    <div class="case-loc-meta">
-                      <span class="case-loc-dot" style="background:#C0622B"></span>
-                      <span class="case-loc-name" style="color:#a84e1e">Death Valley</span>
-                      <span class="case-loc-coords">36.46°N · 116.87°W</span>
-                      <span class="case-loc-tag">Hot desert · 14.5°C mean</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-    
-            <!-- Slide 1: Climate Profile bar chart -->
-            <div class="case-slide" id="case-slide-1">
-              <div class="case-split-layout">
-                <div class="case-split-text">
-                  <p class="case-label">Chart 1 of 3</p>
-                  <h3 class="case-split-head">Climate<br>Profile</h3>
-                  <hr class="case-divider"/>
-                  <p class="case-body">
-                    Death Valley runs <em>~5°C hotter</em>, yet monthly precipitation
-                    is nearly identical — around <em>22–24 mm/month.</em> Temperature
-                    alone doesn't explain drought frequency.
-                  </p>
-                  <div class="case-thumb-wrap">
-                    <img src="visualizations/death_valley.jpg" alt="Death Valley" class="case-thumb"/>
-                    <span class="case-thumb-caption">Death Valley — the hottest place on Earth</span>
-                  </div>
-                </div>
-                <div class="case-split-chart">
-                  <svg id="case-chart-svg-1" class="case-chart-svg"></svg>
-                </div>
-              </div>
-            </div>
-    
-            <!-- Slide 2: SPI-12 line chart -->
-            <div class="case-slide" id="case-slide-2">
-              <div class="case-split-layout case-split-reversed">
-                <div class="case-split-chart">
-                  <svg id="case-chart-svg-2" class="case-chart-svg"></svg>
-                </div>
-                <div class="case-split-text">
-                  <p class="case-label">Chart 2 of 3</p>
-                  <h3 class="case-split-head">SPI-12<br>over Time</h3>
-                  <hr class="case-divider"/>
-                  <p class="case-body">
-                    Both regions track each other closely across 1950–2014. Drought
-                    pulses appear nearly <em>in sync</em> — driven by the same
-                    large-scale atmospheric patterns over the American West.
-                  </p>
-                  <div class="case-spi-legend">
-                    <div class="case-legend-row">
-                      <span class="case-legend-line" style="background:#5B8DB8"></span>
-                      <span>Great Basin</span>
-                    </div>
-                    <div class="case-legend-row">
-                      <span class="case-legend-line" style="background:#C0622B"></span>
-                      <span>Death Valley</span>
-                    </div>
-                    <div class="case-legend-row">
-                      <span class="case-legend-dash"></span>
-                      <span>SPI = −1.0 threshold</span>
-                    </div>
-                  </div>
-                  <div class="case-thumb-wrap">
-                    <img src="visualizations/great_basin.jpg" alt="Great Basin" class="case-thumb"/>
-                    <span class="case-thumb-caption">Great Basin — cold desert, same deficit</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-    
-            <!-- Slide 3: Drought frequency bar chart -->
-            <div class="case-slide" id="case-slide-3">
-              <div class="case-split-layout">
-                <div class="case-split-text">
-                  <p class="case-label">Chart 3 of 3</p>
-                  <h3 class="case-split-head">Drought<br>Frequency</h3>
-                  <hr class="case-divider"/>
-                  <p class="case-body">
-                    Both share <em>identical</em> drought statistics:
-                    <em>17.8%</em> of months with SPI below −1.0,
-                    <em>3.0%</em> below −2.0. Cold desert or hot — the
-                    sky doesn't discriminate.
-                  </p>
-                  <div class="case-stat-pills">
-                    <div class="case-stat-pill">
-                      <span class="case-stat-num">17.8%</span>
-                      <span class="case-stat-desc">months SPI &lt; −1.0</span>
-                      <span class="case-stat-both">both regions</span>
-                    </div>
-                    <div class="case-stat-pill">
-                      <span class="case-stat-num">3.0%</span>
-                      <span class="case-stat-desc">months SPI &lt; −2.0</span>
-                      <span class="case-stat-both">both regions</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="case-split-chart">
-                  <svg id="case-chart-svg-3" class="case-chart-svg"></svg>
-                </div>
-              </div>
-            </div>
-    
-          </div><!-- end case-slider-track -->
-        </div><!-- end case-slider-viewport -->
-    
-        <!-- Arrow navigation -->
-        <button class="case-arrow case-arrow-left" id="case-prev" aria-label="Previous slide">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"/>
-          </svg>
-        </button>
-        <button class="case-arrow case-arrow-right" id="case-next" aria-label="Next slide">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 6 15 12 9 18"/>
-          </svg>
-        </button>
-    
-        <!-- Dot indicators -->
-        <div id="case-dots">
-          <button class="case-dot-btn active" data-slide="0" aria-label="Go to slide 1"></button>
-          <button class="case-dot-btn" data-slide="1" aria-label="Go to slide 2"></button>
-          <button class="case-dot-btn" data-slide="2" aria-label="Go to slide 3"></button>
-          <button class="case-dot-btn" data-slide="3" aria-label="Go to slide 4"></button>
-        </div>
-    
-      </div><!-- end sticky-scene -->
-      <div class="case-scroll-space"></div>
-    </section>
-
- <!-- SLIDE 3 — More to come -->
- <section class="slide" id="slide-3">
-   <div class="slide-content">
-     <h2 class="subtitle">More to come...</h2>
-   </div>
- </section>
-
-
- <script src="main.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
 

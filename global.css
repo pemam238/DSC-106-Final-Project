@@ -707,7 +707,14 @@
 
 .spi-panel.exit-up {
   opacity: 0;
-  transition: none; /* scroll-driven, not CSS transition */
+  transform: translateY(calc(-50% - 60px));
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.map-scene {
+  opacity: 0;
+  transition: none;
   background: #f5f0e8 !important;
 }
 
@@ -945,6 +952,12 @@
   max-width: 340px;
   line-height: 1.6;
 }
+
+.spi-divider {
+  width: 2rem;
+  height: 2px;
+  background: #8B5E3C;
+  border: none;
   margin: 0 0 0.7rem;
 }
 
