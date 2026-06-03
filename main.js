@@ -888,7 +888,9 @@ dialNeedle.setAttribute('transform', `rotate(${needleDeg}, 130, 130)`);
   
     /* ── Chart draw on first visit ───────────────── */
     async function maybeDrawChart(idx) {
-      if (typeof d3 === 'undefined') return;
+      if (typeof d3 === 'undefined') {
+        await loadScript('https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js');
+      }
       await caseDataLoaded;
       if (idx === 1 && !chartsDrawn[1]) {
         const el = document.getElementById('case-chart-svg-1');
