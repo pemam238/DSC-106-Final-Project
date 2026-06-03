@@ -708,28 +708,28 @@ function loadScript(src) {
   })();
 
 /* ═══════════════════════════════════════════════
-   CASE STUDY — warm palette redesign
+   CASE STUDY — slideshow version
    REPLACE the entire old case study IIFE at the
    bottom of main.js with this block.
    ═══════════════════════════════════════════════ */
 
    (function () {
 
-    /* ── Colors (match Python script + warm palette) */
+    /* ── Colors ─────────────────────────────────── */
     const GB_COLOR   = '#5B8DB8';
     const DV_COLOR   = '#C0622B';
     const AXIS_COLOR = 'rgba(139,94,60,0.18)';
     const TEXT_COLOR = '#7a6248';
-    const SAND       = '#f5f0e8';
   
-    /* ── State ─────────────────────────────────── */
-    let caseBuilt   = false;
-    let caseStepNow = -1;
-    let annualData  = null;
-    let spiData     = null;
-    let chartsDrawn = { 1: false, 2: false, 3: false };
+    /* ── State ──────────────────────────────────── */
+    let currentSlide = 0;
+    const TOTAL      = 4;
+    let chartsDrawn  = { 1: false, 2: false, 3: false };
+    let annualData   = null;
+    let spiData      = null;
+    let isAnimating  = false;
   
-    /* ── CSV loading ────────────────────────────── */
+    /* ── CSV loading ─────────────────────────────── */
     function parseCSV(text) {
       const lines   = text.trim().split('\n');
       const headers = lines[0].split(',').map(h => h.trim());
@@ -756,54 +756,120 @@ function loadScript(src) {
           dv_spi: d.dv_spi,
         }));
       } catch (err) {
-        console.warn('Case study CSVs not found — using fallback stats.', err);
+        console.warn('Case study CSVs not found — fallback stats used.', err);
       }
     }
   
     const caseDataLoaded = loadCaseData();
   
-    /* ── Track helpers ──────────────────────────── */
-    function isOnCaseTrack() {
-      const t = document.getElementById('slide-case-track');
-      if (!t) return false;
-      const r = t.getBoundingClientRect();
-      return r.top <= 0 && r.bottom > window.innerHeight;
+    /* ── DOM refs ────────────────────────────────── */
+    const track   = document.getElementById('case-slider-track');
+    const prevBtn = document.getElementById('case-prev');
+    const nextBtn = document.getElementById('case-next');
+    const dots    = document.querySelectorAll('.case-dot-btn');
+  
+    /* ── Slide to index ──────────────────────────── */
+    function goTo(idx, skipDraw) {
+      if (isAnimating) return;
+      idx = Math.max(0, Math.min(TOTAL - 1, idx));
+      if (idx === currentSlide && !skipDraw) return;
+  
+      isAnimating = true;
+      currentSlide = idx;
+  
+      /* Translate track */
+      if (track) track.style.transform = `translateX(-${idx * 100}%)`;
+  
+      /* Update dots */
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  
+      /* Arrow visibility */
+      if (prevBtn) prevBtn.classList.toggle('hidden', idx === 0);
+      if (nextBtn) nextBtn.classList.toggle('hidden', idx === TOTAL - 1);
+  
+      /* Unlock after transition */
+      setTimeout(() => { isAnimating = false; }, 560);
+  
+      /* Draw chart on first visit */
+      if (!skipDraw) maybeDrawChart(idx);
     }
   
-    function getCaseScrollStep() {
-      const t = document.getElementById('slide-case-track');
-      if (!t) return 0;
-      const rect  = t.getBoundingClientRect();
-      const total = t.offsetHeight - window.innerHeight;
-      const prog  = Math.max(0, Math.min(1, -rect.top / total));
-      if (prog < 0.01)  return 0;
-      if (prog < 0.28)  return 0;
-      if (prog < 0.52)  return 1;
-      if (prog < 0.76)  return 2;
-      return 3;
-    }
-  
-    /* ── Step switcher ──────────────────────────── */
-    function setCaseStep(idx) {
-      document.querySelectorAll('.case-step').forEach((el, i) => {
-        el.classList.toggle('active', i === idx);
-      });
-      /* Trigger intro cards on step 0 */
-      if (idx === 0) {
-        setTimeout(() => {
-          document.getElementById('card-gb')?.classList.add('visible');
-        }, 80);
-        setTimeout(() => {
-          document.getElementById('card-dv')?.classList.add('visible');
-        }, 230);
+    /* ── Chart draw on first visit ───────────────── */
+    async function maybeDrawChart(idx) {
+      if (typeof d3 === 'undefined') return;
+      await caseDataLoaded;
+      if (idx === 1 && !chartsDrawn[1]) {
+        const el = document.getElementById('case-chart-svg-1');
+        if (el) { drawBarChart(el);  chartsDrawn[1] = true; }
+      }
+      if (idx === 2 && !chartsDrawn[2]) {
+        const el = document.getElementById('case-chart-svg-2');
+        if (el) { drawLineChart(el); chartsDrawn[2] = true; }
+      }
+      if (idx === 3 && !chartsDrawn[3]) {
+        const el = document.getElementById('case-chart-svg-3');
+        if (el) { drawFreqChart(el); chartsDrawn[3] = true; }
       }
     }
   
-    /* ── Shared D3 helpers ──────────────────────── */
+    /* ── Button & dot listeners ──────────────────── */
+    prevBtn?.addEventListener('click', () => goTo(currentSlide - 1));
+    nextBtn?.addEventListener('click', () => goTo(currentSlide + 1));
+    dots.forEach(d => {
+      d.addEventListener('click', () => goTo(parseInt(d.dataset.slide)));
+    });
+  
+    /* ── Keyboard navigation ─────────────────────── */
+    document.addEventListener('keydown', e => {
+      const track = document.getElementById('slide-case-track');
+      if (!track) return;
+      const r = track.getBoundingClientRect();
+      /* Only intercept when case study is the sticky scene in view */
+      if (r.top > 0 || r.bottom < window.innerHeight) return;
+      if (e.key === 'ArrowRight') goTo(currentSlide + 1);
+      if (e.key === 'ArrowLeft')  goTo(currentSlide - 1);
+    });
+  
+    /* ── Touch / swipe ───────────────────────────── */
+    let touchStartX = null;
+    const viewport = document.getElementById('case-slider-viewport');
+    viewport?.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    viewport?.addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      touchStartX = null;
+      if (Math.abs(dx) < 40) return;
+      dx < 0 ? goTo(currentSlide + 1) : goTo(currentSlide - 1);
+    }, { passive: true });
+  
+    /* ── Scroll: let page scroll freely; sticky
+          naturally pins for the scroll-space height ── */
+  
+    /* ── Resize: redraw active chart ─────────────── */
+    window.addEventListener('resize', async () => {
+      if (typeof d3 === 'undefined') return;
+      await caseDataLoaded;
+      /* Redraw whichever chart is visible */
+      const drawn = { ...chartsDrawn };
+      chartsDrawn = { 1: false, 2: false, 3: false };
+      if (drawn[1]) { const el = document.getElementById('case-chart-svg-1'); if (el) { drawBarChart(el);  chartsDrawn[1] = true; } }
+      if (drawn[2]) { const el = document.getElementById('case-chart-svg-2'); if (el) { drawLineChart(el); chartsDrawn[2] = true; } }
+      if (drawn[3]) { const el = document.getElementById('case-chart-svg-3'); if (el) { drawFreqChart(el); chartsDrawn[3] = true; } }
+    });
+  
+    /* ── Init ────────────────────────────────────── */
+    goTo(0, true);
+  
+    /* ══════════════════════════════════════════════
+       D3 CHART FUNCTIONS
+       ══════════════════════════════════════════════ */
+  
     function chartDims(svgEl) {
-      const W = svgEl.clientWidth  || 560;
-      const H = svgEl.clientHeight || 340;
-      const margin = { top: 38, right: 20, bottom: 48, left: 50 };
+      const W = svgEl.clientWidth  || 520;
+      const H = svgEl.clientHeight || 320;
+      const margin = { top: 38, right: 20, bottom: 50, left: 50 };
       return { W, H, iW: W - margin.left - margin.right,
                       iH: H - margin.top  - margin.bottom, margin };
     }
@@ -817,7 +883,7 @@ function loadScript(src) {
       return g;
     }
   
-    function animateBars(bars, yScale, innerH, dur = 800) {
+    function animateBars(bars, yScale, innerH, dur = 820) {
       bars
         .attr('y', innerH).attr('height', 0)
         .transition().duration(dur).ease(d3.easeCubicOut)
@@ -825,7 +891,7 @@ function loadScript(src) {
         .attr('height', d => innerH - yScale(d.value));
     }
   
-    function animateLine(path, dur = 1300) {
+    function animateLine(path, dur = 1350) {
       const len = path.node().getTotalLength();
       path
         .attr('stroke-dasharray',  `${len} ${len}`)
@@ -835,17 +901,26 @@ function loadScript(src) {
     }
   
     function addGridlines(g, yScale, iW) {
-      g.append('g').attr('class', 'case-axis')
-       .call(d3.axisLeft(yScale).ticks(5).tickSize(-iW).tickFormat(''))
-       .select('.domain').remove();
-      g.selectAll('.case-axis line').style('stroke', 'rgba(139,94,60,0.10)');
+      const grid = g.append('g').attr('class', 'case-axis')
+        .call(d3.axisLeft(yScale).ticks(5).tickSize(-iW).tickFormat(''));
+      grid.select('.domain').remove();
+      grid.selectAll('line').style('stroke', 'rgba(139,94,60,0.10)');
     }
   
     function addTitle(svg, W, margin, text) {
       svg.append('text').attr('class', 'case-chart-title')
-        .attr('x', W / 2)
-        .attr('y', margin.top * 0.55)
-        .text(text);
+        .attr('x', W / 2).attr('y', margin.top * 0.58).text(text);
+    }
+  
+    function addLegend(g, iW) {
+      const leg = g.append('g').attr('transform', `translate(${iW - 152}, -26)`);
+      [['Great Basin', GB_COLOR], ['Death Valley', DV_COLOR]].forEach(([n, c], i) => {
+        leg.append('rect').attr('x', i * 86).attr('width', 11).attr('height', 11)
+          .attr('rx', 2).attr('fill', c).attr('opacity', 0.88);
+        leg.append('text').attr('x', i * 86 + 15).attr('y', 9.5)
+          .style('font-family', "'Montserrat',sans-serif").style('font-size', '8.5px')
+          .style('fill', TEXT_COLOR).text(n);
+      });
     }
   
     /* ── Chart 1: Climate profile bars ─────────── */
@@ -862,81 +937,57 @@ function loadScript(src) {
       const dvPr  = d3.mean(annualData, d => d.dv_pr);
   
       const groups = ['Temperature (°C)', 'Precip (mm/mo)'];
-  
-      const x0 = d3.scaleBand().domain(groups).range([0, iW])
-        .paddingInner(0.38).paddingOuter(0.18);
-      const x1 = d3.scaleBand().domain(['Great Basin','Death Valley'])
-        .range([0, x0.bandwidth()]).paddingInner(0.12);
-  
-      const yTemp   = d3.scaleLinear().domain([0, Math.max(gbTas,dvTas)*1.38]).range([iH,0]);
-      const yPrecip = d3.scaleLinear().domain([0, Math.max(gbPr,dvPr)*1.38]).range([iH,0]);
+      const x0 = d3.scaleBand().domain(groups).range([0, iW]).paddingInner(0.38).paddingOuter(0.18);
+      const x1 = d3.scaleBand().domain(['Great Basin', 'Death Valley']).range([0, x0.bandwidth()]).paddingInner(0.12);
+      const yTemp   = d3.scaleLinear().domain([0, Math.max(gbTas, dvTas) * 1.38]).range([iH, 0]);
+      const yPrecip = d3.scaleLinear().domain([0, Math.max(gbPr,  dvPr)  * 1.38]).range([iH, 0]);
       const yFor    = name => name === 'Temperature (°C)' ? yTemp : yPrecip;
   
       addGridlines(g, yTemp, iW);
   
-      styleAxis(g.append('g').attr('class','case-axis')
-        .attr('transform',`translate(0,${iH})`)
-        .call(d3.axisBottom(x0).tickSize(0)))
-       .select('.domain').remove();
-      g.selectAll('.case-axis text').attr('dy','1.4em')
-        .style('font-size','10.5px').style('font-weight','700')
-        .style('fill','#4a3020');
+      const xAxisG = styleAxis(g.append('g').attr('class', 'case-axis')
+        .attr('transform', `translate(0,${iH})`).call(d3.axisBottom(x0).tickSize(0)));
+      xAxisG.select('.domain').remove();
+      xAxisG.selectAll('text').attr('dy', '1.4em')
+        .style('font-size', '10.5px').style('font-weight', '700').style('fill', '#4a3020');
   
-      styleAxis(g.append('g').attr('class','case-axis')
-        .call(d3.axisLeft(yTemp).ticks(5)));
-      g.append('text').attr('class','case-axis-label')
-        .attr('transform','rotate(-90)')
-        .attr('x',-iH/2).attr('y',-38).attr('text-anchor','middle')
-        .text('Temperature °C');
+      styleAxis(g.append('g').attr('class', 'case-axis').call(d3.axisLeft(yTemp).ticks(5)));
+      g.append('text').attr('class', 'case-axis-label').attr('transform', 'rotate(-90)')
+        .attr('x', -iH / 2).attr('y', -40).attr('text-anchor', 'middle').text('Temperature °C');
   
-      styleAxis(g.append('g').attr('class','case-axis')
-        .attr('transform',`translate(${iW},0)`)
+      styleAxis(g.append('g').attr('class', 'case-axis').attr('transform', `translate(${iW},0)`)
         .call(d3.axisRight(yPrecip).ticks(5).tickSize(0)));
-      g.append('text').attr('class','case-axis-label')
-        .attr('transform','rotate(90)')
-        .attr('x',iH/2).attr('y',-iW-36).attr('text-anchor','middle')
-        .text('Precip mm/mo');
+      g.append('text').attr('class', 'case-axis-label').attr('transform', 'rotate(90)')
+        .attr('x', iH / 2).attr('y', -iW - 36).attr('text-anchor', 'middle').text('Precip mm/mo');
   
       const barData = {
         'Temperature (°C)': [
-          {region:'Great Basin',  value:gbTas, color:GB_COLOR},
-          {region:'Death Valley', value:dvTas, color:DV_COLOR},
+          { region: 'Great Basin',  value: gbTas, color: GB_COLOR },
+          { region: 'Death Valley', value: dvTas, color: DV_COLOR },
         ],
         'Precip (mm/mo)': [
-          {region:'Great Basin',  value:gbPr,  color:GB_COLOR},
-          {region:'Death Valley', value:dvPr,  color:DV_COLOR},
+          { region: 'Great Basin',  value: gbPr,  color: GB_COLOR },
+          { region: 'Death Valley', value: dvPr,  color: DV_COLOR },
         ],
       };
   
       groups.forEach(gName => {
-        const gEl = g.append('g').attr('transform',`translate(${x0(gName)},0)`);
+        const gEl = g.append('g').attr('transform', `translate(${x0(gName)},0)`);
         const yS  = yFor(gName);
         const dat = barData[gName];
         const bars = gEl.selectAll('rect').data(dat).enter().append('rect')
-          .attr('x',     d => x1(d.region))
-          .attr('width', x1.bandwidth())
-          .attr('rx', 3)
-          .attr('fill', d => d.color)
-          .attr('opacity', 0.85);
+          .attr('x', d => x1(d.region)).attr('width', x1.bandwidth())
+          .attr('rx', 3).attr('fill', d => d.color).attr('opacity', 0.85);
         animateBars(bars, yS, iH);
         gEl.selectAll('.bv').data(dat).enter().append('text')
-          .attr('class','case-bar-label')
-          .attr('x', d => x1(d.region) + x1.bandwidth()/2)
+          .attr('class', 'case-bar-label')
+          .attr('x', d => x1(d.region) + x1.bandwidth() / 2)
           .attr('y', d => yS(d.value) - 5)
-          .text(d => gName==='Temperature (°C)' ? `${d.value.toFixed(1)}°` : `${d.value.toFixed(1)}`)
-          .attr('opacity',0).transition().delay(820).duration(280).attr('opacity',1);
+          .text(d => gName === 'Temperature (°C)' ? `${d.value.toFixed(1)}°` : `${d.value.toFixed(1)}`)
+          .attr('opacity', 0).transition().delay(840).duration(280).attr('opacity', 1);
       });
   
-      /* Legend */
-      const leg = g.append('g').attr('transform',`translate(${iW-150},-26)`);
-      [['Great Basin',GB_COLOR],['Death Valley',DV_COLOR]].forEach(([n,c],i)=>{
-        leg.append('rect').attr('x',i*84).attr('width',11).attr('height',11)
-          .attr('rx',2).attr('fill',c).attr('opacity',0.88);
-        leg.append('text').attr('x',i*84+15).attr('y',9.5)
-          .style('font-family',"'Montserrat',sans-serif").style('font-size','8.5px')
-          .style('fill',TEXT_COLOR).text(n);
-      });
-  
+      addLegend(g, iW);
       addTitle(svg, W, margin, 'Mean Temperature & Precipitation · 1950–2014');
     }
   
@@ -946,213 +997,128 @@ function loadScript(src) {
       const svg = d3.select(svgEl);
       svg.selectAll('*').remove();
       const { W, H, iW, iH, margin } = chartDims(svgEl);
-      const g = svg.append('g').attr('transform',`translate(${margin.left},${margin.top})`);
+      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
   
-      /* Warm background band for drought zone */
-      const x = d3.scaleTime().domain(d3.extent(spiData,d=>d.date)).range([0,iW]);
-      const y = d3.scaleLinear().domain([-3.0,2.0]).range([iH,0]);
+      const x = d3.scaleTime().domain(d3.extent(spiData, d => d.date)).range([0, iW]);
+      const y = d3.scaleLinear().domain([-3.0, 2.0]).range([iH, 0]);
   
-      /* Drought shade */
-      g.append('rect')
-        .attr('x',0).attr('y',y(-1.0))
-        .attr('width',iW).attr('height',iH - y(-1.0))
-        .attr('fill','rgba(139,94,60,0.06)').attr('rx',0);
+      /* Drought shade band */
+      g.append('rect').attr('x', 0).attr('y', y(-1.0))
+        .attr('width', iW).attr('height', iH - y(-1.0))
+        .attr('fill', 'rgba(139,94,60,0.06)');
   
       addGridlines(g, y, iW);
   
-      styleAxis(g.append('g').attr('class','case-axis')
-        .attr('transform',`translate(0,${iH})`)
+      styleAxis(g.append('g').attr('class', 'case-axis').attr('transform', `translate(0,${iH})`)
         .call(d3.axisBottom(x).ticks(d3.timeYear.every(10))));
-      styleAxis(g.append('g').attr('class','case-axis')
-        .call(d3.axisLeft(y).ticks(5)));
-      g.append('text').attr('class','case-axis-label')
-        .attr('transform','rotate(-90)')
-        .attr('x',-iH/2).attr('y',-40).attr('text-anchor','middle')
-        .text('SPI-12');
+      styleAxis(g.append('g').attr('class', 'case-axis').call(d3.axisLeft(y).ticks(5)));
+      g.append('text').attr('class', 'case-axis-label').attr('transform', 'rotate(-90)')
+        .attr('x', -iH / 2).attr('y', -40).attr('text-anchor', 'middle').text('SPI-12');
   
       /* Zero line */
-      g.append('line').attr('x1',0).attr('x2',iW)
-        .attr('y1',y(0)).attr('y2',y(0))
-        .style('stroke','rgba(139,94,60,0.22)').style('stroke-width',1);
+      g.append('line').attr('x1', 0).attr('x2', iW).attr('y1', y(0)).attr('y2', y(0))
+        .style('stroke', 'rgba(139,94,60,0.22)').style('stroke-width', 1);
   
       /* −1.0 threshold */
-      g.append('line').attr('class','case-threshold-line')
-        .attr('x1',0).attr('x2',iW)
-        .attr('y1',y(-1.0)).attr('y2',y(-1.0));
-      g.append('text').attr('class','case-threshold-label')
-        .attr('x',iW-2).attr('y',y(-1.0)-4).attr('text-anchor','end')
-        .text('SPI = −1.0');
+      g.append('line').attr('class', 'case-threshold-line')
+        .attr('x1', 0).attr('x2', iW).attr('y1', y(-1.0)).attr('y2', y(-1.0));
+      g.append('text').attr('class', 'case-threshold-label')
+        .attr('x', iW - 2).attr('y', y(-1.0) - 4).attr('text-anchor', 'end').text('SPI = −1.0');
   
       /* Drought fill areas */
       const mkArea = key => d3.area()
-        .x(d=>x(d.date)).y0(y(0))
-        .y1(d=>y(Math.min(0,d[key]))).curve(d3.curveBasis);
-  
-      g.append('path').datum(spiData).attr('d',mkArea('gb_spi'))
-        .attr('fill',GB_COLOR).attr('opacity',0.13);
-      g.append('path').datum(spiData).attr('d',mkArea('dv_spi'))
-        .attr('fill',DV_COLOR).attr('opacity',0.13);
+        .x(d => x(d.date)).y0(y(0)).y1(d => y(Math.min(0, d[key]))).curve(d3.curveBasis);
+      g.append('path').datum(spiData).attr('d', mkArea('gb_spi')).attr('fill', GB_COLOR).attr('opacity', 0.14);
+      g.append('path').datum(spiData).attr('d', mkArea('dv_spi')).attr('fill', DV_COLOR).attr('opacity', 0.14);
   
       /* Lines */
-      const mkLine = key => d3.line()
-        .x(d=>x(d.date)).y(d=>y(d[key])).curve(d3.curveBasis);
-  
-      const pGB = g.append('path').datum(spiData)
-        .attr('d',mkLine('gb_spi')).attr('fill','none')
-        .attr('stroke',GB_COLOR).attr('stroke-width',1.8).attr('opacity',0.9);
-      const pDV = g.append('path').datum(spiData)
-        .attr('d',mkLine('dv_spi')).attr('fill','none')
-        .attr('stroke',DV_COLOR).attr('stroke-width',1.8).attr('opacity',0.9);
+      const mkLine = key => d3.line().x(d => x(d.date)).y(d => y(d[key])).curve(d3.curveBasis);
+      const pGB = g.append('path').datum(spiData).attr('d', mkLine('gb_spi'))
+        .attr('fill', 'none').attr('stroke', GB_COLOR).attr('stroke-width', 1.8).attr('opacity', 0.9);
+      const pDV = g.append('path').datum(spiData).attr('d', mkLine('dv_spi'))
+        .attr('fill', 'none').attr('stroke', DV_COLOR).attr('stroke-width', 1.8).attr('opacity', 0.9);
   
       animateLine(pGB, 1400);
-      animateLine(pDV, 1650);
+      animateLine(pDV, 1680);
   
+      addLegend(g, iW);
       addTitle(svg, W, margin, 'SPI-12 Time Series · 1950–2014');
     }
   
     /* ── Chart 3: Drought frequency bars ────────── */
     function drawFreqChart(svgEl) {
       let freqData;
-  
       if (spiData?.length) {
-        const gbVals = spiData.map(d=>d.gb_spi).filter(v=>!isNaN(v));
-        const dvVals = spiData.map(d=>d.dv_spi).filter(v=>!isNaN(v));
-        const pct = (arr,lo,hi=Infinity) =>
-          arr.filter(v=>v<lo&&(hi===Infinity||v>=hi)).length/arr.length*100;
+        const gbVals = spiData.map(d => d.gb_spi).filter(v => !isNaN(v));
+        const dvVals = spiData.map(d => d.dv_spi).filter(v => !isNaN(v));
+        const pct = (arr, lo, hi = Infinity) =>
+          arr.filter(v => v < lo && (hi === Infinity || v >= hi)).length / arr.length * 100;
         freqData = [
-          {cat:'Moderate\n(< −1.0)',  gb:pct(gbVals,-1.0,-1.5), dv:pct(dvVals,-1.0,-1.5)},
-          {cat:'Severe\n(< −1.5)',    gb:pct(gbVals,-1.5,-2.0), dv:pct(dvVals,-1.5,-2.0)},
-          {cat:'Extreme\n(< −2.0)',   gb:pct(gbVals,-2.0),      dv:pct(dvVals,-2.0)},
+          { cat: 'Moderate\n(< −1.0)', gb: pct(gbVals, -1.0, -1.5), dv: pct(dvVals, -1.0, -1.5) },
+          { cat: 'Severe\n(< −1.5)',   gb: pct(gbVals, -1.5, -2.0), dv: pct(dvVals, -1.5, -2.0) },
+          { cat: 'Extreme\n(< −2.0)',  gb: pct(gbVals, -2.0),       dv: pct(dvVals, -2.0)        },
         ];
       } else {
         freqData = [
-          {cat:'Moderate\n(< −1.0)', gb:14.8, dv:14.8},
-          {cat:'Severe\n(< −1.5)',   gb:3.0,  dv:3.0 },
-          {cat:'Extreme\n(< −2.0)',  gb:3.0,  dv:3.0 },
+          { cat: 'Moderate\n(< −1.0)', gb: 14.8, dv: 14.8 },
+          { cat: 'Severe\n(< −1.5)',   gb: 3.0,  dv: 3.0  },
+          { cat: 'Extreme\n(< −2.0)',  gb: 3.0,  dv: 3.0  },
         ];
       }
   
       const svg = d3.select(svgEl);
       svg.selectAll('*').remove();
       const { W, H, iW, iH, margin } = chartDims(svgEl);
-      const g = svg.append('g').attr('transform',`translate(${margin.left},${margin.top})`);
+      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
   
-      const x0 = d3.scaleBand().domain(freqData.map(d=>d.cat)).range([0,iW])
-        .paddingInner(0.38).paddingOuter(0.18);
-      const x1 = d3.scaleBand().domain(['gb','dv']).range([0,x0.bandwidth()]).paddingInner(0.1);
-      const maxV = Math.max(d3.max(freqData,d=>d.gb), d3.max(freqData,d=>d.dv));
-      const y = d3.scaleLinear().domain([0,Math.max(maxV*1.35,6)]).range([iH,0]);
+      const x0 = d3.scaleBand().domain(freqData.map(d => d.cat)).range([0, iW]).paddingInner(0.38).paddingOuter(0.18);
+      const x1 = d3.scaleBand().domain(['gb', 'dv']).range([0, x0.bandwidth()]).paddingInner(0.1);
+      const maxV = Math.max(d3.max(freqData, d => d.gb), d3.max(freqData, d => d.dv));
+      const y = d3.scaleLinear().domain([0, Math.max(maxV * 1.38, 6)]).range([iH, 0]);
   
       addGridlines(g, y, iW);
   
-      /* X axis with multiline labels */
-      const xAxisG = g.append('g').attr('class','case-axis')
-        .attr('transform',`translate(0,${iH})`)
-        .call(d3.axisBottom(x0).tickSize(0));
+      const xAxisG = g.append('g').attr('class', 'case-axis')
+        .attr('transform', `translate(0,${iH})`).call(d3.axisBottom(x0).tickSize(0));
       xAxisG.select('.domain').remove();
-      xAxisG.selectAll('.tick text').each(function(d){
+      xAxisG.selectAll('.tick text').each(function (d) {
         const el = d3.select(this); const parts = d.split('\n');
         el.text('');
-        parts.forEach((p,i)=>{
-          el.append('tspan').attr('x',0).attr('dy', i===0?'1.3em':'1.2em').text(p);
-        });
-      }).style('font-family',"'Montserrat',sans-serif")
-        .style('font-size','9.5px').style('font-weight','700')
-        .style('fill','#4a3020');
+        parts.forEach((p, i) => el.append('tspan').attr('x', 0).attr('dy', i === 0 ? '1.3em' : '1.2em').text(p));
+      }).style('font-family', "'Montserrat',sans-serif").style('font-size', '9.5px')
+        .style('font-weight', '700').style('fill', '#4a3020');
   
-      styleAxis(g.append('g').attr('class','case-axis')
-        .call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%')));
-      g.append('text').attr('class','case-axis-label')
-        .attr('transform','rotate(-90)')
-        .attr('x',-iH/2).attr('y',-40).attr('text-anchor','middle')
-        .text('% of months');
+      styleAxis(g.append('g').attr('class', 'case-axis').call(d3.axisLeft(y).ticks(5).tickFormat(d => d + '%')));
+      g.append('text').attr('class', 'case-axis-label').attr('transform', 'rotate(-90)')
+        .attr('x', -iH / 2).attr('y', -40).attr('text-anchor', 'middle').text('% of months');
   
       /* 5% reference */
-      g.append('line').attr('class','case-threshold-line')
-        .attr('x1',0).attr('x2',iW).attr('y1',y(5)).attr('y2',y(5));
-      g.append('text').attr('class','case-threshold-label')
-        .attr('x',iW-2).attr('y',y(5)-4).attr('text-anchor','end')
+      g.append('line').attr('class', 'case-threshold-line')
+        .attr('x1', 0).attr('x2', iW).attr('y1', y(5)).attr('y2', y(5));
+      g.append('text').attr('class', 'case-threshold-label')
+        .attr('x', iW - 2).attr('y', y(5) - 4).attr('text-anchor', 'end')
         .text('5% expected under normal climate');
   
-      freqData.forEach(d=>{
-        const gEl = g.append('g').attr('transform',`translate(${x0(d.cat)},0)`);
+      freqData.forEach(d => {
+        const gEl = g.append('g').attr('transform', `translate(${x0(d.cat)},0)`);
         const dat = [
-          {key:'gb',value:d.gb,color:GB_COLOR},
-          {key:'dv',value:d.dv,color:DV_COLOR},
+          { key: 'gb', value: d.gb, color: GB_COLOR },
+          { key: 'dv', value: d.dv, color: DV_COLOR },
         ];
         const bars = gEl.selectAll('rect').data(dat).enter().append('rect')
-          .attr('x',b=>x1(b.key)).attr('width',x1.bandwidth())
-          .attr('rx',3).attr('fill',b=>b.color).attr('opacity',0.85);
-        animateBars(bars, y, iH, 900);
+          .attr('x', b => x1(b.key)).attr('width', x1.bandwidth())
+          .attr('rx', 3).attr('fill', b => b.color).attr('opacity', 0.85);
+        animateBars(bars, y, iH, 920);
         gEl.selectAll('.fv').data(dat).enter().append('text')
-          .attr('class','case-bar-label')
-          .attr('x',b=>x1(b.key)+x1.bandwidth()/2)
-          .attr('y',b=>y(b.value)-4)
-          .text(b=>`${b.value.toFixed(1)}%`)
-          .attr('opacity',0).transition().delay(920).duration(280).attr('opacity',1);
+          .attr('class', 'case-bar-label')
+          .attr('x', b => x1(b.key) + x1.bandwidth() / 2)
+          .attr('y', b => y(b.value) - 4)
+          .text(b => `${b.value.toFixed(1)}%`)
+          .attr('opacity', 0).transition().delay(940).duration(280).attr('opacity', 1);
       });
   
-      const leg = g.append('g').attr('transform',`translate(${iW-150},-26)`);
-      [['Great Basin',GB_COLOR],['Death Valley',DV_COLOR]].forEach(([n,c],i)=>{
-        leg.append('rect').attr('x',i*84).attr('width',11).attr('height',11)
-          .attr('rx',2).attr('fill',c).attr('opacity',0.88);
-        leg.append('text').attr('x',i*84+15).attr('y',9.5)
-          .style('font-family',"'Montserrat',sans-serif").style('font-size','8.5px')
-          .style('fill',TEXT_COLOR).text(n);
-      });
-  
+      addLegend(g, iW);
       addTitle(svg, W, margin, 'Drought Category Frequency · SPI-12 · 1950–2014');
     }
-  
-    /* ── Apply step ──────────────────────────────── */
-    async function applyCaseStep(step) {
-      if (step === caseStepNow) return;
-      caseStepNow = step;
-      setCaseStep(step);
-  
-      if (typeof d3 === 'undefined') return;
-      await caseDataLoaded;
-  
-      /* Draw each chart only once; redraw on resize separately */
-      if (step === 1 && !chartsDrawn[1]) {
-        const el = document.getElementById('case-chart-svg-1');
-        if (el) { drawBarChart(el);  chartsDrawn[1] = true; }
-      }
-      if (step === 2 && !chartsDrawn[2]) {
-        const el = document.getElementById('case-chart-svg-2');
-        if (el) { drawLineChart(el); chartsDrawn[2] = true; }
-      }
-      if (step === 3 && !chartsDrawn[3]) {
-        const el = document.getElementById('case-chart-svg-3');
-        if (el) { drawFreqChart(el); chartsDrawn[3] = true; }
-      }
-    }
-  
-    /* ── Build (first entry) ─────────────────────── */
-    async function buildCase() {
-      if (caseBuilt) return;
-      caseBuilt = true;
-      await caseDataLoaded;
-      applyCaseStep(getCaseScrollStep());
-    }
-  
-    /* ── Scroll driver ───────────────────────────── */
-    function driveCase() {
-      if (!isOnCaseTrack()) return;
-      if (!caseBuilt) { buildCase(); return; }
-      applyCaseStep(getCaseScrollStep());
-    }
-  
-    window.addEventListener('scroll', driveCase);
-    setCaseStep(0); /* seed on load */
-  
-    /* ── Resize: redraw whichever charts are visible */
-    window.addEventListener('resize', () => {
-      if (!caseBuilt) return;
-      chartsDrawn = { 1: false, 2: false, 3: false };
-      const s = caseStepNow;
-      caseStepNow = -1; /* force re-apply */
-      applyCaseStep(s);
-    });
   
   })();
