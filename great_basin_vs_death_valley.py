@@ -1,589 +1,476 @@
 """
 great_basin_vs_death_valley.py
+===============================
+Case-study comparison: Great Basin vs Death Valley
+using CMIP6 data pulled live from the Pangeo GCS Zarr store.
 
-Exploratory comparison of two iconic drought-affected landscapes:
-  - Great Basin (center: 40.67°N, 117.67°W)
-  - Death Valley (center: 36.46°N, 116.87°W)
+Research question
+-----------------
+Despite sitting just ~4° of latitude apart, the Great Basin (cold desert) and
+Death Valley (hot desert) are both in persistent drought.  This script
+visualises their shared aridity through SPI while highlighting the temperature
+contrast that makes them climatologically distinct.
 
-Despite a stark temperature contrast (cold desert vs. hot desert),
-both regions share persistent drought signals in the SPI record.
+Figures produced
+----------------
+  1. fig1_climate_profile.png  — stacked monthly climate profile (temp + precip bars)
+  2. fig2_temp_precip.png      — annual temperature & precipitation comparison
+  3. fig3_spi_timeseries.png   — 12-month SPI side-by-side time series
+  4. fig4_drought_frequency.png— drought-category frequency bar chart
 
-Data source: CMIP6 multi-model ensemble (nearest-grid-cell extraction)
+Data
+----
+  Model : MPI-ESM1-2-HR  (high-resolution, good western-US coverage)
+  Experiment : historical  (1850-2014)
+  Variables  : tas (near-surface air temp), pr (precipitation)
+  Zarr store : Google Cloud Storage via Pangeo ESGF catalog
 
-Figures produced:
-  1. climate_profile_stacked_bar.png  — Seasonal climate profiles (temp + precip)
-  2. spi_comparison_line.png          — Annual SPI time series (both locations)
-  3. spi_rolling_mean.png             — 10-year rolling-mean SPI overlay
-  4. temp_vs_spi_scatter.png          — Temperature anomaly vs SPI scatter
-  5. drought_frequency_bar.png        — % years in drought (SPI < −0.5) by decade
-  6. combined_dashboard.png           — All panels in one publication-ready figure
-
-SPI sign convention: positive = wetter-than-normal, negative = drier-than-normal.
-Drought threshold used throughout: SPI < −0.5 (mild or worse).
+Coordinates
+-----------
+  Great Basin center : 40.67°N, 117.67°W
+  Death Valley center: 36.46°N, 116.87°W
 """
 
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-from matplotlib.ticker import MultipleLocator
-from scipy.stats import linregress
+# ── Standard library ──────────────────────────────────────────────────────────
 import warnings
 warnings.filterwarnings("ignore")
 
-# ── Optional: if xarray / netCDF4 are available, extract from raw CMIP6 files.
-# ── Otherwise the script falls back to synthetic data so it runs standalone.
-try:
-    import xarray as xr
-    HAS_XARRAY = True
-except ImportError:
-    HAS_XARRAY = False
-
+# ── Third-party ───────────────────────────────────────────────────────────────
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import matplotlib.gridspec as gridspec
+from matplotlib.lines import Line2D
+import gcsfs
+import xarray as xr
+import intake
+from scipy.stats import gamma, norm
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# 0. Configuration
+# 0.  Configuration
 # ═══════════════════════════════════════════════════════════════════════════════
 
-LOCATIONS = {
-    "Great Basin": dict(lat=40.67, lon=-117.67, color="#4E89AE", marker="o"),
-    "Death Valley": dict(lat=36.46, lon=-116.87, color="#C7522A", marker="s"),
+LOCS = {
+    "Great Basin":  {"lat": 40.67, "lon": -117.67},
+    "Death Valley": {"lat": 36.46, "lon": -116.87},
 }
 
-# Paths to CMIP6 NetCDF files — set these to your actual paths.
-# Expected variables: 'spi'  (dimensionless), 'tas' (K), 'pr' (kg m-2 s-1)
-CMIP6_FILES = {
-    "spi": "cmip6_spi_annual.nc",
-    "tas": "cmip6_tas_annual.nc",
-    "pr":  "cmip6_pr_monthly.nc",   # monthly used for seasonal profile
+# Plotting palette  (earthy / desert tones)
+COLORS = {
+    "Great Basin":  "#5B8DB8",   # dusty blue  (cold desert sky)
+    "Death Valley": "#C0622B",   # burnt sienna (hot sand)
+    "neutral":      "#6B6B6B",
 }
 
-YEAR_START, YEAR_END = 1950, 2014   # analysis window
-DROUGHT_THRESH       = -0.5         # SPI threshold for "in drought"
-ROLLING_WINDOW       = 10           # years for rolling mean
+MODEL       = "MPI-ESM1-2-HR"
+EXPERIMENT  = "historical"
+TABLE_TAS   = "Amon"   # monthly air temperature
+TABLE_PR    = "Amon"   # monthly precipitation
+MEMBER      = "r1i1p1f1"
+GRID        = "gn"
 
-SEASONS = {
-    "DJF": [12, 1, 2],
-    "MAM": [3, 4, 5],
-    "JJA": [6, 7, 8],
-    "SON": [9, 10, 11],
-}
-
-FIGDIR = "."   # output directory for PNG files
-
+SPI_WINDOW  = 12        # months  — 12-month SPI is standard for drought
+MODERN_SLICE = slice("1950", "2014")
+CLIMATE_NORM  = slice("1981", "2010")   # WMO climate normal for profile
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# 1. Data extraction helpers
+# 1.  Load CMIP6 data from GCS via Pangeo catalog
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def nearest_cell(ds, lat, lon, var):
-    """Return a 1-D time series (DataArray) for the nearest grid cell."""
-    return ds[var].sel(lat=lat, lon=lon, method="nearest")
+print("Opening Pangeo ESGF catalog …")
+cat_url = "https://storage.googleapis.com/cmip6/pangeo-cmip6.json"
+col = intake.open_esm_datastore(cat_url)
 
+def query_var(variable_id, table_id):
+    """Return a single Dataset for the requested variable."""
+    subset = col.search(
+        source_id       = MODEL,
+        experiment_id   = EXPERIMENT,
+        variable_id     = variable_id,
+        table_id        = table_id,
+        member_id       = MEMBER,
+        grid_label      = GRID,
+    )
+    if len(subset.df) == 0:
+        raise RuntimeError(
+            f"No results for {variable_id}/{table_id}/{MODEL}/{EXPERIMENT}. "
+            "Try a different member_id or grid_label."
+        )
+    dsets = subset.to_dataset_dict(
+        zarr_kwargs={"consolidated": True},
+        storage_options={"token": "anon"},
+    )
+    key = list(dsets.keys())[0]
+    return dsets[key]
 
-def extract_annual_series(nc_path, var, lat, lon, year_start, year_end):
-    """
-    Open a CMIP6 NetCDF, extract nearest cell, return a pandas Series
-    indexed by integer year.  Converts K→°C for temperature.
-    """
-    ds   = xr.open_dataset(nc_path)
-    da   = nearest_cell(ds, lat, lon, var)
-    # Resample to annual mean if not already annual
-    if "month" not in str(da.dims):
-        da = da.resample(time="1Y").mean()
-    da   = da.sel(time=slice(str(year_start), str(year_end)))
-    s    = da.to_series()
-    s.index = s.index.year
-    if var == "tas":
-        s = s - 273.15           # K → °C
-    if var == "pr":
-        s = s * 86400            # kg m-2 s-1 → mm day-1
-    return s.rename(var)
+print(f"Fetching tas ({TABLE_TAS}) …")
+ds_tas = query_var("tas", TABLE_TAS)
 
+print(f"Fetching pr ({TABLE_PR}) …")
+ds_pr  = query_var("pr", TABLE_PR)
 
-def extract_seasonal_profile(nc_path, var, lat, lon):
-    """
-    Return a DataFrame with columns = SEASONS, index = location.
-    Used for the stacked bar climate profile.
-    """
-    ds = xr.open_dataset(nc_path)
-    da = nearest_cell(ds, lat, lon, var)
-    monthly = da.resample(time="1ME").mean()
-    result  = {}
-    for season, months in SEASONS.items():
-        mask = monthly.time.dt.month.isin(months)
-        result[season] = float(monthly.sel(time=mask).mean())
-    s = pd.Series(result)
-    if var == "tas":
-        s = s - 273.15
-    if var == "pr":
-        s = s * 86400
-    return s
-
+# ── Normalize longitude to –180 … 180 if stored as 0 … 360 ──────────────────
+for ds in [ds_tas, ds_pr]:
+    if ds["lon"].values.max() > 180:
+        ds["lon"] = xr.where(ds["lon"] > 180, ds["lon"] - 360, ds["lon"])
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# 2. Load or synthesise data
+# 2.  Extract nearest grid cells
 # ═══════════════════════════════════════════════════════════════════════════════
 
-years = np.arange(YEAR_START, YEAR_END + 1)
-n     = len(years)
+def nearest_point(ds, lat, lon, var):
+    """Select the single grid cell nearest to (lat, lon) and return a DataArray."""
+    return ds[var].sel(lat=lat, lon=lon, method="nearest").squeeze()
 
-if HAS_XARRAY:
-    # ── Real CMIP6 extraction ──────────────────────────────────────────────
-    annual = {}
-    seasonal_temp = {}
-    seasonal_pr   = {}
+print("Extracting grid cells …")
+series = {}   # dict[location][variable] → monthly DataArray
+for name, coords in LOCS.items():
+    lat, lon = coords["lat"], coords["lon"]
+    tas_da = nearest_point(ds_tas, lat, lon, "tas")   # K
+    pr_da  = nearest_point(ds_pr,  lat, lon, "pr")    # kg m⁻² s⁻¹  →  mm/day
 
-    for name, cfg in LOCATIONS.items():
-        lat, lon = cfg["lat"], cfg["lon"]
-        annual[name] = pd.DataFrame({
-            "year": years,
-            "spi":  extract_annual_series(CMIP6_FILES["spi"], "spi", lat, lon,
-                                          YEAR_START, YEAR_END).values,
-            "tas":  extract_annual_series(CMIP6_FILES["tas"], "tas", lat, lon,
-                                          YEAR_START, YEAR_END).values,
-            "pr":   extract_annual_series(CMIP6_FILES["pr"],  "pr",  lat, lon,
-                                          YEAR_START, YEAR_END).values,
-        })
-        seasonal_temp[name] = extract_seasonal_profile(
-            CMIP6_FILES["tas"], "tas", lat, lon)
-        seasonal_pr[name]   = extract_seasonal_profile(
-            CMIP6_FILES["pr"],  "pr",  lat, lon)
+    # Unit conversions
+    tas_C  = tas_da - 273.15                          # → °C
+    pr_mmd = pr_da * 86_400                           # → mm day⁻¹
 
-else:
-    # ── Synthetic stand-in data (structurally realistic) ──────────────────
-    # Great Basin: cold desert, ~8 °C mean, moderate precip, persistent mild drought
-    # Death Valley: hot desert, ~25 °C mean, very low precip, chronic drought
-    rng = np.random.default_rng(42)
+    # Restrict to MODERN_SLICE and load into memory
+    series[name] = {
+        "tas": tas_C.sel(time=MODERN_SLICE).load(),
+        "pr":  pr_mmd.sel(time=MODERN_SLICE).load(),
+    }
+    print(f"  {name}: lat={float(tas_C.lat):.2f}, lon={float(tas_C.lon):.2f}")
 
-    def synthetic_spi(n, trend=-0.006, noise=0.9, seed_offset=0):
-        """Slightly negative-trending SPI with autocorrelation."""
-        rng2  = np.random.default_rng(seed_offset)
-        noise_ts = rng2.normal(0, noise, n)
-        ar    = np.zeros(n)
-        for i in range(1, n):
-            ar[i] = 0.35 * ar[i-1] + noise_ts[i]
-        return ar + trend * np.arange(n)
+# ═══════════════════════════════════════════════════════════════════════════════
+# 3.  Compute SPI-12
+# ═══════════════════════════════════════════════════════════════════════════════
 
-    gb_spi  = synthetic_spi(n, trend=-0.005, seed_offset=1)
-    dv_spi  = synthetic_spi(n, trend=-0.008, seed_offset=2)
+def compute_spi(pr_monthly: xr.DataArray, window: int = 12) -> pd.Series:
+    """
+    Compute SPI for a 1-D monthly precipitation DataArray.
 
-    gb_tas  = 8.0  + 0.018 * np.arange(n) + rng.normal(0, 0.5, n)
-    dv_tas  = 25.0 + 0.022 * np.arange(n) + rng.normal(0, 0.6, n)
+    Steps
+    -----
+    1. Roll a `window`-month accumulation.
+    2. For each calendar month, fit a gamma distribution to the rolling sums
+       from the full record (using the calibration period).
+    3. Transform to standard normal (SPI).
 
-    gb_pr   = 0.85 + rng.normal(0, 0.12, n)
-    dv_pr   = 0.20 + rng.normal(0, 0.04, n)
+    Returns a pd.Series aligned to the input time index (NaN for the first
+    `window-1` periods).
+    """
+    pr = pd.Series(pr_monthly.values, index=pd.DatetimeIndex(pr_monthly.time.values))
+    acc = pr.rolling(window).sum()          # rolling accumulation
 
-    annual = {
-        "Great Basin":  pd.DataFrame({"year": years, "spi": gb_spi,
-                                      "tas": gb_tas, "pr": gb_pr}),
-        "Death Valley": pd.DataFrame({"year": years, "spi": dv_spi,
-                                      "tas": dv_tas, "pr": dv_pr}),
+    spi = pd.Series(np.nan, index=acc.index)
+
+    for month in range(1, 13):
+        mask  = acc.index.month == month
+        vals  = acc[mask].dropna()
+        if len(vals) < 10:
+            continue
+
+        # Fit gamma (loc=0 forced — precipitation can't be negative)
+        shape, loc, scale = gamma.fit(vals, floc=0)
+
+        # CDF → ppf of normal
+        cdf_vals = gamma.cdf(acc[mask], shape, loc=loc, scale=scale)
+
+        # Clip to avoid inf at 0 or 1
+        cdf_vals = np.clip(cdf_vals, 1e-6, 1 - 1e-6)
+        spi[mask] = norm.ppf(cdf_vals)
+
+    return spi
+
+
+print("Computing SPI-12 …")
+spi_series = {}
+for name in LOCS:
+    spi_series[name] = compute_spi(series[name]["pr"], window=SPI_WINDOW)
+    print(f"  {name}: mean SPI = {spi_series[name].mean():.3f}")
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 4.  Climate normals (monthly averages over 1981-2010)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def monthly_normal(da: xr.DataArray, time_slice: slice) -> pd.DataFrame:
+    """Return a DataFrame with columns [month, mean] from a monthly DataArray."""
+    sub = da.sel(time=time_slice)
+    df  = pd.DataFrame({
+        "month": pd.DatetimeIndex(sub.time.values).month,
+        "value": sub.values,
+    })
+    return df.groupby("month")["value"].mean()
+
+normals = {}
+for name in LOCS:
+    normals[name] = {
+        "tas": monthly_normal(series[name]["tas"], CLIMATE_NORM),
+        "pr":  monthly_normal(series[name]["pr"],  CLIMATE_NORM),
     }
 
-    # Seasonal profiles: realistic temperature and precip by season
-    seasonal_temp = {
-        "Great Basin":  pd.Series({"DJF": -1.5, "MAM":  8.2, "JJA": 19.4, "SON":  8.1}),
-        "Death Valley": pd.Series({"DJF": 13.5, "MAM": 26.1, "JJA": 41.0, "SON": 27.3}),
-    }
-    seasonal_pr = {
-        "Great Basin":  pd.Series({"DJF": 1.10, "MAM": 0.90, "JJA": 0.45, "SON": 0.75}),
-        "Death Valley": pd.Series({"DJF": 0.28, "MAM": 0.15, "JJA": 0.05, "SON": 0.12}),
+# Annual summaries (modern period)
+annual = {}
+for name in LOCS:
+    tas_pd = pd.Series(
+        series[name]["tas"].values,
+        index=pd.DatetimeIndex(series[name]["tas"].time.values),
+    )
+    pr_pd = pd.Series(
+        series[name]["pr"].values,
+        index=pd.DatetimeIndex(series[name]["pr"].time.values),
+    )
+    annual[name] = {
+        "tas": tas_pd.resample("YE").mean(),
+        "pr":  pr_pd.resample("YE").mean() * 30.44,   # mm/day → mm/month approx
     }
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# 5.  Plotting
+# ═══════════════════════════════════════════════════════════════════════════════
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# 3. Shared style
-# ═══════════════════════════════════════════════════════════════════════════════
+MONTHS = ["Jan","Feb","Mar","Apr","May","Jun",
+          "Jul","Aug","Sep","Oct","Nov","Dec"]
 
 plt.rcParams.update({
     "font.family":      "serif",
-    "font.serif":       ["Georgia", "DejaVu Serif"],
+    "font.size":        11,
     "axes.spines.top":  False,
     "axes.spines.right":False,
-    "axes.grid":        True,
-    "grid.alpha":       0.3,
-    "grid.linestyle":   "--",
     "figure.dpi":       150,
 })
 
-COLORS = {loc: cfg["color"] for loc, cfg in LOCATIONS.items()}
-
-# Drought band shading helper
-def shade_drought(ax, x, spi, color, alpha=0.20):
-    """Fill area below DROUGHT_THRESH in muted red."""
-    below = np.where(spi < DROUGHT_THRESH, spi, DROUGHT_THRESH)
-    ax.fill_between(x, below, DROUGHT_THRESH, color="#d73027", alpha=alpha,
-                    label="_nolegend_")
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# 4. Figure 1 — Seasonal Climate Profile (stacked bars)
-# ═══════════════════════════════════════════════════════════════════════════════
-# Two panels side-by-side:
-#   Left:  Stacked bar of mean seasonal temperature (°C)
-#   Right: Stacked bar of mean seasonal precipitation (mm/day)
-# The juxtaposition makes the hot-vs-cold AND wet-vs-dry contrast immediately
-# clear to the reader.
-
-fig1, (ax_t, ax_p) = plt.subplots(1, 2, figsize=(12, 5))
-
-locs  = list(LOCATIONS.keys())
-x_pos = np.arange(len(locs))
-width = 0.55
-season_colors = ["#2c7bb6", "#abd9e9", "#fdae61", "#d7191c"]   # DJF→MAM→JJA→SON
-
-# Temperature
-bottoms_t = np.zeros(len(locs))
-for (season, clr) in zip(SEASONS.keys(), season_colors):
-    vals = np.array([seasonal_temp[loc][season] for loc in locs])
-    # Allow negative values (DJF Great Basin) to show below zero
-    ax_t.bar(x_pos, vals, width, bottom=bottoms_t, color=clr,
-             label=season, edgecolor="white", linewidth=0.5)
-    bottoms_t += vals
-
-ax_t.set_xticks(x_pos)
-ax_t.set_xticklabels(locs, fontsize=11)
-ax_t.set_ylabel("Mean Seasonal Temperature (°C)", fontsize=10)
-ax_t.set_title("Seasonal Temperature Profile", fontsize=12, fontweight="bold")
-ax_t.axhline(0, color="black", linewidth=0.8, linestyle="--")
-ax_t.legend(title="Season", loc="upper left", fontsize=9)
-# Annotate annual mean
-for i, loc in enumerate(locs):
-    mean_val = seasonal_temp[loc].mean()
-    ax_t.text(i, seasonal_temp[loc].sum() + 0.8, f"μ={mean_val:.1f}°C",
-              ha="center", fontsize=9, color=COLORS[loc], fontweight="bold")
-
-# Precipitation
-bottoms_p = np.zeros(len(locs))
-for (season, clr) in zip(SEASONS.keys(), season_colors):
-    vals = np.array([seasonal_pr[loc][season] for loc in locs])
-    ax_p.bar(x_pos, vals, width, bottom=bottoms_p, color=clr,
-             label=season, edgecolor="white", linewidth=0.5)
-    bottoms_p += vals
-
-ax_p.set_xticks(x_pos)
-ax_p.set_xticklabels(locs, fontsize=11)
-ax_p.set_ylabel("Mean Seasonal Precipitation (mm/day)", fontsize=10)
-ax_p.set_title("Seasonal Precipitation Profile", fontsize=12, fontweight="bold")
-ax_p.legend(title="Season", loc="upper right", fontsize=9)
-for i, loc in enumerate(locs):
-    total = seasonal_pr[loc].sum()
-    ax_p.text(i, total + 0.02, f"Σ={total:.2f} mm/d",
-              ha="center", fontsize=9, color=COLORS[loc], fontweight="bold")
-
-fig1.suptitle(
-    "Climate Profile: Great Basin (Cold Desert) vs Death Valley (Hot Desert)\n"
-    "Contrasting Temperature Regimes, Shared Aridity",
-    fontsize=13, fontweight="bold", y=1.01
+# ── Figure 1: Monthly climate profile (Walter-Lieth inspired) ─────────────────
+fig, axes = plt.subplots(1, 2, figsize=(14, 6), sharey=False)
+fig.suptitle(
+    "Monthly Climate Profiles — Great Basin vs Death Valley\n"
+    "(WMO Normal 1981–2010, MPI-ESM1-2-HR historical)",
+    fontsize=13, fontweight="bold", y=1.01,
 )
+
+for ax, name in zip(axes, LOCS):
+    color   = COLORS[name]
+    tas_n   = normals[name]["tas"]
+    pr_n    = normals[name]["pr"]
+
+    x = np.arange(1, 13)
+    ax2 = ax.twinx()
+
+    # Precipitation bars (left axis)
+    bars = ax.bar(x, pr_n.values, color=color, alpha=0.55, label="Precip (mm/day)", zorder=2)
+
+    # Temperature line (right axis)
+    ax2.plot(x, tas_n.values, color=color, linewidth=2.5,
+             marker="o", markersize=5, label="Temp (°C)", zorder=3)
+    ax2.axhline(0, color="grey", linewidth=0.6, linestyle="--")
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(MONTHS, fontsize=9)
+    ax.set_ylabel("Precipitation (mm/day)", color="steelblue", fontsize=10)
+    ax2.set_ylabel("Temperature (°C)", color=color, fontsize=10)
+    ax.set_title(f"{name}", fontsize=12, fontweight="bold", color=color)
+
+    # Shade the "drought zone": where precip < 2×temp/10 (Gaussen aridity rule)
+    for m in range(12):
+        if pr_n.values[m] < (tas_n.values[m] / 5):
+            ax.axvspan(m + 0.55, m + 1.45, color=color, alpha=0.10, zorder=0)
+
+    # Annotation: mean annual temp & precip
+    ax.text(0.97, 0.97,
+            f"Mean annual\nT: {tas_n.mean():.1f}°C\nP: {pr_n.mean()*30.44:.0f} mm/mo",
+            transform=ax.transAxes, va="top", ha="right", fontsize=9,
+            bbox=dict(boxstyle="round,pad=0.3", fc="white", alpha=0.7))
+
+    legend_patches = [
+        mpatches.Patch(color=color, alpha=0.55, label="Precip (mm/day)"),
+        Line2D([0], [0], color=color, linewidth=2.5, marker="o", label="Temp (°C)"),
+        mpatches.Patch(color=color, alpha=0.10, label="Aridity period"),
+    ]
+    ax.legend(handles=legend_patches, fontsize=8, loc="upper left")
+
 plt.tight_layout()
-fig1.savefig(f"{FIGDIR}/climate_profile_stacked_bar.png",
-             dpi=150, bbox_inches="tight")
-print("[Saved] climate_profile_stacked_bar.png")
+plt.savefig("fig1_climate_profile.png", dpi=150, bbox_inches="tight")
 plt.show()
+print("Saved fig1_climate_profile.png")
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# 5. Figure 2 — Annual SPI time series
-# ═══════════════════════════════════════════════════════════════════════════════
-
-fig2, axes2 = plt.subplots(2, 1, figsize=(13, 8), sharex=True)
-
-for ax, (loc, cfg) in zip(axes2, LOCATIONS.items()):
-    df  = annual[loc]
-    clr = cfg["color"]
-    ax.plot(df["year"], df["spi"], color=clr, linewidth=0.9, alpha=0.85, label=loc)
-    ax.axhline(0, color="grey",   linewidth=0.7, linestyle="--")
-    ax.axhline(DROUGHT_THRESH, color="#d73027", linewidth=0.9,
-               linestyle=":", label=f"Drought threshold (SPI={DROUGHT_THRESH})")
-    shade_drought(ax, df["year"].values, df["spi"].values, clr)
-
-    # Linear trend
-    slope, intercept, *_ = linregress(df["year"], df["spi"])
-    trend_line = intercept + slope * df["year"]
-    ax.plot(df["year"], trend_line, color="black", linewidth=1.5,
-            linestyle="-.", label=f"Trend: {slope:+.4f} SPI/yr")
-
-    ax.set_ylabel("SPI", fontsize=10)
-    ax.set_title(loc, fontsize=11, fontweight="bold", color=clr, loc="left")
-    ax.legend(fontsize=9, loc="upper right")
-    ax.set_ylim(-3.2, 3.2)
-    ax.yaxis.set_minor_locator(MultipleLocator(0.5))
-
-    # Shade red background for drought years
-    pct_drought = (df["spi"] < DROUGHT_THRESH).mean() * 100
-    ax.text(0.01, 0.04, f"{pct_drought:.0f}% of years in drought (SPI < {DROUGHT_THRESH})",
-            transform=ax.transAxes, fontsize=9, color="#d73027")
-
-axes2[-1].set_xlabel("Year", fontsize=10)
-fig2.suptitle(
-    "Annual SPI: Great Basin vs Death Valley\n"
-    "Red shading = years below drought threshold",
-    fontsize=13, fontweight="bold"
+# ── Figure 2: Annual temperature & precipitation over time ────────────────────
+fig, (ax_t, ax_p) = plt.subplots(2, 1, figsize=(13, 8), sharex=True)
+fig.suptitle(
+    "Annual Temperature & Precipitation — Great Basin vs Death Valley\n"
+    "(1950–2014, MPI-ESM1-2-HR historical)",
+    fontsize=13, fontweight="bold",
 )
+
+for name in LOCS:
+    color = COLORS[name]
+    yr    = annual[name]["tas"].index.year
+
+    # Temperature with 10-yr rolling mean
+    tas_ann = annual[name]["tas"]
+    ax_t.plot(yr, tas_ann.values, color=color, alpha=0.35, linewidth=0.9)
+    ax_t.plot(yr, tas_ann.rolling(10, center=True).mean().values,
+              color=color, linewidth=2.2, label=name)
+
+    # Precipitation
+    pr_ann = annual[name]["pr"]
+    ax_p.plot(yr, pr_ann.values, color=color, alpha=0.35, linewidth=0.9)
+    ax_p.plot(yr, pr_ann.rolling(10, center=True).mean().values,
+              color=color, linewidth=2.2, label=name)
+
+ax_t.set_ylabel("Temperature (°C)", fontsize=11)
+ax_t.legend(fontsize=10)
+ax_t.set_title("Near-Surface Air Temperature (10-yr rolling mean bold)", fontsize=10)
+
+ax_p.set_ylabel("Precipitation (mm/month)", fontsize=11)
+ax_p.set_xlabel("Year", fontsize=11)
+ax_p.set_title("Monthly Precipitation — annual mean (10-yr rolling mean bold)", fontsize=10)
+ax_p.legend(fontsize=10)
+
 plt.tight_layout()
-fig2.savefig(f"{FIGDIR}/spi_comparison_line.png", dpi=150, bbox_inches="tight")
-print("[Saved] spi_comparison_line.png")
+plt.savefig("fig2_temp_precip.png", dpi=150, bbox_inches="tight")
 plt.show()
+print("Saved fig2_temp_precip.png")
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# 6. Figure 3 — 10-year rolling-mean SPI overlay
-# ═══════════════════════════════════════════════════════════════════════════════
-
-fig3, ax3 = plt.subplots(figsize=(13, 5))
-
-ax3.axhline(0, color="grey", linewidth=0.8, linestyle="--")
-ax3.axhline(DROUGHT_THRESH, color="#d73027", linewidth=1.0, linestyle=":",
-            label=f"Drought threshold (SPI={DROUGHT_THRESH})")
-ax3.fill_betweenx([-3.5, DROUGHT_THRESH], YEAR_START, YEAR_END,
-                  color="#d73027", alpha=0.05)
-
-for loc, cfg in LOCATIONS.items():
-    df  = annual[loc]
-    roll = df.set_index("year")["spi"].rolling(ROLLING_WINDOW, center=True).mean()
-    ax3.plot(roll.index, roll.values, color=cfg["color"], linewidth=2.5,
-             label=f"{loc} ({ROLLING_WINDOW}-yr mean)", marker=cfg["marker"],
-             markevery=5, markersize=5)
-    # raw series in faint background
-    ax3.plot(df["year"], df["spi"], color=cfg["color"], linewidth=0.5,
-             alpha=0.25, label="_nolegend_")
-
-ax3.set_ylim(-3.0, 2.5)
-ax3.set_xlabel("Year", fontsize=10)
-ax3.set_ylabel(f"{ROLLING_WINDOW}-Year Rolling Mean SPI", fontsize=10)
-ax3.set_title(
-    f"Smoothed SPI Trends ({ROLLING_WINDOW}-Year Rolling Mean)\n"
-    "Both regions trend toward persistent dryness despite opposite temperature regimes",
-    fontsize=12, fontweight="bold"
+# ── Figure 3: SPI-12 time series (side-by-side panels) ───────────────────────
+fig, axes = plt.subplots(2, 1, figsize=(14, 8), sharex=True)
+fig.suptitle(
+    "12-Month Standardised Precipitation Index (SPI-12)\n"
+    "Great Basin vs Death Valley  ·  1950–2014",
+    fontsize=13, fontweight="bold",
 )
-ax3.legend(fontsize=10)
+
+DROUGHT_THRESHOLDS = {
+    "Moderate drought":  (-1.0, -1.5),
+    "Severe drought":    (-1.5, -2.0),
+    "Extreme drought":   (-2.0, -99),
+}
+DROUGHT_COLORS = {
+    "Moderate drought":  "#F4A460",
+    "Severe drought":    "#CD5C5C",
+    "Extreme drought":   "#8B0000",
+}
+
+for ax, name in zip(axes, LOCS):
+    spi  = spi_series[name].dropna()
+    color = COLORS[name]
+
+    ax.axhline(0,    color="grey",  linewidth=0.7, linestyle="--")
+    ax.axhline(-1.0, color="#F4A460", linewidth=0.8, linestyle=":")
+    ax.axhline(-1.5, color="#CD5C5C", linewidth=0.8, linestyle=":")
+    ax.axhline(-2.0, color="#8B0000", linewidth=0.8, linestyle=":")
+
+    # Fill: wet (blue) / dry (red)
+    ax.fill_between(spi.index, spi.values, 0,
+                    where=(spi.values >= 0), color="#4575b4", alpha=0.45, label="Wet")
+    ax.fill_between(spi.index, spi.values, 0,
+                    where=(spi.values < 0),  color=color,     alpha=0.55, label="Dry")
+
+    ax.plot(spi.index, spi.values, color=color, linewidth=0.7, alpha=0.7)
+
+    # 24-month rolling mean
+    roll = spi.rolling(24, center=True).mean()
+    ax.plot(roll.index, roll.values, color="black", linewidth=1.8,
+            linestyle="-", label="24-mo rolling mean")
+
+    # Percent of months in drought (SPI < –1)
+    pct_drought = (spi < -1.0).mean() * 100
+    ax.text(0.01, 0.04,
+            f"Months with SPI < −1.0: {pct_drought:.1f}%",
+            transform=ax.transAxes, fontsize=9,
+            color="darkred",
+            bbox=dict(boxstyle="round,pad=0.25", fc="white", alpha=0.75))
+
+    ax.set_ylim(-3.5, 3.5)
+    ax.set_ylabel("SPI-12", fontsize=10)
+    ax.set_title(name, fontsize=11, fontweight="bold", color=color)
+    ax.legend(fontsize=8, loc="upper right")
+
+axes[-1].set_xlabel("Year", fontsize=11)
 plt.tight_layout()
-fig3.savefig(f"{FIGDIR}/spi_rolling_mean.png", dpi=150, bbox_inches="tight")
-print("[Saved] spi_rolling_mean.png")
+plt.savefig("fig3_spi_timeseries.png", dpi=150, bbox_inches="tight")
 plt.show()
+print("Saved fig3_spi_timeseries.png")
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# 7. Figure 4 — Temperature anomaly vs SPI scatter
-# ═══════════════════════════════════════════════════════════════════════════════
-# Shows how warming correlates with drying (negative SPI) in both locations,
-# reinforcing the drought story even across very different baseline temperatures.
+# ── Figure 4: Drought category frequency bar chart ───────────────────────────
+CATEGORIES = {
+    "Near Normal":       (spi >= -1.0),
+    "Moderate\nDrought": (spi >= -1.5) & (spi < -1.0),
+    "Severe\nDrought":   (spi >= -2.0) & (spi < -1.5),
+    "Extreme\nDrought":  (spi < -2.0),
+}
+CAT_COLORS = ["#a8d5e2", "#F4A460", "#CD5C5C", "#8B0000"]
 
-fig4, axes4 = plt.subplots(1, 2, figsize=(13, 5))
+# Recompute per-location
+def drought_frequencies(spi: pd.Series) -> dict:
+    s = spi.dropna()
+    return {
+        "Near Normal":       (s >= -1.0).mean() * 100,
+        "Moderate Drought":  ((s >= -1.5) & (s < -1.0)).mean() * 100,
+        "Severe Drought":    ((s >= -2.0) & (s < -1.5)).mean() * 100,
+        "Extreme Drought":   (s < -2.0).mean() * 100,
+    }
 
-for ax, (loc, cfg) in zip(axes4, LOCATIONS.items()):
-    df      = annual[loc].copy()
-    tas_anom = df["tas"] - df["tas"].mean()   # anomaly vs period mean
+freq = {name: drought_frequencies(spi_series[name]) for name in LOCS}
+cats = list(freq[list(LOCS.keys())[0]].keys())
 
-    sc = ax.scatter(tas_anom, df["spi"], c=df["year"], cmap="plasma",
-                    s=40, edgecolors="white", linewidths=0.3, alpha=0.85)
+x     = np.arange(len(cats))
+width = 0.35
 
-    slope, intercept, r, *_ = linregress(tas_anom, df["spi"])
-    x_fit = np.linspace(tas_anom.min(), tas_anom.max(), 100)
-    ax.plot(x_fit, intercept + slope * x_fit, color="black",
-            linewidth=1.8, linestyle="--",
-            label=f"Slope: {slope:.3f}  r={r:.2f}")
-
-    ax.axhline(0, color="grey", linewidth=0.7, linestyle="--")
-    ax.axhline(DROUGHT_THRESH, color="#d73027", linewidth=0.9, linestyle=":")
-    ax.axvline(0, color="grey", linewidth=0.7, linestyle="--")
-
-    ax.set_xlabel("Temperature Anomaly (°C)", fontsize=10)
-    ax.set_ylabel("Annual SPI", fontsize=10)
-    ax.set_title(loc, fontsize=11, fontweight="bold", color=cfg["color"])
-    ax.legend(fontsize=9)
-    plt.colorbar(sc, ax=ax, label="Year", pad=0.01)
-
-fig4.suptitle(
-    "Temperature Anomaly vs SPI\n"
-    "Warming consistently co-occurs with drying in both deserts (color = time)",
-    fontsize=12, fontweight="bold"
+fig, ax = plt.subplots(figsize=(10, 6))
+fig.suptitle(
+    "Drought Category Frequency — Great Basin vs Death Valley\n"
+    "(SPI-12, 1950–2014)",
+    fontsize=13, fontweight="bold",
 )
+
+names = list(LOCS.keys())
+for i, name in enumerate(names):
+    offset = (i - 0.5) * width
+    vals   = [freq[name][c] for c in cats]
+    bars   = ax.bar(x + offset, vals, width, label=name,
+                    color=COLORS[name], alpha=0.80, edgecolor="white", linewidth=0.6)
+    for bar, val in zip(bars, vals):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
+                f"{val:.1f}%", ha="center", va="bottom", fontsize=8)
+
+ax.set_xticks(x)
+ax.set_xticklabels(cats, fontsize=10)
+ax.set_ylabel("% of months", fontsize=11)
+ax.set_ylim(0, 100)
+ax.axhline(5, color="grey", linewidth=0.7, linestyle="--",
+           label="5% reference (expected under normal climate)")
+ax.legend(fontsize=10)
+
+# Callout: both deserts, different temperatures, same drought
+ax.text(0.5, 0.92,
+        "Both cold (Great Basin) and hot (Death Valley) deserts\n"
+        "show elevated drought frequency — aridity transcends temperature.",
+        transform=ax.transAxes, ha="center", va="top", fontsize=9, style="italic",
+        bbox=dict(boxstyle="round,pad=0.4", fc="#FFF8F0", ec="#C0622B", alpha=0.9))
+
 plt.tight_layout()
-fig4.savefig(f"{FIGDIR}/temp_vs_spi_scatter.png", dpi=150, bbox_inches="tight")
-print("[Saved] temp_vs_spi_scatter.png")
+plt.savefig("fig4_drought_frequency.png", dpi=150, bbox_inches="tight")
 plt.show()
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# 8. Figure 5 — Drought frequency by decade (grouped bar)
-# ═══════════════════════════════════════════════════════════════════════════════
-
-def drought_freq_by_decade(df, thresh=DROUGHT_THRESH):
-    df = df.copy()
-    df["decade"] = (df["year"] // 10) * 10
-    return (
-        df.groupby("decade")
-          .apply(lambda g: (g["spi"] < thresh).mean() * 100, include_groups=False)
-          .rename("pct_drought")
-          .reset_index()
-    )
-
-dfreq = {loc: drought_freq_by_decade(annual[loc]) for loc in LOCATIONS}
-
-all_decades = sorted(set(
-    d for df in dfreq.values() for d in df["decade"]
-))
-x_d = np.arange(len(all_decades))
-bw  = 0.35
-
-fig5, ax5 = plt.subplots(figsize=(12, 5))
-for i, (loc, cfg) in enumerate(LOCATIONS.items()):
-    df_f  = dfreq[loc].set_index("decade").reindex(all_decades, fill_value=np.nan)
-    offset = (i - 0.5) * bw
-    bars = ax5.bar(x_d + offset, df_f["pct_drought"].values, bw,
-                   color=cfg["color"], label=loc, edgecolor="white",
-                   linewidth=0.5, alpha=0.88)
-    for bar, val in zip(bars, df_f["pct_drought"].values):
-        if not np.isnan(val):
-            ax5.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.8,
-                     f"{val:.0f}%", ha="center", va="bottom", fontsize=7.5)
-
-ax5.axhline(50, color="black", linewidth=0.8, linestyle="--",
-            label="50% (majority of years in drought)")
-ax5.set_xticks(x_d)
-ax5.set_xticklabels([str(d) + "s" for d in all_decades], fontsize=9)
-ax5.set_ylabel(f"% Years with SPI < {DROUGHT_THRESH}", fontsize=10)
-ax5.set_title(
-    "Drought Frequency by Decade\n"
-    "Both hot and cold desert show sustained or increasing drought prevalence",
-    fontsize=12, fontweight="bold"
-)
-ax5.legend(fontsize=10)
-ax5.set_ylim(0, 100)
-plt.tight_layout()
-fig5.savefig(f"{FIGDIR}/drought_frequency_bar.png", dpi=150, bbox_inches="tight")
-print("[Saved] drought_frequency_bar.png")
-plt.show()
-
+print("Saved fig4_drought_frequency.png")
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# 9. Figure 6 — Combined dashboard (publication-ready)
+# 6.  Print summary statistics
 # ═══════════════════════════════════════════════════════════════════════════════
+print("\n" + "="*60)
+print("SUMMARY — Great Basin vs Death Valley (1950–2014)")
+print("="*60)
+for name in LOCS:
+    spi = spi_series[name].dropna()
+    tas_ann = annual[name]["tas"]
+    pr_ann  = annual[name]["pr"]
+    print(f"\n{name}")
+    print(f"  Mean annual temperature : {tas_ann.mean():.2f} °C")
+    print(f"  Mean monthly precip     : {pr_ann.mean():.1f} mm/month")
+    print(f"  Mean SPI-12             : {spi.mean():.3f}")
+    print(f"  % months SPI < –1.0     : {(spi < -1.0).mean()*100:.1f}%")
+    print(f"  % months SPI < –2.0     : {(spi < -2.0).mean()*100:.1f}%")
 
-fig6 = plt.figure(figsize=(18, 14))
-gs   = gridspec.GridSpec(3, 3, figure=fig6, hspace=0.42, wspace=0.35)
-
-ax_prof_t  = fig6.add_subplot(gs[0, 0])    # seasonal temp profile
-ax_prof_p  = fig6.add_subplot(gs[0, 1])    # seasonal precip profile
-ax_roll    = fig6.add_subplot(gs[0, 2])    # rolling SPI overlay
-ax_gb_spi  = fig6.add_subplot(gs[1, :])    # annual SPI — Great Basin full width
-ax_dv_spi  = fig6.add_subplot(gs[2, :2])  # annual SPI — Death Valley
-ax_dfreq   = fig6.add_subplot(gs[2, 2])   # drought frequency summary
-
-# ── Panel A: Seasonal temperature ──
-bottoms = np.zeros(len(locs))
-for season, clr in zip(SEASONS.keys(), season_colors):
-    vals = np.array([seasonal_temp[loc][season] for loc in locs])
-    ax_prof_t.bar(x_pos, vals, 0.5, bottom=bottoms, color=clr,
-                  label=season, edgecolor="white", linewidth=0.4)
-    bottoms += vals
-ax_prof_t.set_xticks(x_pos); ax_prof_t.set_xticklabels(locs, fontsize=8)
-ax_prof_t.axhline(0, color="black", linewidth=0.7, linestyle="--")
-ax_prof_t.set_title("A. Seasonal Temp (°C)", fontsize=9, fontweight="bold")
-ax_prof_t.legend(fontsize=7, loc="upper left")
-
-# ── Panel B: Seasonal precipitation ──
-bottoms = np.zeros(len(locs))
-for season, clr in zip(SEASONS.keys(), season_colors):
-    vals = np.array([seasonal_pr[loc][season] for loc in locs])
-    ax_prof_p.bar(x_pos, vals, 0.5, bottom=bottoms, color=clr,
-                  label=season, edgecolor="white", linewidth=0.4)
-    bottoms += vals
-ax_prof_p.set_xticks(x_pos); ax_prof_p.set_xticklabels(locs, fontsize=8)
-ax_prof_p.set_title("B. Seasonal Precip (mm/d)", fontsize=9, fontweight="bold")
-
-# ── Panel C: Rolling SPI ──
-ax_roll.axhline(0, color="grey", linewidth=0.7, linestyle="--")
-ax_roll.axhline(DROUGHT_THRESH, color="#d73027", linewidth=0.9, linestyle=":")
-for loc, cfg in LOCATIONS.items():
-    df   = annual[loc]
-    roll = df.set_index("year")["spi"].rolling(ROLLING_WINDOW, center=True).mean()
-    ax_roll.plot(roll.index, roll.values, color=cfg["color"], linewidth=1.8,
-                 label=loc)
-ax_roll.set_title(f"C. {ROLLING_WINDOW}-yr Rolling SPI", fontsize=9, fontweight="bold")
-ax_roll.legend(fontsize=7)
-ax_roll.set_ylim(-2.5, 2.0)
-
-# ── Panel D & E: Annual SPI ──
-for ax, (loc, cfg) in zip([ax_gb_spi, ax_dv_spi], LOCATIONS.items()):
-    df  = annual[loc]
-    clr = cfg["color"]
-    ax.plot(df["year"], df["spi"], color=clr, linewidth=0.85, alpha=0.8)
-    ax.axhline(0, color="grey", linewidth=0.6, linestyle="--")
-    ax.axhline(DROUGHT_THRESH, color="#d73027", linewidth=0.8, linestyle=":")
-    shade_drought(ax, df["year"].values, df["spi"].values, clr)
-    slope, intercept, *_ = linregress(df["year"], df["spi"])
-    ax.plot(df["year"], intercept + slope * df["year"], "k-.", linewidth=1.2,
-            label=f"Trend {slope:+.4f}/yr")
-    ax.set_title(f"{'D' if 'Great' in loc else 'E'}. {loc} — Annual SPI",
-                 fontsize=9, fontweight="bold", color=clr)
-    ax.set_ylim(-3.2, 3.0)
-    ax.legend(fontsize=8)
-    ax.set_ylabel("SPI", fontsize=8)
-
-ax_dv_spi.set_xlabel("Year", fontsize=8)
-ax_gb_spi.set_xticklabels([])
-
-# ── Panel F: Drought frequency ──
-all_decs = sorted(set(d for df in dfreq.values() for d in df["decade"]))
-x_dd = np.arange(len(all_decs))
-for i, (loc, cfg) in enumerate(LOCATIONS.items()):
-    df_f   = dfreq[loc].set_index("decade").reindex(all_decs, fill_value=np.nan)
-    offset = (i - 0.5) * 0.35
-    ax_dfreq.bar(x_dd + offset, df_f["pct_drought"].values, 0.35,
-                 color=cfg["color"], label=loc[:5], edgecolor="white", linewidth=0.3)
-ax_dfreq.set_xticks(x_dd)
-ax_dfreq.set_xticklabels([str(d)[2:] + "s" for d in all_decs], fontsize=7, rotation=45)
-ax_dfreq.axhline(50, color="black", linewidth=0.7, linestyle="--")
-ax_dfreq.set_title("F. Drought Freq (%)", fontsize=9, fontweight="bold")
-ax_dfreq.legend(fontsize=7)
-ax_dfreq.set_ylim(0, 100)
-
-fig6.suptitle(
-    "Drought Without Borders: Great Basin vs Death Valley\n"
-    "Two deserts, opposite temperatures — one shared drying signal (CMIP6)",
-    fontsize=14, fontweight="bold", y=1.01
-)
-fig6.savefig(f"{FIGDIR}/combined_dashboard.png", dpi=150, bbox_inches="tight")
-print("[Saved] combined_dashboard.png")
-plt.show()
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# 10. Print summary statistics
-# ═══════════════════════════════════════════════════════════════════════════════
-
-print("\n" + "="*65)
-print("  SUMMARY STATISTICS — Great Basin vs Death Valley")
-print("="*65)
-fmt = "{:<20} {:>10} {:>10} {:>12} {:>10}"
-print(fmt.format("Metric", "Great Basin", "Death Valley", "Difference", "Unit"))
-print("-"*65)
-
-for label, col, unit in [
-    ("Mean SPI",        "spi",  ""),
-    ("SPI Std Dev",     "spi",  ""),
-    ("Mean Temp",       "tas",  "°C"),
-    ("Mean Precip",     "pr",   "mm/day"),
-]:
-    if label == "SPI Std Dev":
-        gb_val = annual["Great Basin"]["spi"].std()
-        dv_val = annual["Death Valley"]["spi"].std()
-    else:
-        gb_val = annual["Great Basin"][col].mean()
-        dv_val = annual["Death Valley"][col].mean()
-    print(fmt.format(label, f"{gb_val:.3f}", f"{dv_val:.3f}",
-                     f"{dv_val - gb_val:+.3f}", unit))
-
-print()
-for loc in LOCATIONS:
-    df = annual[loc]
-    slope, _, r, pval, _ = linregress(df["year"], df["spi"])
-    pct_dr = (df["spi"] < DROUGHT_THRESH).mean() * 100
-    print(f"  {loc}")
-    print(f"    SPI trend  : {slope:+.5f} SPI/yr  (r={r:.3f}, p={pval:.4f})")
-    print(f"    % in drought: {pct_dr:.1f}%  (SPI < {DROUGHT_THRESH})")
-print("="*65)
-print("\n[DONE] All figures and statistics complete.")
+print("\n[DONE] 4 figures saved.")
