@@ -468,13 +468,16 @@ function applyMapStep(step) {
       if (!meta.el) continue;
       const isHighlighted = highlights.some(h => name === h);
       if (isHighlighted) {
+        const col = getBaseColor(meta, mode);
         meta.el.style.opacity = "1";
-        meta.el.setAttribute("stroke", "#111");
-        meta.el.setAttribute("stroke-width", "1.5");
+        meta.el.setAttribute("stroke", col);
+        meta.el.setAttribute("stroke-width", "2");
+        meta.el.style.filter = `drop-shadow(0 4px 6px rgba(0, 0, 0, 0.27)) drop-shadow(0 2px 3px rgba(0,0,0,0.4)) drop-shadow(0 0 8px ${col})`;
       } else {
-        meta.el.style.opacity = "0.15";
-        meta.el.setAttribute("stroke", "rgba(255,255,255,0.1)");
+        meta.el.style.opacity = "0.08";
+        meta.el.setAttribute("stroke", "rgba(255,255,255,0.05)");
         meta.el.setAttribute("stroke-width", "0.3");
+        meta.el.style.filter = "";
       }
     }
   } else {
@@ -545,10 +548,11 @@ function updateInfoBox(step, highlights) {
   const info = INFO_CONTENT[countryName];
   if (!info) { setContent(""); box.classList.remove("visible"); return; }
 
+  const baseColor = getBaseColor(countryMeta[countryName] || {}, mapStep <= 2 ? "temp" : mapStep <= 5 ? "pr" : "overlay");
   setContent(`
     <div class="cib-label">${info.label}</div>
     <div class="cib-name">${countryName}</div>
-    <div class="cib-stat" style="color:${info.color}">${info.stat}</div>
+    <div class="cib-stat" style="color:${baseColor}">${info.stat}</div>
     <div class="cib-unit">${info.unit}</div>
     <div class="cib-divider"></div>
     <div class="cib-body">${info.body}</div>
