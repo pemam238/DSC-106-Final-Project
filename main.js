@@ -1318,3 +1318,47 @@ if (matches.length && similarName && similarDesc) {
     }
   
   })();
+
+  /* ── Typed rainfall transition title ───────────── */
+(function () {
+  const titleEl = document.getElementById("typed-rainfall-title");
+  const section = document.getElementById("rainfall-transition");
+
+  if (!titleEl || !section) return;
+
+  const text = "But rainfall tells the deeper story.";
+  let hasTyped = false;
+
+  function typeTitle() {
+    if (hasTyped) return;
+    hasTyped = true;
+
+    titleEl.textContent = "";
+
+    let i = 0;
+    const speed = 55;
+
+    function type() {
+      if (i < text.length) {
+        titleEl.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+
+    type();
+  }
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          typeTitle();
+        }
+      });
+    },
+    { threshold: 0.55 }
+  );
+
+  observer.observe(section);
+})();

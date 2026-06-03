@@ -1501,3 +1501,49 @@
     fill: #8B5E3C;
     letter-spacing: 0.06em;
   }
+
+  /* ── Rainfall Transition ───────────────────── */
+
+#rainfall-transition {
+  height: 100vh;
+  background: #f5f0e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.transition-inner {
+  max-width: 900px;
+}
+
+.transition-kicker {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #8B5E3C;
+  margin-bottom: 1rem;
+}
+
+#typed-rainfall-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  line-height: 1.05;
+  color: #1a1a1a;
+  letter-spacing: 0.04em;
+  min-height: 1.2em;
+}
+
+#typed-rainfall-title::after {
+  content: "|";
+  color: #8B5E3C;
+  animation: cursorBlink 0.8s infinite;
+}
+
+@keyframes cursorBlink {
+  0%,50% { opacity:1; }
+  51%,100% { opacity:0; }
+}
