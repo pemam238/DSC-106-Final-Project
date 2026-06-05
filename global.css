@@ -1064,60 +1064,72 @@ body {
   background: #f5f0e8;
   overflow-y: auto;
   height: auto;
-  min-height: auto;
-  align-items: flex-start;
-  padding: 2rem 1rem 2rem;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vh, 3rem) clamp(1rem, 3vw, 2rem);
 }
 
 #slide-climate .climate-builder {
-  margin: 1rem auto;
+  margin: 0 auto;
 }
+
 .climate-builder {
-  width: min(860px, 92vw);
+  width: min(960px, 92vw);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
+  gap: clamp(0.6rem, 1.5vh, 1.2rem);
 }
+
 .climate-title {
   font-weight: 900;
-  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-size: clamp(1.6rem, 3.5vw, 3.2rem);
   letter-spacing: 0.06em;
   color: #1a1a1a;
   text-align: center;
 }
+
 .climate-sub {
-  font-size: clamp(0.78rem, 1.4vw, 0.88rem);
+  font-size: clamp(0.82rem, 1.1vw, 1rem);
   color: #2e2e2e;
   text-align: center;
   line-height: 1.75;
-  max-width: 500px;
+  max-width: min(560px, 88vw);
   opacity: 0.65;
 }
+
 .climate-controls {
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  gap: clamp(0.9rem, 2vh, 1.6rem);
   width: 100%;
 }
+
 .climate-slider-group {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: clamp(0.3rem, 0.8vh, 0.55rem);
 }
+
 .slider-label {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
 }
 .slider-name {
-  font-size: 0.68rem;
+  font-size: clamp(0.7rem, 0.9vw, 0.8rem);
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #1a1a1a;
 }
-.slider-value { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; }
+.slider-value {
+  font-size: clamp(0.7rem, 0.9vw, 0.8rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
 .climate-range {
   -webkit-appearance: none;
   width: 100%;
@@ -1144,7 +1156,7 @@ body {
 .slider-ticks {
   display: flex;
   justify-content: space-between;
-  font-size: 0.58rem;
+  font-size: clamp(0.55rem, 0.7vw, 0.65rem);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1156,12 +1168,12 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
-  padding-top: 1.2rem;
+  gap: clamp(1rem, 3vw, 3rem);
+  padding-top: clamp(0.8rem, 1.5vh, 1.2rem);
   border-top: 1px solid rgba(139,94,60,0.15);
 }
 .meter-label {
-  font-size: 0.65rem;
+  font-size: clamp(0.58rem, 0.75vw, 0.7rem);
   font-weight: 700;
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -1172,49 +1184,60 @@ body {
   width: min(520px, 80vw);
   height: auto;
 }
-.dial-wrap svg { width: 100%; height: auto; }
+.dial-wrap {
+  position: relative;
+  width: min(340px, 55vw);
+  height: auto;
+}
+
 .meter-verdict {
   font-weight: 900;
-  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-size: clamp(1.4rem, 3.2vw, 3rem);
   letter-spacing: 0.1em;
   color: #1a1a1a;
   text-transform: uppercase;
   transition: color 0.4s;
-  margin-top: -0.5rem;
+  margin-top: -0.3rem;
 }
 .meter-example {
-  font-size: 0.72rem;
+  font-size: clamp(0.68rem, 0.9vw, 0.82rem);
   font-weight: 400;
   color: rgba(42,42,42,0.5);
   letter-spacing: 0.05em;
   text-align: center;
-  max-width: 340px;
+  max-width: min(300px, 88vw);
   line-height: 1.6;
+  margin-top: 0.4rem;
 }
 .similar-climate-card {
-  margin-top: 1rem;
+  margin-top: clamp(0.5rem, 1vh, 1rem);
   text-align: center;
   background: rgba(139,94,60,0.08);
   border-radius: 12px;
-  padding: 0.8rem 1.2rem;
+  padding: clamp(1rem, 2vh, 1.6rem) clamp(1.2rem, 2.5vw, 2rem);
+  width: 100%;
+  border: 1px solid rgba(139,94,60,0.15);
 }
 .similar-label {
-  font-size: 0.55rem;
+  font-size: clamp(0.52rem, 0.65vw, 0.62rem);
   letter-spacing: 0.2em;
   font-weight: 700;
   text-transform: uppercase;
   color: #8B5E3C;
 }
+
+
 #similar-name {
-  font-size: 1.1rem;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
   font-weight: 900;
   color: #1a1a1a;
-  margin: 0.2rem 0 0.3rem;
+  margin: 0.35rem 0 0.4rem;
 }
+
 #similar-desc {
-  font-size: 0.7rem;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
   color: #2e2e2e;
-  line-height: 1.5;
+  line-height: 1.7;
 }
 
 /* ── Slide outro ────────────────────────────────── */
@@ -1377,13 +1400,16 @@ body {
   flex-direction: column;
   align-items: center;
   flex: 1;
+  min-width: 0;
 }
+
 .meter-right-col {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex: 1;
+  min-width: 0;
 }
 
 .takeaway-content {
