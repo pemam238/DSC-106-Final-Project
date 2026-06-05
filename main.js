@@ -1008,7 +1008,7 @@ loadTopojsonAndMap();
     const { W, H, iW, iH, margin } = chartDims(svgEl);
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
     const x = d3.scaleTime().domain(d3.extent(spiData, d => d.date)).range([0, iW]);
-    const y = d3.scaleLinear().domain([-3.0, 2.0]).range([iH, 0]);
+    const y = d3.scaleLinear().domain([-3.0, 3.5]).range([iH, 0]);
     g.append('rect').attr('x', 0).attr('y', y(-1.0)).attr('width', iW).attr('height', iH - y(-1.0)).attr('fill', 'rgba(139,94,60,0.06)');
     addGridlines(g, y, iW);
     styleAxis(g.append('g').attr('class', 'case-axis').attr('transform', `translate(0,${iH})`).call(d3.axisBottom(x).ticks(d3.timeYear.every(10))));
