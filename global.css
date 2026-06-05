@@ -40,7 +40,7 @@ body {
 /* ── Slide 1 ─────────────────────────────────── */
 #slide-1 {
   min-height: 100vh;
-  padding: 6rem 1.5rem 8rem;
+  padding: clamp(3rem, 8vh, 6rem) 1.5rem clamp(4rem, 10vh, 8rem);
   background-image: url('cracked-earth.jpg');
   background-size: cover;
   background-position: center;
@@ -62,19 +62,21 @@ body {
   padding: 0 1.5rem;
 }
 
-.hero-content { max-width: 900px; }
+.hero-content { 
+  max-width: min(900px, 90vw); 
+}
 
 .title {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-weight: 900;
-  font-size: clamp(3.4rem, 10vw, 8.5rem);
+  font-size: clamp(2.8rem, 8vw, 8.5rem);
   letter-spacing: 0.06em;
   color: #fff;
   text-shadow: 0 4px 30px rgba(0,0,0,0.65);
   line-height: 0.88;
-  margin-bottom: 1.6rem;
+  margin-bottom: clamp(1rem, 2.5vh, 1.6rem);
 }
 
 .title span:nth-child(2) {
@@ -84,13 +86,14 @@ body {
 
 .context-text {
   color: rgba(255,255,255,0.72);
-  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  font-size: clamp(0.8rem, 1.3vw, 1rem);
   line-height: 1.75;
   letter-spacing: 0.03em;
-  max-width: 580px;
+  max-width: min(580px, 85vw);
   margin: 0 auto 1.4rem;
   font-weight: 400;
 }
+
 
 .byline {
   font-weight: 400;
@@ -152,33 +155,34 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.8rem;
-  padding: 2rem;
+  gap: clamp(0.8rem, 2vh, 1.8rem);
+  padding: clamp(1rem, 3vh, 2rem) clamp(1rem, 3vw, 2rem);
   overflow: hidden;
 }
 
 /* Hot/Cold question UI */
 .hot-cold-question {
   font-weight: 800;
-  font-size: clamp(2.8rem, 5vw, 4rem);
+  font-size: clamp(1.8rem, 3.5vw, 4rem);
   color: #2a2a2a;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   text-align: center;
   z-index: 1;
   position: relative;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
   line-height: 1.05;
 }
+
 .hot-cold-question .big-word {
-  font-size: 1.5em;
+  font-size: clamp(2.8rem, 5.5vw, 1.5em);
   display: block;
   line-height: 1;
 }
 
 .hot-cold-frame {
   position: relative;
-  width: min(1000px, 90vw);
+  width: min(680px, 58vw);
   aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
@@ -273,27 +277,29 @@ body {
 .side-panel {
   position: absolute;
   top: 0;
-  width:  clamp(300px, 25vw, 500px);
+  width: clamp(200px, 20vw, 500px);
   height: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 0 2rem;
+  padding: 0 1rem;
   pointer-events: none;
   z-index: 2;
   overflow: hidden;
 }
 
-.left-panel  { left: 0; 
-  justify-content: flex-end; 
-  padding-right: 6rem; 
-  align-items: center; 
- }
+.left-panel {
+  left: 0;
+  justify-content: flex-end;
+  padding-right: clamp(1.5rem, 3vw, 6rem);
+  align-items: center;
+}
 
-.right-panel { right: 0; 
-  justify-content: flex-start; 
-  padding-left: 6rem; 
-  align-items: center; 
+.right-panel {
+  right: 0;
+  justify-content: flex-start;
+  padding-left: clamp(1.5rem, 3vw, 6rem);
+  align-items: center;
 }
 
 .left-panel .side-panel-inner {
@@ -336,20 +342,23 @@ body {
   margin-bottom: 0.2rem;
 }
 .panel-heading {
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  font-size: clamp(1rem, 1.6vw, 2rem);
   font-weight: 900;
   color: #1a1a1a;
   letter-spacing: 0.04em;
   line-height: 1.15;
   text-transform: uppercase;
 }
+
 .panel-heading em { font-style: normal; color: #8B5E3C; }
+
 .panel-body {
-  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  font-size: clamp(0.78rem, 1vw, 1.15rem);
   color: #2e2e2e;
   line-height: 1.8;
   font-weight: 400;
 }
+
 .panel-body em { font-style: italic; color: #8B5E3C; font-weight: 600; }
 
 .panel-divider {
