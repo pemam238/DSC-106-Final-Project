@@ -786,14 +786,14 @@ body {
 .case-split-layout {
   display: flex;
   align-items: center;
-  gap: 3vw;
-  width: 100%;
-  max-width: 1500px;
+  gap: clamp(1.5rem, 3vw, 4rem);
+  width: min(92vw, 1400px);
+  max-width: none;
 }
 .case-split-reversed { flex-direction: row-reverse; }
 .case-split-text {
-  flex: 0 0 420px;
-  max-width: 500px;
+  flex: 1 1 320px;
+  max-width: 460px;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
