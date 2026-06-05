@@ -17,11 +17,11 @@ const chapterNav = document.getElementById('chapter-nav');
 const chapterLabel = document.getElementById('chapter-label');
 const chapterDots = document.querySelectorAll('.chapter-dot');
 const CHAPTERS = [
-  { id: 'slide-1',       label: 'Intro' },
+  { id: 'slide-1', label: 'Intro' },
   { id: 'slide-2-track', label: 'Hot or Cold?' },
+  { id: 'slide-case-track', label: 'Two Deserts' },
   { id: 'slide-3-track', label: 'The World' },
   { id: 'slide-spi-track', label: 'Measuring Drought' },
-  { id: 'slide-case-track', label: 'Two Deserts' },
   { id: 'slide-climate', label: 'Build a Climate' },
 ];
 

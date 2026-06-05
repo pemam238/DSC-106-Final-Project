@@ -178,7 +178,7 @@ body {
 
 .hot-cold-frame {
   position: relative;
-  width: min(640px, 72vw);
+  width: min(1000px, 90vw);
   aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
@@ -273,7 +273,7 @@ body {
 .side-panel {
   position: absolute;
   top: 0;
-  width: calc((100% - min(640px, 72vw)) / 2);
+  width:  clamp(300px, 25vw, 500px);
   height: 100%;
   display: flex;
   align-items: flex-start;
@@ -284,8 +284,17 @@ body {
   overflow: hidden;
 }
 
-.left-panel  { left: 0; justify-content: flex-end; padding-right: 1.5rem; align-items: flex-start; padding-top: 25rem; }
-.right-panel { right: 0; justify-content: flex-start; padding-left: 1.5rem; align-items: flex-start; padding-top: 25rem; }
+.left-panel  { left: 0; 
+  justify-content: flex-end; 
+  padding-right: 6rem; 
+  align-items: center; 
+ }
+
+.right-panel { right: 0; 
+  justify-content: flex-start; 
+  padding-left: 6rem; 
+  align-items: center; 
+}
 
 .left-panel .side-panel-inner {
   display: flex;
@@ -297,7 +306,7 @@ body {
   text-align: right;
   align-items: flex-end;
   width: 100%;
-  max-width: 250px;
+  max-width: 400px;
 }
 .right-panel .side-panel-inner {
   display: flex;
@@ -309,7 +318,7 @@ body {
   text-align: left;
   align-items: flex-start;
   width: 100%;
-  max-width: 250px;
+  max-width: 400px;
 }
 
 .left-panel.visible .side-panel-inner,
@@ -327,16 +336,16 @@ body {
   margin-bottom: 0.2rem;
 }
 .panel-heading {
-  font-size: clamp(1rem, 1.8vw, 1.35rem);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
   font-weight: 900;
   color: #1a1a1a;
   letter-spacing: 0.04em;
-  line-height: 1.2;
+  line-height: 1.15;
   text-transform: uppercase;
 }
 .panel-heading em { font-style: normal; color: #8B5E3C; }
 .panel-body {
-  font-size: clamp(0.75rem, 1.1vw, 0.88rem);
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
   color: #2e2e2e;
   line-height: 1.8;
   font-weight: 400;

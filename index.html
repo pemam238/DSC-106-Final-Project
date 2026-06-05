@@ -19,10 +19,9 @@
   <span id="chapter-label">Intro</span>
   <button class="chapter-dot active" data-target="slide-1" title="Intro"></button>
   <button class="chapter-dot" data-target="slide-2-track" title="Hot or Cold?"></button>
-  <button class="chapter-dot" data-target="slide-3-track" title="World Map"></button>
-  <button class="chapter-dot" data-target="slide-spi-track" title="SPI"></button>
-  <button class="chapter-dot" data-target="slide-case-track" title="Case Study"></button>
-  <button class="chapter-dot" data-target="slide-climate" title="Build a Climate"></button>
+<button class="chapter-dot" data-target="slide-case-track"></button>
+<button class="chapter-dot" data-target="slide-3-track"></button>
+<button class="chapter-dot" data-target="slide-spi-track"></button>  <button class="chapter-dot" data-target="slide-climate" title="Build a Climate"></button>
   <button class="chapter-dot" data-target="slide-outro" title="Takeaway"></button>
 </nav>
 
@@ -58,14 +57,14 @@
 <!-- SLIDE 2 — Hot/Cold question + sticky panels -->
 <section id="slide-2-track">
   <div class="sticky-scene" id="scene-question">
-    <p class="hot-cold-question">Where do <em style="color:#8B5E3C; font-style:normal;">you</em> think<br><span class="big-word">droughts</span>strike?</p>
+    <p class="hot-cold-question">Where do <em style="color:#8B5E3C; font-style:normal; ">you</em> think it's<br><span class="big-word">dry?</span></p>
     <div class="hot-cold-frame">
       <div class="hot-cold-halves" id="hot-cold-halves">
         <div class="half left-half" data-choice="hot">
-          <span class="half-label">HOT</span>
+          
         </div>
         <div class="half right-half" data-choice="cold">
-          <span class="half-label">COLD</span>
+          
         </div>
       </div>
       <div class="reveal-overlay" id="reveal-overlay">
@@ -111,125 +110,6 @@
     </div>
   </div>
   <div class="scroll-spacer"></div>
-</section>
-
-<!-- Connective divider -->
-<div class="section-divider section-reveal">
-  <div class="divider-line"></div>
-  <span class="divider-text">The world</span>
-  <div class="divider-line"></div>
-</div>
-
-<!-- SLIDE 3 — WORLD MAP SCROLLYTELLING -->
-<section id="slide-3-track">
-  <div class="sticky-scene" id="scene-map" style="gap:0;">
-    <div class="map-top-label" id="map-top-label">
-      <p class="map-label-text" id="map-label-text"></p>
-    </div>
-    <div id="map-left-col">
-      <div id="world-map-wrap">
-        <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
-      </div>
-      <div class="map-legend" id="map-legend">
-        <div class="legend-label" id="legend-label">Temperature</div>
-        <div class="legend-bar" id="legend-bar"></div>
-        <div class="legend-ends">
-          <span id="legend-min"></span>
-          <span id="legend-max"></span>
-        </div>
-      </div>
-    </div>
-    <div class="map-right-panel" id="map-right-panel">
-      <div class="country-info-box" id="country-info-box"></div>
-    </div>
-  </div>
-  <div class="scroll-spacer" style="height:900vh;"></div>
-</section>
-
-<!-- Connective divider -->
-<div class="section-divider section-reveal">
-  <div class="divider-line"></div>
-  <span class="divider-text">Measuring drought</span>
-  <div class="divider-line"></div>
-</div>
-
-<!-- SLIDE 4 — SPI RAIN EXPLAINER -->
-<section id="slide-spi-track">
-  <div class="sticky-scene spi-scene" id="scene-spi">
-    <canvas id="spi-canvas"></canvas>
-    <div id="spi-panels">
-      <div class="spi-panel active" id="spi-p0">
-        <p class="spi-label">Step 1</p>
-        <h3 class="spi-head">Normal rainfall</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">In a typical year, rain falls steadily. Each drop contributes to what we call the <em>expected</em> precipitation for a region.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-needle" id="spi-needle-0" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-0">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p1">
-        <p class="spi-label">Step 2</p>
-        <h3 class="spi-head">What is SPI?</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">The <em>Standardized Precipitation Index</em> measures how far actual rainfall deviates from the long-term average — in units of standard deviation.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-needle" id="spi-needle-1" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-1">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p2">
-        <p class="spi-label">Step 3</p>
-        <h3 class="spi-head">Mild drought begins</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">When SPI drops below <em>−0.5</em>, rainfall is noticeably below average. Fewer drops reach the ground. Soil moisture starts to fall.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-needle" id="spi-needle-2" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-2">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p3">
-        <p class="spi-label">Step 4</p>
-        <h3 class="spi-head">Severe drought</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">At <em>−1.5</em> or below, drought is severe. Rain is rare. Rivers shrink. What was once a steady rhythm becomes near‑silence.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-needle" id="spi-needle-3" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-3">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p4">
-        <p class="spi-label">Step 5</p>
-        <h3 class="spi-head">Extreme drought</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">SPI below <em>−2.0</em> is extreme drought. The sky is nearly empty. What little falls evaporates before it can help. The land remembers nothing but thirst.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-needle" id="spi-needle-4" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-4">SPI = 0.0</p>
-      </div>
-    </div>
-  </div>
-  <div class="spi-scroll-space"></div>
 </section>
 
 <!-- Connective divider -->
@@ -396,6 +276,127 @@
   </div>
   <div class="case-scroll-space"></div>
 </section>
+
+
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
+  <span class="divider-text">The world</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- SLIDE 3 — WORLD MAP SCROLLYTELLING -->
+<section id="slide-3-track">
+  <div class="sticky-scene" id="scene-map" style="gap:0;">
+    <div class="map-top-label" id="map-top-label">
+      <p class="map-label-text" id="map-label-text"></p>
+    </div>
+    <div id="map-left-col">
+      <div id="world-map-wrap">
+        <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+      <div class="map-legend" id="map-legend">
+        <div class="legend-label" id="legend-label">Temperature</div>
+        <div class="legend-bar" id="legend-bar"></div>
+        <div class="legend-ends">
+          <span id="legend-min"></span>
+          <span id="legend-max"></span>
+        </div>
+      </div>
+    </div>
+    <div class="map-right-panel" id="map-right-panel">
+      <div class="country-info-box" id="country-info-box"></div>
+    </div>
+  </div>
+  <div class="scroll-spacer" style="height:900vh;"></div>
+</section>
+
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
+  <span class="divider-text">Measuring drought</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- SLIDE 4 — SPI RAIN EXPLAINER -->
+<section id="slide-spi-track">
+  <div class="sticky-scene spi-scene" id="scene-spi">
+    <canvas id="spi-canvas"></canvas>
+    <div id="spi-panels">
+      <div class="spi-panel active" id="spi-p0">
+        <p class="spi-label">Step 1</p>
+        <h3 class="spi-head">Normal rainfall</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">In a typical year, rain falls steadily. Each drop contributes to what we call the <em>expected</em> precipitation for a region.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-0" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-0">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p1">
+        <p class="spi-label">Step 2</p>
+        <h3 class="spi-head">What is SPI?</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">The <em>Standardized Precipitation Index</em> measures how far actual rainfall deviates from the long-term average — in units of standard deviation.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-1" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-1">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p2">
+        <p class="spi-label">Step 3</p>
+        <h3 class="spi-head">Mild drought begins</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">When SPI drops below <em>−0.5</em>, rainfall is noticeably below average. Fewer drops reach the ground. Soil moisture starts to fall.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-2" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-2">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p3">
+        <p class="spi-label">Step 4</p>
+        <h3 class="spi-head">Severe drought</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">At <em>−1.5</em> or below, drought is severe. Rain is rare. Rivers shrink. What was once a steady rhythm becomes near‑silence.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-3" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-3">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p4">
+        <p class="spi-label">Step 5</p>
+        <h3 class="spi-head">Extreme drought</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">SPI below <em>−2.0</em> is extreme drought. The sky is nearly empty. What little falls evaporates before it can help. The land remembers nothing but thirst.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-4" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-4">SPI = 0.0</p>
+      </div>
+    </div>
+  </div>
+  <div class="spi-scroll-space"></div>
+</section>
+
 
 <!-- Connective divider -->
 <div class="section-divider section-reveal">
