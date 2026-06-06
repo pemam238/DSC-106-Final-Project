@@ -19,9 +19,10 @@
   <span id="chapter-label">Intro</span>
   <button class="chapter-dot active" data-target="slide-1" title="Intro"></button>
   <button class="chapter-dot" data-target="slide-2-track" title="Hot or Cold?"></button>
+  <button class="chapter-dot" data-target="slide-spi-track"></button> 
 <button class="chapter-dot" data-target="slide-case-track"></button>
-<button class="chapter-dot" data-target="slide-3-track"></button>
-<button class="chapter-dot" data-target="slide-spi-track"></button>  <button class="chapter-dot" data-target="slide-climate" title="Build a Climate"></button>
+<button class="chapter-dot" data-target="slide-3-track"></button> 
+<button class="chapter-dot" data-target="slide-climate" title="Build a Climate"></button>
   <button class="chapter-dot" data-target="slide-outro" title="Takeaway"></button>
 </nav>
 
@@ -34,7 +35,7 @@
       <span>HIDE</span>
     </h1>
     <p class="context-text">
-      Exploring patterns of dryness across a changing climate.
+      Everyone pictures cracked desrt earth. But some of the world's most persistent droughts happen somewhere far colder.
     </p>
   </div>
   <div class="scroll-arrow">
@@ -57,19 +58,19 @@
 <!-- SLIDE 2 — Hot/Cold question + sticky panels -->
 <section id="slide-2-track">
   <div class="sticky-scene" id="scene-question">
-    <p class="hot-cold-question">Where do <em style="color:#8B5E3C; font-style:normal; ">you</em> think it's<br><span class="big-word">dry?</span></p>
+    <p class="hot-cold-question">Which one is in <br><span class="big-word" style="color: #8B5E3C;">drought?</span></p>
     <div class="hot-cold-frame">
       <div class="hot-cold-halves" id="hot-cold-halves">
-        <div class="half left-half" data-choice="hot">
+        <div class="half left-half" data-choice="hot" style="background-image: url('visualizations/death_valley.jpg'); background-size: cover; background-position: center;">
           
         </div>
-        <div class="half right-half" data-choice="cold">
+        <div class="half right-half" data-choice="cold" style="background-image: url('visualizations/great_basin.jpg'); background-size: cover; background-position: center;">
           
         </div>
       </div>
       <div class="reveal-overlay" id="reveal-overlay">
-        <h2 class="reveal-text">Both.</h2>
-        <p class="reveal-sub">Drought can occur anywhere precipitation falls below what's expected.</p>
+        <h2 class="reveal-text">They both are.</h2>
+        <p class="reveal-sub">A cold desert in Nevada and the hottest place on earth. Both experience drought at the same frequency, even with a temperature difference of 5°C(41°F) </p>
       </div>
     </div>
 
@@ -80,14 +81,13 @@
         <h3 class="panel-heading">What is a <em>drought?</em></h3>
         <hr class="panel-divider" />
         <p class="panel-body">
-          A drought is a prolonged period of abnormally low precipitation
-          relative to what a region typically receives. It's not about
-          absolute dryness, but <em>deficit.</em>
+          Drought isn't about how little rain a place gets, it's about how much less it gets
+          than <em>usual. </em> A rainforest receiving half its normally
+          rainfall is in drought. A desert getting its typical trickle of rain is not.
         </p>
         <p class="panel-body">
-          When rain or snow falls well below historical averages for weeks,
-          months, or years, soils dry out, rivers shrink, and water supplies
-          dwindle.
+          Scientists measure this gap by using the <em> Standardized Precipiatation Index (SPI)</em>. This is 
+          a score that tells you how far below normal precipitation has fallen, regardless of climate. 
         </p>
       </div>
     </div>
@@ -96,15 +96,15 @@
     <div class="side-panel right-panel" id="panel-right">
       <div class="side-panel-inner">
         <p class="panel-label">Surprise</p>
-        <h3 class="panel-heading">Temperature is only part of the story.</h3>
+        <h3 class="panel-heading">Cold places <br> <em>drought too.</em></h3>
         <hr class="panel-divider" />
         <p class="panel-body">
-          Drought is not measured by heat alone. It happens when a place receives
-          significantly less rain or snow than it normally expects.
+          Because drought is defined by <em>deficit</em>, not heat, it can strike anywhere precipitation
+          drops below expectaion, such as snowpack in mountain ranges, rainfall in temperate forests,
+          even Arctic regions.
         </p>
         <p class="panel-body">
-          That means drought can appear in many different climates; wherever the
-          usual pattern of precipitation breaks!
+          An SPI below <em>-1 </em> signals drought. It doesn't matter whether the thermometer reads 40°C or 4°C.
         </p>
       </div>
     </div>
@@ -118,6 +118,85 @@
   <span class="divider-text">A tale of two deserts</span>
   <div class="divider-line"></div>
 </div>
+
+<!-- SLIDE 4 — SPI RAIN EXPLAINER -->
+<section id="slide-spi-track">
+  <div class="sticky-scene spi-scene" id="scene-spi">
+    <canvas id="spi-canvas"></canvas>
+    <div id="spi-panels">
+      <div class="spi-panel active" id="spi-p0">
+        <p class="spi-label">Step 1</p>
+        <h3 class="spi-head">Normal rainfall</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">In a typical year, rain falls steadily. Each drop contributes to what we call the <em>expected</em> precipitation for a region.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-0" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-0">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p1">
+        <p class="spi-label">Step 2</p>
+        <h3 class="spi-head">What is SPI?</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">The <em>Standardized Precipitation Index</em> measures how far actual rainfall deviates from the long-term average — in units of standard deviation.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-1" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-1">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p2">
+        <p class="spi-label">Step 3</p>
+        <h3 class="spi-head">Mild drought begins</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">When SPI drops below <em>−0.5</em>, rainfall is noticeably below average. Fewer drops reach the ground. Soil moisture starts to fall.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-2" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-2">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p3">
+        <p class="spi-label">Step 4</p>
+        <h3 class="spi-head">Severe drought</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">At <em>−1.5</em> or below, drought is severe. Rain is rare. Rivers shrink. What was once a steady rhythm becomes near‑silence.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-3" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-3">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p4">
+        <p class="spi-label">Step 5</p>
+        <h3 class="spi-head">Extreme drought</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">SPI below <em>−2.0</em> is extreme drought. The sky is nearly empty. What little falls evaporates before it can help. The land remembers nothing but thirst.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-4" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-4">SPI = 0.0</p>
+      </div>
+    </div>
+  </div>
+  <div class="spi-scroll-space"></div>
+</section>
 
 <!-- SLIDE 5 — CASE STUDY (Great Basin vs Death Valley) -->
 <section id="slide-case-track">
@@ -317,84 +396,7 @@
   <div class="divider-line"></div>
 </div>
 
-<!-- SLIDE 4 — SPI RAIN EXPLAINER -->
-<section id="slide-spi-track">
-  <div class="sticky-scene spi-scene" id="scene-spi">
-    <canvas id="spi-canvas"></canvas>
-    <div id="spi-panels">
-      <div class="spi-panel active" id="spi-p0">
-        <p class="spi-label">Step 1</p>
-        <h3 class="spi-head">Normal rainfall</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">In a typical year, rain falls steadily. Each drop contributes to what we call the <em>expected</em> precipitation for a region.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-needle" id="spi-needle-0" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-0">SPI = 0.0</p>
-      </div>
 
-      <div class="spi-panel" id="spi-p1">
-        <p class="spi-label">Step 2</p>
-        <h3 class="spi-head">What is SPI?</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">The <em>Standardized Precipitation Index</em> measures how far actual rainfall deviates from the long-term average — in units of standard deviation.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-needle" id="spi-needle-1" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-1">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p2">
-        <p class="spi-label">Step 3</p>
-        <h3 class="spi-head">Mild drought begins</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">When SPI drops below <em>−0.5</em>, rainfall is noticeably below average. Fewer drops reach the ground. Soil moisture starts to fall.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-needle" id="spi-needle-2" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-2">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p3">
-        <p class="spi-label">Step 4</p>
-        <h3 class="spi-head">Severe drought</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">At <em>−1.5</em> or below, drought is severe. Rain is rare. Rivers shrink. What was once a steady rhythm becomes near‑silence.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-needle" id="spi-needle-3" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-3">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p4">
-        <p class="spi-label">Step 5</p>
-        <h3 class="spi-head">Extreme drought</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">SPI below <em>−2.0</em> is extreme drought. The sky is nearly empty. What little falls evaporates before it can help. The land remembers nothing but thirst.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-needle" id="spi-needle-4" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-4">SPI = 0.0</p>
-      </div>
-    </div>
-  </div>
-  <div class="spi-scroll-space"></div>
-</section>
 
 
 <!-- Connective divider -->
