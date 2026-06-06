@@ -598,18 +598,18 @@ loadTopojsonAndMap();
 (function () {
   const SPI_STEPS = [
     { spi: 0.0,  label: 'Normal rainfall',   dropRate: 1.0,  color: [70, 140, 210] },
-    { spi: 0.0,  label: 'What is SPI?',      dropRate: 1.0,  color: [70, 140, 210] },
+    { spi: 1.5 ,  label: 'Above Average',    dropRate: 1.8,  color: [30, 100, 200] },
     { spi: -0.6, label: 'Mild drought',      dropRate: 0.52, color: [180, 130,  70] },
-    { spi: -1.5, label: 'Severe drought',    dropRate: 0.18, color: [200,  80,  30] },
+    { spi: -1.5, label: 'Significant drought',    dropRate: 0.18, color: [200,  80,  30] },
     { spi: -2.1, label: 'Extreme drought',   dropRate: 0.04, color: [160,  35,  10] },
   ];
 
   function spiToNeedle(spi) {
-    return Math.max(0, Math.min(100, ((spi + 2.5) / 4.0) * 100));
+    return Math.max(0, Math.min(100, ((spi + 2.5) / 5.0) * 100));
   }
 
   function spiToColor(spi) {
-    const t = Math.max(0, Math.min(1, (spi + 2.5) / 4.0));
+    const t = Math.max(0, Math.min(1, (spi + 2.5) / 5.0));
     const r = Math.round(180 + (90 - 180) * t);
     const g = Math.round(60 + (170 - 60) * t);
     const b = Math.round(20 + (255 - 20) * t);
