@@ -116,68 +116,81 @@ document.querySelectorAll('.half').forEach(half => {
 });
 
 /* ══════════════════════════════════════════════
-   SLIDE 3 — WORLD MAP SCROLLYTELLING (from original)
+   SLIDE 3 — WORLD MAP SCROLLYTELLING
    ══════════════════════════════════════════════ */
-const MAP_STEPS = [0, 0.12, 0.22, 0.33, 0.44, 0.55, 0.66, 0.78];
+const MAP_STEPS = [0, 0.18, 0.36, 0.54, 0.72, 0.88];
 
 const STEP_LABELS = [
-  `<strong style="color:#6b0a0a">THE HEAT MAP</strong><br><span>Mean surface temperature per country, averaged across 165 years of records from 1850 to 2014 — revealing how hot each place typically runs over the long run, not just in a single season.</span>`,
-  `<strong style="color:#6b0a0a">THE HEAT MAP</strong><br><span>Mean surface temperature per country, averaged across 165 years of records from 1850 to 2014 — revealing how hot each place typically runs over the long run, not just in a single season.</span>`,
-  `<strong style="color:#6b0a0a">THE HEAT MAP</strong><br><span>Mean surface temperature per country, averaged across 165 years of records from 1850 to 2014 — revealing how hot each place typically runs over the long run, not just in a single season.</span>`,
-  `<strong style="color:#0a1f4a">FOLLOW THE RAIN</strong><br><span>Mean daily precipitation in mm/day, averaged across 165 years from 1850 to 2014 — showing how much moisture each country typically receives, from bone‑dry deserts to monsoon‑soaked mountains.</span>`,
-  `<strong style="color:#0a1f4a">FOLLOW THE RAIN</strong><br><span>Mean daily precipitation in mm/day, averaged across 165 years from 1850 to 2014 — showing how much moisture each country typically receives, from bone‑dry deserts to monsoon‑soaked mountains.</span>`,
-  `<strong style="color:#0a1f4a">FOLLOW THE RAIN</strong><br><span>Mean daily precipitation in mm/day, averaged across 165 years from 1850 to 2014 — showing how much moisture each country typically receives, from bone‑dry deserts to monsoon‑soaked mountains.</span>`,
-  `<strong>WHERE THEY MEET</strong><br><span>Heat and rain overlaid across every country — revealing where climates are hot‑and‑dry, cold‑and‑wet, or somewhere between. The gap between what falls and what's expected is exactly where drought hides.</span>`,
-  `<strong>WHERE THEY MEET</strong><br><span>Heat and rain overlaid across every country — revealing where climates are hot‑and‑dry, cold‑and‑wet, or somewhere between. The gap between what falls and what's expected is exactly where drought hides.</span>`,
+  `<strong style="color:#6b0a0a">WHERE YOU'D EXPECT DROUGHT</strong><br><span>Temperature across every country — the obvious suspects. Hot places. The Sahara, the Arabian Peninsula, the Horn of Africa. This is where most people picture drought.</span>`,
+  `<strong style="color:#6b0a0a">WHERE YOU'D EXPECT DROUGHT</strong><br><span>Temperature across every country — the obvious suspects. Hot places. The Sahara, the Arabian Peninsula, the Horn of Africa. This is where most people picture drought.</span>`,
+  `<strong style="color:#0a2a4a">BUT THE DATA TELLS A DIFFERENT STORY</strong><br><span>Now colored by SPI — the actual measure of drought deficit. Hot deserts stay red. But cold and temperate regions are lighting up too. Click any glowing country to explore.</span>`,
+  `<strong style="color:#0a2a4a">DROUGHT IS GETTING WORSE — IN THE COLD</strong><br><span>SPI change from baseline to modern period. Dark red means drought is intensifying. Many of the sharpest declines are in places you wouldn't expect — cold steppes, mountain valleys, temperate plains.</span>`,
+  `<strong style="color:#0a2a4a">DROUGHT IS GETTING WORSE — IN THE COLD</strong><br><span>SPI change from baseline to modern period. Dark red means drought is intensifying. Many of the sharpest declines are in places you wouldn't expect — cold steppes, mountain valleys, temperate plains.</span>`,
+  `<strong>THE THERMOMETER NEVER TELLS THE WHOLE STORY</strong><br><span>From scorching deserts to cold steppes — drought hides wherever precipitation falls short of expectation, regardless of temperature. And it's spreading.</span>`,
 ];
 
-const COUNTRY_DATA = {
-  "Mali":       { temp: 29.1,  pr: 0.52, spi: -0.85 },
-  "Antarctica": { temp: -28.9, pr: 0.14, spi: -0.12 },
-  "Myanmar":    { temp: 24.3,  pr: 7.18, spi:  0.31 },
-  "Egypt":      { temp: 25.8,  pr: 0.07, spi: -0.92 },
+const COLD_DROUGHT_INFO = {
+  "Kazakhstan": {
+    label: "Cold Steppe Drought",
+    temp: "Mean temp: 6.8°C",
+    spi: "SPI −0.78",
+    spiChange: "Worsening",
+    body: "Central Asia's vast steppe receives far less precipitation than its grasslands need. Despite harsh winters, Kazakhstan experiences chronic drought — invisible to anyone expecting drought to look like a desert.",
+  },
+  "Argentina": {
+    label: "Patagonian Drought",
+    temp: "Mean temp: 8.2°C",
+    spi: "SPI −0.81",
+    spiChange: "Worsening",
+    body: "Patagonia sits in a rain shadow east of the Andes. Cold, windswept, and persistently dry — it records some of South America's most severe SPI deficits despite temperatures rarely exceeding 15°C.",
+  },
+  "Mongolia": {
+    label: "Continental Drought",
+    temp: "Mean temp: −0.4°C",
+    spi: "SPI −0.92",
+    spiChange: "Significantly worsening",
+    body: "One of the coldest countries on Earth, Mongolia averages below freezing annually. Yet its grasslands — critical for nomadic herders — are among the most drought-stressed in the dataset.",
+  },
+  "United States": {
+    label: "The Great Basin",
+    temp: "Mean temp: 9.7°C",
+    spi: "SPI −0.74",
+    spiChange: "Worsening",
+    body: "You saw it in the case study. The Great Basin is cold desert — average temperature under 10°C — yet its SPI record is identical to Death Valley's. Cold doesn't mean wet.",
+  },
+  "Russia": {
+    label: "Siberian Drought",
+    temp: "Mean temp: −5.1°C",
+    spi: "SPI −0.61",
+    spiChange: "Worsening",
+    body: "Russia spans 11 time zones. Much of Siberia experiences continental drought — extreme cold winters with far less snowfall than the ecosystem requires. Permafrost is drying out, not just thawing.",
+  },
 };
 
-const HIGHLIGHT_COUNTRIES = {
-  1: ["Mali"],
-  2: ["Antarctica"],
-  4: ["Myanmar"],
-  5: ["Egypt"],
-  7: ["Mali","Antarctica","Myanmar","Egypt"],
-};
+const COLD_DROUGHT_COUNTRIES = Object.keys(COLD_DROUGHT_INFO);
+const HOT_DROUGHT_COUNTRIES  = ["Mali", "Egypt", "Saudi Arabia", "Libya", "Mauritania", "Algeria"];
 
-const INFO_CONTENT = {
-  "Mali": {
-    label: "Hottest Country",
-    stat: "29.1°C",
-    unit: "Mean annual temperature",
-    color: "rgb(200,60,20)",
-    body: "Mali's position in the Sahel and Sahara makes it the single hottest‑averaging country in the dataset. Sparse vegetation amplifies radiative heating.",
-  },
-  "Antarctica": {
-    label: "Coldest Region",
-    stat: "−28.9°C",
-    unit: "Mean annual temperature",
-    color: "rgb(80,120,180)",
-    body: "High elevation, polar location, and a year‑round ice sheet that reflects nearly all incoming sunlight combine to make Antarctica the coldest landmass on Earth.",
-  },
-  "Myanmar": {
-    label: "Among the Wettest",
-    stat: "7.18 mm/day",
-    unit: "Mean daily precipitation",
-    color: "rgb(30,100,180)",
-    body: "Southwest monsoon winds drop enormous moisture loads against Myanmar's mountain ranges from May through October, producing one of the world's highest national rainfall averages.",
-  },
-  "Egypt": {
-    label: "One of the Driest",
-    stat: "0.07 mm/day",
-    unit: "Mean daily precipitation",
-    color: "rgb(180,70,30)",
-    body: "Rain almost never falls in Egypt. The country owes its agriculture entirely to the Nile. Its mean SPI of −0.92 marks persistent hydrological drought.",
-  },
-};
+function spiColor(spi) {
+  if (spi === undefined || isNaN(spi)) return "#c8bfad";
+  const t = Math.max(0, Math.min(1, (spi + 1.5) / 3.0));
+  const r = Math.round(180 - t * (180 - 50));
+  const g = Math.round(50  + t * (140 - 50));
+  const b = Math.round(20  + t * (210 - 20));
+  return `rgb(${r},${g},${b})`;
+}
+
+function spiChangeColor(change) {
+  if (change === undefined || isNaN(change)) return "#c8bfad";
+  // negative = worsening drought (red), positive = improving (blue)
+  const t = Math.max(0, Math.min(1, (change + 1.0) / 2.0));
+  const r = Math.round(180 - t * (180 - 30));
+  const g = Math.round(40  + t * (120 - 40));
+  const b = Math.round(20  + t * (200 - 20));
+  return `rgb(${r},${g},${b})`;
+}
 
 function tempColor(tempC) {
+  if (tempC === undefined || isNaN(tempC)) return "#c8bfad";
   const t = Math.max(0, Math.min(1, (tempC + 30) / 62));
   const r = Math.round(245 - t * (245 - 153));
   const g = Math.round(235 - t * (235 - 15));
@@ -185,26 +198,10 @@ function tempColor(tempC) {
   return `rgb(${r},${g},${b})`;
 }
 
-function prColor(prMm) {
-  const t = Math.max(0, Math.min(1, prMm / 9));
-  const r = Math.round(235 - t * (235 - 10));
-  const g = Math.round(240 - t * (240 - 20));
-  const b = Math.round(245 - t * (245 - 80));
-  return `rgb(${r},${g},${b})`;
-}
-
-function overlayColor(tempC, prMm) {
-  const tT = Math.max(0, Math.min(1, (tempC + 30) / 62));
-  const tP = Math.max(0, Math.min(1, prMm / 9));
-  const r = Math.round(10  + tT * (153 - 10)  - tP * (10 * tT));
-  const g = Math.round(31  + tT * (15  - 31)  - tP * (15 * tT));
-  const b = Math.round(74  + tT * (2   - 74)  + tP * (80 * (1 - tT)));
-  return `rgb(${Math.max(0,Math.min(255,r))},${Math.max(0,Math.min(255,g))},${Math.max(0,Math.min(255,b))})`;
-}
-
 let mapLoaded = false;
 let mapStep = -1;
 let countryMeta = {};
+let clickListenersAttached = false;
 
 async function initMap() {
   if (mapLoaded) return;
@@ -212,83 +209,97 @@ async function initMap() {
 
   const [topoRes, csvRes] = await Promise.all([
     fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"),
-    fetch("climate_agg_country.csv"),
+    fetch("country_summary.csv"),
   ]);
-  const topo = await topoRes.json();
+  const topo    = await topoRes.json();
   const csvText = await csvRes.text();
 
-  // Parse CSV → country means
-  const rows = csvText.trim().split("\n").slice(1);
-  const sums = {}, counts = {};
-  for (const row of rows) {
-    const [year, country, , , temp, pr, spi] = row.split(",");
-    if (!country) continue;
-    const name = country.replace(/^"|"$/g, "").trim();
-    if (!sums[name]) { sums[name] = { temp: 0, pr: 0, spi: 0 }; counts[name] = 0; }
-    sums[name].temp += parseFloat(temp) || 0;
-    sums[name].pr   += parseFloat(pr)   || 0;
-    sums[name].spi  += parseFloat(spi)  || 0;
-    counts[name]++;
-  }
-  for (const name in sums) {
-    const n = counts[name];
+  // Parse country_summary.csv
+  const lines   = csvText.trim().split("\n");
+  const headers = lines[0].split(",").map(h => h.trim());
+  for (let i = 1; i < lines.length; i++) {
+    const vals = lines[i].split(",");
+    const row  = {};
+    headers.forEach((h, idx) => { row[h] = vals[idx]?.trim(); });
+    const name = row.country;
+    if (!name) continue;
     countryMeta[name] = {
-      temp: sums[name].temp / n,
-      pr:   sums[name].pr   / n,
-      spi:  sums[name].spi  / n,
+      continent:    row.continent,
+      spi_base:     parseFloat(row.mean_spi_base),
+      spi_mod:      parseFloat(row.mean_spi_mod),
+      temp_base:    parseFloat(row.mean_temp_C_base),
+      temp_mod:     parseFloat(row.mean_temp_C_mod),
+      spi_change:   parseFloat(row.spi_change),
+      temp_change:  parseFloat(row.temp_change_C),
     };
-  }
-  for (const [k, v] of Object.entries(COUNTRY_DATA)) {
-    if (!countryMeta[k]) countryMeta[k] = v;
   }
 
   const countries = topojson.feature(topo, topo.objects.countries).features;
 
-  // Natural Earth numeric ID → CSV country name
   const idToName = {
-    4:"Afghanistan", 8:"Albania", 12:"Algeria", 24:"Angola", 32:"Argentina",
-    36:"Australia", 40:"Austria", 31:"Azerbaijan", 50:"Bangladesh",
-    56:"Belgium", 64:"Bhutan", 68:"Bolivia", 70:"Bosnia and Herzegovina",
-    72:"Botswana", 76:"Brazil", 84:"Belize", 100:"Bulgaria", 104:"Myanmar",
-    108:"Burundi", 112:"Belarus", 116:"Cambodia", 120:"Cameroon",
-    124:"Canada", 132:"Cape Verde", 140:"Central African Republic",
-    144:"Sri Lanka", 148:"Chad", 152:"Chile", 156:"China", 170:"Colombia",
-    178:"Republic of the Congo", 180:"DR Congo", 188:"Costa Rica",
-    191:"Croatia", 192:"Cuba", 196:"Cyprus", 203:"Czechia", 204:"Benin",
-    208:"Denmark", 214:"Dominican Republic", 218:"Ecuador", 222:"El Salvador",
-    231:"Ethiopia", 232:"Eritrea", 233:"Estonia", 246:"Finland",
-    250:"France", 262:"Djibouti", 266:"Gabon", 268:"Georgia",
-    276:"Germany", 288:"Ghana", 300:"Greece", 308:"Grenada",
-    320:"Guatemala", 324:"Guinea", 328:"Guyana", 332:"Haiti",
-    340:"Honduras", 348:"Hungary", 356:"India", 360:"Indonesia",
-    364:"Iran", 368:"Iraq", 372:"Ireland", 376:"Israel", 380:"Italy",
-    384:"Ivory Coast", 388:"Jamaica", 392:"Japan", 398:"Kazakhstan",
-    400:"Jordan", 404:"Kenya", 408:"North Korea", 410:"South Korea",
-    414:"Kuwait", 417:"Kyrgyzstan", 418:"Laos", 422:"Lebanon",
-    426:"Lesotho", 428:"Latvia", 430:"Liberia", 434:"Libya",
-    440:"Lithuania", 450:"Madagascar", 454:"Malawi", 458:"Malaysia",
-    466:"Mali", 478:"Mauritania", 480:"Mauritius", 484:"Mexico",
-    496:"Mongolia", 498:"Moldova", 499:"Montenegro", 504:"Morocco",
-    508:"Mozambique", 512:"Oman", 516:"Namibia", 524:"Nepal",
-    528:"Netherlands", 540:"New Caledonia", 554:"New Zealand",
-    558:"Nicaragua", 562:"Niger", 566:"Nigeria", 578:"Norway",
-    586:"Pakistan", 591:"Panama", 598:"Papua New Guinea", 600:"Paraguay",
-    604:"Peru", 608:"Philippines", 616:"Poland", 620:"Portugal",
-    624:"Guinea-Bissau", 626:"Timor-Leste", 634:"Qatar", 642:"Romania",
-    643:"Russia", 646:"Rwanda", 678:"Sao Tome and Principe",
-    682:"Saudi Arabia", 686:"Senegal", 688:"Serbia", 694:"Sierra Leone",
-    703:"Slovakia", 704:"Vietnam", 705:"Slovenia", 706:"Somalia",
-    710:"South Africa", 716:"Zimbabwe", 724:"Spain", 728:"South Sudan",
-    729:"Sudan", 740:"Suriname", 748:"Eswatini", 752:"Sweden",
-    756:"Switzerland", 760:"Syria", 762:"Tajikistan", 764:"Thailand",
-    768:"Togo", 776:"Tonga", 780:"Trinidad and Tobago", 784:"United Arab Emirates",
-    788:"Tunisia", 792:"Turkey", 800:"Uganda", 804:"Ukraine",
-    807:"North Macedonia", 818:"Egypt", 826:"United Kingdom",
-    834:"Tanzania", 840:"United States", 854:"Burkina Faso",
-    858:"Uruguay", 860:"Uzbekistan", 862:"Venezuela", 887:"Yemen",
-    894:"Zambia", 51:"Armenia", 10:"Antarctica", 90:"Solomon Islands",
-    275:"Palestine", 548:"Vanuatu",
+    4:"Afghanistan",8:"Albania",12:"Algeria",24:"Angola",32:"Argentina",
+    36:"Australia",40:"Austria",31:"Azerbaijan",50:"Bangladesh",
+    56:"Belgium",64:"Bhutan",68:"Bolivia",70:"Bosnia and Herzegovina",
+    72:"Botswana",76:"Brazil",84:"Belize",100:"Bulgaria",104:"Myanmar",
+    108:"Burundi",112:"Belarus",116:"Cambodia",120:"Cameroon",
+    124:"Canada",132:"Cape Verde",140:"Central African Republic",
+    144:"Sri Lanka",148:"Chad",152:"Chile",156:"China",170:"Colombia",
+    178:"Republic of the Congo",180:"DR Congo",188:"Costa Rica",
+    191:"Croatia",192:"Cuba",196:"Cyprus",203:"Czechia",204:"Benin",
+    208:"Denmark",214:"Dominican Republic",218:"Ecuador",222:"El Salvador",
+    231:"Ethiopia",232:"Eritrea",233:"Estonia",246:"Finland",
+    250:"France",262:"Djibouti",266:"Gabon",268:"Georgia",
+    276:"Germany",288:"Ghana",300:"Greece",308:"Grenada",
+    320:"Guatemala",324:"Guinea",328:"Guyana",332:"Haiti",
+    340:"Honduras",348:"Hungary",356:"India",360:"Indonesia",
+    364:"Iran",368:"Iraq",372:"Ireland",376:"Israel",380:"Italy",
+    384:"Ivory Coast",388:"Jamaica",392:"Japan",398:"Kazakhstan",
+    400:"Jordan",404:"Kenya",408:"North Korea",410:"South Korea",
+    414:"Kuwait",417:"Kyrgyzstan",418:"Laos",422:"Lebanon",
+    426:"Lesotho",428:"Latvia",430:"Liberia",434:"Libya",
+    440:"Lithuania",450:"Madagascar",454:"Malawi",458:"Malaysia",
+    466:"Mali",478:"Mauritania",480:"Mauritius",484:"Mexico",
+    496:"Mongolia",498:"Moldova",499:"Montenegro",504:"Morocco",
+    508:"Mozambique",512:"Oman",516:"Namibia",524:"Nepal",
+    528:"Netherlands",540:"New Caledonia",554:"New Zealand",
+    558:"Nicaragua",562:"Niger",566:"Nigeria",578:"Norway",
+    586:"Pakistan",591:"Panama",598:"Papua New Guinea",600:"Paraguay",
+    604:"Peru",608:"Philippines",616:"Poland",620:"Portugal",
+    624:"Guinea-Bissau",626:"Timor-Leste",634:"Qatar",642:"Romania",
+    643:"Russia",646:"Rwanda",678:"Sao Tome and Principe",
+    682:"Saudi Arabia",686:"Senegal",688:"Serbia",694:"Sierra Leone",
+    703:"Slovakia",704:"Vietnam",705:"Slovenia",706:"Somalia",
+    710:"South Africa",716:"Zimbabwe",724:"Spain",728:"South Sudan",
+    729:"Sudan",740:"Suriname",748:"Eswatini",752:"Sweden",
+    756:"Switzerland",760:"Syria",762:"Tajikistan",764:"Thailand",
+    768:"Togo",776:"Tonga",780:"Trinidad and Tobago",784:"United Arab Emirates",
+    788:"Tunisia",792:"Turkey",800:"Uganda",804:"Ukraine",
+    807:"North Macedonia",818:"Egypt",826:"United Kingdom",
+    834:"Tanzania",840:"United States",854:"Burkina Faso",
+    858:"Uruguay",860:"Uzbekistan",862:"Venezuela",887:"Yemen",
+    894:"Zambia",51:"Armenia",10:"Antarctica",90:"Solomon Islands",
+    275:"Palestine",548:"Vanuatu",
   };
+
+  function normalizeName(name) {
+    const map = {
+      "United States of America":"United States","Russian Federation":"Russia",
+      "Iran (Islamic Republic of)":"Iran","Venezuela (Bolivarian Republic of)":"Venezuela",
+      "Bolivia (Plurinational State of)":"Bolivia","United Republic of Tanzania":"Tanzania",
+      "Korea, Republic of":"South Korea","Korea, Democratic People's Republic of":"North Korea",
+      "Viet Nam":"Vietnam","Syrian Arab Republic":"Syria",
+      "Lao People's Democratic Republic":"Laos","Congo, Democratic Republic of the":"DR Congo",
+      "Congo":"Republic of the Congo","Côte d'Ivoire":"Ivory Coast","Burma":"Myanmar",
+      "Czech Republic":"Czechia","Macedonia, the former Yugoslav Republic of":"North Macedonia",
+      "Republic of Moldova":"Moldova","Swaziland":"Eswatini",
+      "São Tomé and Príncipe":"Sao Tome and Principe","Brunei Darussalam":"Brunei",
+      "Palestine, State of":"Palestine","Taiwan, Province of China":"Taiwan",
+      "Tanzania, United Republic of":"Tanzania",
+      "Micronesia (Federated States of)":"Micronesia","Macao":"Macau",
+      "Dominican Rep.":"Dominican Republic",
+    };
+    return map[name] || name;
+  }
 
   function project([lon, lat]) {
     const x = (lon + 180) / 360 * 960;
@@ -324,10 +335,10 @@ async function initMap() {
   svg.innerHTML = "";
 
   for (const feature of countries) {
-    const id = parseInt(feature.id, 10);
+    const id      = parseInt(feature.id, 10);
     const rawName = idToName[id] || "";
     const csvName = normalizeName(rawName);
-    const meta = countryMeta[csvName] || countryMeta[rawName] || null;
+    const meta    = countryMeta[csvName] || countryMeta[rawName] || null;
 
     const d = coordsToPath(feature.geometry);
     if (!d) continue;
@@ -339,7 +350,8 @@ async function initMap() {
     svg.appendChild(path);
 
     if (meta) {
-      if (!countryMeta[csvName]) countryMeta[csvName] = meta;
+      if (!countryMeta[csvName]) countryMeta[csvName] = {};
+      Object.assign(countryMeta[csvName], meta);
       countryMeta[csvName].el = path;
     }
     if (rawName && !countryMeta[rawName]) countryMeta[rawName] = { el: path };
@@ -352,75 +364,45 @@ async function initMap() {
     countryMeta[n].el = p;
   });
 
+  // Tooltip
   const tooltip = document.getElementById("map-tooltip");
   svg.addEventListener("mousemove", (e) => {
     const path = e.target.closest("path");
     if (!path) { tooltip.classList.remove("visible"); return; }
     const name = path.getAttribute("data-name");
     const meta = countryMeta[name];
-    if (!meta || meta.temp === undefined) { tooltip.classList.remove("visible"); return; }
+    if (!meta || meta.temp_base === undefined) { tooltip.classList.remove("visible"); return; }
 
-    const mode = mapStep <= 2 ? "temp" : mapStep <= 5 ? "pr" : "overlay";
-    let valHtml = "";
-    if (mode === "temp" || mode === "overlay")
-      valHtml += `<div class="tt-val">🌡 ${meta.temp.toFixed(1)}°C</div>`;
-    if (mode === "pr" || mode === "overlay")
-      valHtml += `<div class="tt-val">🌧 ${meta.pr.toFixed(2)} mm/day</div>`;
+    const isCold = COLD_DROUGHT_COUNTRIES.includes(name);
+    let valHtml = `<div class="tt-val">🌡 ${meta.temp_base.toFixed(1)}°C</div>`;
+    if (mapStep >= 2 && mapStep <= 4) {
+      valHtml += `<div class="tt-val">SPI ${meta.spi_base.toFixed(2)}</div>`;
+    }
+    if (mapStep >= 3 && mapStep <= 4) {
+      const ch = meta.spi_change;
+      valHtml += `<div class="tt-val">SPI change: ${ch >= 0 ? '+' : ''}${ch.toFixed(2)}</div>`;
+    }
+    if (mapStep >= 2 && isCold) {
+      valHtml += `<div class="tt-val" style="color:#8B5E3C;font-weight:700">Click to explore ↗</div>`;
+    }
 
     tooltip.innerHTML = `<div class="tt-name">${name}</div>${valHtml}`;
     tooltip.style.left = (e.clientX + 14) + "px";
     tooltip.style.top  = (e.clientY - 10) + "px";
     tooltip.classList.add("visible");
   });
-
-  svg.addEventListener("mouseleave", () => {
-    tooltip.classList.remove("visible");
-  });
+  svg.addEventListener("mouseleave", () => { tooltip.classList.remove("visible"); });
 
   mapStep = -1;
   applyMapStep(0);
 }
 
-function normalizeName(name) {
-  const map = {
-    "United States of America": "United States",
-    "Russian Federation": "Russia",
-    "Iran (Islamic Republic of)": "Iran",
-    "Venezuela (Bolivarian Republic of)": "Venezuela",
-    "Bolivia (Plurinational State of)": "Bolivia",
-    "United Republic of Tanzania": "Tanzania",
-    "Korea, Republic of": "South Korea",
-    "Korea, Democratic People's Republic of": "North Korea",
-    "Viet Nam": "Vietnam",
-    "Syrian Arab Republic": "Syria",
-    "Lao People's Democratic Republic": "Laos",
-    "Congo, Democratic Republic of the": "DR Congo",
-    "Congo": "Republic of the Congo",
-    "Côte d'Ivoire": "Ivory Coast",
-    "Burma": "Myanmar",
-    "Czech Republic": "Czechia",
-    "Macedonia, the former Yugoslav Republic of": "North Macedonia",
-    "Republic of Moldova": "Moldova",
-    "Swaziland": "Eswatini",
-    "São Tomé and Príncipe": "Sao Tome and Principe",
-    "Brunei Darussalam": "Brunei",
-    "Palestine, State of": "Palestine",
-    "Taiwan, Province of China": "Taiwan",
-    "Tanzania, United Republic of": "Tanzania",
-    "Micronesia (Federated States of)": "Micronesia",
-    "Macao": "Macau",
-    "Dominican Rep.": "Dominican Republic",
-  };
-  return map[name] || name;
-}
-
 function updateLegend(mode) {
   const legend = document.getElementById("map-legend");
-  const bar = document.getElementById("legend-bar");
-  const label = document.getElementById("legend-label");
-  const minEl = document.getElementById("legend-min");
-  const maxEl = document.getElementById("legend-max");
-
+  const bar    = document.getElementById("legend-bar");
+  const label  = document.getElementById("legend-label");
+  const minEl  = document.getElementById("legend-min");
+  const maxEl  = document.getElementById("legend-max");
   legend.classList.add("visible");
 
   if (mode === "temp") {
@@ -428,16 +410,94 @@ function updateLegend(mode) {
     bar.style.background = `linear-gradient(to right, ${tempColor(-30)}, ${tempColor(0)}, ${tempColor(30)})`;
     minEl.textContent = "−30°C";
     maxEl.textContent = "30°C";
-  } else if (mode === "pr") {
-    label.textContent = "Mean Precipitation";
-    bar.style.background = `linear-gradient(to right, ${prColor(0)}, ${prColor(4)}, ${prColor(9)})`;
-    minEl.textContent = "0 mm/day";
-    maxEl.textContent = "9+ mm/day";
+  } else if (mode === "spi") {
+    label.textContent = "SPI — Drought Deficit";
+    bar.style.background = `linear-gradient(to right, ${spiColor(-1.5)}, ${spiColor(0)}, ${spiColor(1.5)})`;
+    minEl.textContent = "−1.5 Severe drought";
+    maxEl.textContent = "+1.5 Wet";
+  } else if (mode === "spi_change") {
+    label.textContent = "SPI Change (baseline → modern)";
+    bar.style.background = `linear-gradient(to right, ${spiChangeColor(-1)}, ${spiChangeColor(0)}, ${spiChangeColor(1)})`;
+    minEl.textContent = "Worsening drought";
+    maxEl.textContent = "Improving";
+  }
+}
+
+function attachColdDroughtClicks() {
+  if (clickListenersAttached) return;
+  clickListenersAttached = true;
+  COLD_DROUGHT_COUNTRIES.forEach(name => {
+    const meta = countryMeta[name];
+    if (!meta?.el) return;
+    meta.el.addEventListener("click", () => {
+      if (mapStep < 2) return;
+      showColdDroughtInfo(name);
+    });
+  });
+}
+
+function showColdDroughtInfo(name) {
+  const info = COLD_DROUGHT_INFO[name];
+  const meta = countryMeta[name];
+  if (!info) return;
+
+  // Use real CSV data where available
+  const spiVal    = meta?.spi_base  !== undefined ? `SPI ${meta.spi_base.toFixed(2)}`    : info.spi;
+  const tempVal   = meta?.temp_base !== undefined ? `Mean temp: ${meta.temp_base.toFixed(1)}°C` : info.temp;
+  const changeVal = meta?.spi_change !== undefined
+    ? (meta.spi_change < 0 ? `Worsening (${meta.spi_change.toFixed(2)})` : `Improving (+${meta.spi_change.toFixed(2)})`)
+    : info.spiChange;
+
+  const box = document.getElementById("country-info-box");
+  const doEnter = () => {
+    box.classList.remove("exit");
+    box.style.transition = "none";
+    box.style.transform  = "translateY(calc(-50% + 80px))";
+    box.style.opacity    = "0";
+    box.innerHTML = `
+      <div class="cib-label">${info.label}</div>
+      <div class="cib-name">${name}</div>
+      <div class="cib-stat" style="color:#3b8bd4">${spiVal}</div>
+      <div class="cib-unit">${tempVal} · Trend: ${changeVal}</div>
+      <div class="cib-divider"></div>
+      <div class="cib-body">${info.body}</div>
+    `;
+    void box.offsetWidth;
+    box.style.transition = "";
+    box.style.transform  = "";
+    box.style.opacity    = "";
+    box.classList.add("visible");
+  };
+
+  if (box.classList.contains("visible")) {
+    box.classList.add("exit");
+    box.classList.remove("visible");
+    setTimeout(doEnter, 340);
   } else {
-    label.textContent = "Temp + Precipitation";
-    bar.style.background = `linear-gradient(to right, ${overlayColor(-30,0)}, ${overlayColor(15,4)}, ${overlayColor(30,9)})`;
-    minEl.textContent = "Cold & Dry";
-    maxEl.textContent = "Hot & Wet";
+    doEnter();
+  }
+}
+
+function setInfoBox(html) {
+  const box = document.getElementById("country-info-box");
+  const doEnter = () => {
+    box.classList.remove("exit");
+    box.style.transition = "none";
+    box.style.transform  = "translateY(calc(-50% + 80px))";
+    box.style.opacity    = "0";
+    box.innerHTML        = html;
+    void box.offsetWidth;
+    box.style.transition = "";
+    box.style.transform  = "";
+    box.style.opacity    = "";
+    if (html) box.classList.add("visible");
+  };
+  if (box.classList.contains("visible")) {
+    box.classList.add("exit");
+    box.classList.remove("visible");
+    setTimeout(doEnter, 340);
+  } else {
+    doEnter();
   }
 }
 
@@ -449,122 +509,122 @@ function applyMapStep(step) {
   const labelEl = document.getElementById("map-label-text");
   labelEl.style.opacity = "0";
   setTimeout(() => {
-    labelEl.innerHTML = STEP_LABELS[step] || "";
+    labelEl.innerHTML  = STEP_LABELS[step] || "";
     labelEl.style.opacity = "1";
   }, 300);
 
-  const mode = step <= 2 ? "temp" : step <= 5 ? "pr" : "overlay";
-  updateLegend(mode);
-
-  for (const [name, meta] of Object.entries(countryMeta)) {
-    if (!meta.el) continue;
-    meta.el.setAttribute("fill", getBaseColor(meta, mode));
-    meta.el.style.opacity = "1";
-  }
-
-  const highlights = HIGHLIGHT_COUNTRIES[step];
-  if (highlights) {
+  // ── Act 1: temperature, hot countries highlighted (steps 0–1)
+  if (step <= 1) {
+    updateLegend("temp");
     for (const [name, meta] of Object.entries(countryMeta)) {
       if (!meta.el) continue;
-      const isHighlighted = highlights.some(h => name === h);
-      if (isHighlighted) {
-        const col = getBaseColor(meta, mode);
+      meta.el.setAttribute("fill", tempColor(meta.temp_base ?? 15));
+      meta.el.style.cursor = "default";
+      const isHot = HOT_DROUGHT_COUNTRIES.includes(name);
+      if (isHot) {
         meta.el.style.opacity = "1";
-        meta.el.setAttribute("stroke", col);
+        meta.el.setAttribute("stroke", tempColor(meta.temp_base ?? 25));
         meta.el.setAttribute("stroke-width", "2");
-        meta.el.style.filter = `drop-shadow(0 4px 6px rgba(0, 0, 0, 0.27)) drop-shadow(0 2px 3px rgba(0,0,0,0.4)) drop-shadow(0 0 8px ${col})`;
+        meta.el.style.filter = `drop-shadow(0 0 8px rgba(200,60,20,0.7))`;
       } else {
-        meta.el.style.opacity = "0.08";
+        meta.el.style.opacity = "0.18";
         meta.el.setAttribute("stroke", "rgba(255,255,255,0.05)");
         meta.el.setAttribute("stroke-width", "0.3");
         meta.el.style.filter = "";
       }
     }
-  } else {
+    setInfoBox(`
+      <div class="cib-label">Where drought is expected</div>
+      <div class="cib-name">Hot & Dry</div>
+      <div class="cib-divider"></div>
+      <div class="cib-body">
+        Mali, Egypt, Saudi Arabia, Libya, Mauritania — all hot, all dry, all obvious candidates for drought.
+        <br><br>Temperatures above <strong>25°C</strong>. Precipitation near zero. This is the picture most people have.
+        <br><br><em style="color:#8B5E3C">Scroll on — the map is about to change.</em>
+      </div>
+    `);
+  }
+
+  // ── Act 2: SPI coloring, cold drought countries clickable (steps 2–3)
+  else if (step <= 3) {
+    updateLegend(step <= 2 ? "spi" : "spi_change");
     for (const [name, meta] of Object.entries(countryMeta)) {
       if (!meta.el) continue;
-      meta.el.style.opacity = "1";
-      meta.el.setAttribute("stroke", "rgba(255,255,255,0.25)");
-      meta.el.setAttribute("stroke-width", "0.3");
+      const col = step <= 2 ? spiColor(meta.spi_base) : spiChangeColor(meta.spi_change);
+      meta.el.setAttribute("fill", col);
+      const isCold = COLD_DROUGHT_COUNTRIES.includes(name);
+      const isHot  = HOT_DROUGHT_COUNTRIES.includes(name);
+      if (isCold || isHot) {
+        meta.el.style.opacity = "1";
+        meta.el.setAttribute("stroke", col);
+        meta.el.setAttribute("stroke-width", "2");
+        meta.el.style.filter = `drop-shadow(0 0 8px ${col})`;
+        meta.el.style.cursor = isCold ? "pointer" : "default";
+      } else {
+        meta.el.style.opacity = "0.3";
+        meta.el.setAttribute("stroke", "rgba(255,255,255,0.08)");
+        meta.el.setAttribute("stroke-width", "0.3");
+        meta.el.style.filter = "";
+        meta.el.style.cursor = "default";
+      }
     }
-  }
-
-  updateInfoBox(step, highlights);
-}
-
-function getBaseColor(meta, mode) {
-  if (!meta || meta.temp === undefined) return "#c8bfad";
-  if (mode === "temp") return tempColor(meta.temp);
-  if (mode === "pr")   return prColor(meta.pr);
-  return overlayColor(meta.temp, meta.pr);
-}
-
-function updateInfoBox(step, highlights) {
-  const box = document.getElementById("country-info-box");
-
-  function setContent(html) {
-    const doEnter = () => {
-      box.classList.remove("exit");
-      box.style.transition = "none";
-      box.style.transform = "translateY(calc(-50% + 80px))";
-      box.style.opacity = "0";
-      box.innerHTML = html;
-      void box.offsetWidth;
-      box.style.transition = "";
-      box.style.transform = "";
-      box.style.opacity = "";
-      if (html) box.classList.add("visible");
-    };
-
-    if (box.classList.contains("visible")) {
-      box.classList.add("exit");
-      box.classList.remove("visible");
-      setTimeout(doEnter, 340);
-    } else {
-      doEnter();
-    }
-  }
-
-  if (!highlights || step === 7) {
-    if (step === 7) {
-      setContent(`
-        <div class="cib-label">Four Countries, One Story</div>
-        <div class="cib-name">Drought & Surplus</div>
+    attachColdDroughtClicks();
+    if (step === 2) {
+      setInfoBox(`
+        <div class="cib-label">Now look at SPI</div>
+        <div class="cib-name">Cold Drought</div>
         <div class="cib-divider"></div>
         <div class="cib-body">
-          <strong style="color:#990f02">Mali & Egypt</strong> — extremely hot and dry, chronic SPI deficits near −0.9.<br><br>
-          <strong style="color:#3a3a6a">Antarctica</strong> — cold and snowless by volume; ice accumulation is slow.<br><br>
-          <strong style="color:#0a3060">Myanmar</strong> — warm and drenched; positive SPI buffers against drought.<br><br>
-          Drought isn't defined by heat. It's defined by the <em>gap</em> between what fell and what was expected.
-        </div>`);
-      return;
+          The hot deserts are still red. But now cold and temperate regions are glowing too.
+          <br><br>Kazakhstan. Mongolia. Russia. Argentina. The United States Great Basin.
+          <br><br><em style="color:#8B5E3C">Click any highlighted country to explore its drought story.</em>
+        </div>
+      `);
+    } else {
+      setInfoBox(`
+        <div class="cib-label">SPI is changing</div>
+        <div class="cib-name">Drought Trends</div>
+        <div class="cib-divider"></div>
+        <div class="cib-body">
+          Red means drought is intensifying — SPI is falling further below normal.
+          <br><br>Some of the sharpest declines are in cold or temperate regions that were never thought of as drought-prone.
+          <br><br><em style="color:#8B5E3C">Click any highlighted country to explore.</em>
+        </div>
+      `);
     }
-    setContent("");
-    box.classList.remove("visible");
-    return;
   }
 
-  const countryName = highlights[0];
-  const info = INFO_CONTENT[countryName];
-  if (!info) { setContent(""); box.classList.remove("visible"); return; }
-
-  const baseColor = getBaseColor(countryMeta[countryName] || {}, mapStep <= 2 ? "temp" : mapStep <= 5 ? "pr" : "overlay");
-  setContent(`
-    <div class="cib-label">${info.label}</div>
-    <div class="cib-name">${countryName}</div>
-    <div class="cib-stat" style="color:${baseColor}">${info.stat}</div>
-    <div class="cib-unit">${info.unit}</div>
-    <div class="cib-divider"></div>
-    <div class="cib-body">${info.body}</div>
-  `);
+  // ── Step 4–5: full world SPI, all countries shown
+  else {
+    updateLegend("spi");
+    for (const [name, meta] of Object.entries(countryMeta)) {
+      if (!meta.el) continue;
+      meta.el.setAttribute("fill", spiColor(meta.spi_base));
+      meta.el.style.opacity = "1";
+      meta.el.setAttribute("stroke", "rgba(255,255,255,0.15)");
+      meta.el.setAttribute("stroke-width", "0.3");
+      meta.el.style.filter = "";
+      meta.el.style.cursor = "default";
+    }
+    setInfoBox(`
+      <div class="cib-label">The Full Picture</div>
+      <div class="cib-name">SPI Worldwide</div>
+      <div class="cib-divider"></div>
+      <div class="cib-body">
+        Every country colored by SPI — the true measure of drought. Red means persistent deficit. Blue means surplus.
+        <br><br>Drought-red appears across cold Central Asia, Patagonia, and the American West — not just the Sahara.
+        <br><br><em style="color:#8B5E3C">The thermometer never tells the whole story.</em>
+      </div>
+    `);
+  }
 }
 
 function driveMap() {
   const slide3Track = document.getElementById("slide-3-track");
   if (!slide3Track) return;
-  const rect = slide3Track.getBoundingClientRect();
+  const rect        = slide3Track.getBoundingClientRect();
   const trackHeight = slide3Track.offsetHeight;
-  const vh = window.innerHeight;
+  const vh          = window.innerHeight;
   if (rect.top > vh || rect.bottom < 0) return;
   const progress = Math.max(0, Math.min(1, -rect.top / (trackHeight - vh)));
   let currentStep = 0;
@@ -574,15 +634,14 @@ function driveMap() {
   applyMapStep(currentStep);
 }
 
-// Lazy load map when entering view
 let topojsonLoaded = false;
 function loadTopojsonAndMap() {
   if (topojsonLoaded) return;
   const rect = document.getElementById("slide-3-track")?.getBoundingClientRect();
   if (rect && rect.top < window.innerHeight * 1.5 && !window.topojson) {
-    const s = document.createElement("script");
-    s.src = "https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js";
-    s.onload = () => { topojsonLoaded = true; initMap(); };
+    const s    = document.createElement("script");
+    s.src      = "https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js";
+    s.onload   = () => { topojsonLoaded = true; initMap(); };
     document.head.appendChild(s);
   } else if (rect && rect.top < window.innerHeight * 1.5 && window.topojson) {
     topojsonLoaded = true;

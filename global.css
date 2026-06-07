@@ -390,6 +390,10 @@ body {
   overflow: hidden;
 }
 
+#world-map path.cold-drought-active {
+  cursor: pointer;
+}
+
 .map-top-label {
   width: 100%;
   padding: clamp(0.3rem, 0.6vh, 0.6rem) 2rem 0;
