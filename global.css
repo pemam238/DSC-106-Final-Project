@@ -1467,3 +1467,302 @@ body {
   font-style: normal;
   color: #8B5E3C;
 }
+/* ── Hero subtext ───────────────────────────────── */
+.hero-subtext {
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  font-weight: 900;
+  color: rgba(255,255,255,0.88);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+
+
+/* ── Country lookup globe ────────────────────────── */
+#slide-lookup {
+  background: #f5f0e8;
+  min-height: 100vh;
+  align-items: flex-start;
+  padding: clamp(2.5rem, 6vh, 5rem) clamp(1.5rem, 4vw, 3rem) clamp(2rem, 4vh, 4rem);
+  flex-direction: column;
+}
+
+.lookup-wrap {
+  width: min(1100px, 94vw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.8rem, 1.5vh, 1.2rem);
+}
+
+.lookup-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.lookup-kicker {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #8B5E3C;
+}
+
+.lookup-title {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+  color: #1a1a1a;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.lookup-sub {
+  font-size: clamp(0.82rem, 1.1vw, 1rem);
+  color: rgba(42,42,42,0.55);
+  line-height: 1.75;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.globe-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(139,94,60,0.55);
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(139,94,60,0.2);
+  border-radius: 50px;
+  background: rgba(139,94,60,0.06);
+  transition: opacity 0.5s ease;
+}
+
+.globe-hint svg { flex-shrink: 0; stroke: #8B5E3C; }
+
+#globe-container {
+  position: relative;
+  width: min(480px, 80vw);
+  height: min(480px, 80vw);
+  min-width: 200px;
+  min-height: 200px;
+  cursor: grab;
+  user-select: none;
+}
+
+#globe-container:active { cursor: grabbing; }
+
+#globe-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 4px 24px rgba(139,94,60,0.15);
+  overflow: hidden;
+}
+
+#globe-tooltip {
+  position: absolute;
+  background: #1a1a1a;
+  color: #f5f0e8;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+  z-index: 10;
+  transform: translate(-50%, -130%);
+}
+
+#globe-tooltip.visible { opacity: 1; }
+
+.lookup-result {
+  width: 100%;
+  animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.lookup-card {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: clamp(1.2rem, 2.5vw, 2.5rem);
+  background: #ece6d9;
+  border-radius: 14px;
+  padding: clamp(1.4rem, 2.5vh, 2.2rem) clamp(1.4rem, 2.5vw, 2.2rem);
+  border: 1px solid rgba(139,94,60,0.15);
+}
+
+.lookup-card-left {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.7rem, 1.2vh, 1rem);
+}
+
+.lookup-card-country {
+  font-size: clamp(1.6rem, 3vw, 2.8rem);
+  font-weight: 900;
+  color: #1a1a1a;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.lookup-card-continent {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8B5E3C;
+  margin-bottom: 0.2rem;
+}
+
+.lookup-rank-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  width: fit-content;
+}
+
+.lookup-rank-num {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 900;
+  color: #c84b1a;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.lookup-rank-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+}
+
+.lookup-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.lookup-stat-cell {
+  background: rgba(139,94,60,0.08);
+  border-radius: 8px;
+  padding: 0.65rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.lookup-stat-val {
+  font-size: clamp(1rem, 1.6vw, 1.4rem);
+  font-weight: 900;
+  color: #1a1a1a;
+}
+
+.lookup-stat-lbl {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(42,42,42,0.45);
+}
+
+.lookup-trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.lookup-trend-badge.worsening { background: rgba(200,75,26,0.12); color: #c84b1a; }
+.lookup-trend-badge.improving { background: rgba(59,139,212,0.12); color: #3b8bd4; }
+
+.lookup-card-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.lookup-chart-title {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(42,42,42,0.45);
+}
+
+.lookup-chart-wrap {
+  flex: 1;
+  min-height: clamp(180px, 28vh, 320px);
+}
+
+#lookup-spi-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.lookup-not-found {
+  padding: 2rem;
+  text-align: center;
+  color: rgba(42,42,42,0.45);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.globe-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+.globe-zoom-hint {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(139,94,60,0.45);
+}
+
+.globe-reset-btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid rgba(139,94,60,0.3);
+  border-radius: 50px;
+  background: transparent;
+  color: #8B5E3C;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.globe-reset-btn:hover { background: #8B5E3C; color: #f5f0e8; }

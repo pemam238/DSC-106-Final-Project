@@ -23,6 +23,7 @@
 <button class="chapter-dot" data-target="slide-case-track"></button>
 <button class="chapter-dot" data-target="slide-3-track"></button> 
 <button class="chapter-dot" data-target="slide-climate" title="Build a Climate"></button>
+<button class="chapter-dot" data-target="slide-lookup" title="Country Lookup"></button>
   <button class="chapter-dot" data-target="slide-outro" title="Takeaway"></button>
 </nav>
 
@@ -35,7 +36,10 @@
       <span>HIDE</span>
     </h1>
     <p class="context-text">
-      Everyone pictures cracked desrt earth. But some of the world's most persistent droughts happen somewhere far colder.
+      You already know what drought looks like.
+    </p>
+    <p class="context-text hero-subtext">
+      Or do you?
     </p>
   </div>
   <div class="scroll-arrow">
@@ -404,6 +408,13 @@
 <!-- Connective divider -->
 <div class="section-divider section-reveal">
   <div class="divider-line"></div>
+  <span class="divider-text">A century of change</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
   <span class="divider-text">Try it yourself</span>
   <div class="divider-line"></div>
 </div>
@@ -474,6 +485,37 @@
 </section>
 
 <div id="map-tooltip"></div>
+
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
+  <span class="divider-text">Your country's drought story</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- SLIDE — COUNTRY LOOKUP GLOBE -->
+<section class="slide" id="slide-lookup">
+  <div class="lookup-wrap">
+    <div class="lookup-header">
+      <p class="lookup-kicker">How Does Your Country Rank?</p>
+      <h2 class="lookup-title">FIND YOUR COUNTRY</h2>
+      <p class="lookup-sub">Spin the globe and click your country to see its drought rank, SPI trend, and 165 years of data.</p>
+    </div>
+   <div class="globe-hint" id="globe-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg>
+      Drag to spin · Scroll to zoom · Click a country
+    </div>
+    <div id="globe-container">
+      <canvas id="globe-canvas"></canvas>
+      <div id="globe-tooltip"></div>
+    </div>
+    <div class="globe-controls">
+      <span class="globe-zoom-hint">Scroll to zoom</span>
+      <button class="globe-reset-btn" id="globe-reset">↺ Reset view</button>
+    </div>
+    <div id="lookup-result" class="lookup-result"></div>
+  </div>
+</section>
 
 <!-- Connective divider -->
 <div class="section-divider section-reveal">
