@@ -651,7 +651,7 @@ loadTopojsonAndMap();
 
   // Palette matching case study slide
 // Palette constants as hex strings — THREE.Color created later inside initGlobe
-  const COL_OCEAN_HEX = '#b8d4e8';
+  const COL_OCEAN_HEX = '#7697d6';
   const COL_LAND_HEX  = '#d4c9b5';
   // ── Load data ────────────────────────────────
   async function loadLookupData() {
@@ -678,20 +678,47 @@ loadTopojsonAndMap();
       });
     }
     rankings = [...allCountries].sort((a, b) => a.spi_change - b.spi_change);
+    populateRankLists();
 
     const yLines = yearlyText.trim().split('\n');
     const yHdrs  = yLines[0].split(',').map(h => h.trim());
-    for (let i = 1; i < yLines.length; i += 2) {
-      const vals = yLines[i].split(','), row = {};
-      yHdrs.forEach((h, idx) => { row[h] = vals[idx]?.trim(); });
-      if (!row.country || !row.year) continue;
-      const year = parseInt(row.year), spi = parseFloat(row.mean_spi);
-      if (isNaN(year) || isNaN(spi)) continue;
-      if (!countryYearly[row.country]) countryYearly[row.country] = [];
-      countryYearly[row.country].push({ year, spi });
+    const yearIdx    = yHdrs.indexOf('year');
+    const countryIdx = yHdrs.indexOf('country');
+    const spiIdx     = yHdrs.indexOf('mean_spi');
+    for (let i = 1; i < yLines.length; i++) {
+      const vals = yLines[i].split(',');
+      if (vals.length < 4) continue;
+      const country = vals[countryIdx]?.trim();
+      const year    = parseInt(vals[yearIdx]);
+      const spi     = parseFloat(vals[spiIdx]);
+      if (!country || isNaN(year) || isNaN(spi)) continue;
+      if (!countryYearly[country]) countryYearly[country] = [];
+      countryYearly[country].push({ year, spi });
     }
   }
+function populateRankLists() {
+    const worstEl = document.getElementById('rank-list-worst');
+    const bestEl  = document.getElementById('rank-list-best');
+    if (!worstEl || !bestEl) return;
 
+    const worst = rankings.slice(0, 5);
+    const best  = [...rankings].reverse().slice(0, 5);
+
+    function makeItem(c, isWorst) {
+      const li = document.createElement('li');
+      li.className = 'rank-list-item';
+      const sign = c.spi_change >= 0 ? '+' : '';
+      li.innerHTML = `
+        <span class="rank-list-item-name">${c.country}</span>
+        <span class="rank-list-item-val">${sign}${c.spi_change.toFixed(2)} SPI</span>
+      `;
+      li.addEventListener('click', () => showResult(c.country));
+      return li;
+    }
+
+    worst.forEach(c => worstEl.appendChild(makeItem(c, true)));
+    best.forEach(c  => bestEl.appendChild(makeItem(c, false)));
+  }
   // ── Point-in-polygon (ray casting) ──────────
   function pointInPolygon(point, polygon) {
     const [px, py] = point;
@@ -855,19 +882,25 @@ loadTopojsonAndMap();
       }
     }
 
-    for (const feature of features) {
+for (const feature of features) {
       const rawName  = feature.properties?.name || '';
       const normName = normalizeName(rawName);
       if (normName === selected) {
-        drawFeature(feature, `rgba(139,94,60,0.75)`);
+        drawFeature(feature, `rgba(139,94,60,0.85)`);
       } else if (normName === hovered) {
-        drawFeature(feature, `rgba(200,75,26,0.5)`);
+        drawFeature(feature, `rgba(200,75,26,0.6)`);
       } else {
-        // Tint by drought severity
         const meta = summaryMap[normName];
-        if (meta && meta.spi_change < -0.3) {
-          const intensity = Math.min(1, Math.abs(meta.spi_change) / 1.0);
-          drawFeature(feature, `rgba(200,75,26,${intensity * 0.22})`);
+        if (meta) {
+          if (meta.spi_change < 0) {
+            // Worsening — red tint, intensity scales with severity
+            const intensity = Math.min(1, Math.abs(meta.spi_change) / 1.2);
+            drawFeature(feature, `rgba(200,75,26,${0.08 + intensity * 0.42})`);
+          } else if (meta.spi_change > 0.1) {
+            // Improving — blue tint
+            const intensity = Math.min(1, meta.spi_change / 1.2);
+            drawFeature(feature, `rgba(59,139,212,${0.08 + intensity * 0.38})`);
+          }
         }
       }
     }
@@ -916,11 +949,12 @@ const topoRes = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countrie
     const W = container.getBoundingClientRect().width  || 520;
     const H = container.getBoundingClientRect().height || 520;
     scene    = new THREE.Scene();
-camera   = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
-    camera.position.z = 2.2;
-    const DEFAULT_FOV = 45;
-    const MIN_FOV = 20;
-    const MAX_FOV = 75;
+    const DEFAULT_Z = 3.8;
+    const MIN_Z     = 1.8;  // zoomed in
+    const MAX_Z     = 6.0;  // zoomed out
+    let currentScale = 1.0;
+    camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
+    camera.position.z = DEFAULT_Z;
 
     renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true, alpha: true });
     renderer.setSize(W, H);
@@ -1199,35 +1233,19 @@ canvasEl.addEventListener('touchmove', e => {
       renderer.setSize(W, H);
     });
 
-// Scroll to zoom via FOV
+// Scroll to zoom
     canvasEl.addEventListener('wheel', e => {
       e.preventDefault();
-      camera.fov = Math.max(MIN_FOV, Math.min(MAX_FOV, camera.fov + e.deltaY * 0.05));
-      camera.updateProjectionMatrix();
+      e.stopPropagation();
+      const newZ = Math.max(MIN_Z, Math.min(MAX_Z, camera.position.z + e.deltaY * 0.008));
+      camera.position.z = newZ;
+      // Keep globe filling the same screen area by scaling inversely with distance
+      currentScale = DEFAULT_Z / newZ;
+      globe.scale.setScalar(currentScale);
+      countriesMesh.scale.setScalar(currentScale);
     }, { passive: false });
 
-    // Pinch to zoom (touch)
-canvasEl.addEventListener('touchstart', e => {
-  e.preventDefault();
-
-  if (e.touches.length === 1) {
-    isDragging = true;
-    lastTouch = {
-      x: e.touches[0].clientX,
-      y: e.touches[0].clientY,
-      time: Date.now()
-    };
-  }
-
-  if (e.touches.length === 2) {
-    isDragging = false;
-
-    lastPinchDist = Math.hypot(
-      e.touches[0].clientX - e.touches[1].clientX,
-      e.touches[0].clientY - e.touches[1].clientY
-    );
-  }
-}, { passive: false });
+let lastPinchDist = null;
     canvasEl.addEventListener('touchmove', e => {
       if (e.touches.length === 2 && lastPinchDist !== null) {
         const dist = Math.hypot(
@@ -1235,17 +1253,24 @@ canvasEl.addEventListener('touchstart', e => {
           e.touches[0].clientY - e.touches[1].clientY
         );
         const delta = lastPinchDist - dist;
-        camera.fov = Math.max(MIN_FOV, Math.min(MAX_FOV, camera.fov + delta * 0.2));
-        camera.updateProjectionMatrix();
+        const newZ = Math.max(MIN_Z, Math.min(MAX_Z, camera.position.z + delta * 0.01));
+        camera.position.z = newZ;
+        currentScale = DEFAULT_Z / newZ;
+        globe.scale.setScalar(currentScale);
+        countriesMesh.scale.setScalar(currentScale);
         lastPinchDist = dist;
       }
     }, { passive: true });
     canvasEl.addEventListener('touchend', () => { lastPinchDist = null; }, { passive: true });
 
+// Reset button
+
     // Reset button
-    document.getElementById('globe-reset')?.addEventListener('click', () => {
-      camera.fov = DEFAULT_FOV;
-      camera.updateProjectionMatrix();
+      document.getElementById('globe-reset')?.addEventListener('click', () => {
+      camera.position.z = DEFAULT_Z;
+      currentScale = 1.0;
+      globe.scale.setScalar(1.0);
+      countriesMesh.scale.setScalar(1.0);
       globe.rotation.x = 0;
       globe.rotation.y = 0;
       countriesMesh.rotation.x = 0;
@@ -1255,11 +1280,22 @@ canvasEl.addEventListener('touchstart', e => {
       selectedCountry = null;
       hoveredCountry  = null;
       updateOverlay();
-      document.getElementById('lookup-result').innerHTML = '';
+document.getElementById('lookup-result').innerHTML = '';
     });
+
+    // Spin toggle
+    const spinBtn = document.getElementById('globe-spin-toggle');
+    if (spinBtn) {
+      spinBtn.addEventListener('click', () => {
+        autoRotate = !autoRotate;
+        spinBtn.textContent = autoRotate ? 'II Pause' : '> Spin';
+        if (!autoRotate) clearTimeout(autoRotateTimer);
+      });
+    }
   }
 
   // ── Result card (same as before) ─────────────
+
   async function showResult(countryName) {
     const resultEl = document.getElementById('lookup-result');
     if (!resultEl) return;
