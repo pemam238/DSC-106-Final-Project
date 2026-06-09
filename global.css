@@ -62,8 +62,8 @@ body {
   padding: 0 1.5rem;
 }
 
-.hero-content { 
-  max-width: min(900px, 90vw); 
+.hero-content {
+  max-width: min(900px, 90vw);
 }
 
 .title {
@@ -94,7 +94,6 @@ body {
   font-weight: 400;
 }
 
-
 .byline {
   font-weight: 400;
   font-size: clamp(0.78rem, 1.5vw, 0.95rem);
@@ -107,6 +106,15 @@ body {
   font-weight: 700;
   font-size: clamp(1.5rem, 4vw, 3rem);
   color: #fff;
+}
+
+.hero-subtext {
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  font-weight: 900;
+  color: rgba(255,255,255,0.88);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
 }
 
 .scroll-arrow {
@@ -138,10 +146,10 @@ body {
 
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); opacity: .55; }
-  50%      { transform: translateX(-50%) translateY(8px); opacity: .9;  }
+  50%       { transform: translateX(-50%) translateY(8px); opacity: .9; }
 }
 
-/* ── Slide 2 track ─────────────────────────────── */
+/* ── Slide 2 — Hot/Cold sticky scene ──────────── */
 #slide-2-track { position: relative; }
 .scroll-spacer { height: 250vh; }
 
@@ -160,7 +168,6 @@ body {
   overflow: hidden;
 }
 
-/* Hot/Cold question UI */
 .hot-cold-question {
   font-weight: 800;
   font-size: clamp(1.8rem, 3.5vw, 4rem);
@@ -210,42 +217,38 @@ body {
   transition: background 0.3s;
 }
 
-/* Colored overlays on hover */
-.left-half:hover,
-.right-half:hover {
-  cursor: pointer;
-}
-
 .half::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0);
+  background: rgba(0,0,0,0);
   transition: background 0.3s;
   pointer-events: none;
 }
 
 .half:hover::after {
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0,0,0,0.45);
 }
 
-.choice-btn {
+.choice-btn { display: none; }
+
+.half-label {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
-  letter-spacing: 0.16em;
+  font-size: clamp(2rem, 8vw, 4rem);
+  letter-spacing: 0.12em;
   color: #fff;
-  background: rgba(255,255,255,0.18);
-  border: 2px solid rgba(255,255,255,0.6);
-  border-radius: 50px;
-  padding: 0.75rem 2.4rem;
-  cursor: pointer;
-  backdrop-filter: blur(4px);
-  transition: background 0.2s, transform 0.15s;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  backdrop-filter: none;
+  transition: transform 0.2s;
 }
-.choice-btn:hover {
-  background: rgba(255,255,255,0.32);
-  transform: scale(1.05);
+
+.half:hover .half-label {
+  transform: scale(1.08);
+  background: rgba(0,0,0,0.5);
 }
 
 .reveal-overlay {
@@ -288,7 +291,7 @@ body {
   width: clamp(200px, 20vw, 500px);
   height: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 0 1rem;
   pointer-events: none;
@@ -299,15 +302,13 @@ body {
 .left-panel {
   left: 0;
   justify-content: flex-end;
-  padding-right: clamp(1.5rem, 3vw, 6rem);
-  align-items: center;
+  padding-right: clamp(1rem, 2vw, 2.5rem);
 }
 
 .right-panel {
   right: 0;
   justify-content: flex-start;
-  padding-left: clamp(1.5rem, 3vw, 6rem);
-  align-items: center;
+  padding-left: clamp(1rem, 2vw, 2.5rem);
 }
 
 .left-panel .side-panel-inner {
@@ -320,7 +321,7 @@ body {
   text-align: right;
   align-items: flex-end;
   width: 100%;
-  max-width: 400px;
+  max-width: clamp(160px, 18vw, 320px);
 }
 .right-panel .side-panel-inner {
   display: flex;
@@ -332,7 +333,7 @@ body {
   text-align: left;
   align-items: flex-start;
   width: 100%;
-  max-width: 400px;
+  max-width: clamp(160px, 18vw, 320px);
 }
 
 .left-panel.visible .side-panel-inner,
@@ -357,7 +358,6 @@ body {
   line-height: 1.15;
   text-transform: uppercase;
 }
-
 .panel-heading em { font-style: normal; color: #8B5E3C; }
 
 .panel-body {
@@ -366,7 +366,6 @@ body {
   line-height: 1.8;
   font-weight: 400;
 }
-
 .panel-body em { font-style: italic; color: #8B5E3C; font-weight: 600; }
 
 .panel-divider {
@@ -376,30 +375,40 @@ body {
   border: none;
   margin: 0;
 }
+
 /* ── WORLD MAP (slide 3) ───────────────────────── */
+/* 
+  Use CSS grid so .map-top-label spans full width on row 1,
+  and #map-left-col + .map-right-panel share row 2.
+  This makes the right panel text naturally align with the map top.
+*/
 #slide-3-track { position: relative; }
+
 #scene-map {
   background: #f5f0e8;
-  justify-content: flex-start;
-  padding: clamp(0.3rem, 0.8vh, 1rem) clamp(1rem, 2vw, 2rem) clamp(1rem, 2vh, 1.5rem);
-  flex-direction: row !important;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 0;
-  row-gap: clamp(0.3rem, 0.6vh, 0.6rem);
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 4vh, 4rem) 0;
   overflow: hidden;
-}
-
-#world-map path.cold-drought-active {
-  cursor: pointer;
+  gap: clamp(0.5rem, 1vh, 1rem);
 }
 
 .map-top-label {
-  width: 100%;
-  padding: clamp(0.3rem, 0.6vh, 0.6rem) 2rem 0;
-  margin-bottom: 0;
+  width: min(1200px, 94vw);
+  padding: 0 0 clamp(1rem, 2vh, 2rem) 0;
   text-align: center;
   z-index: 10;
+}
+
+#map-content-row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: min(1200px, 94vw);
+  min-height: 0;
+  position: relative;
 }
 
 .map-label-text {
@@ -414,62 +423,99 @@ body {
 
 .map-label-text strong {
   display: block;
-  font-size: clamp(1.4rem, 3.2vw, 4rem);
+  font-size: clamp(2rem, 4.5vw, 6rem);
   color: #111;
   letter-spacing: 0.04em;
-  line-height: 0.92;
+  line-height: 1;
   font-weight: 900;
   text-transform: uppercase;
-  margin-bottom: 0.2rem;
-  white-space: nowrap;
+  margin-bottom: 0.4rem;
+  white-space: normal;
   text-align: center;
+  max-width: 95%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-#world-map {
-  width: 100%;
-  height: 100%;
-  max-height: calc(100vh - clamp(8rem, 18vh, 14rem));
-  border-radius: 14px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.13);
+#map-left-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  padding-right: clamp(1rem, 2vw, 2rem);
 }
 
 #world-map {
   width: 100%;
   flex: 1 1 auto;
   min-height: 0;
-  max-height: 62vh;
+  max-height: 58vh;
   border-radius: 14px;
   box-shadow: 0 8px 40px rgba(0,0,0,0.13);
 }
 
-#map-left-col {
-  flex: 1 1 55%;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - clamp(10rem, 22vh, 16rem));
-  padding: 0;
+#world-map path.cold-drought-active {
+  cursor: pointer;
 }
 
-/* Right panel */
+/* Legend */
+.map-legend {
+  flex: 0 0 auto;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  width: 100%;
+}
+.map-legend.visible { opacity: 1; }
+
+.legend-label {
+  font-size: clamp(0.72rem, 0.9vw, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.55);
+  margin-bottom: 0.15rem;
+}
+
+.legend-bar {
+  width: 100%;
+  height: clamp(10px, 1.2vh, 14px);
+  border-radius: 6px;
+}
+
+.legend-ends {
+  display: flex;
+  justify-content: space-between;
+  font-size: clamp(0.65rem, 0.75vw, 0.75rem);
+  color: rgba(0,0,0,0.5);
+  letter-spacing: 0.06em;
+  margin-top: 0.15rem;
+  font-weight: 600;
+}
+
+/* Right panel — aligns naturally with map top via grid */
 .map-right-panel {
-  flex: 0 0 clamp(200px, 24vw, 360px);
-  height: calc(100vh - clamp(10rem, 22vh, 16rem));
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
-  padding: clamp(0.8rem, 1.5vh, 1.5rem) clamp(1rem, 1.8vw, 2rem);
+  flex: 0 0 clamp(220px, 26vw, 380px);
+  padding: clamp(0.5rem, 1vh, 1rem) 0 0 clamp(1rem, 2vw, 2rem);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  min-height: 200px;
 }
-
-/* Country info box */
+/* Country info box — centered in right panel via absolute */
 .country-info-box {
   position: absolute;
   top: 50%;
-  left: clamp(0.8rem, 1.5vw, 1.8rem);
-  right: clamp(0.8rem, 1.5vw, 1.8rem);
+  left: 0;
+  right: 0;
   transform: translateY(calc(-50% + 80px));
   opacity: 0;
   pointer-events: none;
@@ -534,49 +580,6 @@ body {
   line-height: 1.85;
 }
 
-
-/* Legend */
-.map-legend {
-  position: relative;
-  flex: 0 0 auto;
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  z-index: 10;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  width: 100%;
-}
-
-.map-legend.visible { opacity: 1; }
-
-.legend-label {
-  font-size: clamp(0.72rem, 0.9vw, 0.85rem);
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.55);
-  margin-bottom: 0.15rem;
-}
-
-.legend-bar {
-  width: 100%;
-  height: clamp(10px, 1.2vh, 14px);
-  border-radius: 6px;
-}
-
-
-.legend-ends {
-  display: flex;
-  justify-content: space-between;
-  font-size: clamp(0.65rem, 0.75vw, 0.75rem);
-  color: rgba(0,0,0,0.5);
-  letter-spacing: 0.06em;
-  margin-top: 0.15rem;
-  font-weight: 600;
-}
-
 #map-tooltip {
   position: fixed;
   background: rgba(20,20,20,0.88);
@@ -631,7 +634,7 @@ body {
   top: 50%;
   transform: translateX(-50%) translateY(calc(-50% + 40px));
   width: min(92vw, 560px);
-  background: rgba(20, 15, 10, 0.88);
+  background: rgba(20,15,10,0.88);
   backdrop-filter: blur(12px);
   border-radius: 10px;
   padding: clamp(1.8rem, 3vh, 2.8rem) clamp(1.8rem, 2.5vw, 2.6rem);
@@ -689,9 +692,8 @@ body {
   line-height: 1.85;
   margin-bottom: 1.2rem;
 }
-
-
 .spi-body em { font-style: normal; font-weight: 700; color: #8B5E3C; }
+
 .spi-meter-track {
   position: relative;
   height: clamp(8px, 1vh, 12px);
@@ -709,7 +711,7 @@ body {
   background: #fff;
   border-radius: 2px;
   box-shadow: 0 0 6px rgba(255,255,255,0.8);
-  transition: left 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: left 0.8s cubic-bezier(0.22,1,0.36,1);
 }
 
 .spi-meter-labels {
@@ -733,7 +735,10 @@ body {
 }
 
 /* ── Case study ─────────────────────────────────── */
-#slide-case-track { position: relative; }
+#slide-case-track {
+  position: relative;
+  background: #f5f0e8;
+}
 .case-scroll-space { height: 200vh; }
 .case-scene {
   position: sticky;
@@ -755,7 +760,7 @@ body {
   display: flex;
   width: 100%;
   height: 100%;
-  transition: transform 0.52s cubic-bezier(0.72, 0, 0.28, 1);
+  transition: transform 0.52s cubic-bezier(0.72,0,0.28,1);
 }
 .case-slide {
   flex: 0 0 100%;
@@ -767,6 +772,7 @@ body {
   padding: 2rem 5vw;
   overflow: hidden;
 }
+
 /* intro slide */
 .case-intro-inner {
   max-width: min(1300px, 92vw);
@@ -777,7 +783,6 @@ body {
   align-items: center;
   gap: clamp(0.8rem, 1.5vh, 1.3rem);
 }
-
 
 .case-kicker {
   font-size: 0.65rem;
@@ -852,6 +857,7 @@ body {
 .case-loc-name { font-weight: 900; font-size: 0.92rem; letter-spacing: 0.05em; text-transform: uppercase; }
 .case-loc-coords { font-size: 0.68rem; color: #7a6248; letter-spacing: 0.06em; }
 .case-loc-tag { font-size: 0.65rem; color: #8B5E3C; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+
 /* split layout */
 .case-split-layout {
   display: flex;
@@ -862,6 +868,7 @@ body {
 }
 
 .case-split-reversed { flex-direction: row-reverse; }
+
 .case-split-text {
   flex: 0 0 clamp(220px, 28vw, 420px);
   max-width: clamp(220px, 28vw, 420px);
@@ -872,6 +879,7 @@ body {
 .case-split-chart {
   flex: 1;
   min-width: 0;
+  min-width: 400px;
   height: clamp(300px, 50vh, 600px);
 }
 .case-chart-svg {
@@ -959,7 +967,6 @@ body {
   flex-direction: column;
   gap: clamp(0.3rem, 0.8vh, 0.55rem);
 }
-
 .case-stat-pill {
   background: #ece6d9;
   border: 1px solid rgba(139,94,60,0.2);
@@ -969,16 +976,15 @@ body {
   flex-direction: column;
   gap: 0.08rem;
 }
-
 .case-stat-num {
   font-weight: 900;
   font-size: clamp(1rem, 1.6vw, 1.6rem);
   color: #8B5E3C;
   line-height: 1;
 }
-
 .case-stat-desc { font-size: 0.7rem; color: #2e2e2e; font-weight: 600; letter-spacing: 0.05em; }
 .case-stat-both { font-size: 0.6rem; color: #8B5E3C; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+
 .case-arrow {
   position: absolute;
   top: 50%;
@@ -1006,6 +1012,7 @@ body {
 .case-arrow.hidden { opacity: 0; pointer-events: none; }
 .case-arrow-left  { left: clamp(0.5rem, 1.2vw, 1.4rem); }
 .case-arrow-right { right: clamp(0.5rem, 1.2vw, 1.4rem); }
+
 #case-dots {
   position: absolute;
   bottom: 1.6rem;
@@ -1028,6 +1035,7 @@ body {
   background: #8B5E3C;
   transform: scale(1.35);
 }
+
 /* D3 chart styles */
 .case-axis text {
   font-family: 'Montserrat', sans-serif;
@@ -1071,7 +1079,6 @@ body {
 }
 
 /* ── Climate builder ───────────────────────────── */
-
 #slide-climate {
   background: #f5f0e8;
   overflow-y: auto;
@@ -1165,6 +1172,7 @@ body {
 }
 #pr-slider::-webkit-slider-thumb { border-color: #1a6fba; }
 .climate-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
 .slider-ticks {
   display: flex;
   justify-content: space-between;
@@ -1174,6 +1182,7 @@ body {
   text-transform: uppercase;
   color: rgba(42,42,42,0.35);
 }
+
 .drought-meter-wrap {
   width: 100%;
   display: flex;
@@ -1184,6 +1193,7 @@ body {
   padding-top: clamp(0.8rem, 1.5vh, 1.2rem);
   border-top: 1px solid rgba(139,94,60,0.15);
 }
+
 .meter-label {
   font-size: clamp(0.58rem, 0.75vw, 0.7rem);
   font-weight: 700;
@@ -1191,11 +1201,7 @@ body {
   text-transform: uppercase;
   color: rgba(42,42,42,0.4);
 }
-.dial-wrap {
-  position: relative;
-  width: min(520px, 80vw);
-  height: auto;
-}
+
 .dial-wrap {
   position: relative;
   width: min(340px, 55vw);
@@ -1221,6 +1227,24 @@ body {
   line-height: 1.6;
   margin-top: 0.4rem;
 }
+
+.meter-left-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.meter-right-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+
 .similar-climate-card {
   margin-top: clamp(0.5rem, 1vh, 1rem);
   text-align: center;
@@ -1237,7 +1261,6 @@ body {
   text-transform: uppercase;
   color: #8B5E3C;
 }
-
 
 #similar-name {
   font-size: clamp(1.4rem, 2.2vw, 2rem);
@@ -1265,42 +1288,6 @@ body {
   letter-spacing: 0.06em;
   max-width: 700px;
 }
-
-/* ── Hot/Cold halves as clickable areas ───────── */
-.half {
-  flex: 1;
-  display: flex;
-  align-items: center;          /* center vertically */
-  justify-content: center;      /* center horizontally */
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.half-label {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2rem, 8vw, 4rem);
-  letter-spacing: 0.12em;
-  color: #fff;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
-  background: none;
-  padding: 0;
-  border-radius: 0;
-  backdrop-filter: none;
-  transition: transform 0.2s;
-}
-
-
-.half:hover .half-label {
-  transform: scale(1.08);
-  background: rgba(0,0,0,0.5);
-}
-
-/* remove old button styles */
-.choice-btn {
-  display: none;
-}
-
 
 /* ── Progress indicator ─────────────────────────── */
 #story-progress {
@@ -1366,7 +1353,7 @@ body {
   transition: opacity 0.3s;
 }
 
-/* ── Section dividers (connective tissue) ──────── */
+/* ── Section dividers ───────────────────────────── */
 .section-divider {
   background: #f5f0e8;
   padding: 3rem 2rem;
@@ -1389,41 +1376,7 @@ body {
   color: rgba(139,94,60,0.5);
 }
 
-/* ── Case study: scroll-driven instead of slideshow ── */
-#slide-case-track {
-  position: relative;
-  background: #f5f0e8;
-}
-.case-scroll-space { height: 100vh; }
-.case-scene {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  background: #f5f0e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.meter-left-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  min-width: 0;
-}
-
-.meter-right-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  min-width: 0;
-}
-
+/* ── Takeaway / outro content ───────────────────── */
 .takeaway-content {
   max-width: 780px;
   display: flex;
@@ -1467,17 +1420,6 @@ body {
   font-style: normal;
   color: #8B5E3C;
 }
-/* ── Hero subtext ───────────────────────────────── */
-.hero-subtext {
-  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
-  font-weight: 900;
-  color: rgba(255,255,255,0.88);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin-top: 0.2rem;
-}
-
-
 
 /* ── Country lookup globe ────────────────────────── */
 #slide-lookup {
@@ -1543,7 +1485,6 @@ body {
   background: rgba(139,94,60,0.06);
   transition: opacity 0.5s ease;
 }
-
 .globe-hint svg { flex-shrink: 0; stroke: #8B5E3C; }
 
 #globe-container {
@@ -1555,7 +1496,6 @@ body {
   cursor: grab;
   user-select: none;
 }
-
 #globe-container:active { cursor: grabbing; }
 
 #globe-canvas {
@@ -1585,7 +1525,6 @@ body {
   z-index: 10;
   transform: translate(-50%, -130%);
 }
-
 #globe-tooltip.visible { opacity: 1; }
 
 .lookup-result {
@@ -1742,6 +1681,7 @@ body {
   font-weight: 600;
   letter-spacing: 0.06em;
 }
+
 .globe-controls {
   display: flex;
   align-items: center;
@@ -1793,6 +1733,7 @@ body {
 
 .lookup-rank-list.worst { left: 0; top: clamp(8rem, 18vh, 14rem); }
 .lookup-rank-list.best  { right: 0; top: clamp(8rem, 18vh, 14rem); }
+
 .rank-list-label {
   font-size: 0.6rem;
   font-weight: 700;
@@ -1824,7 +1765,6 @@ body {
   background: rgba(139,94,60,0.06);
   border: 1px solid rgba(139,94,60,0.12);
 }
-
 .rank-list-item:hover { background: rgba(139,94,60,0.14); }
 
 .rank-list-item-name {
@@ -1842,3 +1782,169 @@ body {
 
 .lookup-rank-list.worst .rank-list-item-val { color: #c84b1a; }
 .lookup-rank-list.best  .rank-list-item-val { color: #3b8bd4; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS — largest first
+   ═══════════════════════════════════════════════ */
+
+/* ── 850px: world map stacks vertically ─────────── */
+@media (max-width: 850px) {
+  #scene-map {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+    align-items: stretch;
+    padding: 2rem 1.2rem 2rem;
+  }
+
+  #map-content-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .map-top-label {
+    grid-area: unset;
+    width: 100%;
+    padding: 0 0 0.8rem 0;
+    text-align: center;
+  }
+
+  #map-left-col {
+    grid-area: unset;
+    flex: none;
+    width: 100%;
+    height: auto;
+    padding-right: 0;
+  }
+
+  #world-map {
+    width: 100%;
+    max-height: 45vw;
+    height: 45vw;
+    flex: none;
+    border-radius: 8px;
+  }
+
+  .map-legend {
+    padding: 0.6rem 0;
+  }
+
+  .map-right-panel {
+    grid-area: unset;
+    flex: none;
+    width: 100%;
+    height: auto;
+    padding: 1.5rem 0 2rem 0;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: visible;
+  }
+
+  /* Force country info box visible and centered below map */
+  .country-info-box {
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .country-info-box .cib-label,
+  .country-info-box .cib-name,
+  .country-info-box .cib-stat,
+  .country-info-box .cib-unit,
+  .country-info-box .cib-body {
+    text-align: center;
+  }
+  .country-info-box .cib-divider {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ── 768px: lookup card, case study, chapter nav ── */
+@media (max-width: 768px) {
+  .lookup-rank-list.worst,
+  .lookup-rank-list.best {
+    display: none;
+  }
+
+  .lookup-card {
+    grid-template-columns: 1fr;
+  }
+
+  .case-intro-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .case-loc-card {
+    max-width: 100%;
+  }
+
+  .case-split-layout,
+  .case-split-reversed {
+    flex-direction: column;
+  }
+  .case-split-text {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+  }
+  .case-split-chart {
+    width: 100%;
+    height: clamp(200px, 35vh, 320px);
+  }
+
+  #chapter-label {
+    display: none;
+  }
+}
+
+/* ── 700px: hot/cold side panels stack below frame ── */
+@media (max-width: 700px) {
+  .sticky-scene {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    flex-direction: column;
+    padding: 2rem 1.2rem 3rem;
+  }
+
+  .side-panel {
+    position: static;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    padding: 0;
+    pointer-events: auto;
+  }
+
+  .left-panel {
+    justify-content: center;
+    padding-right: 0;
+  }
+
+  .right-panel {
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .left-panel .side-panel-inner,
+  .right-panel .side-panel-inner {
+    text-align: center;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .hot-cold-frame {
+    width: min(95vw, 680px);
+  }
+
+  #slide-outro {
+    padding: 3rem 1.2rem;
+  }
+}

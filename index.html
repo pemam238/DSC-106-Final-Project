@@ -377,25 +377,27 @@
 
 <!-- SLIDE 3 — WORLD MAP SCROLLYTELLING -->
 <section id="slide-3-track">
-  <div class="sticky-scene" id="scene-map" style="gap:0;">
+  <div class="sticky-scene" id="scene-map">
     <div class="map-top-label" id="map-top-label">
       <p class="map-label-text" id="map-label-text"></p>
     </div>
-    <div id="map-left-col">
-      <div id="world-map-wrap">
-        <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
-      </div>
-      <div class="map-legend" id="map-legend">
-        <div class="legend-label" id="legend-label">Temperature</div>
-        <div class="legend-bar" id="legend-bar"></div>
-        <div class="legend-ends">
-          <span id="legend-min"></span>
-          <span id="legend-max"></span>
+    <div id="map-content-row">
+      <div id="map-left-col">
+        <div id="world-map-wrap">
+          <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div class="map-legend" id="map-legend">
+          <div class="legend-label" id="legend-label">Temperature</div>
+          <div class="legend-bar" id="legend-bar"></div>
+          <div class="legend-ends">
+            <span id="legend-min"></span>
+            <span id="legend-max"></span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="map-right-panel" id="map-right-panel">
-      <div class="country-info-box" id="country-info-box"></div>
+      <div class="map-right-panel" id="map-right-panel">
+        <div class="country-info-box" id="country-info-box"></div>
+      </div>
     </div>
   </div>
   <div class="scroll-spacer" style="height:900vh;"></div>
