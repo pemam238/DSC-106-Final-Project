@@ -1157,9 +1157,93 @@ loadTopojsonAndMap();
     const slope=(n*sumXY-sumX*sumY)/(n*sumX2-sumX*sumX),intercept=(sumY-slope*sumX)/n;
     const xMin=d3.min(series,d=>d.year),xMax=d3.max(series,d=>d.year);
     g.append('line').attr('x1',x(xMin)).attr('y1',y(slope*xMin+intercept)).attr('x2',x(xMax)).attr('y2',y(slope*xMax+intercept)).attr('stroke',spiChange<0?'rgba(200,75,26,0.6)':'rgba(59,139,212,0.6)').attr('stroke-width',1.5).attr('stroke-dasharray','6 3');
-    const path=g.append('path').datum(series).attr('d',d3.line().x(d=>x(d.year)).y(d=>y(d.spi)).curve(d3.curveBasis)).attr('fill','none').attr('stroke',spiChange<0?'#c84b1a':'#3b8bd4').attr('stroke-width',1.8);
+const path=g.append('path').datum(series).attr('d',d3.line().x(d=>x(d.year)).y(d=>y(d.spi)).curve(d3.curveBasis)).attr('fill','none').attr('stroke',spiChange<0?'#c84b1a':'#3b8bd4').attr('stroke-width',1.8);
     const len=path.node().getTotalLength();
     path.attr('stroke-dasharray',`${len} ${len}`).attr('stroke-dashoffset',len).transition().duration(1200).ease(d3.easeLinear).attr('stroke-dashoffset',0);
+
+    // ── Hover tooltip ──────────────────────────
+    const hoverLine = g.append('line')
+      .attr('y1', 0).attr('y2', iH)
+      .attr('stroke', 'rgba(139,94,60,0.35)')
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', '3 3')
+      .attr('pointer-events', 'none')
+      .style('opacity', 0)
+      .style('transition', 'none');
+
+    const hoverDot = g.append('circle')
+      .attr('r', 4)
+      .attr('fill', spiChange < 0 ? '#c84b1a' : '#3b8bd4')
+      .attr('stroke', '#f5f0e8')
+      .attr('stroke-width', 2)
+      .attr('pointer-events', 'none')
+      .style('opacity', 0)
+      .style('transition', 'none');
+
+    const hoverLabel = g.append('g').style('opacity', 0).style('transition', 'none').attr('pointer-events', 'none');
+    const hoverBg = hoverLabel.append('rect')
+      .attr('rx', 4).attr('ry', 4)
+      .attr('fill', '#1a1a1a');
+    const hoverText = hoverLabel.append('text')
+      .style('font-family', "'Montserrat',sans-serif")
+      .style('font-size', '9px')
+      .style('font-weight', '700')
+      .attr('fill', '#f5f0e8');
+
+    // Invisible overlay rect to capture mouse events
+    g.append('rect')
+      .attr('width', iW).attr('height', iH)
+      .attr('fill', 'transparent')
+      .on('mousemove', function(event) {
+        const [mx] = d3.pointer(event, this);
+
+        // Snap to nearest data point by year
+        const year = Math.round(x.invert(mx));
+        const bisect = d3.bisector(d => d.year).left;
+        const idx = bisect(series, year);
+        const a = series[idx - 1], b = series[idx];
+        const closest = !a ? b : !b ? a : Math.abs(b.year - year) < Math.abs(a.year - year) ? b : a;
+        if (!closest) return;
+
+      // Sample the rendered SVG path to get visually correct y
+        // path lives inside the g group so its x coords are already in local (margin-offset) space
+        const pathNode = path.node();
+        const totalLen = pathNode.getTotalLength();
+        let lo = 0, hi = totalLen;
+        for (let iter = 0; iter < 20; iter++) {
+          const mid = (lo + hi) / 2;
+          const pt = pathNode.getPointAtLength(mid);
+          if (pt.x < mx) lo = mid; else hi = mid;
+        }
+        const sampledPt = pathNode.getPointAtLength((lo + hi) / 2);
+        const cy = sampledPt.y;
+
+        const cx = mx;
+        const displayedSpi = y.invert(cy);
+        const displayYear = Math.round(x.invert(mx));
+        const label = `${displayYear}  SPI ${displayedSpi >= 0 ? '+' : ''}${displayedSpi.toFixed(2)}`;
+        hoverLine.attr('x1', mx).attr('x2', mx).style('opacity', 1);
+        hoverDot.attr('cx', mx).attr('cy', cy).style('opacity', 1);
+
+        hoverText.text(label);
+        const bbox = hoverText.node().getBBox();
+        const pad = 5;
+        const labelX = cx + 8 + bbox.width + pad * 2 > iW ? cx - bbox.width - pad * 2 - 8 : cx + 8;
+        const labelY = Math.max(0, Math.min(cy - bbox.height / 2 - pad, iH - bbox.height - pad * 2));
+
+        hoverBg
+          .attr('x', labelX - pad)
+          .attr('y', labelY - pad)
+          .attr('width', bbox.width + pad * 2)
+          .attr('height', bbox.height + pad * 2);
+        hoverText.attr('x', labelX).attr('y', labelY + bbox.height * 0.75);
+        hoverLabel.style('opacity', 1);
+      })
+      .on('mouseleave', function() {
+        hoverLine.style('opacity', 0);
+        hoverDot.style('opacity', 0);
+        hoverLabel.style('opacity', 0);
+      });
   }
 
   async function boot() {
