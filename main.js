@@ -30,12 +30,16 @@ const CHAPTERS = [
   { id: 'slide-3-track',     label: 'The World' },
   { id: 'slide-climate',     label: 'Build a Climate' },
   { id: 'slide-lookup',      label: 'Country Lookup' },
+  { id: 'slide-outro',       label: 'Takeaway' },
 ];
 
 chapterDots.forEach(dot => {
   dot.addEventListener('click', () => {
     const target = document.getElementById(dot.dataset.target);
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    if (target) {
+      const top = target.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
   });
 });
 
@@ -489,8 +493,8 @@ loadTopojsonAndMap();
   function animateBars(bars,yScale,innerH,dur=820){bars.attr('y',innerH).attr('height',0).transition().duration(dur).ease(d3.easeCubicOut).attr('y',d=>yScale(d.value)).attr('height',d=>innerH-yScale(d.value));}
   function animateLine(path,dur=1350){const len=path.node().getTotalLength();path.attr('stroke-dasharray',`${len} ${len}`).attr('stroke-dashoffset',len).transition().duration(dur).ease(d3.easeLinear).attr('stroke-dashoffset',0);}
   function addGridlines(g,yScale,iW){const grid=g.append('g').attr('class','case-axis').call(d3.axisLeft(yScale).ticks(5).tickSize(-iW).tickFormat(''));grid.select('.domain').remove();grid.selectAll('line').style('stroke','rgba(139,94,60,0.10)');}
-  function addTitle(svg,W,margin,text){svg.append('text').attr('class','case-chart-title').attr('x',W/2).attr('y',margin.top*0.58).text(text);}
-  function addLegend(g,iW){const leg=g.append('g').attr('transform',`translate(${iW-152},-26)`);[['Great Basin',GB_COLOR],['Death Valley',DV_COLOR]].forEach(([n,c],i)=>{leg.append('rect').attr('x',i*86).attr('width',11).attr('height',11).attr('rx',2).attr('fill',c).attr('opacity',0.88);leg.append('text').attr('x',i*86+15).attr('y',9.5).style('font-family',"'Montserrat',sans-serif").style('font-size','8.5px').style('fill',TEXT_COLOR).text(n);});}
+  function addTitle(svg,W,margin,text){svg.append('text').attr('class','case-chart-title').attr('x',W/2).attr('y',margin.top*0.35).text(text);}
+  function addLegend(g,iW){const leg=g.append('g').attr('transform',`translate(${iW/2-86},-14)`);[['Great Basin',GB_COLOR],['Death Valley',DV_COLOR]].forEach(([n,c],i)=>{leg.append('rect').attr('x',i*86).attr('width',11).attr('height',11).attr('rx',2).attr('fill',c).attr('opacity',0.88);leg.append('text').attr('x',i*86+15).attr('y',9.5).style('font-family',"'Montserrat',sans-serif").style('font-size','8.5px').style('fill',TEXT_COLOR).text(n);});}
   function drawBarChart(svgEl){
     if(!annualData?.length)return;
     const svg=d3.select(svgEl);svg.selectAll('*').remove();
