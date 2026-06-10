@@ -23,14 +23,15 @@ const chapterNav   = document.getElementById('chapter-nav');
 const chapterLabel = document.getElementById('chapter-label');
 const chapterDots  = document.querySelectorAll('.chapter-dot');
 const CHAPTERS = [
-  { id: 'slide-1',           label: 'Intro' },
-  { id: 'slide-2-track',     label: 'Hot or Cold?' },
-  { id: 'slide-case-track',  label: 'Two Deserts' },
-  { id: 'slide-spi-track',   label: 'Measuring Drought' },
-  { id: 'slide-3-track',     label: 'The World' },
-  { id: 'slide-climate',     label: 'Build a Climate' },
-  { id: 'slide-lookup',      label: 'Country Lookup' },
-  { id: 'slide-outro',       label: 'Takeaway' },
+  { id: 'slide-1',          label: 'Intro' },
+  { id: 'slide-2-track',    label: 'Hot or Cold?' },
+  { id: 'slide-case-track', label: 'Two Deserts' },
+  { id: 'slide-spi-track',  label: 'Measuring Drought' },
+  { id: 'slide-3-track',    label: 'The World' },
+  { id: 'slide-why',        label: 'Why It Matters' },
+  { id: 'slide-climate',    label: 'Build a Climate' },
+  { id: 'slide-lookup',     label: 'Country Lookup' },
+  { id: 'slide-outro',      label: 'Takeaway' },
 ];
 
 chapterDots.forEach(dot => {
