@@ -120,8 +120,7 @@ document.querySelectorAll('.half').forEach(half => {
 const MAP_STEPS = [0, 0.18, 0.36, 0.54, 0.72, 0.88];
 
 const STEP_LABELS = [
-  `<strong style="color:#6b0a0a">WHERE YOU'D EXPECT DROUGHT</strong><br><span>Temperature across every country — the obvious suspects. Hot places. The Sahara, the Arabian Peninsula, the Horn of Africa. This is where most people picture drought.</span>`,
-  `<strong style="color:#6b0a0a">WHERE YOU'D EXPECT DROUGHT</strong><br><span>Temperature across every country — the obvious suspects. Hot places. The Sahara, the Arabian Peninsula, the Horn of Africa. This is where most people picture drought.</span>`,
+  `<strong style="color:#6b0a0a">A Global Picture of Droughts  </strong><br><span>In this visualization, we calculated the mean temperature of countries over a 164-year period (1850-2014) to visualize the effects of temperature on the SPI Index. </span>`,
   `<strong style="color:#0a2a4a">BUT THE DATA TELLS A DIFFERENT STORY</strong><br><span>Now colored by SPI — the actual measure of drought deficit. Hot deserts stay red. But cold and temperate regions are lighting up too. Click any glowing country to explore.</span>`,
   `<strong style="color:#0a2a4a">DROUGHT IS GETTING WORSE — IN THE COLD</strong><br><span>SPI change from baseline to modern period. Dark red means drought is intensifying. Many of the sharpest declines are in places you wouldn't expect — cold steppes, mountain valleys, temperate plains.</span>`,
   `<strong style="color:#0a2a4a">DROUGHT IS GETTING WORSE — IN THE COLD</strong><br><span>SPI change from baseline to modern period. Dark red means drought is intensifying. Many of the sharpest declines are in places you wouldn't expect — cold steppes, mountain valleys, temperate plains.</span>`,
@@ -294,7 +293,7 @@ function applyMapStep(step) {
       if(isHot){meta.el.style.opacity="1";meta.el.setAttribute("stroke",tempColor(meta.temp_base??25));meta.el.setAttribute("stroke-width","2");meta.el.style.filter="drop-shadow(0 0 8px rgba(200,60,20,0.7))";}
       else{meta.el.style.opacity="0.18";meta.el.setAttribute("stroke","rgba(255,255,255,0.05)");meta.el.setAttribute("stroke-width","0.3");meta.el.style.filter="";}
     }
-    setInfoBox(`<div class="cib-label">Where drought is expected</div><div class="cib-name">Hot & Dry</div><div class="cib-divider"></div><div class="cib-body">Mali, Egypt, Saudi Arabia, Libya, Mauritania — all hot, all dry, all obvious candidates for drought.<br><br>Temperatures above <strong>25C</strong>. Precipitation near zero. This is the picture most people have.<br><br><em style="color:#8B5E3C">Scroll on — the map is about to change.</em></div>`);
+    setInfoBox(`<div class="cib-label">Where drought is expected</div><div class="cib-name">Hot & Dry</div><div class="cib-divider"></div><div class="cib-body">Regions with this climate include Mali, Egypt, Saudi Arabia, Libya, and Mauritania — all hot, all dry, all obvious candidates for drought.<br><br>Temperatures above <strong>25C</strong>. Precipitation near zero. This is the picture most people have.<br><br><em style="color:#8B5E3C">Scroll on — the map is about to change.</em></div>`);
   } else if(step<=3){
     updateLegend(step<=2?"spi":"spi_change");
     for(const[name,meta]of Object.entries(countryMeta)){
