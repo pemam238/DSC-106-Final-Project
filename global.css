@@ -752,7 +752,7 @@
    .case-arrow {
      position: absolute; top: 50%; transform: translateY(-50%);
      width: clamp(36px,3.5vw,44px); height: clamp(36px,3.5vw,44px);
-     border-radius: 50%; border: 2px solid rgba(36,58,45,0.25);
+     border-radius: 50%; box-shadow: 0 2px 10px rgba(36,58,45,0.18); overflow: hidden;
      background: rgba(247,244,238,0.9); backdrop-filter: blur(6px);
      color: var(--forest); cursor: pointer;
      display: flex; align-items: center; justify-content: center;
@@ -1055,7 +1055,7 @@
    .globe-hint svg { flex-shrink: 0; stroke: var(--forest); }
    
    #globe-container {
-     position: relative; width: min(480px,80vw); height: min(480px,80vw);
+     position: relative; width: min(400px,70vw); height: min(400px,70vw);
      min-width: 200px; min-height: 200px; cursor: grab; user-select: none;
    }
    #globe-container:active { cursor: grabbing; }

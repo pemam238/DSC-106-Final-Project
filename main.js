@@ -121,9 +121,9 @@ document.querySelectorAll('.half').forEach(half => {
 const MAP_STEPS = [0, 0.33, 0.66];
 
 const STEP_LABELS = [
-  `<strong style="color:#6b0a0a">Drought is not limited to places that appear dry.</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`,
-  `<strong style="color:#6b0a0a">Drought is not limited to places that appear dry.</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`,
-  `<strong style="color:#6b0a0a">Drought is not limited to places that appear dry.</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`
+  `<strong style="color:#6b0a0a">Drought isn't limited to places that appear dry.</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`,
+  `<strong style="color:#6b0a0a">Drought isn't limited to places that appear dry.</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`,
+  `<strong style="color:#6b0a0a">Drought isn't limited to places that appear dry.</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`
 ];
 
 const COLD_DROUGHT_INFO = {
@@ -214,7 +214,7 @@ async function initMap() {
     const d=coordsToPath(feature.geometry);
     if (!d) continue;
     const path=document.createElementNS("http://www.w3.org/2000/svg","path");
-    path.setAttribute("d",d); path.setAttribute("data-name",csvName); path.setAttribute("fill","#c8bfad");
+    path.setAttribute("d",d); path.setAttribute("data-name",csvName); path.setAttribute("fill","#c8bfad"); path.setAttribute("stroke","rgba(255,255,255,0.4)"); path.setAttribute("stroke-width","0.4");
     svg.appendChild(path);
     if (meta) { if (!countryMeta[csvName]) countryMeta[csvName]={}; Object.assign(countryMeta[csvName],meta); countryMeta[csvName].el=path; }
     if (rawName && !countryMeta[rawName]) countryMeta[rawName]={el:path};
@@ -293,8 +293,8 @@ function applyMapStep(step) {
     for(const[name,meta]of Object.entries(countryMeta)){
       if(!meta.el)continue; meta.el.setAttribute("fill",tempColor(meta.temp_base??15)); meta.el.style.cursor="default";
       const isHot=HOT_DROUGHT_COUNTRIES.includes(name);
-      if(isHot){meta.el.style.opacity="1";meta.el.setAttribute("stroke",tempColor(meta.temp_base??25));meta.el.setAttribute("stroke-width","2");meta.el.style.filter="drop-shadow(0 0 8px rgba(200,60,20,0.7))";}
-      else{meta.el.style.opacity="0.18";meta.el.setAttribute("stroke","rgba(255,255,255,0.05)");meta.el.setAttribute("stroke-width","0.3");meta.el.style.filter="";}
+      if(isHot){meta.el.style.opacity="1";meta.el.setAttribute("stroke","rgba(0,0,0,0.35)");meta.el.setAttribute("stroke-width","0.8");meta.el.style.filter="drop-shadow(0 0 8px rgba(200,60,20,0.7))";}
+      else{meta.el.style.opacity="0.18";meta.el.setAttribute("stroke","none");meta.el.setAttribute("stroke-width","0");meta.el.style.filter="";}
     }
     setInfoBox(`<div class="cib-label">Where drought is expected</div><div class="cib-name">Hot & Dry</div><div class="cib-divider"></div><div class="cib-body">Regions with this climate include Mali, Egypt, Saudi Arabia, Libya, and Mauritania — all hot, all dry, all obvious candidates for drought.<br><br>Temperatures above <strong>25°C</strong>. Precipitation near zero. This is the picture most people have.<br><br><em style="color:#8B5E3C">Scroll on — the map is about to change.</em></div>`);
   } else if(step===1){
@@ -304,8 +304,8 @@ function applyMapStep(step) {
       const col=spiColor(meta.spi_base);
       meta.el.setAttribute("fill",col);
       const isCold=COLD_DROUGHT_COUNTRIES.includes(name), isHot=HOT_DROUGHT_COUNTRIES.includes(name);
-      if(isCold||isHot){meta.el.style.opacity="1";meta.el.setAttribute("stroke",col);meta.el.setAttribute("stroke-width","2");meta.el.style.filter=`drop-shadow(0 0 8px ${col})`;meta.el.style.cursor=isCold?"pointer":"default";}
-      else{meta.el.style.opacity="0.3";meta.el.setAttribute("stroke","rgba(255,255,255,0.08)");meta.el.setAttribute("stroke-width","0.3");meta.el.style.filter="";meta.el.style.cursor="default"}
+            if(isCold||isHot){meta.el.style.opacity="1";meta.el.setAttribute("stroke","rgba(0,0,0,0.35)");meta.el.setAttribute("stroke-width","0.8");meta.el.style.filter=`drop-shadow(0 0 8px ${col})`;meta.el.style.cursor=isCold?"pointer":"default";}
+      else{meta.el.style.opacity="0.3";meta.el.setAttribute("stroke","none");meta.el.setAttribute("stroke-width","0");meta.el.style.filter="";meta.el.style.cursor="default"}
     }
     attachColdDroughtClicks();
     setInfoBox(`<div class="cib-label">Now look at SPI</div><div class="cib-name">Cold Drought</div><div class="cib-divider"></div><div class="cib-body">The hot deserts are still red. But now cold and temperate regions are glowing too.<br><br>Kazakhstan. Mongolia. Russia. Argentina. The United States Great Basin.<br><br><em style="color:#8B5E3C">Click any highlighted country to explore its drought story.</em></div>`);
@@ -316,8 +316,8 @@ function applyMapStep(step) {
       const col=spiChangeColor(meta.spi_change);
       meta.el.setAttribute("fill",col);
       const isCold=COLD_DROUGHT_COUNTRIES.includes(name), isHot=HOT_DROUGHT_COUNTRIES.includes(name);
-      if(isCold||isHot){meta.el.style.opacity="1";meta.el.setAttribute("stroke",col);meta.el.setAttribute("stroke-width","2");meta.el.style.filter=`drop-shadow(0 0 8px ${col})`;meta.el.style.cursor=isCold?"pointer":"default";}
-      else{meta.el.style.opacity="0.3";meta.el.setAttribute("stroke","rgba(255,255,255,0.08)");meta.el.setAttribute("stroke-width","0.3");meta.el.style.filter="";meta.el.style.cursor="default"}
+      if(isCold||isHot){meta.el.style.opacity="1";meta.el.setAttribute("stroke","rgba(0,0,0,0.35)");meta.el.setAttribute("stroke-width","0.8");meta.el.style.filter=`drop-shadow(0 0 8px ${col})`;meta.el.style.cursor=isCold?"pointer":"default";}
+      else{meta.el.style.opacity="0.3";meta.el.setAttribute("stroke","none");meta.el.setAttribute("stroke-width","0");meta.el.style.filter="";meta.el.style.cursor="default"}
     }
     attachColdDroughtClicks();
     setInfoBox(`<div class="cib-label">SPI is changing</div><div class="cib-name">Drought Trends</div><div class="cib-divider"></div><div class="cib-body">Red means drought is intensifying — SPI is falling further below normal.<br><br>Some of the sharpest declines are in cold or temperate regions that were never thought of as drought-prone.<br><br><em style="color:#8B5E3C">Click any highlighted country to explore.</em></div>`);
@@ -845,9 +845,9 @@ loadTopojsonAndMap();
       const W = container.getBoundingClientRect().width  || 520;
       const H = container.getBoundingClientRect().height || 520;
   
-      const DEFAULT_Z   = 3.8;
+      const DEFAULT_Z   = 2.5;
       const MIN_Z       = 1.8;
-      const MAX_Z       = 6.0;
+      const MAX_Z       = 2.5;
       let   currentScale = 1.0;
   
       scene  = new THREE.Scene();

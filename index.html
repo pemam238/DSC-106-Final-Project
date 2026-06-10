@@ -22,10 +22,10 @@
   <button class="chapter-dot" data-target="slide-case-track" title="Two Deserts"></button>
   <button class="chapter-dot" data-target="slide-spi-track" title="Measuring Drought"></button>
   <button class="chapter-dot" data-target="slide-3-track" title="The World"></button>
-  <button class="chapter-dot" data-target="slide-why" title="Why It Matters"></button>
-  <button class="chapter-dot" data-target="slide-climate" title="Build a Climate"></button>
-  <button class="chapter-dot" data-target="slide-lookup" title="Country Lookup"></button>
-  <button class="chapter-dot" data-target="slide-outro" title="Takeaway"></button>
+  <button class="chapter-dot" data-target="slide-why-track" title="Why It Matters"></button>
+  <button class="chapter-dot" data-target="slide-climate-track" title="Build a Climate"></button>
+  <button class="chapter-dot" data-target="slide-lookup-track" title="Country Lookup"></button>
+  <button class="chapter-dot" data-target="slide-outro-track" title="Takeaway"></button>
 </nav>
 
 <!-- SLIDE 1 -->
@@ -37,11 +37,8 @@
       <span>HIDE</span>
     </h1>
     <p class="context-text"> 
-      Exploring drought patterns beyond the world’s hottest and driest regions.
+      Exploring drought patterns beyond the world's hottest and driest regions.
     </p>
-    <!-- <p class="context-text hero-subtext">
-      But they’re more unexpected than they seem
-    </p> -->
   </div>
   <div class="scroll-arrow">
     <span>scroll</span>
@@ -89,7 +86,7 @@
           Drought is not determined by how little precipitation a region receives. It is defined by how much precipitation falls relative to what is historically expected. A rainforest receiving half its normal rainfall may be experiencing drought, while a desert receiving its typical amount of precipitation may not.
         </p>
         <p class="panel-body">
-          Scientists measure these deviations using the <em>Standardized Precipitation Index (SPI)</em>, a score that compares observed precipitation to a region’s long-term average.
+          Scientists measure these deviations using the <em>Standardized Precipitation Index (SPI)</em>, a score that compares observed precipitation to a region's long-term average.
         </p>
       </div>
     </div>
@@ -353,8 +350,6 @@
   <div class="spi-scroll-space"></div>
 </section>
 
-
-
 <!-- Connective divider -->
 <div class="section-divider section-reveal">
   <div class="divider-line"></div>
@@ -398,78 +393,78 @@
 </div>
 
 <!-- SLIDE — WHY IT MATTERS -->
-<section class="slide" id="slide-why">
-  <div class="why-matters-wrap">
+<section id="slide-why-track" style="position:relative;">
+  <div class="sticky-scene" id="slide-why" style="overflow-y:auto;">
+    <div class="why-matters-wrap">
 
-    <!-- News ticker -->
-    <div class="wm-ticker-bar">
-      <div class="wm-ticker-label">News</div>
-      <div class="wm-ticker-overflow">
-        <div class="wm-ticker-track" id="wm-ticker">
-          <div class="wm-ticker-item"><span class="wm-tag">[Breaking]</span> Regional report: Central Asia's Amu Darya and Syr Darya rivers face unprecedented flow reductions — experts warn of "permanent water stress" by 2030 <span class="wm-dot"></span></div>
-          <div class="wm-ticker-item"><span class="wm-tag">[Energy]</span> Bishkek: Kyrgyzstan struggles with critical water levels at Toktogul Reservoir, threatening hydroelectric output for millions during winter peak <span class="wm-dot"></span></div>
-          <div class="wm-ticker-item"><span class="wm-tag">[Agriculture]</span> Tashkent: Uzbekistan cotton and grain sectors hit by severe low-water periods as alpine glacial melt runs dry earlier each season <span class="wm-dot"></span></div>
-          <div class="wm-ticker-item"><span class="wm-tag">[Security]</span> Caspian Sea: water levels drop to near-historic lows — satellite data reveals hundreds of square miles of exposed seabed from upstream river deficits <span class="wm-dot"></span></div>
-          <div class="wm-ticker-item"><span class="wm-tag">[Trade]</span> European Alps: winter snowpack deficits trigger summer shipping halts — Rhine River levels dip too low for commercial barges <span class="wm-dot"></span></div>
-          <div class="wm-ticker-item"><span class="wm-tag">[Ecology]</span> Kazakhstan declares state of emergency in western districts as steppe grazing lands dry out, devastating local livestock populations <span class="wm-dot"></span></div>
-          <!-- duplicate for seamless loop -->
-          <div class="wm-ticker-item"><span class="wm-tag">[Breaking]</span> Regional report: Central Asia's Amu Darya and Syr Darya rivers face unprecedented flow reductions — experts warn of "permanent water stress" by 2030 <span class="wm-dot"></span></div>
-          <div class="wm-ticker-item"><span class="wm-tag">[Energy]</span> Bishkek: Kyrgyzstan struggles with critical water levels at Toktogul Reservoir, threatening hydroelectric output for millions during winter peak <span class="wm-dot"></span></div>
-          <div class="wm-ticker-item"><span class="wm-tag">[Agriculture]</span> Tashkent: Uzbekistan cotton and grain sectors hit by severe low-water periods as alpine glacial melt runs dry earlier each season <span class="wm-dot"></span></div>
-          <div class="wm-ticker-item"><span class="wm-tag">[Security]</span> Caspian Sea: water levels drop to near-historic lows — satellite data reveals hundreds of square miles of exposed seabed from upstream river deficits <span class="wm-dot"></span></div>
-          <div class="wm-ticker-item"><span class="wm-tag">[Trade]</span> European Alps: winter snowpack deficits trigger summer shipping halts — Rhine River levels dip too low for commercial barges <span class="wm-dot"></span></div>
-          <div class="wm-ticker-item"><span class="wm-tag">[Ecology]</span> Kazakhstan declares state of emergency in western districts as steppe grazing lands dry out, devastating local livestock populations <span class="wm-dot"></span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Body -->
-    <div class="wm-body">
-      <div class="wm-header">
-        <p class="wm-kicker">Why this matters</p>
-        <h2 class="wm-title">How this affects us</em></h2>
-        <p class="wm-subtitle">
-          When a hot desert experiences a dry spell, the local infrastructure is already built for it.
-          But when a cold, temperate, or high-altitude region slips into a persistent precipitation deficit,
-          <strong>communities become vulnerable to unexpected climate events.</strong>
-          Hidden droughts strike the places least prepared for them.
-        </p>
-      </div>
-
-      <div class="wm-cards">
-        <div class="wm-card">
-          <p class="wm-card-label">Food security</p>
-          <h3 class="wm-card-head">Threat to Our World's Grain</h3>
-          <div class="wm-card-divider"></div>
-          <p class="wm-card-body">Temperate grasslands and continental interiors like Central Asia or the US Midwest grow the majority of the world's grain. A seemingly mild <em>15% drop below historical precipitation averages</em> is enough to trigger global food price spikes and export bans.</p>
-        </div>
-        <div class="wm-card">
-          <p class="wm-card-label">Energy</p>
-          <h3 class="wm-card-head">Green Energy is at Risk</h3>
-          <div class="wm-card-divider"></div>
-          <p class="wm-card-body">Many cold and mountainous regions rely on winter snowfall to drive <em>hydroelectric power</em>. When cold droughts hit, alpine reservoirs dry up. Countries transitioning to green energy are suddenly forced back to coal and gas just to keep the lights on.</p>
-        </div>
-        <div class="wm-card">
-          <p class="wm-card-label">Geopolitics</p>
-          <h3 class="wm-card-head">Lack of Government Policies</h3>
-          <div class="wm-card-divider"></div>
-          <p class="wm-card-body">Because these droughts don't "look" like a natural disaster, political responses are slow. Water-sharing agreements signed decades ago based on <em>historical baselines are collapsing</em>, turning river basins into geopolitical flashpoints.</p>
+      <!-- News ticker -->
+      <div class="wm-ticker-bar">
+        <div class="wm-ticker-label">News</div>
+        <div class="wm-ticker-overflow">
+          <div class="wm-ticker-track" id="wm-ticker">
+            <div class="wm-ticker-item"><span class="wm-tag">[Breaking]</span> Regional report: Central Asia's Amu Darya and Syr Darya rivers face unprecedented flow reductions — experts warn of "permanent water stress" by 2030 <span class="wm-dot"></span></div>
+            <div class="wm-ticker-item"><span class="wm-tag">[Energy]</span> Bishkek: Kyrgyzstan struggles with critical water levels at Toktogul Reservoir, threatening hydroelectric output for millions during winter peak <span class="wm-dot"></span></div>
+            <div class="wm-ticker-item"><span class="wm-tag">[Agriculture]</span> Tashkent: Uzbekistan cotton and grain sectors hit by severe low-water periods as alpine glacial melt runs dry earlier each season <span class="wm-dot"></span></div>
+            <div class="wm-ticker-item"><span class="wm-tag">[Security]</span> Caspian Sea: water levels drop to near-historic lows — satellite data reveals hundreds of square miles of exposed seabed from upstream river deficits <span class="wm-dot"></span></div>
+            <div class="wm-ticker-item"><span class="wm-tag">[Trade]</span> European Alps: winter snowpack deficits trigger summer shipping halts — Rhine River levels dip too low for commercial barges <span class="wm-dot"></span></div>
+            <div class="wm-ticker-item"><span class="wm-tag">[Ecology]</span> Kazakhstan declares state of emergency in western districts as steppe grazing lands dry out, devastating local livestock populations <span class="wm-dot"></span></div>
+            <!-- duplicate for seamless loop -->
+            <div class="wm-ticker-item"><span class="wm-tag">[Breaking]</span> Regional report: Central Asia's Amu Darya and Syr Darya rivers face unprecedented flow reductions — experts warn of "permanent water stress" by 2030 <span class="wm-dot"></span></div>
+            <div class="wm-ticker-item"><span class="wm-tag">[Energy]</span> Bishkek: Kyrgyzstan struggles with critical water levels at Toktogul Reservoir, threatening hydroelectric output for millions during winter peak <span class="wm-dot"></span></div>
+            <div class="wm-ticker-item"><span class="wm-tag">[Agriculture]</span> Tashkent: Uzbekistan cotton and grain sectors hit by severe low-water periods as alpine glacial melt runs dry earlier each season <span class="wm-dot"></span></div>
+            <div class="wm-ticker-item"><span class="wm-tag">[Security]</span> Caspian Sea: water levels drop to near-historic lows — satellite data reveals hundreds of square miles of exposed seabed from upstream river deficits <span class="wm-dot"></span></div>
+            <div class="wm-ticker-item"><span class="wm-tag">[Trade]</span> European Alps: winter snowpack deficits trigger summer shipping halts — Rhine River levels dip too low for commercial barges <span class="wm-dot"></span></div>
+            <div class="wm-ticker-item"><span class="wm-tag">[Ecology]</span> Kazakhstan declares state of emergency in western districts as steppe grazing lands dry out, devastating local livestock populations <span class="wm-dot"></span></div>
+          </div>
         </div>
       </div>
 
-      <div class="wm-stat-strip">
-        <div class="wm-stat"><span class="wm-stat-num">~60%</span><span class="wm-stat-lbl">of global grain from cold-temperate zones</span></div>
-        <div class="wm-stat-sep"></div>
-        <div class="wm-stat"><span class="wm-stat-num">15%</span><span class="wm-stat-lbl">precipitation drop can trigger food price spikes</span></div>
-        <div class="wm-stat-sep"></div>
-        <div class="wm-stat"><span class="wm-stat-num">2030</span><span class="wm-stat-lbl">projected permanent water stress in Central Asia</span></div>
+      <!-- Body -->
+      <div class="wm-body">
+        <div class="wm-header">
+          <p class="wm-kicker">Why this matters</p>
+          <h2 class="wm-title">How this affects us</h2>
+          <p class="wm-subtitle">
+            When a hot desert experiences a dry spell, the local infrastructure is already built for it.
+            But when a cold, temperate, or high-altitude region slips into a persistent precipitation deficit,
+            <strong>communities become vulnerable to unexpected climate events.</strong>
+            Hidden droughts strike the places least prepared for them.
+          </p>
+        </div>
+
+        <div class="wm-cards">
+          <div class="wm-card">
+            <p class="wm-card-label">Food security</p>
+            <h3 class="wm-card-head">Threat to Our World's Grain</h3>
+            <div class="wm-card-divider"></div>
+            <p class="wm-card-body">Temperate grasslands and continental interiors like Central Asia or the US Midwest grow the majority of the world's grain. A seemingly mild <em>15% drop below historical precipitation averages</em> is enough to trigger global food price spikes and export bans.</p>
+          </div>
+          <div class="wm-card">
+            <p class="wm-card-label">Energy</p>
+            <h3 class="wm-card-head">Green Energy is at Risk</h3>
+            <div class="wm-card-divider"></div>
+            <p class="wm-card-body">Many cold and mountainous regions rely on winter snowfall to drive <em>hydroelectric power</em>. When cold droughts hit, alpine reservoirs dry up. Countries transitioning to green energy are suddenly forced back to coal and gas just to keep the lights on.</p>
+          </div>
+          <div class="wm-card">
+            <p class="wm-card-label">Geopolitics</p>
+            <h3 class="wm-card-head">Lack of Government Policies</h3>
+            <div class="wm-card-divider"></div>
+            <p class="wm-card-body">Because these droughts don't "look" like a natural disaster, political responses are slow. Water-sharing agreements signed decades ago based on <em>historical baselines are collapsing</em>, turning river basins into geopolitical flashpoints.</p>
+          </div>
+        </div>
+
+        <div class="wm-stat-strip">
+          <div class="wm-stat"><span class="wm-stat-num">~60%</span><span class="wm-stat-lbl">of global grain from cold-temperate zones</span></div>
+          <div class="wm-stat-sep"></div>
+          <div class="wm-stat"><span class="wm-stat-num">15%</span><span class="wm-stat-lbl">precipitation drop can trigger food price spikes</span></div>
+          <div class="wm-stat-sep"></div>
+          <div class="wm-stat"><span class="wm-stat-num">2030</span><span class="wm-stat-lbl">projected permanent water stress in Central Asia</span></div>
+        </div>
       </div>
     </div>
   </div>
+  <div class="scroll-spacer" style="height:200vh;"></div>
 </section>
-
-
-
 
 <!-- Connective divider -->
 <div class="section-divider section-reveal">
@@ -479,68 +474,72 @@
 </div>
 
 <!-- SLIDE 6 — CLIMATE BUILDER -->
-<section class="slide" id="slide-climate">
-  <div class="climate-builder">
-    <h2 class="climate-title">BUILD YOUR OWN CLIMATE</h2>
-    <p class="climate-sub">Adjust temperature and precipitation to compare climate profiles across countries.</p>
+<section id="slide-climate-track" style="position:relative;">
+  <div class="sticky-scene" id="slide-climate" style="overflow-y:auto;">
+    <div class="climate-builder">
+      <h2 class="climate-title">BUILD YOUR OWN CLIMATE</h2>
+      <p class="climate-sub">Adjust temperature and precipitation to compare climate profiles across countries.</p>
 
-    <div class="climate-controls">
-      <div class="climate-slider-group">
-        <label class="slider-label">
-          <span class="slider-name">Temperature</span>
-          <span class="slider-value" id="temp-val">Moderate</span>
-        </label>
-        <div class="slider-track-wrap">
-          <input type="range" id="temp-slider" class="climate-range" min="0" max="100" value="50" />
-          <div class="slider-ticks">
-            <span>Cold</span><span>Moderate</span><span>Hot</span>
+      <div class="climate-controls">
+        <div class="climate-slider-group">
+          <label class="slider-label">
+            <span class="slider-name">Temperature</span>
+            <span class="slider-value" id="temp-val">Moderate</span>
+          </label>
+          <div class="slider-track-wrap">
+            <input type="range" id="temp-slider" class="climate-range" min="0" max="100" value="50" />
+            <div class="slider-ticks">
+              <span>Cold</span><span>Moderate</span><span>Hot</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="climate-slider-group">
+          <label class="slider-label">
+            <span class="slider-name">Precipitation</span>
+            <span class="slider-value" id="pr-val">Moderate</span>
+          </label>
+          <div class="slider-track-wrap">
+            <input type="range" id="pr-slider" class="climate-range" min="0" max="100" value="50" />
+            <div class="slider-ticks">
+              <span>Dry</span><span>Moderate</span><span>Wet</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="climate-slider-group">
-        <label class="slider-label">
-          <span class="slider-name">Precipitation</span>
-          <span class="slider-value" id="pr-val">Moderate</span>
-        </label>
-        <div class="slider-track-wrap">
-          <input type="range" id="pr-slider" class="climate-range" min="0" max="100" value="50" />
-          <div class="slider-ticks">
-            <span>Dry</span><span>Moderate</span><span>Wet</span>
-          </div>
+      <div class="drought-meter-wrap">
+        <div class="meter-left-col">
+        <p class="meter-verdict" id="meter-verdict" id="meter-verdict-top">—</p>
+        <p class="meter-label">DROUGHT RISK</p>
+        <div class="dial-wrap">
+          <svg id="dial-svg" viewBox="0 0 260 140">
+            <path id="dial-track" d="" fill="none" stroke="rgba(139,94,60,0.12)" stroke-width="18"/>
+            <path id="dial-fill" d="" fill="none" stroke="#8B5E3C" stroke-width="18" stroke-linecap="round"/>
+            <g id="dial-needle-g">
+              <line x1="130" y1="130" x2="130" y2="45" stroke="#1a1a1a" stroke-width="2.5"/>
+            </g>
+            <circle cx="130" cy="130" r="6" fill="#1a1a1a"/>
+            <circle cx="130" cy="130" r="3" fill="#f5f0e8"/>
+            <text x="28"  y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">LOW</text>
+            <text x="76"  y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">MOD</text>
+            <text x="184" y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">HIGH</text>
+            <text x="232" y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">V.HIGH</text>
+          </svg>
+        </div>
+        <p class="meter-example" id="meter-example"></p>
+    </div>
+    <div class="meter-right-col">
+        <div class="similar-climate-card">
+          <p class="similar-label">YOUR CLIMATE IS MOST SIMILAR TO:</p>
+          <h3 id="similar-name">Loading...</h3>
+          <p id="similar-desc"></p>
         </div>
       </div>
     </div>
-
-    <div class="drought-meter-wrap">
-      <div class="meter-left-col">
-      <p class="meter-verdict" id="meter-verdict" id="meter-verdict-top">—</p>
-      <p class="meter-label">DROUGHT RISK</p>
-      <div class="dial-wrap">
-        <svg id="dial-svg" viewBox="0 0 260 140">
-          <path id="dial-track" d="" fill="none" stroke="rgba(139,94,60,0.12)" stroke-width="18"/>
-          <path id="dial-fill" d="" fill="none" stroke="#8B5E3C" stroke-width="18" stroke-linecap="round"/>
-          <g id="dial-needle-g">
-            <line x1="130" y1="130" x2="130" y2="45" stroke="#1a1a1a" stroke-width="2.5"/>
-          </g>
-          <circle cx="130" cy="130" r="6" fill="#1a1a1a"/>
-          <circle cx="130" cy="130" r="3" fill="#f5f0e8"/>
-          <text x="28"  y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">LOW</text>
-          <text x="76"  y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">MOD</text>
-          <text x="184" y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">HIGH</text>
-          <text x="232" y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">V.HIGH</text>
-        </svg>
-      </div>
-      <p class="meter-example" id="meter-example"></p>
   </div>
-  <div class="meter-right-col">
-      <div class="similar-climate-card">
-        <p class="similar-label">YOUR CLIMATE IS MOST SIMILAR TO:</p>
-        <h3 id="similar-name">Loading...</h3>
-        <p id="similar-desc"></p>
-      </div>
-    </div>
   </div>
+  <div class="scroll-spacer" style="height:200vh;"></div>
 </section>
 
 <div id="map-tooltip"></div>
@@ -553,38 +552,41 @@
 </div>
 
 <!-- SLIDE — COUNTRY LOOKUP GLOBE -->
-<section class="slide" id="slide-lookup">
-  <div class="lookup-wrap">
-<div class="lookup-rankings-row">
-      <div class="lookup-rank-list worst">
-        <p class="rank-list-label">↓ Most Worsening</p>
-        <ol id="rank-list-worst" class="rank-list-items"></ol>
+<section id="slide-lookup-track" style="position:relative;">
+  <div class="sticky-scene" id="slide-lookup" style="overflow-y:auto;">
+    <div class="lookup-wrap">
+      <div class="lookup-rankings-row">
+        <div class="lookup-rank-list worst">
+          <p class="rank-list-label">↓ Most Worsening</p>
+          <ol id="rank-list-worst" class="rank-list-items"></ol>
+        </div>
+        <div class="lookup-header">
+          <p class="lookup-kicker">How Does Your Country Rank?</p>
+          <h2 class="lookup-title">FIND YOUR COUNTRY</h2>
+          <p class="lookup-sub">Spin the globe and click a country to view its drought rank, SPI trend, and historical record.</p>
+        </div>
+        <div class="lookup-rank-list best">
+          <p class="rank-list-label">↑ Most Improving</p>
+          <ol id="rank-list-best" class="rank-list-items"></ol>
+        </div>
       </div>
-      <div class="lookup-header">
-        <p class="lookup-kicker">How Does Your Country Rank?</p>
-        <h2 class="lookup-title">FIND YOUR COUNTRY</h2>
-        <p class="lookup-sub">Spin the globe and click a country to view its drought rank, SPI trend, and historical record.</p>
+      <div class="globe-hint" id="globe-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg>
+        Drag to spin · Scroll to zoom · Click a country
       </div>
-      <div class="lookup-rank-list best">
-        <p class="rank-list-label">↑ Most Improving</p>
-        <ol id="rank-list-best" class="rank-list-items"></ol>
+      <div id="globe-container">
+        <canvas id="globe-canvas"></canvas>
+        <div id="globe-tooltip"></div>
       </div>
+      <div class="globe-controls">
+        <span class="globe-zoom-hint">Scroll to zoom</span>
+        <button class="globe-reset-btn" id="globe-spin-toggle">II Pause</button>
+        <button class="globe-reset-btn" id="globe-reset">↺ Reset view</button>
+      </div>
+      <div id="lookup-result" class="lookup-result"></div>
     </div>
-   <div class="globe-hint" id="globe-hint">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg>
-      Drag to spin · Scroll to zoom · Click a country
-    </div>
-    <div id="globe-container">
-      <canvas id="globe-canvas"></canvas>
-      <div id="globe-tooltip"></div>
-    </div>
-    <div class="globe-controls">
-      <span class="globe-zoom-hint">Scroll to zoom</span>
-      <button class="globe-reset-btn" id="globe-spin-toggle">II Pause</button>
-      <button class="globe-reset-btn" id="globe-reset">↺ Reset view</button>
-    </div>
-    <div id="lookup-result" class="lookup-result"></div>
   </div>
+  <div class="scroll-spacer" style="height:200vh;"></div>
 </section>
 
 <!-- Connective divider -->
@@ -595,22 +597,25 @@
 </div>
 
 <!-- FINAL SLIDE — Call to Action -->
-<section class="slide" id="slide-outro">
-  <div class="slide-content takeaway-content">
-    <p class="takeaway-label">The bigger picture</p>
-<h2 class="takeaway-title">
-  Drought doesn't hide.<br><em>It goes unnoticed.</em>
-</h2>
-<p class="takeaway-body">
-  For decades, drought response has followed a simple rule: look where it's hot and dry. But SPI data tells a different story. The precipitation deficits now threatening global food supply, hydroelectric grids, and water-sharing agreements aren't only in the Sahara. They're in Kazakhstan. In Patagonia. In the American West. In places that don't look like they're in trouble — until they are.
-</p>
-<p class="takeaway-body">
-  Every water treaty, every reservoir target, every crop insurance policy is calibrated to a historical baseline. SPI shows that baseline is shifting fastest in the places least expected. And because these regions don't look like deserts, the warning signs go unread until the damage is done.
-</p>
-<p class="takeaway-final">
-  The data exists. The patterns are visible.<br><em>The question is whether the right systems are looking at them.</em>
-</p>
+<section id="slide-outro-track" style="position:relative;">
+  <div class="sticky-scene" id="slide-outro" style="overflow-y:auto;">
+    <div class="slide-content takeaway-content">
+      <p class="takeaway-label">The bigger picture</p>
+      <h2 class="takeaway-title">
+        Drought doesn't hide.<br><em>It goes unnoticed.</em>
+      </h2>
+      <p class="takeaway-body">
+        For decades, drought response has followed a simple rule: look where it's hot and dry. But SPI data tells a different story. The precipitation deficits now threatening global food supply, hydroelectric grids, and water-sharing agreements aren't only in the Sahara. They're in Kazakhstan. In Patagonia. In the American West. In places that don't look like they're in trouble — until they are.
+      </p>
+      <p class="takeaway-body">
+        Every water treaty, every reservoir target, every crop insurance policy is calibrated to a historical baseline. SPI shows that baseline is shifting fastest in the places least expected. And because these regions don't look like deserts, the warning signs go unread until the damage is done.
+      </p>
+      <p class="takeaway-final">
+        The data exists. The patterns are visible.<br><em>The question is whether the right systems are looking at them.</em>
+      </p>
+    </div>
   </div>
+  <div class="scroll-spacer" style="height:200vh;"></div>
 </section>
 
 <script src="main.js"></script>
