@@ -23,15 +23,15 @@ const chapterNav   = document.getElementById('chapter-nav');
 const chapterLabel = document.getElementById('chapter-label');
 const chapterDots  = document.querySelectorAll('.chapter-dot');
 const CHAPTERS = [
-  { id: 'slide-1',           label: 'Intro' },
-  { id: 'slide-2-track',     label: 'Hot or Cold?' },
-  { id: 'slide-case-track',  label: 'Two Deserts' },
-  { id: 'slide-spi-track',   label: 'Measuring Drought' },
-  { id: 'slide-3-track',     label: 'The World' },
-  { id: 'slide-why', label: 'Why It Matters' },
-  { id: 'slide-climate',     label: 'Build a Climate' },
-  { id: 'slide-lookup',      label: 'Country Lookup' },
-  { id: 'slide-outro',       label: 'Takeaway' },
+  { id: 'slide-1',             label: 'Intro' },
+  { id: 'slide-2-track',       label: 'Hot or Cold?' },
+  { id: 'slide-case-track',    label: 'Two Deserts' },
+  { id: 'slide-spi-track',     label: 'Measuring Drought' },
+  { id: 'slide-3-track',       label: 'The World' },
+  { id: 'slide-why-track',     label: 'Why It Matters' },
+  { id: 'slide-climate-track', label: 'Build a Climate' },
+  { id: 'slide-lookup-track',  label: 'Country Lookup' },
+  { id: 'slide-outro-track',   label: 'Takeaway' },
 ];
 
 chapterDots.forEach(dot => {
@@ -139,7 +139,7 @@ const HOT_DROUGHT_COUNTRIES  = ["Mali","Egypt","Saudi Arabia","Libya","Mauritani
 
 function spiColor(spi) {
   if (spi === undefined || isNaN(spi)) return "#c8bfad";
-  const t = Math.max(0, Math.min(1, (spi + 1.5) / 3.0));
+  const t = Math.max(0, Math.min(1, (spi + 1) / 1.6));
   return `rgb(${Math.round(180-t*130)},${Math.round(50+t*90)},${Math.round(20+t*190)})`;
 }
 function spiChangeColor(change) {
@@ -244,7 +244,7 @@ function updateLegend(mode) {
   if(!legend||!bar||!label||!minEl||!maxEl) return;
   legend.classList.add("visible");
   if(mode==="temp"){label.textContent="Mean Temperature";bar.style.background=`linear-gradient(to right,${tempColor(-30)},${tempColor(0)},${tempColor(30)})`;minEl.textContent="-30°C";maxEl.textContent="30°C";}
-  else if(mode==="spi"){label.textContent="SPI Drought Deficit";bar.style.background=`linear-gradient(to right,${spiColor(-1.5)},${spiColor(0)},${spiColor(1.5)})`;minEl.textContent="-1.5 Severe drought";maxEl.textContent="+1.5 Wet";}
+  else if(mode==="spi"){label.textContent="SPI Drought Deficit";bar.style.background=`linear-gradient(to right,${spiColor(-1)},${spiColor(0)},${spiColor(1)})`;minEl.textContent="-1 Drought";maxEl.textContent="+1 Wet";}
   else if(mode==="spi_change"){label.textContent="SPI Change (baseline to modern)";bar.style.background=`linear-gradient(to right,${spiChangeColor(-1)},${spiChangeColor(0)},${spiChangeColor(1)})`;minEl.textContent="Worsening drought";maxEl.textContent="Improving";}
 }
 
@@ -308,7 +308,7 @@ function applyMapStep(step) {
       else{meta.el.style.opacity="0.3";meta.el.setAttribute("stroke","none");meta.el.setAttribute("stroke-width","0");meta.el.style.filter="";meta.el.style.cursor="default"}
     }
     attachColdDroughtClicks();
-    setInfoBox(`<div class="cib-label">Now look at SPI</div><div class="cib-name">Cold Drought</div><div class="cib-divider"></div><div class="cib-body">The hot deserts are still red. But now cold and temperate regions are glowing too.<br><br>Kazakhstan. Mongolia. Russia. Argentina. The United States Great Basin.<br><br><em style="color:#8B5E3C">Click any highlighted country to explore its drought story.</em></div>`);
+    setInfoBox(`<div class="cib-label">Now look at SPI</div><div class="cib-name">Cold Drought</div><div class="cib-divider"></div><div class="cib-body">Cold and temperate regions show persistent precipitation deficits — even without the heat.<br><br>Kazakhstan. Mongolia. Russia. Argentina. The United States Great Basin.<br><br><em style="color:#8B5E3C">Click any highlighted country to explore its drought story.</em></div>`);
   } else if(step===2){
     updateLegend("spi_change");
     for(const[name,meta]of Object.entries(countryMeta)){
@@ -671,6 +671,7 @@ loadTopojsonAndMap();
       }
       rankings = [...allCountries].sort((a, b) => a.spi_change - b.spi_change);
       populateRankLists();
+      selectedCountry = 'united states';
   
       const yLines     = yearlyText.trim().split('\n');
       const yHdrs      = yLines[0].split(',').map(h => h.trim());
@@ -693,8 +694,8 @@ loadTopojsonAndMap();
       const worstEl = document.getElementById('rank-list-worst');
       const bestEl  = document.getElementById('rank-list-best');
       if (!worstEl || !bestEl) return;
-      const worst = rankings.slice(0, 5);
-      const best  = [...rankings].reverse().slice(0, 5);
+      const worst = rankings.slice(0, 2);
+      const best  = [...rankings].reverse().slice(0, 2);
       function makeItem(c) {
         const li = document.createElement('li');
         li.className = 'rank-list-item';
@@ -872,6 +873,12 @@ loadTopojsonAndMap();
         new THREE.MeshBasicMaterial({ map: overlayTex, transparent: true, opacity: 1, depthWrite: false })
       );
       scene.add(countriesMesh);
+
+      // Start facing the United States
+      globe.rotation.y = 1.75;
+      globe.rotation.x = -0.35;
+      countriesMesh.rotation.y = 1.75;
+      countriesMesh.rotation.x = -0.35;
   
       scene.add(new THREE.Mesh(
         new THREE.SphereGeometry(1.04, 64, 64),
@@ -1072,11 +1079,13 @@ loadTopojsonAndMap();
   
       document.getElementById('globe-reset')?.addEventListener('click', () => {
         camera.position.z = DEFAULT_Z;
+        globe.rotation.y = 1.75;
+        globe.rotation.x = -0.35;
+        countriesMesh.rotation.y = 1.75;
+        countriesMesh.rotation.x = -0.35;
         currentScale = 1.0;
         globe.scale.setScalar(1.0);
         countriesMesh.scale.setScalar(1.0);
-        globe.rotation.x = 0; globe.rotation.y = 0;
-        countriesMesh.rotation.x = 0; countriesMesh.rotation.y = 0;
         rotationVel = { x: 0, y: 0 };
         userPaused = false; autoRotate = true;
         if (spinBtn) spinBtn.textContent = 'II Pause';
@@ -1227,11 +1236,8 @@ loadTopojsonAndMap();
   
     async function boot() {
       await loadLookupData();
-      const observer = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) { observer.disconnect(); initGlobe(); }
-      }, { rootMargin: '200px' });
-      const section = document.getElementById('slide-lookup');
-      if (section) observer.observe(section);
+      await initGlobe();
+      showResult('united states');
     }
 
     boot();
