@@ -1,3 +1,6 @@
+if (history.scrollRestoration) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
 function loadScript(src) {
   return new Promise((resolve, reject) => {
     if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
@@ -671,7 +674,6 @@ loadTopojsonAndMap();
       }
       rankings = [...allCountries].sort((a, b) => a.spi_change - b.spi_change);
       populateRankLists();
-      selectedCountry = 'united states';
   
       const yLines     = yearlyText.trim().split('\n');
       const yHdrs      = yLines[0].split(',').map(h => h.trim());
@@ -694,8 +696,8 @@ loadTopojsonAndMap();
       const worstEl = document.getElementById('rank-list-worst');
       const bestEl  = document.getElementById('rank-list-best');
       if (!worstEl || !bestEl) return;
-      const worst = rankings.slice(0, 2);
-      const best  = [...rankings].reverse().slice(0, 2);
+      const worst = rankings.slice(0, 3);
+      const best  = [...rankings].reverse().slice(0, 3);
       function makeItem(c) {
         const li = document.createElement('li');
         li.className = 'rank-list-item';
@@ -874,7 +876,7 @@ loadTopojsonAndMap();
       );
       scene.add(countriesMesh);
 
-      // Start facing the United States
+      // Default facing United States
       globe.rotation.y = 1.75;
       globe.rotation.x = -0.35;
       countriesMesh.rotation.y = 1.75;
@@ -1237,7 +1239,17 @@ loadTopojsonAndMap();
     async function boot() {
       await loadLookupData();
       await initGlobe();
-      showResult('united states');
+      let defaultShown = false;
+      const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && !defaultShown) {
+          defaultShown = true;
+          selectedCountry = 'united states';
+          updateOverlay();
+          showResult('united states');
+        }
+      }, { threshold: 0, rootMargin: '0px 0px -40% 0px' });
+      const section = document.getElementById('slide-lookup');
+      if (section) observer.observe(section);
     }
 
     boot();
