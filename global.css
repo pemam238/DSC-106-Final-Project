@@ -1219,7 +1219,52 @@
      text-transform: uppercase; color: var(--forest);
      min-width: 80px; transition: opacity 0.3s;
    }
+
+   .final-slide {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    
+    /* Set background color fallback, overlay, and image path */
+    background: 
+      linear-gradient(rgba(10, 35, 20, 0.75), rgba(10, 35, 20, 0.75)), 
+      url('visualizations/droughts.jpg');
+    
+    /* Ensure the background covers the area cleanly without repeating */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Ensure layout remains aligned */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff; /* Ensures text is readable against the dark background */
+  }
+
+  /* ══════════════════════════════════════════════
+   INVERTED NAV FOR DARK BACKGROUND
+   ══════════════════════════════════════════════ */
+  #chapter-nav.dark-bg {
+    background: rgba(10, 35, 20, 0.85); /* Matches the dark green overlay */
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  #chapter-nav.dark-bg .chapter-dot {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  #chapter-nav.dark-bg .chapter-dot.active {
+    background: #ffffff; /* Bright white dot for the active final slide */
+  }
+
+  #chapter-nav.dark-bg #chapter-label {
+    color: #ffffff; /* White text */
+  }
    
+
    /* ══════════════════════════════════════════════
       SECTION DIVIDERS
       ══════════════════════════════════════════════ */
