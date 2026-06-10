@@ -32,193 +32,126 @@
   </div>
 </section>
 
-<!-- SLIDE 2 — sticky scroll sequence -->
+<!-- Progress bar -->
+<div id="story-progress"><div id="story-progress-bar"></div></div>
+
+<!-- Chapter nav -->
+<nav id="chapter-nav">
+  <span id="chapter-label">Intro</span>
+  <button class="chapter-dot active" data-target="slide-1" title="Intro"></button>
+  <button class="chapter-dot" data-target="slide-2-track" title="Hot or Cold?"></button>
+  <button class="chapter-dot" data-target="slide-spi-track"></button> 
+<button class="chapter-dot" data-target="slide-case-track"></button>
+<button class="chapter-dot" data-target="slide-3-track"></button> 
+<button class="chapter-dot" data-target="slide-climate" title="Build a Climate"></button>
+<button class="chapter-dot" data-target="slide-lookup" title="Country Lookup"></button>
+  <button class="chapter-dot" data-target="slide-outro" title="Takeaway"></button>
+</nav>
+
+<!-- SLIDE 1 -->
+<section class="slide" id="slide-1">
+  <div class="slide-content hero-content">
+    <h1 class="title">
+      <span>WHERE</span>
+      <span>DROUGHTS</span>
+      <span>HIDE</span>
+    </h1>
+    <p class="context-text">
+      You already know what drought looks like.
+    </p>
+    <p class="context-text hero-subtext">
+      Or do you?
+    </p>
+  </div>
+  <div class="scroll-arrow">
+    <span>scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+         stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <polyline points="19 12 12 19 5 12"/>
+    </svg>
+  </div>
+</section>
+
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
+  <span class="divider-text">The question</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- SLIDE 2 — Hot/Cold question + sticky panels -->
 <section id="slide-2-track">
   <div class="sticky-scene" id="scene-question">
-    <p class="hot-cold-question">Where do you think droughts strike?</p>
+    <p class="hot-cold-question">Which one is in <br><span class="big-word" style="color: #8B5E3C;">drought?</span></p>
     <div class="hot-cold-frame">
       <div class="hot-cold-halves" id="hot-cold-halves">
-        <div class="half left-half">
-          <button class="choice-btn" id="btn-hot" onclick="chooseClimate()">HOT</button>
+        <div class="half left-half" data-choice="hot" style="background-image: url('visualizations/death_valley.jpg'); background-size: cover; background-position: center;">
+          
         </div>
-        <div class="half right-half">
-          <button class="choice-btn" id="btn-cold" onclick="chooseClimate()">COLD</button>
+        <div class="half right-half" data-choice="cold" style="background-image: url('visualizations/great_basin.jpg'); background-size: cover; background-position: center;">
+          
         </div>
       </div>
       <div class="reveal-overlay" id="reveal-overlay">
-       <h2 class="reveal-text">Both.</h2>
-       <p class="reveal-sub">Drought can occur anywhere precipitation falls below what's expected.</p>
+        <h2 class="reveal-text">They both are.</h2>
+        <p class="reveal-sub">A cold desert in Nevada and the hottest place on earth. Both experience drought at the same frequency, even with a temperature difference of 5°C(41°F) </p>
       </div>
     </div>
+
+    <!-- LEFT PANEL (appears on scroll) -->
     <div class="side-panel left-panel" id="panel-left">
       <div class="side-panel-inner">
         <p class="panel-label">Definition</p>
-        <h3 class="panel-heading">What is a <em>drought?</em></h3>
+        <h3 class="panel-heading">What is <em>drought?</em></h3>
         <hr class="panel-divider" />
         <p class="panel-body">
-         A drought is a prolonged period of abnormally low precipitation
-         relative to what a region typically receives. It's not about
-         absolute dryness, but <em>deficit.</em>
-       </p>
-       <p class="panel-body">
-         When rain or snow falls well below historical averages for weeks,
-         months, or years, soils dry out, rivers shrink, and water supplies
-         dwindle.
-       </p>
+          Drought isn't about how little rain a place gets, it's about how much less it gets
+          than <em>usual. </em> A rainforest receiving half its normally
+          rainfall is in drought. A desert getting its typical trickle of rain is not.
+        </p>
+        <p class="panel-body">
+          Scientists measure this gap by using the <em> Standardized Precipiatation Index (SPI)</em>. This is 
+          a score that tells you how far below normal precipitation has fallen, regardless of climate. 
+        </p>
       </div>
     </div>
+
+    <!-- RIGHT PANEL (appears on scroll) -->
     <div class="side-panel right-panel" id="panel-right">
       <div class="side-panel-inner">
-       <p class="panel-label">Surprise</p>
-       <h3 class="panel-heading">Temperature is only part of the story.</h3>
-       <hr class="panel-divider" />
-       <p class="panel-body">
-         Drought is not measured by heat alone. It happens when a place receives
-         significantly less rain or snow than it normally expects.
-       </p>
-       <p class="panel-body">
-         That means drought can appear in many different climates; wherever the
-         usual pattern of precipitation breaks!
-       </p>
+        <p class="panel-label">Surprise</p>
+        <h3 class="panel-heading">Cold places <br> <em>drought too.</em></h3>
+        <hr class="panel-divider" />
+        <p class="panel-body">
+          Because drought is defined by <em>deficit</em>, not heat, it can strike anywhere precipitation
+          drops below expectaion, such as snowpack in mountain ranges, rainfall in temperate forests,
+          even Arctic regions.
+        </p>
+        <p class="panel-body">
+          An SPI below <em>-1 </em> signals drought. It doesn't matter whether the thermometer reads 40°C or 4°C.
+        </p>
       </div>
     </div>
   </div>
   <div class="scroll-spacer"></div>
 </section>
 
-<!-- SLIDE MAP — Heat & Precipitation Scrollytelling -->
-<section id="slide-map-track">
-  <div class="sticky-scene map-scene" id="scene-map">
-    <div id="map-wrapper">
-      <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
-      <div id="map-tooltip"></div>
-      <div class="map-legend-container" id="map-legend">
-        <div class="legend-row" id="legend-temp">
-          <span class="legend-label">Cooler</span>
-          <div class="legend-gradient legend-gradient-temp"></div>
-          <span class="legend-label">Hotter</span>
-        </div>
-        <div class="legend-row hidden" id="legend-pr">
-          <span class="legend-label">Drier</span>
-          <div class="legend-gradient legend-gradient-pr"></div>
-          <span class="legend-label">Wetter</span>
-        </div>
-      </div>
-    </div>
-    <div id="map-panels">
-      <div class="map-panel active" id="mp-0">
-        <p class="mp-head">Where is it hottest?</p>
-        <p class="mp-body">Temperature varies dramatically across continents — the map fills with heat.</p>
-      </div>
-      <div class="map-panel" id="mp-1">
-        <p class="mp-head">Now add precipitation</p>
-        <p class="mp-body">Blue overlay shows mean rainfall. Hot and dry don't always overlap.</p>
-      </div>
-      <div class="map-panel" id="mp-2">
-        <p class="mp-head">The drought paradox</p>
-        <p class="mp-body">South America is both hot <em>and</em> wet. Oceania and Africa are hot <em>but dry</em> — drought risk grows where heat and low rainfall combine.</p>
-      </div>
-    </div>
-  </div>
-  <div class="map-scroll-space"></div>
-</section>
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
+  <span class="divider-text">A tale of two deserts</span>
+  <div class="divider-line"></div>
+</div>
 
-<!-- SLIDE SPI — Dot rain explainer -->
-<section id="slide-spi-track">
-  <div class="sticky-scene spi-scene" id="scene-spi">
-    <canvas id="spi-canvas"></canvas>
-    <div id="spi-panels">
-
-      <div class="spi-panel active" id="spi-p0">
-        <p class="spi-label">Step 1</p>
-        <h3 class="spi-head">Normal rainfall</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">In a typical year, rain falls steadily. Each drop contributes to what we call the <em>expected</em> precipitation for a region.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-fill" id="spi-fill-0" style="width:50%"></div>
-            <div class="spi-meter-needle" id="spi-needle-0" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-0">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p1">
-        <p class="spi-label">Step 2</p>
-        <h3 class="spi-head">What is SPI?</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">The <em>Standardized Precipitation Index</em> measures how far actual rainfall deviates from the long-term average — in units of standard deviation.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-fill" id="spi-fill-1" style="width:50%"></div>
-            <div class="spi-meter-needle" id="spi-needle-1" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-1">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p2">
-        <p class="spi-label">Step 3</p>
-        <h3 class="spi-head">Mild drought begins</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">When SPI drops below <em>−0.5</em>, rainfall is noticeably below average. Fewer drops reach the ground. Soil moisture starts to fall.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-fill" id="spi-fill-2" style="width:50%"></div>
-            <div class="spi-meter-needle" id="spi-needle-2" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-2">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p3">
-        <p class="spi-label">Step 4</p>
-        <h3 class="spi-head">Severe drought</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">At <em>−1.5</em> or below, drought is severe. Rain is rare. Rivers shrink. What was once a steady rhythm becomes near-silence.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-fill" id="spi-fill-3" style="width:50%"></div>
-            <div class="spi-meter-needle" id="spi-needle-3" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-3">SPI = 0.0</p>
-      </div>
-
-      <div class="spi-panel" id="spi-p4">
-        <p class="spi-label">Step 5</p>
-        <h3 class="spi-head">Extreme drought</h3>
-        <hr class="spi-divider"/>
-        <p class="spi-body">SPI below <em>−2.0</em> is extreme drought. The sky is nearly empty. What little falls evaporates before it can help. The land remembers nothing but thirst.</p>
-        <div class="spi-meter">
-          <div class="spi-meter-track">
-            <div class="spi-meter-fill" id="spi-fill-4" style="width:50%"></div>
-            <div class="spi-meter-needle" id="spi-needle-4" style="left:50%"></div>
-          </div>
-          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
-        </div>
-        <p class="spi-stat" id="spi-stat-4">SPI = 0.0</p>
-      </div>
-
-    </div>
-  </div>
-  <div class="spi-scroll-space"></div>
-</section>
-
-<!-- SLIDE CASE STUDY — Great Basin vs Death Valley -->
+<!-- SLIDE 5 — CASE STUDY (Great Basin vs Death Valley) -->
 <section id="slide-case-track">
   <div class="sticky-scene case-scene" id="scene-case">
     <div id="case-slider-viewport">
       <div id="case-slider-track">
-
         <!-- Slide 0: Intro -->
         <div class="case-slide" id="case-slide-0">
           <div class="case-intro-inner">
-            <p class="case-kicker">Case Study</p>
             <h2 class="case-intro-title">Two Deserts.<br>One Drought.</h2>
             <p class="case-intro-sub">
               Sitting just 4° of latitude apart in the American West, the Great Basin
@@ -290,7 +223,7 @@
               <p class="case-body">
                 Both regions track each other closely across 1950–2014. Drought
                 pulses appear nearly <em>in sync</em> — driven by the same
-                large-scale atmospheric patterns over the American West.
+                large‑scale atmospheric patterns over the American West.
               </p>
               <div class="case-spi-legend">
                 <div class="case-legend-row">
@@ -345,35 +278,163 @@
             </div>
           </div>
         </div>
-
-      </div><!-- end case-slider-track -->
-    </div><!-- end case-slider-viewport -->
+      </div>
+    </div>
 
     <button class="case-arrow case-arrow-left" id="case-prev" aria-label="Previous slide">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-           stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <polyline points="15 18 9 12 15 6"/>
       </svg>
     </button>
     <button class="case-arrow case-arrow-right" id="case-next" aria-label="Next slide">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-           stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <polyline points="9 6 15 12 9 18"/>
       </svg>
     </button>
-
     <div id="case-dots">
-      <button class="case-dot-btn active" data-slide="0" aria-label="Go to slide 1"></button>
-      <button class="case-dot-btn" data-slide="1" aria-label="Go to slide 2"></button>
-      <button class="case-dot-btn" data-slide="2" aria-label="Go to slide 3"></button>
-      <button class="case-dot-btn" data-slide="3" aria-label="Go to slide 4"></button>
+      <button class="case-dot-btn active" data-slide="0"></button>
+      <button class="case-dot-btn" data-slide="1"></button>
+      <button class="case-dot-btn" data-slide="2"></button>
+      <button class="case-dot-btn" data-slide="3"></button>
     </div>
-
-  </div><!-- end sticky-scene -->
+  </div>
   <div class="case-scroll-space"></div>
 </section>
 
-<!-- SLIDE CLIMATE — Build Your Own Climate (predictor) -->
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
+  <span class="divider-text">Conceptualizing Standard Precipitation Index (SPI)</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- SLIDE 4 — SPI RAIN EXPLAINER -->
+<section id="slide-spi-track">
+  <div class="sticky-scene spi-scene" id="scene-spi">
+    <canvas id="spi-canvas"></canvas>
+    <div id="spi-panels">
+      <div class="spi-panel active" id="spi-p0">
+        <p class="spi-label">Step 1</p>
+        <h3 class="spi-head">The baseline</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">An SPI of <em>0</em> means rainfall is exactly on par with the long-term average for that region. No surplus or deficit, just a normal year. This is the reference point everything else is measured against.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-0" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-0">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p1">
+        <p class="spi-label">Step 2</p>
+        <h3 class="spi-head">Above average</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">A positive SPI means more rain than usual fell. An SPI of <em>+1.0</em> means rainfall was moderately above average. The rivers run fuller, soil holds more moisture. At <em>+2.0</em>, the region is experiencing unusually wet conditions, which can bring flooding risks.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-1" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-1">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p2">
+        <p class="spi-label">Step 3</p>
+        <h3 class="spi-head">Early warning signs</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">An SPI of <em>−0.5 to −0.9</em> signals that rainfall is running below normal. Soil begins to dry out, vegetation stress appears, and water managers start watching reservoir levels. This is when drought is developing but not yet critical.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-2" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-2">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p3">
+        <p class="spi-label">Step 4</p>
+        <h3 class="spi-head">Significant drought</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">At <em>−1.0 to −1.5</em>, drought is officially underway. This level of deficit means the region has received substantially less rain than it relies on. Stream flows drop, crop yields fall, and water use restrictions typically begin. This threshold is used internationally to declare drought conditions.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-3" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-3">SPI = 0.0</p>
+      </div>
+
+      <div class="spi-panel" id="spi-p4">
+        <p class="spi-label">Step 5</p>
+        <h3 class="spi-head">Extreme drought</h3>
+        <hr class="spi-divider"/>
+        <p class="spi-body">An SPI of <em>−2.0 or below</em> is extreme drought. This is a statistically rare event that occurs in only about 2.5% of all recorded years for any given location. At this level, groundwater is severely depleted, ecosystems are under threat, and recovery can take years even after rainfall returns to normal.</p>
+        <div class="spi-meter">
+          <div class="spi-meter-track">
+            <div class="spi-meter-needle" id="spi-needle-4" style="left:50%"></div>
+          </div>
+          <div class="spi-meter-labels"><span>Dry</span><span>Normal</span><span>Wet</span></div>
+        </div>
+        <p class="spi-stat" id="spi-stat-4">SPI = 0.0</p>
+      </div>
+    </div>
+  </div>
+  <div class="spi-scroll-space"></div>
+</section>
+
+
+
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
+  <span class="divider-text">The world</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- SLIDE 3 — WORLD MAP SCROLLYTELLING -->
+<section id="slide-3-track">
+  <div class="sticky-scene" id="scene-map">
+    <div class="map-top-label" id="map-top-label">
+      <p class="map-label-text" id="map-label-text"></p>
+    </div>
+    <div id="map-content-row">
+      <div id="map-left-col">
+        <div id="world-map-wrap">
+          <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div class="map-legend" id="map-legend">
+          <div class="legend-label" id="legend-label">Temperature</div>
+          <div class="legend-bar" id="legend-bar"></div>
+          <div class="legend-ends">
+            <span id="legend-min"></span>
+            <span id="legend-max"></span>
+          </div>
+        </div>
+      </div>
+      <div class="map-right-panel" id="map-right-panel">
+        <div class="country-info-box" id="country-info-box"></div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-spacer" style="height:900vh;"></div>
+</section>
+
+
+
+
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
+  <span class="divider-text">Try it yourself</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- SLIDE 6 — CLIMATE BUILDER -->
 <section class="slide" id="slide-climate">
   <div class="climate-builder">
     <h2 class="climate-title">BUILD YOUR OWN CLIMATE</h2>
@@ -408,40 +469,108 @@
     </div>
 
     <div class="drought-meter-wrap">
+      <div class="meter-left-col">
+      <p class="meter-verdict" id="meter-verdict" id="meter-verdict-top">—</p>
       <p class="meter-label">DROUGHT RISK</p>
       <div class="dial-wrap">
-        <svg id="dial-svg" viewBox="0 0 260 140" xmlns="http://www.w3.org/2000/svg">
-          <path id="dial-track" d="" fill="none" stroke="rgba(139,94,60,0.12)" stroke-width="18" stroke-linecap="butt"/>
-          <path id="dial-fill"  d="" fill="none" stroke="#8B5E3C"              stroke-width="18" stroke-linecap="round"
-                style="transition: stroke-dashoffset 0.55s cubic-bezier(0.22,1,0.36,1), stroke 0.4s ease;"/>
-          <g id="dial-ticks"></g>
+        <svg id="dial-svg" viewBox="0 0 260 140">
+          <path id="dial-track" d="" fill="none" stroke="rgba(139,94,60,0.12)" stroke-width="18"/>
+          <path id="dial-fill" d="" fill="none" stroke="#8B5E3C" stroke-width="18" stroke-linecap="round"/>
           <g id="dial-needle-g">
-            <line x1="130" y1="130" x2="130" y2="45"
-                  stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="130" y1="130" x2="130" y2="45" stroke="#1a1a1a" stroke-width="2.5"/>
           </g>
           <circle cx="130" cy="130" r="6" fill="#1a1a1a"/>
           <circle cx="130" cy="130" r="3" fill="#f5f0e8"/>
-          <text id="lbl-low"      x="28"  y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">LOW</text>
-          <text id="lbl-mod"      x="76"  y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">MOD</text>
-          <text id="lbl-high"     x="184" y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">HIGH</text>
-          <text id="lbl-veryhigh" x="232" y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" letter-spacing="0.5" text-anchor="middle">V.HIGH</text>
+          <text x="28"  y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">LOW</text>
+          <text x="76"  y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">MOD</text>
+          <text x="184" y="52"  font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">HIGH</text>
+          <text x="232" y="132" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="rgba(42,42,42,0.45)" text-anchor="middle">V.HIGH</text>
         </svg>
       </div>
-      <p class="meter-verdict" id="meter-verdict">—</p>
       <p class="meter-example" id="meter-example"></p>
+  </div>
+  <div class="meter-right-col">
       <div class="similar-climate-card">
-  <p class="similar-label">YOUR CLIMATE IS MOST SIMILAR TO:</p>
-  <h3 id="similar-name">Loading...</h3>
-  <p id="similar-desc"></p>
-</div>
+        <p class="similar-label">YOUR CLIMATE IS MOST SIMILAR TO:</p>
+        <h3 id="similar-name">Loading...</h3>
+        <p id="similar-desc"></p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- SLIDE 3 — More to come -->
-<section class="slide" id="slide-3">
-  <div class="slide-content">
-    <h2 class="subtitle">More to come...</h2>
+<div id="map-tooltip"></div>
+
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
+  <span class="divider-text">Your country's drought story</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- SLIDE — COUNTRY LOOKUP GLOBE -->
+<section class="slide" id="slide-lookup">
+  <div class="lookup-wrap">
+<div class="lookup-rankings-row">
+      <div class="lookup-rank-list worst">
+        <p class="rank-list-label">↓ Most Worsening</p>
+        <ol id="rank-list-worst" class="rank-list-items"></ol>
+      </div>
+      <div class="lookup-header">
+        <p class="lookup-kicker">How Does Your Country Rank?</p>
+        <h2 class="lookup-title">FIND YOUR COUNTRY</h2>
+        <p class="lookup-sub">Spin the globe and click your country to see its drought rank, SPI trend, and 165 years of data.</p>
+      </div>
+      <div class="lookup-rank-list best">
+        <p class="rank-list-label">↑ Most Improving</p>
+        <ol id="rank-list-best" class="rank-list-items"></ol>
+      </div>
+    </div>
+   <div class="globe-hint" id="globe-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg>
+      Drag to spin · Scroll to zoom · Click a country
+    </div>
+    <div id="globe-container">
+      <canvas id="globe-canvas"></canvas>
+      <div id="globe-tooltip"></div>
+    </div>
+    <div class="globe-controls">
+      <span class="globe-zoom-hint">Scroll to zoom</span>
+      <button class="globe-reset-btn" id="globe-spin-toggle">II Pause</button>
+      <button class="globe-reset-btn" id="globe-reset">↺ Reset view</button>
+    </div>
+    <div id="lookup-result" class="lookup-result"></div>
+  </div>
+</section>
+
+<!-- Connective divider -->
+<div class="section-divider section-reveal">
+  <div class="divider-line"></div>
+  <span class="divider-text">The bottom line</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- FINAL SLIDE — Takeaway -->
+<section class="slide" id="slide-outro">
+  <div class="slide-content takeaway-content">
+    <p class="takeaway-label">The Hidden Truth</p>
+    <h2 class="takeaway-title">
+      We only worry about<br>drought where we can<br><em>see</em> it.
+    </h2>
+    <p class="takeaway-body">
+      Cracked earth. Bleached sky. A desert we already knew was dry.
+      But the data shows drought quietly devastating cold steppes,
+      mountain valleys, and temperate plains — places that receive
+      no emergency declarations, no headlines, no aid.
+    </p>
+    <p class="takeaway-body">
+      SPI doesn't care about temperature. It only asks one question:
+      did enough rain fall? In millions of square kilometers of cold
+      and temperate land, the answer is increasingly no.
+    </p>
+    <p class="takeaway-final">
+      The most dangerous droughts are the ones<br><em>nobody expects to find.</em>
+    </p>
   </div>
 </section>
 
