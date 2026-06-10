@@ -121,9 +121,9 @@ document.querySelectorAll('.half').forEach(half => {
 const MAP_STEPS = [0, 0.33, 0.66];
 
 const STEP_LABELS = [
-  `<strong style="color:#6b0a0a">A Global Picture of Droughts and Temperature</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`,
-  `<strong style="color:#6b0a0a">A Global Picture of Droughts and Temperature</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`,
-  `<strong style="color:#6b0a0a">A Global Picture of Droughts and Temperature</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`
+  `<strong style="color:#6b0a0a">Drought is not limited to places that appear dry.</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`,
+  `<strong style="color:#6b0a0a">Drought is not limited to places that appear dry.</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`,
+  `<strong style="color:#6b0a0a">Drought is not limited to places that appear dry.</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`
 ];
 
 const COLD_DROUGHT_INFO = {
