@@ -23,15 +23,15 @@ const chapterNav   = document.getElementById('chapter-nav');
 const chapterLabel = document.getElementById('chapter-label');
 const chapterDots  = document.querySelectorAll('.chapter-dot');
 const CHAPTERS = [
-  { id: 'slide-1',          label: 'Intro' },
-  { id: 'slide-2-track',    label: 'Hot or Cold?' },
-  { id: 'slide-case-track', label: 'Two Deserts' },
-  { id: 'slide-spi-track',  label: 'Measuring Drought' },
-  { id: 'slide-3-track',    label: 'The World' },
-  { id: 'slide-why',        label: 'Why It Matters' },
-  { id: 'slide-climate',    label: 'Build a Climate' },
-  { id: 'slide-lookup',     label: 'Country Lookup' },
-  { id: 'slide-outro',      label: 'Takeaway' },
+  { id: 'slide-1',           label: 'Intro' },
+  { id: 'slide-2-track',     label: 'Hot or Cold?' },
+  { id: 'slide-case-track',  label: 'Two Deserts' },
+  { id: 'slide-spi-track',   label: 'Measuring Drought' },
+  { id: 'slide-3-track',     label: 'The World' },
+  { id: 'slide-why', label: 'Why It Matters' },
+  { id: 'slide-climate',     label: 'Build a Climate' },
+  { id: 'slide-lookup',      label: 'Country Lookup' },
+  { id: 'slide-outro',       label: 'Takeaway' },
 ];
 
 chapterDots.forEach(dot => {
@@ -118,14 +118,12 @@ document.querySelectorAll('.half').forEach(half => {
 /* ══════════════════════════════════════════════
    SLIDE 3 — WORLD MAP SCROLLYTELLING
    ══════════════════════════════════════════════ */
-const MAP_STEPS = [0, 0.18, 0.36, 0.54, 0.72, 0.88];
+const MAP_STEPS = [0, 0.33, 0.66];
 
 const STEP_LABELS = [
-  `<strong style="color:#6b0a0a">A Global Picture of Droughts  </strong><br><span>In this visualization, we calculated the mean temperature of countries over a 164-year period (1850-2014) to visualize the effects of temperature on the SPI Index. </span>`,
-  `<strong style="color:#0a2a4a">BUT THE DATA TELLS A DIFFERENT STORY</strong><br><span>Now colored by SPI — the actual measure of drought deficit. Hot deserts stay red. But cold and temperate regions are lighting up too. Click any glowing country to explore.</span>`,
-  `<strong style="color:#0a2a4a">DROUGHT IS GETTING WORSE — IN THE COLD</strong><br><span>SPI change from baseline to modern period. Dark red means drought is intensifying. Many of the sharpest declines are in places you wouldn't expect — cold steppes, mountain valleys, temperate plains.</span>`,
-  `<strong style="color:#0a2a4a">DROUGHT IS GETTING WORSE — IN THE COLD</strong><br><span>SPI change from baseline to modern period. Dark red means drought is intensifying. Many of the sharpest declines are in places you wouldn't expect — cold steppes, mountain valleys, temperate plains.</span>`,
-  `<strong>THE THERMOMETER NEVER TELLS THE WHOLE STORY</strong><br><span>From scorching deserts to cold steppes — drought hides wherever precipitation falls short of expectation, regardless of temperature. And it's spreading.</span>`,
+  `<strong style="color:#6b0a0a">A Global Picture of Droughts and Temperature</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`,
+  `<strong style="color:#6b0a0a">A Global Picture of Droughts and Temperature</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`,
+  `<strong style="color:#6b0a0a">A Global Picture of Droughts and Temperature</strong><br><span>In this visualization, we calculated the mean temperature of countries over 164 years (1850-2014) to visualize the effects of temperature on the SPI Index between hot and cold places. Scroll through to see the entire story.<br><br></span>`
 ];
 
 const COLD_DROUGHT_INFO = {
@@ -230,9 +228,9 @@ async function initMap() {
     if(!meta||meta.temp_base===undefined){tooltip.classList.remove("visible");return;}
     const isCold=COLD_DROUGHT_COUNTRIES.includes(name);
     let valHtml=`<div class="tt-val">🌡 ${meta.temp_base.toFixed(1)}°C</div>`;
-    if(mapStep>=2&&mapStep<=4) valHtml+=`<div class="tt-val">SPI ${meta.spi_base.toFixed(2)}</div>`;
-    if(mapStep>=3&&mapStep<=4) valHtml+=`<div class="tt-val">SPI change: ${meta.spi_change>=0?'+':''}${meta.spi_change.toFixed(2)}</div>`;
-    if(mapStep>=2&&isCold) valHtml+=`<div class="tt-val" style="color:#8B5E3C;font-weight:700">Click to explore</div>`;
+    if(mapStep>=1) valHtml+=`<div class="tt-val">SPI ${meta.spi_base.toFixed(2)}</div>`;
+    if(mapStep>=2) valHtml+=`<div class="tt-val">SPI change: ${meta.spi_change>=0?'+':''}${meta.spi_change.toFixed(2)}</div>`;
+    if(mapStep>=1&&isCold) valHtml+=`<div class="tt-val" style="color:#8B5E3C;font-weight:700">Click to explore</div>`;
     tooltip.innerHTML=`<div class="tt-name">${name}</div>${valHtml}`;
     tooltip.style.left=(e.clientX+14)+"px"; tooltip.style.top=(e.clientY-10)+"px";
     tooltip.classList.add("visible");
@@ -243,8 +241,9 @@ async function initMap() {
 
 function updateLegend(mode) {
   const legend=document.getElementById("map-legend"),bar=document.getElementById("legend-bar"),label=document.getElementById("legend-label"),minEl=document.getElementById("legend-min"),maxEl=document.getElementById("legend-max");
+  if(!legend) return;
   legend.classList.add("visible");
-  if(mode==="temp"){label.textContent="Mean Temperature";bar.style.background=`linear-gradient(to right,${tempColor(-30)},${tempColor(0)},${tempColor(30)})`;minEl.textContent="30C";maxEl.textContent="30C";}
+  if(mode==="temp"){label.textContent="Mean Temperature";bar.style.background=`linear-gradient(to right,${tempColor(-30)},${tempColor(0)},${tempColor(30)})`;minEl.textContent="-30°C";maxEl.textContent="30°C";}
   else if(mode==="spi"){label.textContent="SPI Drought Deficit";bar.style.background=`linear-gradient(to right,${spiColor(-1.5)},${spiColor(0)},${spiColor(1.5)})`;minEl.textContent="-1.5 Severe drought";maxEl.textContent="+1.5 Wet";}
   else if(mode==="spi_change"){label.textContent="SPI Change (baseline to modern)";bar.style.background=`linear-gradient(to right,${spiChangeColor(-1)},${spiChangeColor(0)},${spiChangeColor(1)})`;minEl.textContent="Worsening drought";maxEl.textContent="Improving";}
 }
@@ -253,14 +252,14 @@ function attachColdDroughtClicks() {
   if (clickListenersAttached) return; clickListenersAttached=true;
   COLD_DROUGHT_COUNTRIES.forEach(name=>{
     const meta=countryMeta[name]; if(!meta?.el) return;
-    meta.el.addEventListener("click",()=>{ if(mapStep<2)return; showColdDroughtInfo(name); });
+    meta.el.addEventListener("click",()=>{ if(mapStep<1)return; showColdDroughtInfo(name); });
   });
 }
 
 function showColdDroughtInfo(name) {
   const info=COLD_DROUGHT_INFO[name], meta=countryMeta[name]; if(!info)return;
   const spiVal=meta?.spi_base!==undefined?`SPI ${meta.spi_base.toFixed(2)}`:info.spi;
-  const tempVal=meta?.temp_base!==undefined?`Mean temp: ${meta.temp_base.toFixed(1)}C`:info.temp;
+  const tempVal=meta?.temp_base!==undefined?`Mean temp: ${meta.temp_base.toFixed(1)}°C`:info.temp;
   const changeVal=meta?.spi_change!==undefined?(meta.spi_change<0?`Worsening (${meta.spi_change.toFixed(2)})`:`Improving (+${meta.spi_change.toFixed(2)})`):info.spiChange;
   const box=document.getElementById("country-info-box");
   const doEnter=()=>{
@@ -273,6 +272,7 @@ function showColdDroughtInfo(name) {
 
 function setInfoBox(html) {
   const box=document.getElementById("country-info-box");
+  if(!box) return;
   const doEnter=()=>{
     box.classList.remove("exit"); box.style.transition="none"; box.style.transform="translateY(calc(-50% + 80px))"; box.style.opacity="0";
     box.innerHTML=html; void box.offsetWidth; box.style.transition=""; box.style.transform=""; box.style.opacity="";
@@ -284,9 +284,12 @@ function setInfoBox(html) {
 function applyMapStep(step) {
   if(step===mapStep)return; if(Object.keys(countryMeta).length===0)return; mapStep=step;
   const labelEl=document.getElementById("map-label-text");
-  labelEl.style.opacity="0";
-  setTimeout(()=>{labelEl.innerHTML=STEP_LABELS[step]||"";labelEl.style.opacity="1";},300);
-  if(step<=1){
+  if (labelEl) {
+    labelEl.style.opacity="0";
+    setTimeout(()=>{labelEl.innerHTML=STEP_LABELS[step]||"";labelEl.style.opacity="1";},300);
+  }
+  
+  if(step===0){
     updateLegend("temp");
     for(const[name,meta]of Object.entries(countryMeta)){
       if(!meta.el)continue; meta.el.setAttribute("fill",tempColor(meta.temp_base??15)); meta.el.style.cursor="default";
@@ -294,26 +297,31 @@ function applyMapStep(step) {
       if(isHot){meta.el.style.opacity="1";meta.el.setAttribute("stroke",tempColor(meta.temp_base??25));meta.el.setAttribute("stroke-width","2");meta.el.style.filter="drop-shadow(0 0 8px rgba(200,60,20,0.7))";}
       else{meta.el.style.opacity="0.18";meta.el.setAttribute("stroke","rgba(255,255,255,0.05)");meta.el.setAttribute("stroke-width","0.3");meta.el.style.filter="";}
     }
-    setInfoBox(`<div class="cib-label">Where drought is expected</div><div class="cib-name">Hot & Dry</div><div class="cib-divider"></div><div class="cib-body">Regions with this climate include Mali, Egypt, Saudi Arabia, Libya, and Mauritania — all hot, all dry, all obvious candidates for drought.<br><br>Temperatures above <strong>25C</strong>. Precipitation near zero. This is the picture most people have.<br><br><em style="color:#8B5E3C">Scroll on — the map is about to change.</em></div>`);
-  } else if(step<=3){
-    updateLegend(step<=2?"spi":"spi_change");
+    setInfoBox(`<div class="cib-label">Where drought is expected</div><div class="cib-name">Hot & Dry</div><div class="cib-divider"></div><div class="cib-body">Regions with this climate include Mali, Egypt, Saudi Arabia, Libya, and Mauritania — all hot, all dry, all obvious candidates for drought.<br><br>Temperatures above <strong>25°C</strong>. Precipitation near zero. This is the picture most people have.<br><br><em style="color:#8B5E3C">Scroll on — the map is about to change.</em></div>`);
+  } else if(step===1){
+    updateLegend("spi");
     for(const[name,meta]of Object.entries(countryMeta)){
       if(!meta.el)continue;
-      const col=step<=2?spiColor(meta.spi_base):spiChangeColor(meta.spi_change);
+      const col=spiColor(meta.spi_base);
       meta.el.setAttribute("fill",col);
       const isCold=COLD_DROUGHT_COUNTRIES.includes(name), isHot=HOT_DROUGHT_COUNTRIES.includes(name);
       if(isCold||isHot){meta.el.style.opacity="1";meta.el.setAttribute("stroke",col);meta.el.setAttribute("stroke-width","2");meta.el.style.filter=`drop-shadow(0 0 8px ${col})`;meta.el.style.cursor=isCold?"pointer":"default";}
-      else{meta.el.style.opacity="0.3";meta.el.setAttribute("stroke","rgba(255,255,255,0.08)");meta.el.setAttribute("stroke-width","0.3");meta.el.style.filter="";meta.el.style.cursor="default";}
+      else{meta.el.style.opacity="0.3";meta.el.setAttribute("stroke","rgba(255,255,255,0.08)");meta.el.setAttribute("stroke-width","0.3");meta.el.style.filter="";meta.el.style.cursor="default"}
     }
     attachColdDroughtClicks();
-    if(step===2) setInfoBox(`<div class="cib-label">Now look at SPI</div><div class="cib-name">Cold Drought</div><div class="cib-divider"></div><div class="cib-body">The hot deserts are still red. But now cold and temperate regions are glowing too.<br><br>Kazakhstan. Mongolia. Russia. Argentina. The United States Great Basin.<br><br><em style="color:#8B5E3C">Click any highlighted country to explore its drought story.</em></div>`);
-    else setInfoBox(`<div class="cib-label">SPI is changing</div><div class="cib-name">Drought Trends</div><div class="cib-divider"></div><div class="cib-body">Red means drought is intensifying — SPI is falling further below normal.<br><br>Some of the sharpest declines are in cold or temperate regions that were never thought of as drought-prone.<br><br><em style="color:#8B5E3C">Click any highlighted country to explore.</em></div>`);
-  } else {
-    updateLegend("spi");
+    setInfoBox(`<div class="cib-label">Now look at SPI</div><div class="cib-name">Cold Drought</div><div class="cib-divider"></div><div class="cib-body">The hot deserts are still red. But now cold and temperate regions are glowing too.<br><br>Kazakhstan. Mongolia. Russia. Argentina. The United States Great Basin.<br><br><em style="color:#8B5E3C">Click any highlighted country to explore its drought story.</em></div>`);
+  } else if(step===2){
+    updateLegend("spi_change");
     for(const[name,meta]of Object.entries(countryMeta)){
-      if(!meta.el)continue; meta.el.setAttribute("fill",spiColor(meta.spi_base)); meta.el.style.opacity="1"; meta.el.setAttribute("stroke","rgba(255,255,255,0.15)"); meta.el.setAttribute("stroke-width","0.3"); meta.el.style.filter=""; meta.el.style.cursor="default";
+      if(!meta.el)continue;
+      const col=spiChangeColor(meta.spi_change);
+      meta.el.setAttribute("fill",col);
+      const isCold=COLD_DROUGHT_COUNTRIES.includes(name), isHot=HOT_DROUGHT_COUNTRIES.includes(name);
+      if(isCold||isHot){meta.el.style.opacity="1";meta.el.setAttribute("stroke",col);meta.el.setAttribute("stroke-width","2");meta.el.style.filter=`drop-shadow(0 0 8px ${col})`;meta.el.style.cursor=isCold?"pointer":"default";}
+      else{meta.el.style.opacity="0.3";meta.el.setAttribute("stroke","rgba(255,255,255,0.08)");meta.el.setAttribute("stroke-width","0.3");meta.el.style.filter="";meta.el.style.cursor="default"}
     }
-    setInfoBox(`<div class="cib-label">The Full Picture</div><div class="cib-name">SPI Worldwide</div><div class="cib-divider"></div><div class="cib-body">Every country colored by SPI — the true measure of drought. Red means persistent deficit. Blue means surplus.<br><br>Drought-red appears across cold Central Asia, Patagonia, and the American West — not just the Sahara.<br><br><em style="color:#8B5E3C">The thermometer never tells the whole story.</em></div>`);
+    attachColdDroughtClicks();
+    setInfoBox(`<div class="cib-label">SPI is changing</div><div class="cib-name">Drought Trends</div><div class="cib-divider"></div><div class="cib-body">Red means drought is intensifying — SPI is falling further below normal.<br><br>Some of the sharpest declines are in cold or temperate regions that were never thought of as drought-prone.<br><br><em style="color:#8B5E3C">Click any highlighted country to explore.</em></div>`);
   }
 }
 
@@ -468,796 +476,11 @@ loadTopojsonAndMap();
   prevBtn?.addEventListener('click',()=>goTo(currentSlide-1));
   nextBtn?.addEventListener('click',()=>goTo(currentSlide+1));
   dots.forEach(d=>{d.addEventListener('click',()=>goTo(parseInt(d.dataset.slide)));});
+  
   document.addEventListener('keydown',e=>{
     const ct=document.getElementById('slide-case-track');if(!ct)return;
     const r=ct.getBoundingClientRect();if(r.top>0||r.bottom<window.innerHeight)return;
-    if(e.key==='ArrowRight')goTo(currentSlide+1);if(e.key==='ArrowLeft')goTo(currentSlide-1);
+    if(e.key==='ArrowLeft')goTo(currentSlide-1);
+    if(e.key==='ArrowRight')goTo(currentSlide+1);
   });
-  let touchStartX=null;
-  const viewport=document.getElementById('case-slider-viewport');
-  viewport?.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
-  viewport?.addEventListener('touchend',e=>{
-    if(touchStartX===null)return; const dx=e.changedTouches[0].clientX-touchStartX; touchStartX=null;
-    if(Math.abs(dx)<40)return; dx<0?goTo(currentSlide+1):goTo(currentSlide-1);
-  },{passive:true});
-  window.addEventListener('resize',async()=>{
-    if(typeof d3==='undefined')return; await caseDataLoaded;
-    const drawn={...chartsDrawn}; chartsDrawn={1:false,2:false,3:false};
-    if(drawn[1]){const el=document.getElementById('case-chart-svg-1');if(el){drawBarChart(el);chartsDrawn[1]=true;}}
-    if(drawn[2]){const el=document.getElementById('case-chart-svg-2');if(el){drawLineChart(el);chartsDrawn[2]=true;}}
-    if(drawn[3]){const el=document.getElementById('case-chart-svg-3');if(el){drawFreqChart(el);chartsDrawn[3]=true;}}
-  });
-  goTo(0,true);
-  function chartDims(svgEl){const W=svgEl.clientWidth||520,H=svgEl.clientHeight||320,margin={top:38,right:20,bottom:50,left:50};return{W,H,iW:W-margin.left-margin.right,iH:H-margin.top-margin.bottom,margin};}
-  function styleAxis(g){g.selectAll('text').style('font-family',"'Montserrat',sans-serif").style('font-size','10px').style('fill',TEXT_COLOR);g.selectAll('line,path').style('stroke',AXIS_COLOR);return g;}
-  function animateBars(bars,yScale,innerH,dur=820){bars.attr('y',innerH).attr('height',0).transition().duration(dur).ease(d3.easeCubicOut).attr('y',d=>yScale(d.value)).attr('height',d=>innerH-yScale(d.value));}
-  function animateLine(path,dur=1350){const len=path.node().getTotalLength();path.attr('stroke-dasharray',`${len} ${len}`).attr('stroke-dashoffset',len).transition().duration(dur).ease(d3.easeLinear).attr('stroke-dashoffset',0);}
-  function addGridlines(g,yScale,iW){const grid=g.append('g').attr('class','case-axis').call(d3.axisLeft(yScale).ticks(5).tickSize(-iW).tickFormat(''));grid.select('.domain').remove();grid.selectAll('line').style('stroke','rgba(139,94,60,0.10)');}
-  function addTitle(svg,W,margin,text){svg.append('text').attr('class','case-chart-title').attr('x',W/2).attr('y',margin.top*0.35).text(text);}
-  function addLegend(g,iW){const leg=g.append('g').attr('transform',`translate(${iW/2-86},-14)`);[['Great Basin',GB_COLOR],['Death Valley',DV_COLOR]].forEach(([n,c],i)=>{leg.append('rect').attr('x',i*86).attr('width',11).attr('height',11).attr('rx',2).attr('fill',c).attr('opacity',0.88);leg.append('text').attr('x',i*86+15).attr('y',9.5).style('font-family',"'Montserrat',sans-serif").style('font-size','8.5px').style('fill',TEXT_COLOR).text(n);});}
-  function drawBarChart(svgEl){
-    if(!annualData?.length)return;
-    const svg=d3.select(svgEl);svg.selectAll('*').remove();
-    const{W,H,iW,iH,margin}=chartDims(svgEl);const g=svg.append('g').attr('transform',`translate(${margin.left},${margin.top})`);
-    const gbTas=d3.mean(annualData,d=>d.gb_tas),dvTas=d3.mean(annualData,d=>d.dv_tas),gbPr=d3.mean(annualData,d=>d.gb_pr),dvPr=d3.mean(annualData,d=>d.dv_pr);
-    const groups=['Temperature (C)','Precip (mm/mo)'];
-    const x0=d3.scaleBand().domain(groups).range([0,iW]).paddingInner(0.38).paddingOuter(0.18);
-    const x1=d3.scaleBand().domain(['Great Basin','Death Valley']).range([0,x0.bandwidth()]).paddingInner(0.12);
-    const yTemp=d3.scaleLinear().domain([0,Math.max(gbTas,dvTas)*1.38]).range([iH,0]);
-    const yPrecip=d3.scaleLinear().domain([0,Math.max(gbPr,dvPr)*1.38]).range([iH,0]);
-    const yFor=name=>name==='Temperature (C)'?yTemp:yPrecip;
-    addGridlines(g,yTemp,iW);
-    const xAxisG=styleAxis(g.append('g').attr('class','case-axis').attr('transform',`translate(0,${iH})`).call(d3.axisBottom(x0).tickSize(0)));
-    xAxisG.select('.domain').remove();xAxisG.selectAll('text').attr('dy','1.4em').style('font-size','10.5px').style('font-weight','700').style('fill','#4a3020');
-    styleAxis(g.append('g').attr('class','case-axis').call(d3.axisLeft(yTemp).ticks(5)));
-    g.append('text').attr('class','case-axis-label').attr('transform','rotate(-90)').attr('x',-iH/2).attr('y',-40).attr('text-anchor','middle').text('Temperature C');
-    styleAxis(g.append('g').attr('class','case-axis').attr('transform',`translate(${iW},0)`).call(d3.axisRight(yPrecip).ticks(5).tickSize(0)));
-    g.append('text').attr('class','case-axis-label').attr('transform','rotate(90)').attr('x',iH/2).attr('y',-iW-36).attr('text-anchor','middle').text('Precip mm/mo');
-    const barData={'Temperature (C)':[{region:'Great Basin',value:gbTas,color:GB_COLOR},{region:'Death Valley',value:dvTas,color:DV_COLOR}],'Precip (mm/mo)':[{region:'Great Basin',value:gbPr,color:GB_COLOR},{region:'Death Valley',value:dvPr,color:DV_COLOR}]};
-    groups.forEach(gName=>{
-      const gEl=g.append('g').attr('transform',`translate(${x0(gName)},0)`),yS=yFor(gName),dat=barData[gName];
-      const bars=gEl.selectAll('rect').data(dat).enter().append('rect').attr('x',d=>x1(d.region)).attr('width',x1.bandwidth()).attr('rx',3).attr('fill',d=>d.color).attr('opacity',0.85);
-      animateBars(bars,yS,iH);
-      gEl.selectAll('.bv').data(dat).enter().append('text').attr('class','case-bar-label').attr('x',d=>x1(d.region)+x1.bandwidth()/2).attr('y',d=>yS(d.value)-5).text(d=>gName==='Temperature (C)'?`${d.value.toFixed(1)}`:`${d.value.toFixed(1)}`).attr('opacity',0).transition().delay(840).duration(280).attr('opacity',1);
-    });
-    addLegend(g,iW);addTitle(svg,W,margin,'Mean Temperature & Precipitation 1950-2014');
-  }
-  function drawLineChart(svgEl){
-    if(!spiData?.length)return;
-    const svg=d3.select(svgEl);svg.selectAll('*').remove();
-    const{W,H,iW,iH,margin}=chartDims(svgEl);const g=svg.append('g').attr('transform',`translate(${margin.left},${margin.top})`);
-    const x=d3.scaleTime().domain(d3.extent(spiData,d=>d.date)).range([0,iW]);
-    const y=d3.scaleLinear().domain([-3.0,3.5]).range([iH,0]);
-    g.append('rect').attr('x',0).attr('y',y(-1.0)).attr('width',iW).attr('height',iH-y(-1.0)).attr('fill','rgba(139,94,60,0.06)');
-    addGridlines(g,y,iW);
-    styleAxis(g.append('g').attr('class','case-axis').attr('transform',`translate(0,${iH})`).call(d3.axisBottom(x).ticks(d3.timeYear.every(10))));
-    styleAxis(g.append('g').attr('class','case-axis').call(d3.axisLeft(y).ticks(5)));
-    g.append('text').attr('class','case-axis-label').attr('transform','rotate(-90)').attr('x',-iH/2).attr('y',-40).attr('text-anchor','middle').text('SPI-12');
-    g.append('line').attr('x1',0).attr('x2',iW).attr('y1',y(0)).attr('y2',y(0)).style('stroke','rgba(139,94,60,0.22)').style('stroke-width',1);
-    g.append('line').attr('class','case-threshold-line').attr('x1',0).attr('x2',iW).attr('y1',y(-1.0)).attr('y2',y(-1.0));
-    g.append('text').attr('class','case-threshold-label').attr('x',iW-2).attr('y',y(-1.0)-4).attr('text-anchor','end').text('SPI = -1.0');
-    const mkArea=key=>d3.area().x(d=>x(d.date)).y0(y(0)).y1(d=>y(Math.min(0,d[key]))).curve(d3.curveBasis);
-    g.append('path').datum(spiData).attr('d',mkArea('gb_spi')).attr('fill',GB_COLOR).attr('opacity',0.14);
-    g.append('path').datum(spiData).attr('d',mkArea('dv_spi')).attr('fill',DV_COLOR).attr('opacity',0.14);
-    const mkLine=key=>d3.line().x(d=>x(d.date)).y(d=>y(d[key])).curve(d3.curveBasis);
-    const pGB=g.append('path').datum(spiData).attr('d',mkLine('gb_spi')).attr('fill','none').attr('stroke',GB_COLOR).attr('stroke-width',1.8);
-    const pDV=g.append('path').datum(spiData).attr('d',mkLine('dv_spi')).attr('fill','none').attr('stroke',DV_COLOR).attr('stroke-width',1.8);
-    animateLine(pGB,1400);animateLine(pDV,1680);addLegend(g,iW);addTitle(svg,W,margin,'SPI-12 Time Series 1950-2014');
-  }
-  function drawFreqChart(svgEl){
-    let freqData;
-    if(spiData?.length){
-      const gbVals=spiData.map(d=>d.gb_spi).filter(v=>!isNaN(v)),dvVals=spiData.map(d=>d.dv_spi).filter(v=>!isNaN(v));
-      const pct=(arr,lo,hi=Infinity)=>arr.filter(v=>v<lo&&(hi===Infinity||v>=hi)).length/arr.length*100;
-      freqData=[{cat:'Moderate\n(< -1.0)',gb:pct(gbVals,-1.0,-1.5),dv:pct(dvVals,-1.0,-1.5)},{cat:'Severe\n(< -1.5)',gb:pct(gbVals,-1.5,-2.0),dv:pct(dvVals,-1.5,-2.0)},{cat:'Extreme\n(< -2.0)',gb:pct(gbVals,-2.0),dv:pct(dvVals,-2.0)}];
-    }else{freqData=[{cat:'Moderate\n(< -1.0)',gb:14.8,dv:14.8},{cat:'Severe\n(< -1.5)',gb:3.0,dv:3.0},{cat:'Extreme\n(< -2.0)',gb:3.0,dv:3.0}];}
-    const svg=d3.select(svgEl);svg.selectAll('*').remove();
-    const{W,H,iW,iH,margin}=chartDims(svgEl);const g=svg.append('g').attr('transform',`translate(${margin.left},${margin.top})`);
-    const x0=d3.scaleBand().domain(freqData.map(d=>d.cat)).range([0,iW]).paddingInner(0.38).paddingOuter(0.18);
-    const x1=d3.scaleBand().domain(['gb','dv']).range([0,x0.bandwidth()]).paddingInner(0.1);
-    const maxV=Math.max(d3.max(freqData,d=>d.gb),d3.max(freqData,d=>d.dv));
-    const y=d3.scaleLinear().domain([0,Math.max(maxV*1.38,6)]).range([iH,0]);
-    addGridlines(g,y,iW);
-    const xAxisG=g.append('g').attr('class','case-axis').attr('transform',`translate(0,${iH})`).call(d3.axisBottom(x0).tickSize(0));
-    xAxisG.select('.domain').remove();
-    xAxisG.selectAll('.tick text').each(function(d){const el=d3.select(this),parts=d.split('\n');el.text('');parts.forEach((p,i)=>el.append('tspan').attr('x',0).attr('dy',i===0?'1.3em':'1.2em').text(p));}).style('font-family',"'Montserrat',sans-serif").style('font-size','9.5px').style('font-weight','700').style('fill','#4a3020');
-    styleAxis(g.append('g').attr('class','case-axis').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%')));
-    g.append('text').attr('class','case-axis-label').attr('transform','rotate(-90)').attr('x',-iH/2).attr('y',-40).attr('text-anchor','middle').text('% of months');
-    g.append('line').attr('class','case-threshold-line').attr('x1',0).attr('x2',iW).attr('y1',y(5)).attr('y2',y(5));
-    g.append('text').attr('class','case-threshold-label').attr('x',iW-2).attr('y',y(5)-4).attr('text-anchor','end').text('5% expected under normal climate');
-    freqData.forEach(d=>{
-      const gEl=g.append('g').attr('transform',`translate(${x0(d.cat)},0)`);
-      const dat=[{key:'gb',value:d.gb,color:GB_COLOR},{key:'dv',value:d.dv,color:DV_COLOR}];
-      const bars=gEl.selectAll('rect').data(dat).enter().append('rect').attr('x',b=>x1(b.key)).attr('width',x1.bandwidth()).attr('rx',3).attr('fill',b=>b.color).attr('opacity',0.85);
-      animateBars(bars,y,iH,920);
-      gEl.selectAll('.fv').data(dat).enter().append('text').attr('class','case-bar-label').attr('x',b=>x1(b.key)+x1.bandwidth()/2).attr('y',b=>y(b.value)-4).text(b=>`${b.value.toFixed(1)}%`).attr('opacity',0).transition().delay(940).duration(280).attr('opacity',1);
-    });
-    addLegend(g,iW);addTitle(svg,W,margin,'Drought Category Frequency SPI-12 1950-2014');
-  }
-})();
-
-/* ══════════════════════════════════════════════
-   CLIMATE BUILDER
-   ══════════════════════════════════════════════ */
-(function(){
-  const tempSlider=document.getElementById('temp-slider'),prSlider=document.getElementById('pr-slider');
-  const tempVal=document.getElementById('temp-val'),prVal=document.getElementById('pr-val');
-  const meterVerdict=document.getElementById('meter-verdict'),meterExample=document.getElementById('meter-example');
-  const dialFill=document.getElementById('dial-fill'),dialTrack=document.getElementById('dial-track'),dialNeedle=document.getElementById('dial-needle-g');
-  if(!tempSlider||!dialFill)return;
-  let COUNTRY_CLIMATES=[];
-  const similarName=document.getElementById('similar-name'),similarDesc=document.getElementById('similar-desc');
-  const CX=130,CY=130,R=80,START_DEG=270,TOTAL_SWEEP=180;
-  function polarToXY(deg){const rad=(deg-90)*Math.PI/180;return{x:CX+R*Math.cos(rad),y:CY+R*Math.sin(rad)};}
-  function arcPath(fromDeg,toDeg){const s=polarToXY(fromDeg),e=polarToXY(toDeg),sweep=((toDeg-fromDeg+360)%360),large=sweep>180?1:0;return`M ${s.x.toFixed(2)} ${s.y.toFixed(2)} A ${R} ${R} 0 ${large} 1 ${e.x.toFixed(2)} ${e.y.toFixed(2)}`;}
-  dialTrack.setAttribute('d',arcPath(START_DEG,START_DEG+TOTAL_SWEEP));
-  const ARC_LEN=(TOTAL_SWEEP/360)*2*Math.PI*R;
-  dialFill.setAttribute('d',arcPath(START_DEG,START_DEG+TOTAL_SWEEP));
-  dialFill.style.strokeDasharray=ARC_LEN.toFixed(2); dialFill.style.strokeDashoffset=ARC_LEN.toFixed(2);
-  const TEMP_LABELS=['Cold','Cool','Moderate','Warm','Hot'],PR_LABELS=['Very Dry','Dry','Moderate','Wet','Very Wet'];
-  const LEVELS=[{max:0.22,label:'Low',color:'#5a8a3c',example:'Mild conditions — water supply stable.'},{max:0.48,label:'Moderate',color:'#8B5E3C',example:'Some stress — seasonal dryness possible.'},{max:0.72,label:'High',color:'#c84b1a',example:'Vegetation stress; water restrictions likely.'},{max:1.01,label:'Very High',color:'#8B0000',example:'Severe drought conditions expected.'}];
-  function labelFor(val,labels){return labels[Math.round((val/100)*(labels.length-1))];}
-  function computeRisk(temp,pr){return Math.max(0,Math.min(1,(temp/100)*0.45+(1-pr/100)*0.55));}
-  async function loadCountryClimateData(){
-    try{
-      const response=await fetch("climate_agg_country.csv");if(!response.ok)throw new Error("CSV not found");
-      const text=await response.text(),lines=text.trim().split("\n"),headers=lines[0].split(",").map(h=>h.trim());
-      const countries={};
-      for(let i=1;i<lines.length;i++){const values=lines[i].split(","),row={};headers.forEach((h,idx)=>{row[h]=values[idx]?.trim();});const country=row.country;if(!country)continue;if(!countries[country])countries[country]={country,continent:row.continent,climate_zone:row.climate_zone,tempSum:0,prSum:0,spiSum:0,count:0};countries[country].tempSum+=Number(row.mean_temp_C);countries[country].prSum+=Number(row.mean_pr_mm_day);countries[country].spiSum+=Number(row.mean_spi);countries[country].count+=1;}
-      COUNTRY_CLIMATES=Object.values(countries).map(d=>({country:d.country,continent:d.continent,climate_zone:d.climate_zone,temp:d.tempSum/d.count,pr:d.prSum/d.count,spi:d.spiSum/d.count}));
-      update();
-    }catch(err){console.error(err);if(similarName)similarName.textContent="Climate data not found";if(similarDesc)similarDesc.textContent="Make sure climate_agg_country.csv is in the same folder.";}
-  }
-  function normalizeTemp(temp){return Math.max(0,Math.min(100,((temp+35)/65)*100));}
-  function normalizePrecip(pr){return Math.max(0,Math.min(100,(pr/12)*100));}
-  function findMostSimilarClimates(userTemp,userPr,count=3){if(!COUNTRY_CLIMATES.length)return[];return COUNTRY_CLIMATES.map(c=>({...c,distance:Math.hypot(userTemp-normalizeTemp(c.temp),userPr-normalizePrecip(c.pr))})).sort((a,b)=>a.distance-b.distance).slice(0,count);}
-  function update(){
-    const t=+tempSlider.value,p=+prSlider.value;
-    tempVal.textContent=labelFor(t,TEMP_LABELS); prVal.textContent=labelFor(p,PR_LABELS);
-    const risk=computeRisk(t,p),level=LEVELS.find(l=>risk<l.max);
-    dialFill.style.strokeDashoffset=(ARC_LEN*(1-risk)).toFixed(2); dialFill.style.stroke=level.color;
-    dialNeedle.setAttribute('transform',`rotate(${(risk*180)-90},130,130)`);
-    meterVerdict.textContent=level.label; meterVerdict.style.color=level.color;
-    const mvt=document.getElementById('meter-verdict-top');if(mvt){mvt.textContent=level.label;mvt.style.color=level.color;}
-    meterExample.textContent=level.example;
-    const matches=findMostSimilarClimates(t,p);
-    if(matches.length&&similarName&&similarDesc){similarName.textContent=matches[0].country;similarDesc.innerHTML=matches.map((m,i)=>`${i+1}. ${m.country} (${m.continent}) — ${m.temp.toFixed(1)}C, ${m.pr.toFixed(2)} mm/day`).join("<br>");}
-  }
-  tempSlider.addEventListener('input',update); prSlider.addEventListener('input',update);
-  loadCountryClimateData(); update();
-})();
-
-/* ══════════════════════════════════════════════
-   COUNTRY GLOBE LOOKUP
-   ══════════════════════════════════════════════ */
-(function () {
-  let allCountries  = [];
-  let countryYearly = {};
-  let rankings      = [];
-  let topoCountries = null;
-
-  let scene, camera, renderer, globe, countriesMesh;
-  let isDragging      = false;
-  let prevMouse       = { x: 0, y: 0 };
-  let rotationVel     = { x: 0, y: 0 };
-  let autoRotate      = true;
-  let autoRotateTimer = null;
-  let userPaused      = false;
-  let hoveredCountry  = null;
-  let selectedCountry = null;
-
-  const COL_OCEAN_HEX = '#8d96d0';
-  const COL_LAND_HEX  = '#d4c9b5';
-
-  async function loadLookupData() {
-    const [summaryRes, yearlyRes] = await Promise.all([
-      fetch('country_summary.csv'),
-      fetch('climate_agg_country.csv'),
-    ]);
-    const summaryText = await summaryRes.text();
-    const yearlyText  = await yearlyRes.text();
-
-    const sLines = summaryText.trim().split('\n');
-    const sHdrs  = sLines[0].split(',').map(h => h.trim());
-    for (let i = 1; i < sLines.length; i++) {
-      const vals = sLines[i].split(','), row = {};
-      sHdrs.forEach((h, idx) => { row[h] = vals[idx]?.trim(); });
-      if (!row.country) continue;
-      allCountries.push({
-        country:    row.country,
-        continent:  row.continent,
-        spi_change: parseFloat(row.spi_change),
-        spi_base:   parseFloat(row.mean_spi_base),
-        spi_mod:    parseFloat(row.mean_spi_mod),
-        temp_base:  parseFloat(row.mean_temp_C_base),
-      });
-    }
-    rankings = [...allCountries].sort((a, b) => a.spi_change - b.spi_change);
-    populateRankLists();
-
-    const yLines     = yearlyText.trim().split('\n');
-    const yHdrs      = yLines[0].split(',').map(h => h.trim());
-    const yearIdx    = yHdrs.indexOf('year');
-    const countryIdx = yHdrs.indexOf('country');
-    const spiIdx     = yHdrs.indexOf('mean_spi');
-    for (let i = 1; i < yLines.length; i++) {
-      const vals = yLines[i].split(',');
-      if (vals.length < 4) continue;
-      const country = vals[countryIdx]?.trim();
-      const year    = parseInt(vals[yearIdx]);
-      const spi     = parseFloat(vals[spiIdx]);
-      if (!country || isNaN(year) || isNaN(spi)) continue;
-      if (!countryYearly[country]) countryYearly[country] = [];
-      countryYearly[country].push({ year, spi });
-    }
-  }
-
-  function populateRankLists() {
-    const worstEl = document.getElementById('rank-list-worst');
-    const bestEl  = document.getElementById('rank-list-best');
-    if (!worstEl || !bestEl) return;
-    const worst = rankings.slice(0, 5);
-    const best  = [...rankings].reverse().slice(0, 5);
-    function makeItem(c) {
-      const li = document.createElement('li');
-      li.className = 'rank-list-item';
-      const sign = c.spi_change >= 0 ? '+' : '';
-      li.innerHTML = `<span class="rank-list-item-name">${c.country}</span><span class="rank-list-item-val">${sign}${c.spi_change.toFixed(2)} SPI</span>`;
-      li.addEventListener('click', () => showResult(c.country));
-      return li;
-    }
-    worst.forEach(c => worstEl.appendChild(makeItem(c)));
-    best.forEach(c  => bestEl.appendChild(makeItem(c)));
-  }
-
-  function pointInPolygon(point, polygon) {
-    const [px, py] = point;
-    let inside = false;
-    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-      const [xi, yi] = polygon[i], [xj, yj] = polygon[j];
-      if (((yi > py) !== (yj > py)) && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi) inside = !inside;
-    }
-    return inside;
-  }
-
-  function latLonToCountry(lat, lon) {
-    if (!topoCountries) return null;
-    for (const feature of topoCountries) {
-      const geom = feature.geometry;
-      const name = feature.properties?.name || '';
-      const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.type === 'MultiPolygon' ? geom.coordinates : [];
-      for (const poly of polys) { if (pointInPolygon([lon, lat], poly[0])) return name; }
-    }
-    return null;
-  }
-
-  const NAME_MAP = {
-    'United States of America':'United States','Russian Federation':'Russia','Iran (Islamic Republic of)':'Iran',
-    'Venezuela (Bolivarian Republic of)':'Venezuela','Bolivia (Plurinational State of)':'Bolivia',
-    'United Republic of Tanzania':'Tanzania','Korea, Republic of':'South Korea',
-    "Korea, Democratic People's Republic of":'North Korea','Viet Nam':'Vietnam',
-    'Syrian Arab Republic':'Syria',"Lao People's Democratic Republic":'Laos',
-    'Congo, Democratic Republic of the':'DR Congo','Congo':'Republic of the Congo',
-    "Cote d'Ivoire":'Ivory Coast','Burma':'Myanmar','Czech Republic':'Czechia',
-    'Republic of Moldova':'Moldova','Swaziland':'Eswatini',
-  };
-  function normalizeName(n) { return NAME_MAP[n] || n; }
-
-  function buildGlobeTexture(features) {
-    const SIZE = 2048;
-    const canvas = document.createElement('canvas');
-    canvas.width = canvas.height = SIZE;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = COL_OCEAN_HEX;
-    ctx.fillRect(0, 0, SIZE, SIZE);
-    function lonLatToXY(lon, lat) { return [((lon+180)/360)*SIZE, ((90-lat)/180)*SIZE]; }
-    function drawRing(ring, doFill, doStroke) {
-      ctx.beginPath(); let first=true, prevX=null;
-      for (const [lon, lat] of ring) {
-        const [x, y] = lonLatToXY(lon, lat);
-        if (!first && prevX !== null && Math.abs(x-prevX) > SIZE*0.4) {
-          ctx.closePath(); if(doFill)ctx.fill(); if(doStroke)ctx.stroke(); ctx.beginPath(); first=true;
-        }
-        first ? ctx.moveTo(x,y) : ctx.lineTo(x,y); first=false; prevX=x;
-      }
-      ctx.closePath(); if(doFill)ctx.fill(); if(doStroke)ctx.stroke();
-    }
-    ctx.fillStyle = COL_LAND_HEX; ctx.strokeStyle='transparent';
-    for (const f of features) {
-      const polys = f.geometry.type==='Polygon'?[f.geometry.coordinates]:f.geometry.type==='MultiPolygon'?f.geometry.coordinates:[];
-      for (const poly of polys) for (const ring of poly) drawRing(ring, true, false);
-    }
-    ctx.strokeStyle='rgba(139,94,60,0.55)'; ctx.lineWidth=1.2;
-    for (const f of features) {
-      const polys = f.geometry.type==='Polygon'?[f.geometry.coordinates]:f.geometry.type==='MultiPolygon'?f.geometry.coordinates:[];
-      for (const poly of polys) for (const ring of poly) drawRing(ring, false, true);
-    }
-    return new THREE.CanvasTexture(canvas);
-  }
-
-  function buildOverlayTexture(features, hovered, selected, summaryMap) {
-    const SIZE = 2048;
-    const canvas = document.createElement('canvas');
-    canvas.width = canvas.height = SIZE;
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, SIZE, SIZE);
-    function lonLatToXY(lon, lat) { return [((lon+180)/360)*SIZE, ((90-lat)/180)*SIZE]; }
-    function drawFeature(feature, fillColor) {
-      const geom = feature.geometry;
-      const polys = geom.type==='Polygon'?[geom.coordinates]:geom.type==='MultiPolygon'?geom.coordinates:[];
-      ctx.fillStyle = fillColor;
-      for (const poly of polys) {
-        ctx.beginPath(); let first=true, prevX=null;
-        for (const [lon, lat] of poly[0]) {
-          const [x,y] = lonLatToXY(lon, lat);
-          if (!first && prevX!==null && Math.abs(x-prevX)>SIZE*0.4) { ctx.closePath();ctx.fill();ctx.beginPath();first=true; }
-          first?ctx.moveTo(x,y):ctx.lineTo(x,y); first=false; prevX=x;
-        }
-        ctx.closePath(); ctx.fill();
-      }
-    }
-    for (const feature of features) {
-      const rawName  = feature.properties?.name || '';
-      const normName = normalizeName(rawName);
-      if (normName === selected) {
-        drawFeature(feature, 'rgba(139,94,60,0.85)');
-      } else if (normName === hovered) {
-        drawFeature(feature, 'rgba(200,75,26,0.6)');
-      } else {
-        const meta = summaryMap[normName];
-        if (meta) {
-          if (meta.spi_change < 0) {
-            const intensity = Math.min(1, Math.abs(meta.spi_change) / 1.2);
-            drawFeature(feature, `rgba(200,75,26,${0.08 + intensity * 0.42})`);
-          } else if (meta.spi_change > 0.1) {
-            const intensity = Math.min(1, meta.spi_change / 1.2);
-            drawFeature(feature, `rgba(59,139,212,${0.08 + intensity * 0.38})`);
-          }
-        }
-      }
-    }
-    return new THREE.CanvasTexture(canvas);
-  }
-
-  async function initGlobe() {
-    const container = document.getElementById('globe-container');
-    const canvasEl  = document.getElementById('globe-canvas');
-    if (!container || !canvasEl) return;
-
-    if (!window.THREE) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js');
-    if (!window.topojson) await loadScript('https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js');
-
-    const topoRes = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
-    const topo    = await topoRes.json();
-    const geoJSON = window.topojson.feature(topo, topo.objects.countries);
-
-    const idToName = {
-      4:"Afghanistan",8:"Albania",12:"Algeria",24:"Angola",32:"Argentina",36:"Australia",40:"Austria",31:"Azerbaijan",50:"Bangladesh",56:"Belgium",64:"Bhutan",68:"Bolivia",70:"Bosnia and Herzegovina",72:"Botswana",76:"Brazil",84:"Belize",100:"Bulgaria",104:"Myanmar",108:"Burundi",112:"Belarus",116:"Cambodia",120:"Cameroon",124:"Canada",132:"Cape Verde",140:"Central African Republic",144:"Sri Lanka",148:"Chad",152:"Chile",156:"China",170:"Colombia",178:"Republic of the Congo",180:"DR Congo",188:"Costa Rica",191:"Croatia",192:"Cuba",196:"Cyprus",203:"Czechia",204:"Benin",208:"Denmark",214:"Dominican Republic",218:"Ecuador",222:"El Salvador",231:"Ethiopia",232:"Eritrea",233:"Estonia",246:"Finland",250:"France",262:"Djibouti",266:"Gabon",268:"Georgia",276:"Germany",288:"Ghana",300:"Greece",320:"Guatemala",324:"Guinea",328:"Guyana",332:"Haiti",340:"Honduras",348:"Hungary",356:"India",360:"Indonesia",364:"Iran",368:"Iraq",372:"Ireland",376:"Israel",380:"Italy",384:"Ivory Coast",388:"Jamaica",392:"Japan",398:"Kazakhstan",400:"Jordan",404:"Kenya",408:"North Korea",410:"South Korea",414:"Kuwait",417:"Kyrgyzstan",418:"Laos",422:"Lebanon",426:"Lesotho",428:"Latvia",430:"Liberia",434:"Libya",440:"Lithuania",450:"Madagascar",454:"Malawi",458:"Malaysia",466:"Mali",478:"Mauritania",484:"Mexico",496:"Mongolia",498:"Moldova",504:"Morocco",508:"Mozambique",512:"Oman",516:"Namibia",524:"Nepal",528:"Netherlands",554:"New Zealand",558:"Nicaragua",562:"Niger",566:"Nigeria",578:"Norway",586:"Pakistan",591:"Panama",598:"Papua New Guinea",600:"Paraguay",604:"Peru",608:"Philippines",616:"Poland",620:"Portugal",634:"Qatar",642:"Romania",643:"Russia",646:"Rwanda",682:"Saudi Arabia",686:"Senegal",688:"Serbia",694:"Sierra Leone",703:"Slovakia",704:"Vietnam",705:"Slovenia",706:"Somalia",710:"South Africa",716:"Zimbabwe",724:"Spain",728:"South Sudan",729:"Sudan",740:"Suriname",748:"Eswatini",752:"Sweden",756:"Switzerland",760:"Syria",762:"Tajikistan",764:"Thailand",768:"Togo",788:"Tunisia",792:"Turkey",800:"Uganda",804:"Ukraine",818:"Egypt",826:"United Kingdom",834:"Tanzania",840:"United States",854:"Burkina Faso",858:"Uruguay",860:"Uzbekistan",862:"Venezuela",887:"Yemen",894:"Zambia",51:"Armenia",10:"Antarctica",275:"Palestine",
-    };
-
-    for (const feature of geoJSON.features) {
-      const id = parseInt(feature.id, 10);
-      feature.properties = feature.properties || {};
-      feature.properties.name = idToName[id] || '';
-    }
-    topoCountries = geoJSON.features;
-
-    const summaryMap = {};
-    for (const c of allCountries) summaryMap[c.country] = c;
-
-    const W = container.getBoundingClientRect().width  || 520;
-    const H = container.getBoundingClientRect().height || 520;
-
-    const DEFAULT_Z   = 3.8;
-    const MIN_Z       = 1.8;
-    const MAX_Z       = 6.0;
-    let   currentScale = 1.0;
-
-    scene  = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
-    camera.position.z = DEFAULT_Z;
-
-    renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true, alpha: true });
-    renderer.setSize(W, H);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0);
-
-    const baseTex = buildGlobeTexture(topoCountries);
-    globe = new THREE.Mesh(
-      new THREE.SphereGeometry(1, 64, 64),
-      new THREE.MeshPhongMaterial({ map: baseTex, specular: new THREE.Color(0x2a1a0a), shininess: 12 })
-    );
-    scene.add(globe);
-
-    const overlayTex = buildOverlayTexture(topoCountries, null, null, summaryMap);
-    countriesMesh = new THREE.Mesh(
-      new THREE.SphereGeometry(1.001, 64, 64),
-      new THREE.MeshBasicMaterial({ map: overlayTex, transparent: true, opacity: 1, depthWrite: false })
-    );
-    scene.add(countriesMesh);
-
-    scene.add(new THREE.Mesh(
-      new THREE.SphereGeometry(1.04, 64, 64),
-      new THREE.MeshBasicMaterial({ color: new THREE.Color(0xf5e8d0), transparent: true, opacity: 0.08, side: THREE.BackSide })
-    ));
-
-    const ambient = new THREE.AmbientLight(0xf5f0e8, 0.45); scene.add(ambient);
-    const sun     = new THREE.DirectionalLight(0xfff5e8, 0.7); sun.position.set(3,2,3); scene.add(sun);
-    const fill    = new THREE.DirectionalLight(0xe8d4b8, 0.15); fill.position.set(-3,-1,-2); scene.add(fill);
-
-    function animate() {
-      requestAnimationFrame(animate);
-      if (autoRotate) {
-        globe.rotation.y += 0.0018;
-        countriesMesh.rotation.y = globe.rotation.y;
-        countriesMesh.rotation.x = globe.rotation.x;
-      }
-      if (!isDragging && !autoRotate) {
-        globe.rotation.y += rotationVel.y;
-        globe.rotation.x += rotationVel.x;
-        countriesMesh.rotation.y = globe.rotation.y;
-        countriesMesh.rotation.x = globe.rotation.x;
-        rotationVel.x *= 0.92;
-        rotationVel.y *= 0.92;
-        if (Math.abs(rotationVel.x) < 0.0001 && Math.abs(rotationVel.y) < 0.0001) {
-          if (!userPaused) autoRotateTimer = setTimeout(() => { autoRotate = true; }, 2000);
-        }
-      }
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    const raycaster = new THREE.Raycaster();
-    const mouse2D   = new THREE.Vector2();
-    const tooltipEl = document.getElementById('globe-tooltip');
-
-    function getLatLon(intersection) {
-      const p = intersection.point.clone();
-      p.applyQuaternion(globe.quaternion.clone().invert());
-      const lat = 90 - (Math.acos(Math.max(-1, Math.min(1, p.y))) * 180) / Math.PI;
-      let lon = (Math.atan2(p.z, -p.x) * 180) / Math.PI - 180;
-      lon = ((lon + 540) % 360) - 180;
-      return { lat, lon };
-    }
-
-    function hitTest(clientX, clientY) {
-      const rect = canvasEl.getBoundingClientRect();
-      mouse2D.x =  ((clientX - rect.left) / rect.width)  * 2 - 1;
-      mouse2D.y = -((clientY - rect.top)  / rect.height) * 2 + 1;
-      raycaster.setFromCamera(mouse2D, camera);
-      const hits = raycaster.intersectObject(globe);
-      return hits.length ? getLatLon(hits[0]) : null;
-    }
-
-    function updateOverlay() {
-      const newTex = buildOverlayTexture(topoCountries, hoveredCountry, selectedCountry, summaryMap);
-      countriesMesh.material.map.dispose();
-      countriesMesh.material.map = newTex;
-      countriesMesh.material.needsUpdate = true;
-    }
-
-    canvasEl.addEventListener('mousedown', e => {
-      isDragging  = true;
-      prevMouse   = { x: e.clientX, y: e.clientY };
-      clearTimeout(autoRotateTimer);
-      autoRotate  = false;
-      rotationVel = { x: 0, y: 0 };
-    });
-
-    window.addEventListener('mousemove', e => {
-      if (isDragging) {
-        const dx = e.clientX - prevMouse.x, dy = e.clientY - prevMouse.y;
-        rotationVel.y = dx * 0.005; rotationVel.x = dy * 0.005;
-        globe.rotation.y += rotationVel.y;
-        globe.rotation.x  = Math.max(-Math.PI/2, Math.min(Math.PI/2, globe.rotation.x + rotationVel.x));
-        countriesMesh.rotation.y = globe.rotation.y;
-        countriesMesh.rotation.x = globe.rotation.x;
-        prevMouse = { x: e.clientX, y: e.clientY };
-        tooltipEl.classList.remove('visible');
-      } else {
-        const ll = hitTest(e.clientX, e.clientY);
-        if (ll) {
-          const name = normalizeName(latLonToCountry(ll.lat, ll.lon) || '');
-          if (name && name !== hoveredCountry) { hoveredCountry = name; updateOverlay(); }
-          if (name) {
-            const rect = canvasEl.getBoundingClientRect();
-            tooltipEl.textContent = name;
-            tooltipEl.style.left = (e.clientX - rect.left) + 'px';
-            tooltipEl.style.top  = (e.clientY - rect.top)  + 'px';
-            tooltipEl.classList.add('visible');
-          } else { tooltipEl.classList.remove('visible'); }
-        } else {
-          hoveredCountry = null;
-          tooltipEl.classList.remove('visible');
-        }
-      }
-    });
-
-    window.addEventListener('mouseup', e => {
-      if (!isDragging) return;
-      const dx = Math.abs(e.clientX - prevMouse.x), dy = Math.abs(e.clientY - prevMouse.y);
-      isDragging = false;
-      if (dx < 4 && dy < 4) {
-        const ll = hitTest(e.clientX, e.clientY);
-        if (ll) {
-          const rawName = latLonToCountry(ll.lat, ll.lon);
-          if (rawName) {
-            selectedCountry = normalizeName(rawName);
-            hoveredCountry  = null;
-            updateOverlay();
-            tooltipEl.classList.remove('visible');
-            showResult(selectedCountry);
-          }
-        }
-      }
-      clearTimeout(autoRotateTimer);
-      if (!userPaused) autoRotateTimer = setTimeout(() => { autoRotate = true; }, 3000);
-    });
-
-    let lastTouch = null, lastPinchDist = null;
-
-    canvasEl.addEventListener('touchstart', e => {
-      e.preventDefault();
-      clearTimeout(autoRotateTimer);
-      autoRotate  = false;
-      rotationVel = { x: 0, y: 0 };
-      if (e.touches.length === 1) {
-        isDragging = true;
-        lastTouch  = { x: e.touches[0].clientX, y: e.touches[0].clientY, time: Date.now() };
-      } else if (e.touches.length === 2) {
-        isDragging    = false;
-        lastTouch     = null;
-        lastPinchDist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
-      }
-    }, { passive: false });
-
-    canvasEl.addEventListener('touchmove', e => {
-      e.preventDefault();
-      if (e.touches.length === 2 && lastPinchDist !== null) {
-        const dist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
-        const newZ = Math.max(MIN_Z, Math.min(MAX_Z, camera.position.z + (lastPinchDist-dist)*0.01));
-        camera.position.z = newZ;
-        currentScale = DEFAULT_Z / newZ;
-        globe.scale.setScalar(currentScale);
-        countriesMesh.scale.setScalar(currentScale);
-        lastPinchDist = dist;
-        return;
-      }
-      if (e.touches.length !== 1 || !isDragging || !lastTouch) return;
-      const dx = e.touches[0].clientX - lastTouch.x, dy = e.touches[0].clientY - lastTouch.y;
-      rotationVel.y = dx * 0.005; rotationVel.x = dy * 0.005;
-      globe.rotation.y += rotationVel.y;
-      globe.rotation.x  = Math.max(-Math.PI/2, Math.min(Math.PI/2, globe.rotation.x + rotationVel.x));
-      countriesMesh.rotation.y = globe.rotation.y;
-      countriesMesh.rotation.x = globe.rotation.x;
-      lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY, time: Date.now() };
-    }, { passive: false });
-
-    canvasEl.addEventListener('touchend', e => {
-      if (lastTouch && Date.now() - lastTouch.time < 200) {
-        const ll = hitTest(lastTouch.x, lastTouch.y);
-        if (ll) {
-          const rawName = latLonToCountry(ll.lat, ll.lon);
-          if (rawName) { selectedCountry = normalizeName(rawName); updateOverlay(); showResult(selectedCountry); }
-        }
-      }
-      isDragging = false; lastTouch = null; lastPinchDist = null;
-      clearTimeout(autoRotateTimer);
-      if (!userPaused) autoRotateTimer = setTimeout(() => { autoRotate = true; }, 3000);
-    }, { passive: true });
-
-    canvasEl.addEventListener('wheel', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      const newZ = Math.max(MIN_Z, Math.min(MAX_Z, camera.position.z + e.deltaY * 0.008));
-      camera.position.z = newZ;
-      currentScale = DEFAULT_Z / newZ;
-      globe.scale.setScalar(currentScale);
-      countriesMesh.scale.setScalar(currentScale);
-    }, { passive: false });
-
-    window.addEventListener('resize', () => {
-      const W = container.clientWidth, H = container.clientHeight;
-      camera.aspect = W / H;
-      camera.updateProjectionMatrix();
-      renderer.setSize(W, H);
-    });
-
-    const spinBtn = document.getElementById('globe-spin-toggle');
-    if (spinBtn) {
-      spinBtn.addEventListener('click', () => {
-        userPaused = !userPaused;
-        autoRotate = !userPaused;
-        spinBtn.textContent = userPaused ? '> Spin' : 'II Pause';
-        if (userPaused) clearTimeout(autoRotateTimer);
-      });
-    }
-
-    document.getElementById('globe-reset')?.addEventListener('click', () => {
-      camera.position.z = DEFAULT_Z;
-      currentScale = 1.0;
-      globe.scale.setScalar(1.0);
-      countriesMesh.scale.setScalar(1.0);
-      globe.rotation.x = 0; globe.rotation.y = 0;
-      countriesMesh.rotation.x = 0; countriesMesh.rotation.y = 0;
-      rotationVel = { x: 0, y: 0 };
-      userPaused = false; autoRotate = true;
-      if (spinBtn) spinBtn.textContent = 'II Pause';
-      selectedCountry = null; hoveredCountry = null;
-      updateOverlay();
-      document.getElementById('lookup-result').innerHTML = '';
-    });
-  }
-
-  async function showResult(countryName) {
-    const resultEl = document.getElementById('lookup-result');
-    if (!resultEl) return;
-    const data = allCountries.find(c => c.country.toLowerCase() === countryName.toLowerCase())
-              || allCountries.find(c => c.country.toLowerCase().includes(countryName.toLowerCase()));
-    if (!data) {
-      resultEl.innerHTML = `<div class="lookup-not-found">No drought data found for <strong>${countryName}</strong>.</div>`;
-      return;
-    }
-    const rank       = rankings.findIndex(c => c.country === data.country) + 1;
-    const total      = rankings.length;
-    const trend      = data.spi_change < 0 ? 'worsening' : 'improving';
-    const trendSign  = data.spi_change < 0 ? '' : '+';
-    const timeSeries = (countryYearly[data.country] || []).sort((a, b) => a.year - b.year);
-
-    resultEl.innerHTML = `
-      <div class="lookup-card">
-        <div class="lookup-card-left">
-          <div>
-            <div class="lookup-card-continent">${data.continent}</div>
-            <div class="lookup-card-country">${data.country}</div>
-          </div>
-          <div class="lookup-rank-badge">
-            <span class="lookup-rank-num">#${rank}</span>
-            <span class="lookup-rank-label">of ${total} most worsening drought</span>
-          </div>
-          <div class="lookup-stats-grid">
-            <div class="lookup-stat-cell"><span class="lookup-stat-val">${data.spi_base.toFixed(2)}</span><span class="lookup-stat-lbl">Baseline SPI</span></div>
-            <div class="lookup-stat-cell"><span class="lookup-stat-val">${data.spi_mod.toFixed(2)}</span><span class="lookup-stat-lbl">Modern SPI</span></div>
-            <div class="lookup-stat-cell"><span class="lookup-stat-val">${data.temp_base.toFixed(1)}C</span><span class="lookup-stat-lbl">Mean Temp</span></div>
-            <div class="lookup-stat-cell"><span class="lookup-stat-val">${trendSign}${data.spi_change.toFixed(2)}</span><span class="lookup-stat-lbl">SPI Change</span></div>
-          </div>
-          <div class="lookup-trend-badge ${trend}">
-            ${trend === 'worsening' ? 'Drought worsening' : 'Drought improving'}
-          </div>
-        </div>
-        <div class="lookup-card-right">
-          <div class="lookup-chart-title">SPI over time 1850-2014</div>
-          <div class="lookup-chart-wrap"><svg id="lookup-spi-svg"></svg></div>
-        </div>
-      </div>`;
-
-    resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    if (timeSeries.length > 0) drawLookupChart(timeSeries, data.spi_change);
-  }
-
-  async function drawLookupChart(series, spiChange) {
-    if (typeof d3 === 'undefined') await loadScript('https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js');
-    const svgEl = document.getElementById('lookup-spi-svg');
-    if (!svgEl) return;
-    const W = svgEl.clientWidth || 520, H = svgEl.clientHeight || 260;
-    const margin = { top: 20, right: 16, bottom: 36, left: 44 };
-    const iW = W - margin.left - margin.right, iH = H - margin.top - margin.bottom;
-    const svg = d3.select(svgEl); svg.selectAll('*').remove();
-    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-    const x = d3.scaleLinear().domain(d3.extent(series, d => d.year)).range([0, iW]);
-    const yExtent = d3.extent(series, d => d.spi);
-    const y = d3.scaleLinear().domain([Math.min(yExtent[0],-2.5), Math.max(yExtent[1],1.5)]).range([iH, 0]);
-    g.append('rect').attr('x',0).attr('y',y(-1.0)).attr('width',iW).attr('height',iH-y(-1.0)).attr('fill','rgba(200,75,26,0.07)');
-    g.append('g').call(d3.axisLeft(y).ticks(5).tickSize(-iW).tickFormat('')).call(gg=>{gg.select('.domain').remove();gg.selectAll('line').attr('stroke','rgba(139,94,60,0.1)');});
-    const xA=g.append('g').attr('transform',`translate(0,${iH})`).call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('d')));
-    xA.select('.domain').attr('stroke','rgba(139,94,60,0.2)');xA.selectAll('text').style('font-family',"'Montserrat',sans-serif").style('font-size','9px').style('fill','#7a6248');xA.selectAll('line').attr('stroke','rgba(139,94,60,0.2)');
-    const yA=g.append('g').call(d3.axisLeft(y).ticks(5));
-    yA.select('.domain').attr('stroke','rgba(139,94,60,0.2)');yA.selectAll('text').style('font-family',"'Montserrat',sans-serif").style('font-size','9px').style('fill','#7a6248');yA.selectAll('line').attr('stroke','rgba(139,94,60,0.2)');
-    g.append('line').attr('x1',0).attr('x2',iW).attr('y1',y(0)).attr('y2',y(0)).attr('stroke','rgba(139,94,60,0.25)').attr('stroke-width',1);
-    g.append('line').attr('x1',0).attr('x2',iW).attr('y1',y(-1.0)).attr('y2',y(-1.0)).attr('stroke','rgba(200,75,26,0.55)').attr('stroke-width',1).attr('stroke-dasharray','4 3');
-    g.append('text').attr('x',iW-2).attr('y',y(-1.0)-4).attr('text-anchor','end').style('font-family',"'Montserrat',sans-serif").style('font-size','8px').style('fill','rgba(200,75,26,0.7)').text('SPI = -1.0 drought threshold');
-    g.append('path').datum(series).attr('d',d3.area().x(d=>x(d.year)).y0(y(0)).y1(d=>y(Math.min(0,d.spi))).curve(d3.curveBasis)).attr('fill',spiChange<0?'rgba(200,75,26,0.12)':'rgba(59,139,212,0.1)');
-    const n=series.length,sumX=d3.sum(series,d=>d.year),sumY=d3.sum(series,d=>d.spi),sumXY=d3.sum(series,d=>d.year*d.spi),sumX2=d3.sum(series,d=>d.year*d.year);
-    const slope=(n*sumXY-sumX*sumY)/(n*sumX2-sumX*sumX),intercept=(sumY-slope*sumX)/n;
-    const xMin=d3.min(series,d=>d.year),xMax=d3.max(series,d=>d.year);
-    g.append('line').attr('x1',x(xMin)).attr('y1',y(slope*xMin+intercept)).attr('x2',x(xMax)).attr('y2',y(slope*xMax+intercept)).attr('stroke',spiChange<0?'rgba(200,75,26,0.6)':'rgba(59,139,212,0.6)').attr('stroke-width',1.5).attr('stroke-dasharray','6 3');
-const path=g.append('path').datum(series).attr('d',d3.line().x(d=>x(d.year)).y(d=>y(d.spi)).curve(d3.curveBasis)).attr('fill','none').attr('stroke',spiChange<0?'#c84b1a':'#3b8bd4').attr('stroke-width',1.8);
-    const len=path.node().getTotalLength();
-    path.attr('stroke-dasharray',`${len} ${len}`).attr('stroke-dashoffset',len).transition().duration(1200).ease(d3.easeLinear).attr('stroke-dashoffset',0);
-
-    // ── Hover tooltip ──────────────────────────
-    const hoverLine = g.append('line')
-      .attr('y1', 0).attr('y2', iH)
-      .attr('stroke', 'rgba(139,94,60,0.35)')
-      .attr('stroke-width', 1)
-      .attr('stroke-dasharray', '3 3')
-      .attr('pointer-events', 'none')
-      .style('opacity', 0)
-      .style('transition', 'none');
-
-    const hoverDot = g.append('circle')
-      .attr('r', 4)
-      .attr('fill', spiChange < 0 ? '#c84b1a' : '#3b8bd4')
-      .attr('stroke', '#f5f0e8')
-      .attr('stroke-width', 2)
-      .attr('pointer-events', 'none')
-      .style('opacity', 0)
-      .style('transition', 'none');
-
-    const hoverLabel = g.append('g').style('opacity', 0).style('transition', 'none').attr('pointer-events', 'none');
-    const hoverBg = hoverLabel.append('rect')
-      .attr('rx', 4).attr('ry', 4)
-      .attr('fill', '#1a1a1a');
-    const hoverText = hoverLabel.append('text')
-      .style('font-family', "'Montserrat',sans-serif")
-      .style('font-size', '9px')
-      .style('font-weight', '700')
-      .attr('fill', '#f5f0e8');
-
-    // Invisible overlay rect to capture mouse events
-    g.append('rect')
-      .attr('width', iW).attr('height', iH)
-      .attr('fill', 'transparent')
-      .on('mousemove', function(event) {
-        const [mx] = d3.pointer(event, this);
-
-        // Snap to nearest data point by year
-        const year = Math.round(x.invert(mx));
-        const bisect = d3.bisector(d => d.year).left;
-        const idx = bisect(series, year);
-        const a = series[idx - 1], b = series[idx];
-        const closest = !a ? b : !b ? a : Math.abs(b.year - year) < Math.abs(a.year - year) ? b : a;
-        if (!closest) return;
-
-      // Sample the rendered SVG path to get visually correct y
-        // path lives inside the g group so its x coords are already in local (margin-offset) space
-        const pathNode = path.node();
-        const totalLen = pathNode.getTotalLength();
-        let lo = 0, hi = totalLen;
-        for (let iter = 0; iter < 20; iter++) {
-          const mid = (lo + hi) / 2;
-          const pt = pathNode.getPointAtLength(mid);
-          if (pt.x < mx) lo = mid; else hi = mid;
-        }
-        const sampledPt = pathNode.getPointAtLength((lo + hi) / 2);
-        const cy = sampledPt.y;
-
-        const cx = mx;
-        const displayedSpi = y.invert(cy);
-        const displayYear = Math.round(x.invert(mx));
-        const label = `${displayYear}  SPI ${displayedSpi >= 0 ? '+' : ''}${displayedSpi.toFixed(2)}`;
-        hoverLine.attr('x1', mx).attr('x2', mx).style('opacity', 1);
-        hoverDot.attr('cx', mx).attr('cy', cy).style('opacity', 1);
-
-        hoverText.text(label);
-        const bbox = hoverText.node().getBBox();
-        const pad = 5;
-        const labelX = cx + 8 + bbox.width + pad * 2 > iW ? cx - bbox.width - pad * 2 - 8 : cx + 8;
-        const labelY = Math.max(0, Math.min(cy - bbox.height / 2 - pad, iH - bbox.height - pad * 2));
-
-        hoverBg
-          .attr('x', labelX - pad)
-          .attr('y', labelY - pad)
-          .attr('width', bbox.width + pad * 2)
-          .attr('height', bbox.height + pad * 2);
-        hoverText.attr('x', labelX).attr('y', labelY + bbox.height * 0.75);
-        hoverLabel.style('opacity', 1);
-      })
-      .on('mouseleave', function() {
-        hoverLine.style('opacity', 0);
-        hoverDot.style('opacity', 0);
-        hoverLabel.style('opacity', 0);
-      });
-  }
-
-  async function boot() {
-    await loadLookupData();
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) { observer.disconnect(); initGlobe(); }
-    }, { rootMargin: '200px' });
-    const section = document.getElementById('slide-lookup');
-    if (section) observer.observe(section);
-  }
-
-  boot();
 })();
