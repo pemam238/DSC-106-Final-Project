@@ -28,6 +28,7 @@ const CHAPTERS = [
   { id: 'slide-case-track',  label: 'Two Deserts' },
   { id: 'slide-spi-track',   label: 'Measuring Drought' },
   { id: 'slide-3-track',     label: 'The World' },
+  { id: 'slide-why', label: 'Why It Matters' },
   { id: 'slide-climate',     label: 'Build a Climate' },
   { id: 'slide-lookup',      label: 'Country Lookup' },
   { id: 'slide-outro',       label: 'Takeaway' },
